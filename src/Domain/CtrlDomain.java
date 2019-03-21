@@ -5,14 +5,10 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class CtrlDomain {
-/*
-    private Presentation.CtrlPersistance CP;
 
-    public CtrlDomain() {
-        CP = ctrlPersistance.getInstance();
+    private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
 
     }
 
-    */
 
-}
+
