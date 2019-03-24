@@ -8,6 +8,7 @@
 package Domain;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * @class Problema
@@ -22,7 +23,7 @@ public class Problema{
     private boolean valid;
     private Huma creador;
     private HashMap<String, Integer> ranking;
-    private vector FitxaProblema;
+    private Vector<FitxaProblema> FitxesProblema;
 
     /**
      * Constructora buida
@@ -44,7 +45,7 @@ public class Problema{
     }
 
     public void validarProblema (){
-        Maquina aux;
+        Maquina aux = new Maquina();
         valid = aux.validarProblema(id);
     }
 
@@ -62,7 +63,7 @@ public class Problema{
      */
     public void inscriureRanking(String nickname, Integer puntuacio) {
         //Replaces the entry for the specified key only if it is currently mapped to some value, otherwise returns NULL
-        if (ranking.replace (nickname, puntuacio) == NULL) ranking.put(nickname,puntuacio);
+        if (ranking.replace (nickname, puntuacio) == null) ranking.put(nickname,puntuacio);
     }
 
     public Integer consultarPuntuacioJugador(String nickname) {

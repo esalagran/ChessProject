@@ -2,8 +2,6 @@ package Domain;
 
 public class FitxaProblema{
 
-
-
     IFitxa fitxa;
     boolean negre;
     ParInt coord;
