@@ -3,6 +3,8 @@ package Domain;
 import java.util.Dictionary;
 import java.util.Enumeration;
 
+
+//Singleton que serveix per controla el nombre m&agrave;xim de peces en un problema
 public class NumMaxPeces {
     private static Dictionary<String, Integer> ourInstance = new Dictionary<String, Integer>() {
         @Override
@@ -56,15 +58,10 @@ public class NumMaxPeces {
             put("Torre", 2);
             put("Dama", 1);
             put("Rei", 1);
-
         }
     };
 
     public static Dictionary<String, Integer> getInstance() {
         return ourInstance;
-    }
-
-    private NumMaxPeces() {
-
     }
 }
