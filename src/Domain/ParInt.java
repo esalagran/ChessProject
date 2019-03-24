@@ -2,7 +2,7 @@ package Domain;
 
 public class ParInt {
 
-    private static int x, y;
+    private int x, y;
 
     ParInt(){
         x = 0;
@@ -11,6 +11,22 @@ public class ParInt {
 
     ParInt(int x, int y){
         this.x = x;
+        this.y = y;
+    }
+
+    public int GetFirst(){
+        return x;
+    }
+
+    public void SetFirst(int x){
+        this.x = x;
+    }
+
+    public int GetSecond(){
+        return y;
+    }
+
+    public void SetSecond(int y){
         this.y = y;
     }
 }

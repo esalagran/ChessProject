@@ -1,24 +1,50 @@
 package Domain;
 
+/**
+ * @class: Fitxa problema
+ * Classe que implementa els elements que té un problema
+ * @author esalagran
+ * */
+
 public class FitxaProblema{
 
     IFitxa fitxa;
     boolean negre;
     ParInt coord;
 
-    public String GetNom(){
+    public String GetTipus(){
         return fitxa.GetNom();
-    };
+    }
 
+    public int GetPes(){
+        return fitxa.GetPes();
+    }
 
+    public ParInt GetCoordenades(){
+        return coord;
+    }
 
-    void MourePeça(int a, boolean b, ParInt desti){
+    public int GetCol(){
+        return coord.GetSecond();
+    }
 
+    public int GetFila(){
+        return coord.GetFirst();
+    }
+
+    void SetCoordenades(ParInt desti){
+        coord = desti;
     }
 
     FitxaProblema(String nom, ParInt posIni, boolean color){
         CreaFitxa(nom);
         coord = posIni;
+        negre = color;
+    }
+
+    FitxaProblema(String nom, int Col, int Fila, boolean color){
+        CreaFitxa(nom);
+        coord = new ParInt(Col, Fila);
         negre = color;
     }
 

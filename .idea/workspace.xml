@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e46380e-8b18-46b2-b5cc-9ba197a06590" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Domain/Alfil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Alfil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Cavall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Cavall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Dama.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Dama.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/FitxaProblema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/FitxaProblema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/IFitxa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/IFitxa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Peo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Peo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Problema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Problema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Rei.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Rei.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Torre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Torre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ParInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ParInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,8 +33,41 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Domain/FitxaProblema.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="296">
+              <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+              <folding>
+                <element signature="e#134#135#0" expanded="true" />
+                <element signature="e#171#172#0" expanded="true" />
+                <element signature="e#314#315#0" expanded="true" />
+                <element signature="e#350#351#0" expanded="true" />
+                <element signature="e#386#387#0" expanded="true" />
+                <element signature="e#413#414#0" expanded="true" />
+                <element signature="e#440#441#0" expanded="true" />
+                <element signature="e#467#468#0" expanded="true" />
+                <element signature="e#507#508#0" expanded="true" />
+                <element signature="e#535#536#0" expanded="true" />
+                <element signature="e#214#215#0" expanded="true" />
+                <element signature="e#243#244#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Domain/ParInt.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="296">
+              <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+              <folding>
+                <element signature="e#213#214#0" expanded="true" />
+                <element signature="e#237#238#0" expanded="true" />
+                <element signature="e#278#279#0" expanded="true" />
+                <element signature="e#304#305#0" expanded="true" />
+                <element signature="e#329#330#0" expanded="true" />
+                <element signature="e#353#354#0" expanded="true" />
+                <element signature="e#392#393#0" expanded="true" />
+                <element signature="e#418#419#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -128,13 +155,11 @@
         <option value="$PROJECT_DIR$/src/Domain/CtrlDomain.java" />
         <option value="$PROJECT_DIR$/src/Presentation/Main.java" />
         <option value="$PROJECT_DIR$/src/Presentation/MainClass.java" />
-        <option value="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" />
         <option value="$PROJECT_DIR$/src/Domain/Partida.java" />
         <option value="$PROJECT_DIR$/src/Coordenada.java" />
         <option value="$PROJECT_DIR$/src/Domain/Coordenada.java" />
         <option value="$PROJECT_DIR$/src/Domain/PeçaProblem.java" />
         <option value="$PROJECT_DIR$/src/Domain/Peça.java" />
-        <option value="$PROJECT_DIR$/src/Domain/ParInt.java" />
         <option value="$PROJECT_DIR$/src/Domain/Fitxa.java" />
         <option value="$PROJECT_DIR$/src/Domain/NumMaxPeces.java" />
         <option value="$PROJECT_DIR$/src/Domain/VectMov.java" />
@@ -146,6 +171,9 @@
         <option value="$PROJECT_DIR$/src/Domain/Peo.java" />
         <option value="$PROJECT_DIR$/src/Domain/Torre.java" />
         <option value="$PROJECT_DIR$/src/Domain/Problema.java" />
+        <option value="$PROJECT_DIR$/src/Domain/Usuari.java" />
+        <option value="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" />
+        <option value="$PROJECT_DIR$/src/Domain/ParInt.java" />
         <option value="$PROJECT_DIR$/src/Domain/FitxaProblema.java" />
       </list>
     </option>
@@ -191,7 +219,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553453211059" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553454148189" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
@@ -253,9 +281,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.86856127" visible="true" weight="0.2388664" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.86856127" visible="true" weight="0.2388664" />
       <window_info id="Structure" order="1" sideWeight="0.13143872" side_tool="true" weight="0.23076923" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -272,7 +299,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3285968" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3285968" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Messages" order="10" visible="true" weight="0.3285968" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24939272" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -367,13 +394,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Presentation/CtrlPresentation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Fitxa.java" />
     <entry file="file://$PROJECT_DIR$/src/Domain/Dificultat.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -413,13 +433,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/ParInt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -526,13 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Usuari.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -543,10 +549,55 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Usuari.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="5" lean-forward="true" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Presentation/CtrlPresentation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/ParInt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+          <folding>
+            <element signature="e#213#214#0" expanded="true" />
+            <element signature="e#237#238#0" expanded="true" />
+            <element signature="e#278#279#0" expanded="true" />
+            <element signature="e#304#305#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#392#393#0" expanded="true" />
+            <element signature="e#418#419#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/FitxaProblema.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="296">
+          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+          <folding>
+            <element signature="e#134#135#0" expanded="true" />
+            <element signature="e#171#172#0" expanded="true" />
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#350#351#0" expanded="true" />
+            <element signature="e#386#387#0" expanded="true" />
+            <element signature="e#413#414#0" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#467#468#0" expanded="true" />
+            <element signature="e#507#508#0" expanded="true" />
+            <element signature="e#535#536#0" expanded="true" />
+            <element signature="e#214#215#0" expanded="true" />
+            <element signature="e#243#244#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
