@@ -32,8 +32,8 @@ public class FitxaProblema{
         return coord.GetFirst();
     }
 
-    void SetCoordenades(ParInt desti){
-        coord = desti;
+    void SetCoordenades(ParInt dest){
+        coord = dest;
     }
 
     FitxaProblema(String nom, ParInt posIni, boolean color){

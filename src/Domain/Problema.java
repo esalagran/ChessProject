@@ -16,14 +16,14 @@ import java.util.Vector;
  */
 
 public class Problema{
-    private int id;
-    private String FEN;
-    private Dificultat dif;
-    private boolean guardat;
-    private boolean valid;
-    private Huma creador;
-    private HashMap<String, Integer> ranking;
-    private Vector<FitxaProblema> FitxesProblema;
+    private int _id;
+    private String _FEN;
+    private Dificultat _dif;
+    private boolean _guardat;
+    private boolean _valid;
+    private Huma _creador;
+    private HashMap<String, Integer> _ranking;
+    private Vector<FitxaProblema> _FitxesProblema;
 
     /**
      * Constructora buida
@@ -33,24 +33,24 @@ public class Problema{
     /**
      * Constructora 2
      */
-    public Problema (int a, String b, Dificultat c, Huma d){
-        id = a;
-        FEN = b;
-        dif = c;
-        creador = d;
+    public Problema (int id, String FEN, Dificultat d, Huma h){
+        _id = id;
+        _FEN = FEN;
+        _dif = d;
+        _creador = h;
     }
 
     public void setDificultat (Dificultat d){
-        dif = d;
+        _dif = d;
     }
 
     public void validarProblema (){
         Maquina aux = new Maquina();
-        valid = aux.validarProblema(id);
+        _valid = aux.validarProblema(_id);
     }
 
     public HashMap<String, Integer> getRanking() {
-        return ranking;
+        return _ranking;
     }
 
     //RANKING FUNCTIONS
@@ -63,11 +63,11 @@ public class Problema{
      */
     public void inscriureRanking(String nickname, Integer puntuacio) {
         //Replaces the entry for the specified key only if it is currently mapped to some value, otherwise returns NULL
-        if (ranking.replace (nickname, puntuacio) == null) ranking.put(nickname,puntuacio);
+        if (_ranking.replace (nickname, puntuacio) == null) _ranking.put(nickname,puntuacio);
     }
 
     public Integer consultarPuntuacioJugador(String nickname) {
-        return ranking.get(nickname);
+        return _ranking.get(nickname);
     }
 
     //PRIVATES
