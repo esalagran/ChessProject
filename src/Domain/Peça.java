@@ -1,5 +1,10 @@
 package Domain;
 
-public class Possibilitats {
+public class Peça{
+    String nom;
     Coordenada[] moviments;
+
+
 }
+
+

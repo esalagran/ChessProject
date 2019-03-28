@@ -1,19 +1,9 @@
 package Domain;
 
 public class Maquina extends Usuari{
+    String[] defHeur;
+    String[] atacHeur;
 
-    protected int depth;
-    protected int heuristica;      //Estimacio
-
-    public Maquina(){}
-
-    public void setDepth(int d){
-        if (depth > 0) depth = d;
-    }
-
-    public int getDepth(){
-        return depth;
-    }
 
     void MourePeça(String a){
 
