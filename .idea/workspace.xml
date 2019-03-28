@@ -2,16 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e46380e-8b18-46b2-b5cc-9ba197a06590" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Presentation/MainClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Coordenada.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Domain/Coordenada.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/CtrlDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Domain/CtrlDomain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Possibilitats.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Domain/Possibilitats.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Presentation/CtrlPresentation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Presentation/CtrlPresentation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Coordenada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coordenada.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Presentation/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cavall.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CtrlDomain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dama.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dificultat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitxaProblema.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Huma.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IFitxa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Maquina.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modalitat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NumMaxPeces.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParInt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Partida.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Peo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Possibilitats.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Problema.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rei.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TipusPeça.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Torre.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Usuari.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VectMov.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Alfil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Cavall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/CtrlDomain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Dama.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Dificultat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Huma.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Maquina.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Modalitat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Partida.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Peo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Possibilitats.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Problema.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Rei.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Torre.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/Usuari.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Persistence/CtrlPersistence.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Presentation/CtrlPresentation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chess/Presentation/MainClass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Coordenada.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,92 +56,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Dificultat.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Partida.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Peo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Peça.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/PeçaProblem.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Coordenada.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="6" selection-start-column="6" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Persistence/CtrlPersistence.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Presentation/CtrlPresentation.java">
+        <entry file="file://$PROJECT_DIR$/src/Domain/Cavall.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+            <state relative-caret-position="369">
+              <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+              <folding>
+                <element signature="e#170#171#0" expanded="true" />
+                <element signature="e#197#198#0" expanded="true" />
+                <element signature="e#236#237#0" expanded="true" />
+                <element signature="e#269#270#0" expanded="true" />
+                <element signature="e#296#297#0" expanded="true" />
+                <element signature="e#323#324#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/CtrlDomain.java">
+        <entry file="file://$PROJECT_DIR$/src/Domain/Dama.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+              <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Presentation/MainClass.java">
+        <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+            <state relative-caret-position="2006">
+              <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Domain/Alfil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -160,10 +145,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="85" />
-    <option name="y" value="25" />
-    <option name="width" value="1750" />
-    <option name="height" value="980" />
+    <option name="x" value="84" />
+    <option name="y" value="24" />
+    <option name="width" value="1751" />
+    <option name="height" value="981" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -173,7 +158,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,17 +181,26 @@
               <item name="ChessProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="ChessProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Persistence" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ChessProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ChessProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Presentation" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553191382412" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553791073896" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
@@ -258,10 +252,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23154363" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24696356" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -288,6 +281,34 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.86856127" visible="true" weight="0.23481782" />
+      <window_info id="Structure" order="1" sideWeight="0.13143872" side_tool="true" weight="0.23076923" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3285968" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3285968" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3285968" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24939272" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+    </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Peçaproblema.java" />
@@ -310,38 +331,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Problemes.java" />
     <entry file="file://$PROJECT_DIR$/src/Domain/test.java" />
-    <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Usuari.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
           <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Alfil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Cavall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Dama.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -440,6 +433,42 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="358">
           <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Cavall.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+          <folding>
+            <element signature="e#170#171#0" expanded="true" />
+            <element signature="e#197#198#0" expanded="true" />
+            <element signature="e#236#237#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#296#297#0" expanded="true" />
+            <element signature="e#323#324#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Dama.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2006">
+          <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Alfil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
         </state>
       </provider>
     </entry>
