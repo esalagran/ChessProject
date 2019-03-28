@@ -1,6 +1,6 @@
 package Domain;
 
 public enum Modalitat{
-    HH, MM, HM, MH
+    no, se, quines, modalitats
 
 }
