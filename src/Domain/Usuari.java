@@ -3,7 +3,7 @@ package Domain;
 public class Usuari{
     String nickname;
 
-    FitxaProblema MourePeça(String a, int b){
+    FitxaProblema MourePeça(TipusPeça a, int b){
         ParInt pos = new ParInt(b, b);
         return new FitxaProblema(a,pos,true);
 

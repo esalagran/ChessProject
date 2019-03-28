@@ -2,10 +2,10 @@ package Domain;
 
 public class Peo implements IFitxa {
     private VectMov[] _moviments;
-    private String _nom;
+    private TipusPeça _nom;
     private int _pes;
 
-    public String GetNom(){
+    public TipusPeça GetNom(){
         return _nom;
     }
 
@@ -19,7 +19,7 @@ public class Peo implements IFitxa {
 
     public Peo()
     {
-        _nom = "Peo";
+        _nom = TipusPeça.Peo;
         _moviments = new VectMov[2];
         _moviments[0] = new VectMov(0,1,0);
         _moviments[1] = new VectMov(0,0,1);

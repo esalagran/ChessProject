@@ -2,7 +2,7 @@ package Domain;
 
 public interface IFitxa {
 
-    public String GetNom();
+    public TipusPeça GetNom();
 
     public VectMov[] GetMoviments();
 

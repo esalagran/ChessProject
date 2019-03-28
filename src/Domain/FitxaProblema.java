@@ -12,7 +12,7 @@ public class FitxaProblema{
     boolean negre;
     ParInt coord;
 
-    public String GetTipus(){
+    public TipusPeça GetTipus(){
         return fitxa.GetNom();
     }
 
@@ -36,36 +36,36 @@ public class FitxaProblema{
         coord = dest;
     }
 
-    FitxaProblema(String nom, ParInt posIni, boolean color){
+    FitxaProblema(TipusPeça nom, ParInt posIni, boolean color){
         CreaFitxa(nom);
         coord = posIni;
         negre = color;
     }
 
-    FitxaProblema(String nom, int Col, int Fila, boolean color){
+    FitxaProblema(TipusPeça nom, int Col, int Fila, boolean color){
         CreaFitxa(nom);
         coord = new ParInt(Col, Fila);
         negre = color;
     }
 
-    private void CreaFitxa(String nom){
+    private void CreaFitxa(TipusPeça nom){
         switch (nom){
-            case "Peo":
+            case Peo:
                 fitxa = new Peo();
                 break;
-            case "Cavall":
+            case Cavall:
                 fitxa = new Cavall();
                 break;
-            case "Alfil":
+            case Alfil:
                 fitxa = new Alfil();
                 break;
-            case "Torre":
+            case Torre:
                 fitxa = new Torre();
                 break;
-            case "Dama":
+            case Dama:
                 fitxa =  new Dama();
                 break;
-            case "Rei":
+            case Rei:
                 fitxa = new Rei();
                 break;
             default:

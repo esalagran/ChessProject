@@ -2,10 +2,10 @@ package Domain;
 
 public class Rei implements IFitxa{
     private VectMov[] _moviments;
-    private String _nom;
+    private TipusPeça _nom;
     private int _pes ;
 
-    public String GetNom(){
+    public TipusPeça GetNom(){
         return _nom;
     }
 
@@ -18,7 +18,7 @@ public class Rei implements IFitxa{
     }
 
     public Rei() {
-        _nom = "Rei";
+        _nom = TipusPeça.Rei;
         _moviments = new VectMov[3];
         _moviments[0] = new VectMov(0, 1, 0);
         _moviments[1] = new VectMov(1, 0, 0);

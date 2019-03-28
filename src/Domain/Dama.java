@@ -2,10 +2,10 @@ package Domain;
 
 public class Dama implements IFitxa {
     private VectMov[] _moviments;
-    private String _nom;
+    private TipusPeça _nom;
     private int _pes;
 
-    public String GetNom(){
+    public TipusPeça GetNom(){
         return _nom;
     }
 
@@ -18,7 +18,7 @@ public class Dama implements IFitxa {
     }
 
     public Dama() {
-        _nom = "Dama";
+        _nom = TipusPeça.Dama;
         _moviments = new VectMov[3];
         _moviments[0] = new VectMov(0, 7, 0);
         _moviments[1] = new VectMov(7, 0, 0);

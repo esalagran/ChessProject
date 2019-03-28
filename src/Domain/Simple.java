@@ -24,7 +24,7 @@ public class Simple  extends  Maquina{
     public int atac(int depth){
         if (depth == 0){} //retorna calcul estimat de la partida ja qe no arriba al final
 
-
+        return 0;
     }
 
     public int defensa (int depth){
