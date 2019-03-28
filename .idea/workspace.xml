@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e46380e-8b18-46b2-b5cc-9ba197a06590" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Domain/ParTipusPeçaBool.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Domain/TipusPeça.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Alfil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Alfil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Cavall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Cavall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Dama.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Dama.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/FitxaProblema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/FitxaProblema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/IFitxa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/IFitxa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/NumMaxPeces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/NumMaxPeces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Peo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Peo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Problema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Problema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Rei.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Rei.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Torre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Torre.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Usuari.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Usuari.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Simple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Simple.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -120,8 +107,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Domain/Simple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+            <state relative-caret-position="177">
+              <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+              <folding>
+                <element signature="e#607#608#0" expanded="true" />
+                <element signature="e#630#631#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -234,7 +225,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553789431691" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553789466604" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
@@ -580,8 +571,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Simple.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+        <state relative-caret-position="177">
+          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+          <folding>
+            <element signature="e#607#608#0" expanded="true" />
+            <element signature="e#630#631#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

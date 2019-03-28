@@ -28,6 +28,6 @@ public class Simple  extends  Maquina{
     }
 
     public int defensa (int depth){
-
+        return 0;
     }
 }
