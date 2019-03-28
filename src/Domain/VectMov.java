@@ -9,4 +9,8 @@ public class VectMov {
         _maxMov[1] = v;
         _maxMov[2] = d;
     }
+
+    public int getH() {return _maxMov[0];}
+    public int getV() {return _maxMov[1];}
+    public int getD() {return _maxMov[2];}
 }
