@@ -1,5 +1,11 @@
 package Domain;
 
+import java.util.*;
+
 public class Possibilitats {
-    Coordenada[] moviments;
+    ParInt[] moviments;
+
+    public Vector<ParInt> validMoves(FitxaProblema x) {
+        Vector v = x.
+    }
 }
