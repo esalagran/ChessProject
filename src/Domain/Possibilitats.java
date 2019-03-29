@@ -1,7 +1,10 @@
 package Domain;
 
+import java.util.*;
+
 public class Possibilitats {
-    ParInt[] moviments;
+    private Vector <ParInt> moviments = new Vector<>();
+    private Tauler a;
 
     public void validMoves(FitxaProblema x) {
         VectMov[] vm = x.getIFitxa().GetMoviments();
@@ -9,15 +12,82 @@ public class Possibilitats {
         ParInt ini = x.GetCoordenades();
         ParInt newPos;
         ParInt move;
-
-        boolean outLimits, PeçaMeva, PeçaRival = false;
+        boolean stopd1,stopd2,stopd3,stopd4;
+        boolean outLimits = false;
         for (int i = 0; i < vm.length; i++){
-            if (x.getIFitxa().getClass().getName() == "Torre") {
+            stopd1 = false;
+            stopd2 = false;
+            stopd3 = false;
+            stopd4 = false;
+            if (x.getIFitxa().getClass().getName() == "Torre" || x.getIFitxa().getClass().getName() == "Dama" ||
+                    x.getIFitxa().getClass().getName() == "Rei" || x.getIFitxa().getClass().getName() == "Alfil") {
+                for (int j = 0; j < vm[i].getD(); j++){
+                    move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond()+j+1);
+                    if (!stopd1){
+                        addMove(move);
+                        stopd1 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                    move = new ParInt(ini.GetFirst()-j-1,ini.GetSecond()+j+1);
+                    if (!stopd2){
+                        addMove(move);
+                        stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                    move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond()-j-1);
+                    if (!stopd3){
+                        addMove(move);
+                        stopd3 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                    move = new ParInt(ini.GetFirst()-j-1,ini.GetSecond()-j-1);
+                    if (!stopd4){
+                        addMove(move);
+                        stopd4 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                }
+                stopd1 = false;
+                stopd2 = false;
+                for (int j = 0; j < vm[i].getH(); j++){
+                    move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond());
+                    if (!stopd1){
+                        addMove(move);
+                        stopd1 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                    move = new ParInt(ini.GetFirst()-j-1,ini.GetSecond());
+                    if (!stopd2){
+                        addMove(move);
+                        stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                }
+                stopd1 = false;
+                stopd2 = false;
+                for (int j = 0; j < vm[i].getV(); j++){
+                    move = new ParInt(ini.GetFirst(),ini.GetSecond()+j+1);
+                    if (!stopd1){
+                        addMove(move);
+                        stopd1 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+                    move = new ParInt(ini.GetFirst(),ini.GetSecond()-j-1);
+                    if (!stopd2){
+                        addMove(move);
+                        stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
+                    }
+
+                }
 
             }
+            if (x.getIFitxa().getClass().getName() == "Peo"){
 
+            }
+            if (x.getIFitxa().getClass().getName() == "Cavall"){
+
+            }
         }
 
+    }
+
+    public void addMove (ParInt move){
+        if (safe(move) && !a.PeçaMeva(move)) {
+            moviments.add(move);
+        }
     }
 
     public Boolean safe(ParInt x) {

@@ -1,11 +1,15 @@
 package Domain;
 
 public class Tauler {
-    private PeçaProblem[][] taulell;
+    private FitxaProblema[][] taulell;
 
     public Tauler (){}
 
-    public PeçaProblem getInfo(ParInt x) {
-        return taulell[x.GetFirst()][x.GetSecond()];
+    public boolean PeçaMeva(ParInt x) {
+        return false;
+    }
+
+    public boolean PeçaRival(ParInt x){
+        return false;
     }
 }
