@@ -1,13 +1,8 @@
 package Domain;
 
-public class Cavall implements IFitxa {
+public class Cavall extends Fitxa {
     private VectMov[] _moviments;
-    private TipusPeça _nom;
     public int _pes;
-
-    public TipusPeça GetNom(){
-        return _nom;
-    }
 
     public VectMov[] GetMoviments() {
         return _moviments;
@@ -19,7 +14,6 @@ public class Cavall implements IFitxa {
 
     public Cavall()
     {
-        _nom = TipusPeça.Cavall;
         _moviments = new VectMov[2];
         _moviments[0] = new VectMov(2,1, 0);
         _moviments[1] = new VectMov(1,2,0);

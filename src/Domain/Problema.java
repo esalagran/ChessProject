@@ -81,6 +81,8 @@ public class Problema{
         return _ranking;
     }
 
+    public int GetId(){ return _id;}
+
     //RANKING FUNCTIONS
 
     /**

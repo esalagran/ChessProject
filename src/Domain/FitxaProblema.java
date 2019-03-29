@@ -9,13 +9,9 @@ package Domain;
 
 public class FitxaProblema{
 
-    IFitxa fitxa;
+    Fitxa fitxa;
     boolean negre;
     ParInt coord;
-
-    public TipusPeça GetTipus(){
-        return fitxa.GetNom();
-    }
 
     public int GetPes(){
         return fitxa.GetPes();
@@ -37,7 +33,7 @@ public class FitxaProblema{
         coord = dest;
     }
 
-    public IFitxa getIFitxa () { return fitxa;}
+    public Fitxa getIFitxa () { return fitxa;}
 
     FitxaProblema(TipusPeça nom, ParInt posIni, boolean color){
         CreaFitxa(nom);

@@ -1,5 +1,6 @@
 package Domain;
 
-public enum Dificultat{
-    facil, mitja, dificil
+public enum Dificultat {
+    dificil, facil, mitja
+
 }

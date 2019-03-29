@@ -6,6 +6,7 @@ public class Possibilitats {
     ParInt[] moviments;
 
     public Vector<ParInt> validMoves(FitxaProblema x) {
-        Vector v = x.
+        //Vector v = x.
+        return null;
     }
 }

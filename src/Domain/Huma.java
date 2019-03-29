@@ -1,9 +1,31 @@
 package Domain;
 
-public class Huma extends Usuari{
-    boolean loggedIn;
-    String password;
+import java.util.HashMap;
 
-    Problema[] problemesCreats;
-    int[] puntuació;
+public class Huma extends Usuari{
+    private boolean loggedIn;
+    private String password;
+
+    private HashMap<Integer, Problema> problemesCreats;
+    private int[] puntuació;
+
+    public boolean IsLoggedIn(){
+        return loggedIn;
+    }
+
+    public void LogIn(){
+        loggedIn = true;
+    }
+
+    public void LogOut(){
+        loggedIn = false;
+    }
+
+    public void AfegirProblema(Problema p){
+        problemesCreats.put(p.GetId(), p);
+    }
+
+
+
+
 }

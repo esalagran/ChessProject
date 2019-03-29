@@ -1,7 +1,7 @@
 package Presentation;
 
 import Domain.Dificultat;
-import javafx.application.Application;
+//import javafx.application.Application;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

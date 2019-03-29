@@ -9,7 +9,7 @@ public class Usuari{
 
     }
 
-    Partida IniciarPartida(String a, String b, int c){
+    Partida IniciarPartida(Usuari u1, Usuari u2, Modalitat m){
 
         return new Partida();
     }

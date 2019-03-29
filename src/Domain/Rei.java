@@ -1,13 +1,8 @@
 package Domain;
 
-public class Rei implements IFitxa{
+public class Rei extends Fitxa{
     private VectMov[] _moviments;
-    private TipusPeça _nom;
-    private int _pes ;
-
-    public TipusPeça GetNom(){
-        return _nom;
-    }
+    private int _pes;
 
     public VectMov[] GetMoviments() {
         return _moviments;
@@ -18,7 +13,6 @@ public class Rei implements IFitxa{
     }
 
     public Rei() {
-        _nom = TipusPeça.Rei;
         _moviments = new VectMov[3];
         _moviments[0] = new VectMov(0, 1, 0);
         _moviments[1] = new VectMov(1, 0, 0);
