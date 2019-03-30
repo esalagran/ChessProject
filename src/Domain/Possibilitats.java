@@ -10,7 +10,6 @@ public class Possibilitats {
         VectMov[] vm = x.getIFitxa().GetMoviments();
 
         ParInt ini = x.GetCoordenades();
-        ParInt newPos;
         ParInt move;
         boolean stopd1,stopd2,stopd3,stopd4;
         boolean outLimits = false;
@@ -70,14 +69,28 @@ public class Possibilitats {
                         addMove(move);
                         stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
                     }
-
                 }
 
             }
             if (x.getIFitxa().getClass().getName() == "Peo"){
+                move = new ParInt(ini.GetFirst(),ini.GetSecond()+1);
+                addMove(move);
+                move = new ParInt(ini.GetFirst()+1,ini.GetSecond()+1);
+                if (a.PeçaRival(move)) addMove(move);
 
             }
             if (x.getIFitxa().getClass().getName() == "Cavall"){
+                int v = vm[i].getV();
+                int h = vm[i].getH();
+
+                move = new ParInt(ini.GetFirst()+v, ini.GetSecond()+h);
+                addMove(move);
+                move = new ParInt(ini.GetFirst()+v, ini.GetSecond()-h);
+                addMove(move);
+                move = new ParInt(ini.GetFirst()-v, ini.GetSecond()+h);
+                addMove(move);
+                move = new ParInt(ini.GetFirst()-v, ini.GetSecond()-h);
+                addMove(move);
 
             }
         }
