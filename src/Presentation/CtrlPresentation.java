@@ -21,41 +21,53 @@ public class CtrlPresentation {
                     boolean negre = taulell[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
+                        System.out.print(" ");
                         if(negre)
-                            System.out.print("c ");
-                        else System.out.print("C ");
+                            System.out.print(Character.toChars(0x265E));
+                        else System.out.print(Character.toChars(0x2658));
+                        System.out.print(" ");
                     }
                     if(tP == TipusPeça.Peo){
+                        System.out.print(" ");
                         if(negre)
-                            System.out.print("p ");
-                        else System.out.print("P ");
+                            System.out.print(Character.toChars(0x265F));
+                        else System.out.print(Character.toChars(0x2659));
+                        System.out.print(" ");
                     }
                     if(tP == TipusPeça.Alfil){
+                        System.out.print(" ");
                         if(negre)
-                            System.out.print("a ");
-                        else System.out.print("A ");
+                            System.out.print(Character.toChars(0x265D));
+                        else System.out.print(Character.toChars(0x2657));
+                        System.out.print(" ");
                     }
 
                     if(tP == TipusPeça.Torre){
+                        System.out.print(" ");
                         if(negre)
-                            System.out.print("t ");
-                        else System.out.print("T ");
+                            System.out.print(Character.toChars(0x265C));
+                        else System.out.print(Character.toChars(0x2656));
+                        System.out.print(" ");
                     }
 
                     if(tP == TipusPeça.Rei){
+                        System.out.print(" ");
                         if(negre)
-                            System.out.print("r ");
-                        else System.out.print("R ");
+                            System.out.print(Character.toChars(0x265A));
+                        else System.out.print(Character.toChars(0x2654));
+                        System.out.print(" ");
                     }
                     if(tP == TipusPeça.Dama){
+                        System.out.print(" ");
                         if(negre)
-                            System.out.print("d ");
-                        else System.out.print("D ");
+                            System.out.print(Character.toChars(0x265B));
+                        else System.out.print(Character.toChars(0x2655));
+                        System.out.print(" ");
                     }
 
                 }
                 else {
-                    System.out.print("0 ");
+                    System.out.print(" [] ");
                 }
             }
             System.out.println();

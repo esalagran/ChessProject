@@ -23,10 +23,11 @@ public class CtrlDomain {
         cjtUsuaris = cPer.GetUsuaris();
         cjtProblemes = cPer.GetProblemes();
 
-/*
+
+        /*
         FitxaProblema[][] t = cjtProblemes.get(0).FENtoTauler();
         cPres.dibuixaTaulell(t);
-*/
+        */
 
 
 
