@@ -9,27 +9,26 @@ public class CtrlDomain {
     private Huma[] cjtUsuaris;
     private List<Problema> cjtProblemes;
     private Huma userLogged;
-    private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
+    private Persistence.CtrlPersistence cPer = new Persistence.CtrlPersistence();
+    private Presentation.CtrlPresentation cPres;
 
     public void CreaProblema(){
         Problema p = new Problema();
         userLogged.AfegirProblema(p);
     }
 
-    public CtrlDomain(Huma u){
+    public CtrlDomain(Huma u, Presentation.CtrlPresentation cPr){
+        cPres = cPr;
         userLogged = u;
-        cjtUsuaris = CP.GetUsuaris();
-        cjtProblemes = CP.GetProblemes();
+        cjtUsuaris = cPer.GetUsuaris();
+        cjtProblemes = cPer.GetProblemes();
+
+/*
+        FitxaProblema[][] t = cjtProblemes.get(0).FENtoTauler();
+        cPres.dibuixaTaulell(t);
+*/
 
 
-        System.out.println(cjtProblemes.size());
-
-        /*
-        for (Problema p : cjtProblemes
-             ) {
-               System.out.println("id: " + p.GetId() + " FEN: " + p.GetFEN());
-        }
-        */
 
     }
 }

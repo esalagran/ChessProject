@@ -8,12 +8,12 @@
 package Domain;
 
 import javax.net.ssl.KeyManager;
+import java.io.BufferedReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.nio.charset.IllegalCharsetNameException;
 import java.security.KeyPair;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * @class Problema
@@ -77,6 +77,14 @@ public class Problema{
         _valid = aux.validarProblema(_id);
     }
 
+    private boolean _isMayus(char ch){
+        if(ch >= 65 && ch<= 90)
+            return  true;
+        else return  false;
+    }
+
+
+
     public HashMap<String, Integer> getRanking() {
         return _ranking;
     }
@@ -106,9 +114,64 @@ public class Problema{
     /**
      * A partir del codi FEN genera el vector de FitxaProblema
      */
-    private void FENtoTauler(){
+    public FitxaProblema[][] FENtoTauler(){
+        try {
+
+            int x = 0;
+            FitxaProblema[][] taulell = new FitxaProblema[8][8];
+
+
+            for(int i = 0; i < _FEN.length(); i++){
+                char ch = _FEN.charAt(i);
+                int l = x / 8;
+                int k = x - (x / 8) * 8;
+               // System.out.println( "Pos: " + x + " X: "+ String.valueOf(k) + " Y: " + String.valueOf(l) + "CHAR: " + ch );
+
+                if(x >= 64)
+                    break;
+
+                if (ch > 48 && ch < 57){
+                    x += (ch - 48);
+                }
+                else if(ch == 'n' || ch == 'N') {
+                    taulell[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    x++;
+                }
+                else if(ch == 'b' || ch == 'B') {
+                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    x++;
+                }
+                else if(ch == 'p' || ch == 'P') {
+                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    x++;
+                }
+                else if(ch == 'k' || ch == 'K') {
+                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    x++;
+                }
+                else if(ch == 'r' || ch == 'R') {
+
+                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    x++;
+                }
+                else if(ch == 'q' || ch == 'Q') {
+                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    x++;
+                }
+
+
+            }
+
+            return taulell;
+
+        }catch (Exception e){
+
+            System.out.print("ERROOOOOR: " + e);
+            return  null;
+        }
 
     }
+
 
     /**
      * A partir del vector de FitxaProblema genera el codi FEN

@@ -28,7 +28,7 @@ try{
         Scanner sc = new Scanner(file);
         String FEN = "";
         Domain.Dificultat dif = Dificultat.facil;
-        int n;
+        int n = 0, uid = 0;
         int id = 0;
 
         while (sc.hasNext()){
@@ -51,8 +51,13 @@ try{
 
              if( s.equals("n:")) {
                  n = Integer.valueOf(sc.next());
-                // System.out.println("El FEN es: " + FEN + ", la dificultat es: " + dif.toString() + " el mat es en " + n + " jugades" );
+
+             }
+
+             if(s.equals("uid:")){
+                 uid = sc.nextInt();
                  problemes.add(new Problema(id, FEN, dif, new Domain.Huma()));
+                // System.out.println("El FEN es: " + FEN + ", la dificultat es: " + dif.toString() + " el mat es en " + n + " jugades i el creador te l'id: " + uid );
                  id++;
 
              }
@@ -61,7 +66,7 @@ try{
         return problemes;
     }
     catch(Exception e) {
-        System.out.println("EROOOOOOROROROORORR");
+        System.out.println("ERROOOOR");
         return null;
 
     }

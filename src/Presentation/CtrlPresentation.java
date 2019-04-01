@@ -1,10 +1,6 @@
 package Presentation;
 
-import Domain.Dificultat;
-import Domain.Modalitat;
-import Domain.Tema;
-import Domain.Color;
-import Domain.Huma;
+import Domain.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -14,10 +10,58 @@ import java.util.*;
 
 public class CtrlPresentation {
 
-    private Domain.CtrlDomain CD = new Domain.CtrlDomain(new Huma());
+    private Domain.CtrlDomain CD = new Domain.CtrlDomain(new Huma(), this);
     private  Scanner scanner = new Scanner(System.in);
 
+    public void dibuixaTaulell(FitxaProblema[][] taulell){
+        for(int i = 0; i < 8; i++){
+            for (int j = 0; j<8; j++){
+                if(taulell[i][j] != null){
+                    TipusPeça tP = taulell[i][j].GetTipus();
+                    boolean negre = taulell[i][j].GetColor();
 
+                    if(tP == TipusPeça.Cavall){
+                        if(negre)
+                            System.out.print("c ");
+                        else System.out.print("C ");
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(negre)
+                            System.out.print("p ");
+                        else System.out.print("P ");
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(negre)
+                            System.out.print("a ");
+                        else System.out.print("A ");
+                    }
+
+                    if(tP == TipusPeça.Torre){
+                        if(negre)
+                            System.out.print("t ");
+                        else System.out.print("T ");
+                    }
+
+                    if(tP == TipusPeça.Rei){
+                        if(negre)
+                            System.out.print("r ");
+                        else System.out.print("R ");
+                    }
+                    if(tP == TipusPeça.Dama){
+                        if(negre)
+                            System.out.print("d ");
+                        else System.out.print("D ");
+                    }
+
+                }
+                else {
+                    System.out.print("0 ");
+                }
+            }
+            System.out.println();
+        }
+
+    }
 
     public void AskCredentials(){
 
