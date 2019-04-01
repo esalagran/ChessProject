@@ -82,6 +82,7 @@ public class Problema{
     }
 
     public int GetId(){ return _id;}
+    public String GetFEN(){ return _FEN;}
 
     //RANKING FUNCTIONS
 

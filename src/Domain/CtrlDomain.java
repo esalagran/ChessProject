@@ -7,7 +7,7 @@ import java.util.*;
 public class CtrlDomain {
 
     private Huma[] cjtUsuaris;
-    private Problema[] cjtProblemes;
+    private List<Problema> cjtProblemes;
     private Huma userLogged;
     private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
 
@@ -20,6 +20,17 @@ public class CtrlDomain {
         userLogged = u;
         cjtUsuaris = CP.GetUsuaris();
         cjtProblemes = CP.GetProblemes();
+
+
+        System.out.println(cjtProblemes.size());
+
+        /*
+        for (Problema p : cjtProblemes
+             ) {
+               System.out.println("id: " + p.GetId() + " FEN: " + p.GetFEN());
+        }
+        */
+
     }
 }
 
