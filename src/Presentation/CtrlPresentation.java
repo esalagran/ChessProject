@@ -20,16 +20,19 @@ public class CtrlPresentation {
     private Domain.CtrlDomain CD = new Domain.CtrlDomain(new Huma(), this);
     private  Scanner scanner = new Scanner(System.in);
 
-    public void dibuixaTaulell(FitxaProblema[][] taulell){
+    public void dibuixaTauler(FitxaProblema[][] tauler){
 
         String formatB =  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
         String formatW =  "| " + ANSI_RED + "%c " + ANSI_RESET ;
-        System.out.println("+---+---+---+---+---+---+---+---+");
+        System.out.println("  +---+---+---+---+---+---+---+---+");
         for(int i = 0; i < 8; i++){
+            System.out.print(8-i);
+            System.out.print(" ");
+
             for (int j = 0; j<8; j++){
-                if(taulell[i][j] != null){
-                    TipusPeça tP = taulell[i][j].GetTipus();
-                    boolean negre = taulell[i][j].GetColor();
+                if(tauler[i][j] != null){
+                    TipusPeça tP = tauler[i][j].GetTipus();
+                    boolean negre = tauler[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
 
@@ -77,9 +80,12 @@ public class CtrlPresentation {
             }
             System.out.print('|');
             System.out.println();
-            System.out.println("+---+---+---+---+---+---+---+---+");
+            System.out.println("  +---+---+---+---+---+---+---+---+");
+
 
         }
+
+        System.out.println("    A   B   C   D   E   F   G   H" );
 
     }
 
@@ -171,7 +177,7 @@ public class CtrlPresentation {
 
                 default:
                     if(Integer.parseInt(response) >= 0 && Integer.parseInt(response) <10 ){
-                        dibuixaTaulell(problemes.get(Integer.parseInt(response)+ pagina*9).FENtoTauler());
+                        dibuixaTauler(problemes.get(Integer.parseInt(response)+ pagina*9).FENtoTauler());
                         done = true;
                     }
                     else {
@@ -261,7 +267,7 @@ public class CtrlPresentation {
                 case "1":
                     isRandom = true;
                     int randIndex = (int)(Math.random() * problemes.size());
-                    dibuixaTaulell(problemes.get(randIndex).FENtoTauler());
+                    dibuixaTauler(problemes.get(randIndex).FENtoTauler());
 
 
                     break;
