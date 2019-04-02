@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e46380e-8b18-46b2-b5cc-9ba197a06590" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/localData/problemes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/localData/problemes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Domain/CtrlDomain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Domain/CtrlDomain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Persistence/CtrlPersistence.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Persistence/CtrlPersistence.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chess/Presentation/CtrlPresentation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chess/Presentation/CtrlPresentation.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/CtrlDomain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/CtrlDomain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Problema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Problema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Persistence/CtrlPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Persistence/CtrlPersistence.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Presentation/MainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/MainClass.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,11 +23,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Presentation/CtrlPresentation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+            <state relative-caret-position="179">
+              <caret line="347" column="87" lean-forward="true" selection-start-line="347" selection-start-column="87" selection-end-line="347" selection-end-column="87" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#dibuixaTaulell#0;class#CtrlPresentation#0" />
+                <element signature="method#AskCredentials#0;class#CtrlPresentation#0" />
+                <element signature="method#PGNtoFEN#0;class#CtrlPresentation#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Presentation/MainClass.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,24 +60,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Color.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Huma.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Domain/Tema.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
@@ -75,13 +68,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Domain/CtrlDomain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+            <state relative-caret-position="612">
+              <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#511#512#0" expanded="true" />
+                <element signature="e#535#536#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,11 +85,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Persistence/CtrlPersistence.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="45" column="6" lean-forward="true" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
+            <state relative-caret-position="259">
+              <caret line="174" column="32" lean-forward="true" selection-start-line="174" selection-start-column="32" selection-end-line="174" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#TaulerToFEN#0;class#CtrlPersistence#0" />
+                <element signature="method#carregarProblemes#0;class#CtrlPersistence#0" />
               </folding>
             </state>
           </provider>
@@ -103,8 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="117" column="13" lean-forward="true" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
+            <state relative-caret-position="434">
+              <caret line="117" column="13" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
               <folding>
                 <element signature="method#FillDictionary#0;class#Problema#0" />
               </folding>
@@ -121,6 +116,13 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>2rk1</find>
+      <find>2r1k3/7</find>
+      <find>2r1k3/8 w</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -164,13 +166,14 @@
         <option value="$PROJECT_DIR$/src/Domain/Color.java" />
         <option value="$PROJECT_DIR$/src/Domain/Modalitat.java" />
         <option value="$PROJECT_DIR$/src/Domain/Tema.java" />
-        <option value="$PROJECT_DIR$/src/Presentation/MainClass.java" />
         <option value="$PROJECT_DIR$/src/Domain/FitxaProblema.java" />
-        <option value="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" />
-        <option value="$PROJECT_DIR$/localData/problemes.txt" />
-        <option value="$PROJECT_DIR$/src/Persistence/CtrlPersistence.java" />
         <option value="$PROJECT_DIR$/src/Domain/Problema.java" />
+        <option value="$PROJECT_DIR$/src/Persistence/CtrlPersistence.java" />
         <option value="$PROJECT_DIR$/src/Domain/CtrlDomain.java" />
+        <option value="$PROJECT_DIR$/localData/FENfromPGN.txt" />
+        <option value="$PROJECT_DIR$/localData/problemes.txt" />
+        <option value="$PROJECT_DIR$/src/Presentation/MainClass.java" />
+        <option value="$PROJECT_DIR$/src/Presentation/CtrlPresentation.java" />
       </list>
     </option>
   </component>
@@ -218,6 +221,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Persistence" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ChessProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ChessProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Presentation" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -225,7 +234,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554218803205" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554225638253" />
     <property name="last_opened_file_path" value="$USER_HOME$/Dropbox/Curs 2018-2019/PROP/HorariMaker-master" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -293,7 +302,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2733711" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4490085" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -462,13 +471,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Presentation/MainClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Fitxa.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -477,13 +479,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/localData/problemes2.txt" />
-    <entry file="file://$PROJECT_DIR$/localData/problemes.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Color.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -498,44 +493,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Tema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="117" column="13" lean-forward="true" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
-          <folding>
-            <element signature="method#FillDictionary#0;class#Problema#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Persistence/CtrlPersistence.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="45" column="6" lean-forward="true" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#TaulerToFEN#0;class#CtrlPersistence#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Presentation/CtrlPresentation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/FitxaProblema.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -543,12 +500,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Tema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/CtrlDomain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+        <state relative-caret-position="612">
+          <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#511#512#0" expanded="true" />
+            <element signature="e#535#536#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Problema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="117" column="13" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
+          <folding>
+            <element signature="method#FillDictionary#0;class#Problema#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/localData/FENfromPGN.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="29" lean-forward="true" selection-end-line="60" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/localData/problemes.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="74" lean-forward="true" selection-start-line="11" selection-start-column="74" selection-end-line="11" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Presentation/MainClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/localData/PGN.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="-1700">
+          <caret line="714" column="26" lean-forward="true" selection-start-line="714" selection-start-column="26" selection-end-line="714" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Persistence/CtrlPersistence.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="174" column="32" lean-forward="true" selection-start-line="174" selection-start-column="32" selection-end-line="174" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#carregarProblemes#0;class#CtrlPersistence#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Presentation/CtrlPresentation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="347" column="87" lean-forward="true" selection-start-line="347" selection-start-column="87" selection-end-line="347" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#dibuixaTaulell#0;class#CtrlPresentation#0" />
+            <element signature="method#AskCredentials#0;class#CtrlPresentation#0" />
+            <element signature="method#PGNtoFEN#0;class#CtrlPresentation#0" />
           </folding>
         </state>
       </provider>

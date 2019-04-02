@@ -2,6 +2,9 @@ package Presentation;
 
 import Domain.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.Instant;
@@ -104,7 +107,7 @@ public class CtrlPresentation {
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >5 ) {
             System.out.print(
-                    "1. Jugar partida" + '\n' +
+                            "1. Jugar partida" + '\n' +
                             "2. Carregar problema"  + '\n' +
                             "3. Crear problema "  + '\n' +
                             "4. Veure ranking "  + '\n' +
@@ -119,15 +122,18 @@ public class CtrlPresentation {
                     DemanarInfoPartida();
                     break;
                 case "2":
-                    //CARREGAR PROBLEMA
+                    CarregarProblema();
                     break;
 
                 case "3":
                     //CREAR PROBLEMA
                     break;
                 case "4":
-                    System.exit(0);
+                    //VEURE PROBLEMA
                     break;
+                case "5":
+                    System.exit(0);
+
                 default:
                     System.out.println("Siusplau, tria una opció vàlida");
                     response = "0";
@@ -137,9 +143,64 @@ public class CtrlPresentation {
         }
 
     }
-    private  void CarregarPartida(){
+    private  void CarregarProblema(){
+
+        boolean done = false;
         String response = "0";
+        List<Problema> problemes =  CD.GetProblemes();
+        int pagina = 0;
+
+        while(!done) {
+
+            printProblems(pagina, problemes);
+
+            response  = scanner.next();
+
+            switch(response){
+
+                case "a":
+                    pagina--;
+                    break;
+
+                case "d":
+                    pagina++;
+                    break;
+
+
+
+
+                default:
+                    if(Integer.parseInt(response) >= 0 && Integer.parseInt(response) <10 ){
+                        dibuixaTaulell(problemes.get(Integer.parseInt(response)+ pagina*9).FENtoTauler());
+                        done = true;
+                    }
+                    else {
+                        System.out.println("Siusplau, tria una opció vàlida");
+                    }
+
+            }
+        }
+
+
+
+
+
         //
+    }
+    private void printProblems(int pagina, List<Problema> problemes){
+        int count = 0;
+
+        System.out.println("PAGINA " + (pagina+1));
+        for (int i = 0 + pagina*9 ; i < 10+pagina*9 && i < problemes.size() && i>=0 ; i++) {
+
+            System.out.println(count +" FEN: " + problemes.get(i).GetFEN());
+            count ++;
+
+        }
+
+        System.out.println("Fes servir les tecles \"A\" i \"D\" per passar pagina");
+        System.out.println("Escriu el numero del problema que vulguis carregar");
+
     }
 
     private void DemanarInfoPartida(){
@@ -150,6 +211,7 @@ public class CtrlPresentation {
         Color c = Color.blanc;
         int n = 1;
         boolean isRandom = false;
+        List<Problema> problemes =  CD.GetProblemes();
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >4 ) {
             System.out.print("Tria la modalitat de la partida: " + '\n' +
@@ -198,29 +260,10 @@ public class CtrlPresentation {
             switch (response) {
                 case "1":
                     isRandom = true;
+                    int randIndex = (int)(Math.random() * problemes.size());
+                    dibuixaTaulell(problemes.get(randIndex).FENtoTauler());
 
-                    if(Math.random()<0.5)
-                        c = Color.blanc;
-                    else c = Color.negre;
 
-                    double random = Math.random();
-                    if(random< 0.33)
-                        dif = Dificultat.facil;
-                    else if(random < 0.66)
-                        dif = Dificultat.mitja;
-                    else dif = Dificultat.dificil;
-
-                    random = Math.random();
-                    if(random< 0.25)
-                        mod = Modalitat.HH;
-                    else if(random < 0.5)
-                        mod = Modalitat.HM;
-                    else if(random < 0.75)
-                        mod = Modalitat.MM;
-                    else mod = Modalitat.MH;
-
-                    n =  (int)((Math.random()*15) + 1);
-                    tema = new Tema(n, c);
                     break;
                 case "2":
 
@@ -301,14 +344,52 @@ public class CtrlPresentation {
             }
         }
 
-
+/*
         System.out.print("L'usuari ha triat una partida amb modalitat: " + mod + '\n' +
                 "Ha triat un problema amb la dificultat: " + dif + '\n' + "Amb el color " + c + " atacant i amb mat en " + n + " jugades");
+*/
 
 
 
 
+    }
 
+    public void PGNtoFEN(){
+        try {
+            File file = new File("localData/PGN.txt");
+            Scanner sc = new Scanner(file);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/FENfromPGN.txt"), true));
+            int c = 0;
+
+            while (sc.hasNext()){
+                c++;
+                String word = sc.next();
+                //System.out.println(word);
+
+                if(word.equals("[FEN")) {
+                    String FEN = sc.next();
+                    FEN = FEN.replace("\"", "");
+                    FEN = FEN + " w - - 0 1";
+
+                    try {
+
+                        writer.append('\n');
+                        writer.append("FEN: " + FEN + " dif: " + "facil" + " n: " + 2 + " uid: " + 0);
+
+
+                    }catch (Exception e){
+                        System.out.println("ERRPR "  + e);
+                    }
+                }
+                if(!sc.hasNext())
+                    System.out.println("ENDED : " + word);
+            }
+
+            writer.close();
+
+        }catch (Exception e){
+            System.out.println("ERRPR "  + e);
+        }
     }
 
 

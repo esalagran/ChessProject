@@ -17,6 +17,10 @@ public class CtrlDomain {
         userLogged.AfegirProblema(p);
     }
 
+    public List<Problema> GetProblemes(){
+        return cjtProblemes;
+    }
+
     public CtrlDomain(Huma u, Presentation.CtrlPresentation cPr){
         cPres = cPr;
         userLogged = u;
@@ -24,12 +28,15 @@ public class CtrlDomain {
         cjtProblemes = cPer.GetProblemes();
 
 
-/*
+
+        /*
         FitxaProblema[][] t = cjtProblemes.get(0).FENtoTauler();
         System.out.println("ORIGINAL: " + cjtProblemes.get(0).GetFEN());
         cPer.TaulerToFEN(t);
         cPres.dibuixaTaulell(t);
 */
+
+
 
 
 

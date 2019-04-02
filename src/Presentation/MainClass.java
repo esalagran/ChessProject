@@ -1,11 +1,19 @@
 package Presentation;
 import Persistence.CtrlPersistence;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Scanner;
+
 public class MainClass {
+
+
 
     public static void main(String[] args) {
 
         CtrlPresentation CP = new CtrlPresentation();
+
 
        // CP.AskCredentials();
 
@@ -14,4 +22,8 @@ public class MainClass {
 
 
     }
+
+
+
+
 }

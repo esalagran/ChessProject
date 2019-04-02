@@ -36,7 +36,7 @@ try{
 if(!repetit){
     BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
     writer.append('\n');
-    writer.append("FEN: " + FEN + " dif: " + dif + " n:" + n + " uid: " + uId);
+    writer.append("FEN: " + FEN + " dif: " + dif + " n: " + n + " uid: " + uId);
     writer.close();}
 
 else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
@@ -60,7 +60,7 @@ else System.out.println("No s'ha pogut guardar el problema ja que el problema es
              String s = sc.next();
              //System.out.println(s);
              if(s.equals("FEN:")){
-                 FEN = sc.next();
+                 FEN = sc.next() + " " + sc.next() + " " + sc.next()+ " " + sc.next()+" " + sc.next();
                 //System.out.println(FEN);
              }
 
@@ -171,7 +171,7 @@ else System.out.println("No s'ha pogut guardar el problema ja que el problema es
                 FEN+="/";
         }
 
-        FEN+="w--01";
+        FEN+="w - - 0 1";
         System.out.println(FEN);
         return  FEN;
 
