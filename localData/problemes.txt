@@ -1,3 +1,1 @@
-FEN: 1N1b4/6nr/R5n1/2Ppk2r/K2p2qR/8/2N1PQ2/B6B w - - 0 1 dif: facil n: 4 uid: 1
-FEN: 1N1b4/6nr/R5n1/2Ppk2r/K2p2qR/8/2N1PQ2/B6B w - - 0 1 dif: mitja n: 6 uid: 3
-
+FEN: 1N1b4/6nr/R5n1/2Ppk2r/K2p2qR/8/2N1PQ2/B6Bw--01 dif: facil n:69 uid: 69

@@ -118,7 +118,7 @@ public class Problema{
         try {
 
             int x = 0;
-            FitxaProblema[][] taulell = new FitxaProblema[8][8];
+            FitxaProblema[][] tauler = new FitxaProblema[8][8];
 
 
             for(int i = 0; i < _FEN.length(); i++){
@@ -130,39 +130,55 @@ public class Problema{
                 if(x >= 64)
                     break;
 
+                if(ch == 57){
+                    System.out.println("FEN invalidm 9 es massa gran" + ch);
+                    break;
+
+                }
+
                 if (ch > 48 && ch < 57){
                     x += (ch - 48);
+                    if(k +(ch - 48) > 8){
+                        System.out.println("FEN invalid, espai massa gran " + k+(ch - 48));
+                        break;
+                    }
                 }
+
+                if(ch == '/' && k!= 0){
+                    System.out.println("FEN invalid, / detectat massa d'hora " + k);
+                    break;
+                }
+
                 else if(ch == 'n' || ch == 'N') {
-                    taulell[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
-                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
                     x++;
                 }
                 else if(ch == 'p' || ch == 'P') {
-                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
-                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
 
-                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
-                    taulell[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 7, x - (x % 7) * 7), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
                     x++;
                 }
 
 
             }
 
-            return taulell;
+            return tauler;
 
         }catch (Exception e){
 
@@ -176,9 +192,7 @@ public class Problema{
     /**
      * A partir del vector de FitxaProblema genera el codi FEN
      */
-    private void TaulertoFEN(){
 
-    }
 
     public void AfegirPeça(FitxaProblema fp){
 

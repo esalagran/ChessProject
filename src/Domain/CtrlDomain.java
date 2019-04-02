@@ -24,10 +24,12 @@ public class CtrlDomain {
         cjtProblemes = cPer.GetProblemes();
 
 
-        /*
+/*
         FitxaProblema[][] t = cjtProblemes.get(0).FENtoTauler();
+        System.out.println("ORIGINAL: " + cjtProblemes.get(0).GetFEN());
+        cPer.TaulerToFEN(t);
         cPres.dibuixaTaulell(t);
-        */
+*/
 
 
 

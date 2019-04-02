@@ -9,11 +9,19 @@ import java.util.*;
 
 
 public class CtrlPresentation {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain(new Huma(), this);
     private  Scanner scanner = new Scanner(System.in);
 
     public void dibuixaTaulell(FitxaProblema[][] taulell){
+
+        String formatB =  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW =  "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println("+---+---+---+---+---+---+---+---+");
         for(int i = 0; i < 8; i++){
             for (int j = 0; j<8; j++){
                 if(taulell[i][j] != null){
@@ -21,56 +29,53 @@ public class CtrlPresentation {
                     boolean negre = taulell[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
-                        System.out.print(" ");
+
                         if(negre)
-                            System.out.print(Character.toChars(0x265E));
-                        else System.out.print(Character.toChars(0x2658));
-                        System.out.print(" ");
+                            System.out.printf(formatB,  'C' );
+                        else System.out.printf(formatW, 'C');
                     }
                     if(tP == TipusPeça.Peo){
-                        System.out.print(" ");
                         if(negre)
-                            System.out.print(Character.toChars(0x265F));
-                        else System.out.print(Character.toChars(0x2659));
-                        System.out.print(" ");
+                            System.out.printf(formatB, 'P');
+                        else System.out.printf(formatW, 'P');
                     }
                     if(tP == TipusPeça.Alfil){
-                        System.out.print(" ");
                         if(negre)
-                            System.out.print(Character.toChars(0x265D));
-                        else System.out.print(Character.toChars(0x2657));
-                        System.out.print(" ");
+                            System.out.printf(formatB, 'A');
+                        else System.out.printf(formatW, 'A');
+
                     }
 
                     if(tP == TipusPeça.Torre){
-                        System.out.print(" ");
                         if(negre)
-                            System.out.print(Character.toChars(0x265C));
-                        else System.out.print(Character.toChars(0x2656));
-                        System.out.print(" ");
+                            System.out.printf(formatB, 'T');
+                        else System.out.printf(formatW,'T');
                     }
 
                     if(tP == TipusPeça.Rei){
-                        System.out.print(" ");
+
                         if(negre)
-                            System.out.print(Character.toChars(0x265A));
-                        else System.out.print(Character.toChars(0x2654));
-                        System.out.print(" ");
+                            System.out.printf(formatB, 'R');
+                        else System.out.printf(formatW, 'R');
+
                     }
+
                     if(tP == TipusPeça.Dama){
-                        System.out.print(" ");
+
                         if(negre)
-                            System.out.print(Character.toChars(0x265B));
-                        else System.out.print(Character.toChars(0x2655));
-                        System.out.print(" ");
+                            System.out.printf(formatB, 'D');
+                        else System.out.printf(formatW, 'D');
                     }
 
                 }
                 else {
-                    System.out.print(" [] ");
+                    System.out.print("|   ");
                 }
             }
+            System.out.print('|');
             System.out.println();
+            System.out.println("+---+---+---+---+---+---+---+---+");
+
         }
 
     }
