@@ -2,11 +2,11 @@ package Presentation;
 
 import Domain.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.List;
-import java.util.Scanner;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.time.Instant;
+import java.util.*;
 
 
 public class CtrlPresentation {
@@ -130,7 +130,7 @@ public class CtrlPresentation {
                     break;
 
                 case "3":
-                    //CREAR PROBLEMA
+                    CrearProblema();
                     break;
                 case "4":
                     //VEURE PROBLEMA
@@ -147,12 +147,53 @@ public class CtrlPresentation {
         }
 
     }
+
+    private void CrearProblema(){
+        String response = "0";
+        FitxaProblema[][] tauler = new FitxaProblema[8][8];
+
+        while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >2){
+
+            System.out.print("Com vols crear el problema: " + '\n' +
+                    "1. Des de zero" + '\n' +
+                    "2. A partir d'un FEN" + '\n');
+
+
+            response = scanner.next();
+
+            switch (response) {
+                case "1":
+                    dibuixaTauler(tauler);
+
+                    break;
+                case "2":
+                    System.out.print("Introdueix un FEN valid: ");
+                    String FEN = scanner.next();
+                    Problema p = new Problema(0,FEN, Dificultat.facil, new  Huma() );
+                    dibuixaTauler(p.FENtoTauler());
+
+                    break;
+
+                default:
+                    System.out.println("Siusplau, tria una opció vàlida");
+                    response = "0";
+
+            }
+
+
+
+
+        }
+
+    }
+
     private  void CarregarProblema(){
 
         boolean done = false;
         String response = "0";
         List<Problema> problemes =  CD.GetProblemes();
         int pagina = 0;
+        int aux;
 
         while(!done) {
 
@@ -175,7 +216,12 @@ public class CtrlPresentation {
 
                 default:
                     if(Integer.parseInt(response) >= 0 && Integer.parseInt(response) <10 ){
-                        dibuixaTauler(problemes.get(Integer.parseInt(response)+ pagina*9).FENtoTauler());
+                        if(pagina<0){
+                            aux = problemes.size()/10 - pagina;
+                            dibuixaTauler(problemes.get(Integer.parseInt(response)+ aux*9).FENtoTauler());
+                        }
+                        else
+                            dibuixaTauler(problemes.get(Integer.parseInt(response)+ pagina*9).FENtoTauler());
                         done = true;
                     }
                     else {
@@ -194,7 +240,11 @@ public class CtrlPresentation {
     private void printProblems(int pagina, List<Problema> problemes){
         int count = 0;
 
+        if(pagina<0)
+            pagina = problemes.size()/10 - pagina;
+
         System.out.println("PAGINA " + (pagina+1));
+
         for (int i = 0 + pagina*9 ; i < 10+pagina*9 && i < problemes.size() && i>=0 ; i++) {
 
             System.out.println(count +" FEN: " + problemes.get(i).GetFEN());
@@ -361,19 +411,18 @@ public class CtrlPresentation {
     public void PGNtoFEN(){
         try {
             File file = new File("localData/PGN.txt");
-            Scanner sc = new Scanner(file);
+            //Scanner sc = new Scanner(file);
+            BufferedReader sc = new BufferedReader(new FileReader(file));
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/FENfromPGN.txt"), true));
-            int c = 0;
 
-            while (sc.hasNext()){
-                c++;
-                String word = sc.next();
+
+            String line;
+            while ((line = sc.readLine()) != null){
+
                 //System.out.println(word);
-
-                if(word.equals("[FEN")) {
-                    String FEN = sc.next();
-                    FEN = FEN.replace("\"", "");
-                    FEN = FEN + " w - - 0 1";
+                if(line.contains("[FEN")) {
+                    String[] splits = line.split("\"");
+                    String FEN = splits[1];
 
                     try {
 
@@ -385,8 +434,6 @@ public class CtrlPresentation {
                         System.out.println("ERRPR "  + e);
                     }
                 }
-                if(!sc.hasNext())
-                    System.out.println("ENDED : " + word);
             }
 
             writer.close();
