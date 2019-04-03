@@ -22,28 +22,35 @@ public class CtrlPersistence {
     List<Problema> problemes = new ArrayList<>();
 
 
-public void guardarProblema(String FEN, Dificultat dif, int n, int uId){
-try{
+    public void guardarProblema(String FEN, Boolean valid){
+    try{
     boolean repetit = false;
+    int c = 0;
     for (Problema p: problemes
-         ) { if (p.GetFEN().equals(FEN)){
+         ) {
+        c++;
+        if(c>= 8 && c <= 10){
+            System.out.println(p.GetFEN());
+            System.out.println(FEN);
+        }
+
+        if (p.GetFEN().equals(FEN)){
              repetit = true;
+             break;
     }
 
-
-
     }
-if(!repetit){
-    BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
-    writer.append('\n');
-    writer.append("FEN: " + FEN + " dif: " + dif + " n: " + n + " uid: " + uId);
-    writer.close();}
+    if(!repetit){
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
+        writer.append('\n');
+        writer.append("FEN: " + FEN + " v: " + valid);
+        writer.close();}
 
-else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
+    else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
 
-}catch(Exception e){
-    System.out.println( "ERROR: " + e);
-    }}
+    }catch(Exception e){
+        System.out.println( "ERROR: " + e);
+        }}
 
 
     private List<Problema> carregarProblemes(){
@@ -55,15 +62,17 @@ else System.out.println("No s'ha pogut guardar el problema ja que el problema es
         Domain.Dificultat dif = Dificultat.facil;
         int n = 0, uid = 0;
         int id = 0;
+        boolean valid = false;
 
         while (sc.hasNext()){
              String s = sc.next();
              //System.out.println(s);
              if(s.equals("FEN:")){
-                 FEN = sc.next() + " " + sc.next() + " " + sc.next()+ " " + sc.next()+" " + sc.next();
+                 FEN = sc.next() + " " + sc.next() + " " + sc.next()+ " " + sc.next()+" " + sc.next() + " " + sc.next();
                 //System.out.println(FEN);
              }
 
+             /*
              if(s.equals("dif:")){
                  String difS = sc.next();
                  if(difS.equals("facil"))
@@ -86,6 +95,13 @@ else System.out.println("No s'ha pogut guardar el problema ja que el problema es
                  id++;
 
              }
+             */
+
+             if(s.equals("v:")){
+                 valid = sc.nextBoolean();
+                 problemes.add(new Problema(FEN, valid));
+
+             }
 
         }
         return problemes;
@@ -98,84 +114,6 @@ else System.out.println("No s'ha pogut guardar el problema ja que el problema es
 }
 
 
-    public String TaulerToFEN(FitxaProblema[][] tauler ){
-        String FEN ="";
-        int spaces = 0;
-        for(int i = 0; i< 8; i++){
-            for (int j = 0; j<8; j++){
-                if(tauler[i][j] != null){
-
-                    if(spaces != 0){
-                        FEN+=spaces;
-                        spaces = 0;
-                    }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Alfil){
-                        if(tauler[i][j].GetColor()){
-                            FEN+="b";
-                        }
-                        else FEN+="B";
-
-
-                    }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Torre){
-                        if(tauler[i][j].GetColor()){
-                            FEN+="r";
-                        }
-                        else FEN+="R";
-
-                    }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Peo){
-                        if(tauler[i][j].GetColor()){
-                            FEN+="p";
-                        }
-                        else FEN+="P";
-
-
-                    }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Dama){
-                        if(tauler[i][j].GetColor()){
-                            FEN+="q";
-                        }
-                        else FEN+="Q";
-
-
-                    }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Rei){
-                        if(tauler[i][j].GetColor()){
-                            FEN+="k";
-                        }
-                        else FEN+="K";
-
-
-                    }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Cavall){
-                        if(tauler[i][j].GetColor()){
-                            FEN+="n";
-                        }
-                        else FEN+="N";
-
-
-                    }
-
-                }
-                else{
-                    spaces++;
-                }
-
-            }
-            if(spaces != 0){
-                FEN+=spaces;
-                spaces = 0;
-            }
-            if(i!=7)
-                FEN+="/";
-        }
-
-        FEN+="w - - 0 1";
-        System.out.println(FEN);
-        return  FEN;
-
-    }
 
     }
 

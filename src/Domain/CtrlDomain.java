@@ -17,6 +17,11 @@ public class CtrlDomain {
         userLogged.AfegirProblema(p);
     }
 
+    public  void AfegirProblema(Problema p){
+        userLogged.AfegirProblema(p);
+        cPer.guardarProblema(p.GetFEN(), p.GetValid());
+    }
+
     public List<Problema> GetProblemes(){
         return cjtProblemes;
     }
@@ -26,7 +31,6 @@ public class CtrlDomain {
         userLogged = u;
         cjtUsuaris = cPer.GetUsuaris();
         cjtProblemes = cPer.GetProblemes();
-
 
 
         /*

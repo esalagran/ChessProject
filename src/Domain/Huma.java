@@ -1,12 +1,14 @@
 package Domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Huma extends Usuari{
     private boolean loggedIn;
     private String password;
 
-    private HashMap<Integer, Problema> problemesCreats;
+    private List<Problema> problemesCreats = new ArrayList<>();
     private int[] puntuació;
 
     public boolean IsLoggedIn(){
@@ -22,7 +24,7 @@ public class Huma extends Usuari{
     }
 
     public void AfegirProblema(Problema p){
-        problemesCreats.put(p.GetId(), p);
+        problemesCreats.add(p);
     }
 
 

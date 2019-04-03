@@ -68,8 +68,17 @@ public class Problema{
         _creador = h;
     }
 
+    public Problema(String FEN, boolean valid){
+        _FEN = FEN;
+        _valid = valid;
+    }
+
+
     public void setDificultat (Dificultat d){
         _dif = d;
+    }
+    public boolean GetValid(){
+        return _valid;
     }
 
     public void validarProblema (){

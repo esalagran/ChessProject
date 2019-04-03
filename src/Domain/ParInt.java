@@ -9,7 +9,7 @@ public class ParInt {
         y = 0;
     }
 
-    ParInt(int x, int y){
+    public ParInt(int x, int y){
         this.x = x;
         this.y = y;
     }

@@ -45,14 +45,14 @@ public class FitxaProblema{
     public Fitxa getIFitxa () { return fitxa;}
 
 
-    FitxaProblema(TipusPeça nom, ParInt posIni, boolean color){
+    public FitxaProblema(TipusPeça nom, ParInt posIni, boolean color){
         CreaFitxa(nom);
         tP = nom;
         coord = posIni;
         negre = color;
     }
 
-    FitxaProblema(TipusPeça nom, int Col, int Fila, boolean color){
+    public FitxaProblema(TipusPeça nom, int Col, int Fila, boolean color){
         CreaFitxa(nom);
         tP = nom;
         coord = new ParInt(Col, Fila);
