@@ -11,29 +11,6 @@ public class Possibilitats {
 
         ParInt ini = x.GetCoordenades();
         ParInt move;
-
-        for (int i = 0; i < vm.length; i++){
-            for (int j = 0; j < vm[i].getH(); j++){
-                newPos = new ParInt(ini.GetFirst()+1,ini.GetSecond());
-                if (safe(newPos)) sol.add(newPos);
-                newPos = new ParInt(ini.GetFirst()-1,ini.GetSecond());
-                if (safe(newPos)) sol.add(newPos);
-            }
-            for (int j = 0; j < vm[i].getV(); j++) {
-                newPos = new ParInt(ini.GetFirst(),ini.GetSecond()+1);
-                if (safe(newPos)) sol.add(newPos);
-                newPos = new ParInt(ini.GetFirst(),ini.GetSecond()-1);
-                if (safe(newPos)) sol.add(newPos);
-            }
-            for (int j = 0; j < vm[i].getD(); j++){
-                newPos = new ParInt(ini.GetFirst()+1,ini.GetSecond()+1);
-                if (safe(newPos)) sol.add(newPos);
-                newPos = new ParInt(ini.GetFirst()-1,ini.GetSecond()+1);
-                if (safe(newPos)) sol.add(newPos);
-                newPos = new ParInt(ini.GetFirst()+1,ini.GetSecond()-1);
-                if (safe(newPos)) sol.add(newPos);
-                newPos = new ParInt(ini.GetFirst()-1,ini.GetSecond()-1);
-                if (safe(newPos)) sol.add(newPos);
         boolean stopd1,stopd2,stopd3,stopd4;
         boolean outLimits = false;
         for (int i = 0; i < vm.length; i++){

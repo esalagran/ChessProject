@@ -5,10 +5,8 @@ import Domain.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.time.Instant;
-import java.util.*;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class CtrlPresentation {
@@ -17,7 +15,7 @@ public class CtrlPresentation {
     public static final String ANSI_BLUE = "\u001B[34m";
 
 
-    private Domain.CtrlDomain CD = new Domain.CtrlDomain(new Huma(), this);
+    private Domain.CtrlDomain CD = new Domain.CtrlDomain("", this);
     private  Scanner scanner = new Scanner(System.in);
 
     public void dibuixaTauler(FitxaProblema[][] tauler){

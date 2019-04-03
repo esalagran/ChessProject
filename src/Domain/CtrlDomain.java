@@ -1,13 +1,13 @@
 package Domain;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.*;
+import java.lang.module.FindException;
+import java.util.HashMap;
+import java.util.List;
 
 public class CtrlDomain {
 
     private HashMap<String, Huma> cjtUsuaris;
-    private HashMap<Integer, Problema> cjtProblemes;
+    private List<Problema> cjtProblemes;
     private Huma userLogged;
     private Problema pObert;
     private Partida partidaEnJoc;
@@ -19,17 +19,12 @@ public class CtrlDomain {
         userLogged.AfegirProblema(p);
     }
 
-    public void CarregaProblema(int idP){
+    public void CarregaProblema(int idP) {
         pObert = cjtProblemes.get(idP);
+    }
     public List<Problema> GetProblemes(){
         return cjtProblemes;
     }
-
-    public CtrlDomain(Huma u, Presentation.CtrlPresentation cPr){
-        cPres = cPr;
-        userLogged = u;
-        cjtUsuaris = cPer.GetUsuaris();
-        cjtProblemes = cPer.GetProblemes();
 
 
 
@@ -40,42 +35,39 @@ public class CtrlDomain {
         cPres.dibuixaTaulell(t);
 */
 
-
-
-
-
-    }
-
-    public CtrlDomain(){
-        Initialize();
-    }
-
     /**
      * Constructora amb logIn
      * @param nickName indica l'usuari que vol entrar
      * Pre:
      * Post: S'han carregat tots els usuaris i tots els problemes que hi ha al sistema.
      * Si l'usuari no existeix es llan+a una excepció*/
-    public CtrlDomain(String nickName){
+    public CtrlDomain(String nickName, Presentation.CtrlPresentation cPr){
 
-        if (cjtUsuaris.isEmpty())
-            Initialize();
+        cPres = cPr;
+        if (cjtUsuaris.isEmpty()){
+            Huma[] users = CP.GetUsuaris();
+            for (Huma u: users) {
+                cjtUsuaris.put(u.GetNickName(), u);
+            }
+        }
 
-        if (!cjtUsuaris.containsKey(nickName)) throw new NoSuchFieldException("No existeix aquest usuari")
         userLogged = cjtUsuaris.get(nickName);
+        if (userLogged.equals(null))
+            throw new FindException("No existeix aquest usuari");
+
     }
 
 
     private void Initialize(){
-        Usuari[] users = CP.GetUsuaris();
-        for (Usuari u: users) {
+        Huma[] users = CP.GetUsuaris();
+        for (Huma u: users) {
             cjtUsuaris.put(u.GetNickName(), u);
         }
 
-        Problema[] problemes = CP.GetProblemes();
-        for (Problema p:problemes) {
+        List<Problema> problemes = CP.GetProblemes();
+        /*for (Problema p:problemes) {
             cjtProblemes.put(p.GetId(), p);
-        }
+        }*/
     }
 
     public void CreaPartida(int u1, int u2, int p){
