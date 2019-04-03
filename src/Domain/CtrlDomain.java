@@ -6,9 +6,11 @@ import java.util.*;
 
 public class CtrlDomain {
 
-    private Huma[] cjtUsuaris;
-    private Problema[] cjtProblemes;
+    private HashMap<String, Huma> cjtUsuaris;
+    private HashMap<Integer, Problema> cjtProblemes;
     private Huma userLogged;
+    private Problema pObert;
+    private Partida partidaEnJoc;
     private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
 
     public void CreaProblema(){
@@ -16,11 +18,50 @@ public class CtrlDomain {
         userLogged.AfegirProblema(p);
     }
 
-    public CtrlDomain(Huma u){
-        userLogged = u;
-        cjtUsuaris = CP.GetUsuaris();
-        cjtProblemes = CP.GetProblemes();
+    public void CarregaProblema(int idP){
+        pObert = cjtProblemes.get(idP);
     }
+
+    public CtrlDomain(){
+        Initialize();
+    }
+
+    /**
+     * Constructora amb logIn
+     * @param nickName indica l'usuari que vol entrar
+     * Pre:
+     * Post: S'han carregat tots els usuaris i tots els problemes que hi ha al sistema.
+     * Si l'usuari no existeix es llan+a una excepció*/
+    public CtrlDomain(String nickName){
+
+        if (cjtUsuaris.isEmpty())
+            Initialize();
+
+        if (!cjtUsuaris.containsKey(nickName)) throw new NoSuchFieldException("No existeix aquest usuari")
+        userLogged = cjtUsuaris.get(nickName);
+    }
+
+
+    private void Initialize(){
+        Usuari[] users = CP.GetUsuaris();
+        for (Usuari u: users) {
+            cjtUsuaris.put(u.GetNickName(), u);
+        }
+
+        Problema[] problemes = CP.GetProblemes();
+        for (Problema p:problemes) {
+            cjtProblemes.put(p.GetId(), p);
+        }
+    }
+
+    public void CreaPartida(int u1, int u2, int p){
+
+        partidaEnJoc = new Partida(cjtUsuaris.get(u1), cjtUsuaris.get(u2), cjtProblemes.get(p));
+    }
+
+    /*public void ModificarPeçaProblema(ParInt ini, ParInt fi){
+        pObert.ModificarPeça(ini, fi);
+    }*/
 }
 
 

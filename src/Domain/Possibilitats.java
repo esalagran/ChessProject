@@ -12,20 +12,21 @@ public class Possibilitats {
         ParInt ini = x.GetCoordenades();
         ParInt newPos;
         ParInt move;
-        for (int i = 0; i < vm.size(); i++){
-            for (j = 0; j < vm[i].getH(); j++){
+
+        for (int i = 0; i < vm.length; i++){
+            for (int j = 0; j < vm[i].getH(); j++){
                 newPos = new ParInt(ini.GetFirst()+1,ini.GetSecond());
                 if (safe(newPos)) sol.add(newPos);
                 newPos = new ParInt(ini.GetFirst()-1,ini.GetSecond());
                 if (safe(newPos)) sol.add(newPos);
             }
-            for (j = 0; j < vm[i].getV(); j++) {
+            for (int j = 0; j < vm[i].getV(); j++) {
                 newPos = new ParInt(ini.GetFirst(),ini.GetSecond()+1);
                 if (safe(newPos)) sol.add(newPos);
                 newPos = new ParInt(ini.GetFirst(),ini.GetSecond()-1);
                 if (safe(newPos)) sol.add(newPos);
             }
-            for (j = 0; j < vm[i].getD(); j++){
+            for (int j = 0; j < vm[i].getD(); j++){
                 newPos = new ParInt(ini.GetFirst()+1,ini.GetSecond()+1);
                 if (safe(newPos)) sol.add(newPos);
                 newPos = new ParInt(ini.GetFirst()-1,ini.GetSecond()+1);
