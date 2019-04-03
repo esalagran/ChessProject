@@ -12,6 +12,7 @@ public class FitxaProblema{
     Fitxa fitxa;
     boolean negre;
     ParInt coord;
+    TipusPeça tP;
 
     public int GetPes(){
         return fitxa.GetPes();
@@ -29,20 +30,31 @@ public class FitxaProblema{
         return coord.GetFirst();
     }
 
+    public TipusPeça GetTipus(){
+        return tP;
+    }
+
+    public boolean GetColor(){
+        return negre;
+    }
+
     void SetCoordenades(ParInt dest){
         coord = dest;
     }
 
     public Fitxa getIFitxa () { return fitxa;}
 
+
     FitxaProblema(TipusPeça nom, ParInt posIni, boolean color){
         CreaFitxa(nom);
+        tP = nom;
         coord = posIni;
         negre = color;
     }
 
     FitxaProblema(TipusPeça nom, int Col, int Fila, boolean color){
         CreaFitxa(nom);
+        tP = nom;
         coord = new ParInt(Col, Fila);
         negre = color;
     }

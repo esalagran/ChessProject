@@ -19,4 +19,5 @@ public class Torre extends Fitxa {
         _moviments[1] = new VectMov(7,0,0);
         _pes = 5;
     }
+
 }

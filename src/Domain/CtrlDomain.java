@@ -12,6 +12,7 @@ public class CtrlDomain {
     private Problema pObert;
     private Partida partidaEnJoc;
     private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
+    private Presentation.CtrlPresentation cPres;
 
     public void CreaProblema(){
         Problema p = new Problema();
@@ -20,6 +21,29 @@ public class CtrlDomain {
 
     public void CarregaProblema(int idP){
         pObert = cjtProblemes.get(idP);
+    public List<Problema> GetProblemes(){
+        return cjtProblemes;
+    }
+
+    public CtrlDomain(Huma u, Presentation.CtrlPresentation cPr){
+        cPres = cPr;
+        userLogged = u;
+        cjtUsuaris = cPer.GetUsuaris();
+        cjtProblemes = cPer.GetProblemes();
+
+
+
+        /*
+        FitxaProblema[][] t = cjtProblemes.get(0).FENtoTauler();
+        System.out.println("ORIGINAL: " + cjtProblemes.get(0).GetFEN());
+        cPer.TaulerToFEN(t);
+        cPres.dibuixaTaulell(t);
+*/
+
+
+
+
+
     }
 
     public CtrlDomain(){
