@@ -1,7 +1,7 @@
 package Domain;
 
 public class Usuari{
-    String nickname;
+    String _nickname;
 
     FitxaProblema MourePeça(TipusPeça a, int b){
         ParInt pos = new ParInt(b, b);
@@ -9,10 +9,14 @@ public class Usuari{
 
     }
 
-    Partida IniciarPartida(Usuari u1, Usuari u2, Modalitat m){
-
-        return new Partida();
+    Partida IniciarPartida(Usuari u1, Usuari u2, Problema p){
+        return new Partida(u1, u2, p);
     }
+
+    public String GetNickName(){
+        return _nickname;
+    }
+
 
 
 
