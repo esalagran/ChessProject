@@ -20,8 +20,8 @@ public class CtrlDomain {
     }
 
     public  void AfegirProblema(Problema p){
-        userLogged.AfegirProblema(p);
-        cPer.guardarProblema(p.GetFEN(), p.GetValid());
+//        userLogged.AfegirProblema(p);
+        CP.guardarProblema(p.GetFEN(), p.GetValid());
     }
 
     public List<Problema> GetProblemes(){
@@ -43,8 +43,10 @@ public class CtrlDomain {
      * Post: S'han carregat tots els usuaris i tots els problemes que hi ha al sistema.
      * Si l'usuari no existeix es llan+a una excepció*/
     public CtrlDomain(String nickName, Presentation.CtrlPresentation cPr){
+        Initialize();
 
         cPres = cPr;
+        /* HO HE COMENTAT PK PRODUEIX java.lang.NullPointerException
         if (cjtUsuaris.isEmpty()){
             Huma[] users = CP.GetUsuaris();
             for (Huma u: users) {
@@ -55,17 +57,19 @@ public class CtrlDomain {
         userLogged = cjtUsuaris.get(nickName);
         if (userLogged.equals(null))
             throw new FindException("No existeix aquest usuari");
-
+*/
     }
 
 
     private void Initialize(){
+        /* NULL POINTER EXCEPTION
         Huma[] users = CP.GetUsuaris();
         for (Huma u: users) {
             cjtUsuaris.put(u.GetNickName(), u);
         }
+        */
 
-        List<Problema> problemes = CP.GetProblemes();
+        cjtProblemes = CP.GetProblemes();
         /*for (Problema p:problemes) {
             cjtProblemes.put(p.GetId(), p);
         }*/

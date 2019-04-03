@@ -620,11 +620,11 @@ public class CtrlPresentation {
                 default:
                     if(Integer.parseInt(response) >= 0 && Integer.parseInt(response) <10 ){
                         if(pagina<0){
-                            aux = problemes.size()/10 - pagina;
-                            ModificaTauler(problemes.get(Integer.parseInt(response)+ aux*9).FENtoTauler());
+                            aux = problemes.size()/10 - pagina -1;
+                            ModificaTauler(problemes.get(Integer.parseInt(response)+ aux*10).FENtoTauler());
                         }
                         else
-                            ModificaTauler(problemes.get(Integer.parseInt(response)+ pagina*9).FENtoTauler());
+                            ModificaTauler(problemes.get(Integer.parseInt(response)+ pagina*10).FENtoTauler());
                         done = true;
                     }
                     else {
@@ -643,21 +643,38 @@ public class CtrlPresentation {
 
     private void PrintProblemes(int pagina, List<Problema> problemes){
         int count = 0;
+        int aux;
 
-        if(pagina<0)
-            pagina = problemes.size()/10 - pagina;
+        if(pagina<0){
+            aux = (int)Math.ceil(problemes.size()/10) + pagina + 1;
 
-        System.out.println("PAGINA " + (pagina+1));
+        System.out.println("PAGINA " + (aux+1));
 
         if(problemes.size() == 0)
             System.out.println("No hi ha problemes a mostrar");
 
-        for (int i = 0 + pagina*9 ; i < 10+pagina*9 && i < problemes.size() && i>=0 ; i++) {
+        for (int i = 0 + aux*10 ; i < 10+aux*10 && i < problemes.size() && i>=0 ; i++) {
 
             System.out.println(count +" FEN: " + problemes.get(i).GetFEN());
             count ++;
 
         }
+        }
+
+        else{
+            System.out.println("PAGINA " + (pagina+1));
+
+            if(problemes.size() == 0)
+                System.out.println("No hi ha problemes a mostrar");
+
+            for (int i = 0 + pagina*10  ; i < 10+pagina*10 && i < problemes.size() && i>=0 ; i++) {
+
+                System.out.println(count +" FEN: " + problemes.get(i).GetFEN());
+                count ++;
+
+            }
+        }
+
 
         System.out.println("Fes servir les tecles \"A\" i \"D\" per passar pagina");
         System.out.println("Escriu el numero del problema que vulguis carregar");

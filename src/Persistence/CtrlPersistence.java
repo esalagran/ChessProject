@@ -25,14 +25,8 @@ public class CtrlPersistence {
     public void guardarProblema(String FEN, Boolean valid){
     try{
     boolean repetit = false;
-    int c = 0;
     for (Problema p: problemes
          ) {
-        c++;
-        if(c>= 8 && c <= 10){
-            System.out.println(p.GetFEN());
-            System.out.println(FEN);
-        }
 
         if (p.GetFEN().equals(FEN)){
              repetit = true;
