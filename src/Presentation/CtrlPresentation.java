@@ -13,6 +13,15 @@ public class CtrlPresentation {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_CYAN = "\u001B[37m";
+    public static final String ANSI_PURPLE = "\u001B[30m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+
+
+
+
 
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain("", this);
@@ -20,12 +29,13 @@ public class CtrlPresentation {
 
     public void dibuixaTauler(FitxaProblema[][] tauler){
 
-        String formatB =  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
-        String formatW =  "| " + ANSI_RED + "%c " + ANSI_RESET ;
-        System.out.println("  +---+---+---+---+---+---+---+---+");
+        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
         for(int i = 0; i < 8; i++){
+            System.out.print(ANSI_BLACK);
             System.out.print(8-i);
-            System.out.print(" ");
+            System.out.print(" " + ANSI_RESET);
 
             for (int j = 0; j<8; j++){
                 if(tauler[i][j] != null){
@@ -76,14 +86,14 @@ public class CtrlPresentation {
                     System.out.print("|   ");
                 }
             }
-            System.out.print('|');
+            System.out.print(ANSI_BLACK + '|');
             System.out.println();
-            System.out.println("  +---+---+---+---+---+---+---+---+");
+            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
 
 
         }
 
-        System.out.println("    A   B   C   D   E   F   G   H" );
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
 
     }
 
@@ -110,12 +120,12 @@ public class CtrlPresentation {
         String response = "0";
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >5 ) {
-            System.out.print(
+            System.out.print(ANSI_PURPLE + "Menú principal" + '\n' + ANSI_CYAN +
                             "1. Jugar partida" + '\n' +
                             "2. Carregar problema"  + '\n' +
                             "3. Crear problema "  + '\n' +
                             "4. Veure ranking "  + '\n' +
-                            "5. Sortir "  + '\n'
+                            "5. Sortir "  + '\n' + ANSI_RESET
             );
 
 
@@ -133,13 +143,13 @@ public class CtrlPresentation {
                     CrearProblema();
                     break;
                 case "4":
-                    //VEURE PROBLEMA
+                    //VEURE RANKING
                     break;
                 case "5":
                     System.exit(0);
 
                 default:
-                    System.out.println("Siusplau, tria una opció vàlida");
+                    System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
 
 
@@ -154,9 +164,9 @@ public class CtrlPresentation {
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >2){
 
-            System.out.print("Com vols crear el problema: " + '\n' +
-                    "1. Des de zero" + '\n' +
-                    "2. A partir d'un FEN" + '\n');
+            System.out.print(ANSI_PURPLE + "Com vols crear el problema: " + '\n' +
+             ANSI_CYAN +  "1. Des de zero" + '\n' +
+                    "2. A partir d'un FEN" + '\n' + ANSI_RESET);
 
 
             response = scanner.next();
@@ -167,7 +177,7 @@ public class CtrlPresentation {
 
                     break;
                 case "2":
-                    System.out.print("Introdueix un FEN valid: ");
+                    System.out.print(ANSI_PURPLE + "Introdueix un FEN valid: " + ANSI_RESET);
                     String FEN = scanner.next();
                     Problema p = new Problema(0,FEN, Dificultat.facil, new  Huma() );
                     ModificaTauler(p.FENtoTauler());
@@ -178,7 +188,7 @@ public class CtrlPresentation {
                     Start();
                     break;
                 default:
-                    System.out.println("Siusplau, tria una opció vàlida");
+                    System.out.println( ANSI_RED +"Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
 
             }
@@ -210,9 +220,9 @@ public class CtrlPresentation {
         boolean exit = false;
 
 
-        System.out.println("Comandes disponibles: \"add\", \"move\", \"delete\", \"save\", \"help\", \"exit\". " + '\n' +
+        System.out.println(ANSI_YELLOW + "Comandes disponibles: \"add\", \"move\", \"delete\", \"save\", \"help\", \"exit\". " + '\n' +
                 "Escriu qualsevol comanda per més informació." + '\n'+
-                "Si vols tornar a veure les comandes fes servir la comanda \"help\" .");
+                "Si vols tornar a veure les comandes fes servir la comanda \"help\" ." + ANSI_RESET);
 
         while (!exit){
 
@@ -223,7 +233,7 @@ public class CtrlPresentation {
                     correcte = false;
 
                     while(!correcte) {
-                        System.out.print("Especifica la posició de la peça que vols moure:");
+                        System.out.print(ANSI_PURPLE + "Especifica la posició de la peça que vols moure:" + ANSI_RESET);
                         response = scanner.next();
                         origen = StringToCoordenada(response);
 
@@ -233,14 +243,14 @@ public class CtrlPresentation {
                                 correcte = true;
 
                             } else{
-                                System.out.println("La posició d'origen està buida");
+                                System.out.println( ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
                                 ResetInput();
 
                             }
 
 
                         } else{
-                            System.out.println("Coordenada no valida");
+                            System.out.println(ANSI_RED + "Coordenada no valida"+ ANSI_RESET);
                             ResetInput();
 
                         }
@@ -250,7 +260,7 @@ public class CtrlPresentation {
 
 
                     while(!correcte) {
-                        System.out.print("Especifica la posició destí de la peça:");
+                        System.out.print(ANSI_PURPLE + "Especifica la posició destí de la peça:" + ANSI_RESET);
                         response = scanner.next();
                         desti = StringToCoordenada(response);
 
@@ -262,14 +272,14 @@ public class CtrlPresentation {
                                 correcte = true;
 
                             } else{
-                                System.out.println("La posició destí està ocupada");
+                                System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
                                 ResetInput();
 
                             }
 
 
                         } else{
-                            System.out.println("Coordenada no valida");
+                            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
                             ResetInput();
 
                         }
@@ -284,7 +294,7 @@ public class CtrlPresentation {
 
                         while(!correcte) {
 
-                            System.out.println("Especifica el color de la peça que vols afegir (\"w\" o \"b\")");
+                            System.out.println(ANSI_PURPLE + "Especifica el color de la peça que vols afegir (\"w\" o \"b\")" + ANSI_RESET);
                             String color = scanner.next();
 
 
@@ -297,7 +307,7 @@ public class CtrlPresentation {
                                 correcte = true;
                             }
                             else {
-                                System.out.println("Color no valid, escriu \"w\" (blanc) o \"b\" (negre)");
+                                System.out.println(ANSI_RED + "Color no valid, escriu \"w\" (blanc) o \"b\" (negre)" + ANSI_RESET);
                                 ResetInput();
 
 
@@ -311,13 +321,13 @@ public class CtrlPresentation {
 
                         while (!correcte) {
 
-                            System.out.println("Especifica la lletra de la peça que vols afegir");
-                            System.out.println("Peo: p" + '\n' +
+                            System.out.println(ANSI_PURPLE + "Especifica la lletra de la peça que vols afegir");
+                            System.out.println(ANSI_CYAN + "Peo: p" + '\n' +
                                     "Alfil: a" + '\n' +
                                     "Cavall: c" + '\n' +
                                     "Torre: t" + '\n' +
                                     "Dama: d" + '\n' +
-                                    "Rei: r" + '\n' );
+                                    "Rei: r" + '\n'  + ANSI_RESET);
 
                             String peça = scanner.next();
 
@@ -345,7 +355,7 @@ public class CtrlPresentation {
                                 correcte = true;
 
                             } else {
-                                System.out.println("Peça no valida, escriu la lletra de la peça que vols afegir");
+                                System.out.println(ANSI_RED + "Peça no valida, escriu la lletra de la peça que vols afegir" + ANSI_RESET);
                                 ResetInput();
 
                             }
@@ -359,7 +369,7 @@ public class CtrlPresentation {
                         while (!correcte) {
 
                             dibuixaTauler(tauler);
-                            System.out.println("Especifica la coordenada on vols afegir la peça");
+                            System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça"+ ANSI_RESET);
 
                             desti = StringToCoordenada(scanner.next());
 
@@ -370,12 +380,12 @@ public class CtrlPresentation {
                                     correcte =true;
 
                                 } else {
-                                    System.out.println("La posició destí està ocupada");
+                                    System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
                                     ResetInput();
 
                                 }
                             } else{
-                                System.out.println("Coordenada no valida");
+                                System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
                                 ResetInput();
 
                             }
@@ -392,7 +402,7 @@ public class CtrlPresentation {
                     correcte = false;
 
                     while(!correcte) {
-                        System.out.print("Especifica la posició de la peça que vols esborrar:");
+                        System.out.print(ANSI_PURPLE + "Especifica la posició de la peça que vols esborrar:" + ANSI_RESET);
                         response = scanner.next();
                         origen = StringToCoordenada(response);
 
@@ -404,14 +414,14 @@ public class CtrlPresentation {
                                 correcte = true;
 
                             } else{
-                                System.out.println("La posició d'origen està buida");
+                                System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
                                 ResetInput();
 
                             }
 
 
                         } else{
-                            System.out.println("Coordenada no valida");
+                            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
                             ResetInput();
 
                         }
@@ -426,15 +436,15 @@ public class CtrlPresentation {
 
                 case "save":
 
-                    System.out.print("Vols validar el problema abans de guardar-lo?" + '\n' +
-                            "1.Si" + '\n' +
-                            "2.No"+ '\n');
+                    System.out.print(ANSI_PURPLE + "Vols validar el problema abans de guardar-lo?" + '\n' +
+                            ANSI_CYAN +  "1.Si" + '\n' +
+                            "2.No"+ '\n' + ANSI_RESET);
                     response = scanner.next();
 
                     switch (response){
                         case "1":
-                            System.out.println("La funcionalitat de validar el problema encara no està implementada, per tant el problema " +
-                                    "es guardarà sense validar.");
+                            System.out.println(ANSI_RED + "La funcionalitat de validar el problema encara no està implementada, per tant el problema " +
+                                    "es guardarà sense validar." + ANSI_RESET);
                             CD.AfegirProblema(new Problema(TaulerToFEN(tauler), false));
                             Start();
                             break;
@@ -450,16 +460,17 @@ public class CtrlPresentation {
 
                 case "play":
 
-                    System.out.println("La funcionalitat jugar encara no està implementada.");
+                    System.out.println(ANSI_RED + "La funcionalitat jugar encara no està implementada." + ANSI_RESET);
                     break;
 
                 case "help":
-                    System.out.println("Comandes disponibles: \"add\", \"move\", \"delete\", \"save\", \"help\", \"exit\". " + '\n' +
-                            "Escriu qualsevol comanda per més informació.");
+                    System.out.println(ANSI_YELLOW + "Comandes disponibles: \"add\", \"move\", \"delete\", \"save\", \"help\", \"exit\". " + '\n' +
+                            "Escriu qualsevol comanda per més informació." + ANSI_RESET);
+                    break;
 
                 default:
 
-                    System.out.println("La comanda \"" + response +  "\" no existeix, escriu \"help\" per veure les comandes disponibles.");
+                    System.out.println(ANSI_RED +"La comanda \"" + response +  "\" no existeix, escriu \"help\" per veure les comandes disponibles." + ANSI_RESET);
                     ResetInput();
                     break;
 
@@ -618,19 +629,24 @@ public class CtrlPresentation {
 
 
                 default:
-                    if(Integer.parseInt(response) >= 0 && Integer.parseInt(response) <10 ){
-                        if(pagina<0){
-                            aux = problemes.size()/10 - pagina -1;
-                            ModificaTauler(problemes.get(Integer.parseInt(response)+ aux*10).FENtoTauler());
-                        }
-                        else
-                            ModificaTauler(problemes.get(Integer.parseInt(response)+ pagina*10).FENtoTauler());
-                        done = true;
-                    }
-                    else {
-                        System.out.println("Siusplau, tria una opció vàlida");
-                    }
 
+                    try {
+                        if (Integer.parseInt(response) >= 0 && Integer.parseInt(response) < 10) {
+                            if (pagina < 0) {
+                                aux = problemes.size() / 10 - pagina - 1;
+                                ModificaTauler(problemes.get(Integer.parseInt(response) + aux * 10).FENtoTauler());
+                            } else
+                                ModificaTauler(problemes.get(Integer.parseInt(response) + pagina * 10).FENtoTauler());
+                            done = true;
+                        } else {
+                            System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
+                            break;
+                        }
+                    }catch (Exception e){
+                        System.out.println(ANSI_RED + "Comanda no valida" + ANSI_RESET);
+                        break;
+
+                    }
             }
         }
 
@@ -648,36 +664,36 @@ public class CtrlPresentation {
         if(pagina<0){
             aux = (int)Math.ceil(problemes.size()/10) + pagina + 1;
 
-        System.out.println("PAGINA " + (aux+1));
+        System.out.println( ANSI_BLUE + "PAGINA " + (aux+1) + ANSI_RESET);
 
         if(problemes.size() == 0)
             System.out.println("No hi ha problemes a mostrar");
 
         for (int i = 0 + aux*10 ; i < 10+aux*10 && i < problemes.size() && i>=0 ; i++) {
 
-            System.out.println(count +" FEN: " + problemes.get(i).GetFEN());
+            System.out.println(ANSI_RED + count  + ANSI_RESET +" FEN: " + ANSI_BLACK + problemes.get(i).GetFEN() + ANSI_RESET);
             count ++;
 
         }
         }
 
         else{
-            System.out.println("PAGINA " + (pagina+1));
+            System.out.println(ANSI_BLUE + "PAGINA " + (pagina+1) + ANSI_RESET);
 
             if(problemes.size() == 0)
-                System.out.println("No hi ha problemes a mostrar");
+                System.out.println(ANSI_RED + "No hi ha problemes a mostrar" + ANSI_RESET);
 
             for (int i = 0 + pagina*10  ; i < 10+pagina*10 && i < problemes.size() && i>=0 ; i++) {
 
-                System.out.println(count +" FEN: " + problemes.get(i).GetFEN());
+                System.out.println(ANSI_RED + count + ANSI_RESET + " FEN: " + ANSI_BLACK + problemes.get(i).GetFEN() + ANSI_RESET);
                 count ++;
 
             }
         }
 
 
-        System.out.println("Fes servir les tecles \"A\" i \"D\" per passar pagina");
-        System.out.println("Escriu el numero del problema que vulguis carregar");
+        System.out.println(ANSI_YELLOW + "Fes servir les tecles \"A\" i \"D\" per passar pagina");
+        System.out.println("Escriu el numero del problema que vulguis carregar" + ANSI_RESET);
 
     }
 
@@ -692,11 +708,11 @@ public class CtrlPresentation {
         List<Problema> problemes =  CD.GetProblemes();
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >4 ) {
-            System.out.print("Tria la modalitat de la partida: " + '\n' +
-                    "1. Humà vs Humà" + '\n' +
+            System.out.print(ANSI_PURPLE + "Tria la modalitat de la partida: " + '\n' +
+       ANSI_CYAN +  "1. Humà vs Humà" + '\n' +
                     "2. Humà vs Màquina" + '\n' +
                     "3. Màquina vs Humà" + '\n' +
-                    "4. Màquina vs Màquina" + '\n');
+                    "4. Màquina vs Màquina" + '\n' + ANSI_RESET);
 
 
             response = scanner.next();
@@ -720,7 +736,7 @@ public class CtrlPresentation {
                     break;
 
                 default:
-                    System.out.println("Siusplau, tria una opció vàlida");
+                    System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
 
             }
@@ -729,9 +745,9 @@ public class CtrlPresentation {
         response = "0";
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >2 ) {
-            System.out.print("Vols un problema aleatori? " + '\n' +
-                    "1. Si" + '\n' +
-                    "2. No" + '\n');
+            System.out.print(ANSI_PURPLE + "Vols un problema aleatori? " + '\n' +
+                    ANSI_CYAN +   "1. Si" + '\n' +
+                    "2. No" + '\n' + ANSI_RESET);
 
 
 
@@ -746,7 +762,7 @@ public class CtrlPresentation {
                     isRandom = true;
                     int randIndex = (int)(Math.random() * problemes.size());
                     dibuixaTauler(problemes.get(randIndex).FENtoTauler());
-                    System.out.println("La funcionalitat jugar encara no està implementada, per ara et dibuixo el taulell.");
+                    System.out.println(ANSI_RED + "La funcionalitat jugar encara no està implementada, per ara et dibuixo el taulell." + ANSI_RESET);
                     Start();
 
 
@@ -756,7 +772,7 @@ public class CtrlPresentation {
                     break;
 
                 default:
-                    System.out.println("Siusplau, tria una opció vàlida");
+                    System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
 
             }
@@ -767,10 +783,10 @@ public class CtrlPresentation {
         response = "0";
 
         while(!isRandom && Integer.parseInt(response) < 1 || Integer.parseInt(response) >3 ) {
-            System.out.print("Tria la dificultat del problema: " + '\n' +
-                    "1. Fàcil" + '\n' +
+            System.out.print(ANSI_PURPLE + "Tria la dificultat del problema: " + '\n' +
+       ANSI_CYAN +  "1. Fàcil" + '\n' +
                     "2. Mitjà" + '\n' +
-                    "3. Difícil" + '\n');
+                    "3. Difícil" + '\n' + ANSI_RESET);
 
             response = scanner.next();
 
@@ -789,7 +805,7 @@ public class CtrlPresentation {
                     break;
 
                 default:
-                    System.out.println("Siusplau, tria una opció vàlida");
+                    System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
 
             }
@@ -798,9 +814,9 @@ public class CtrlPresentation {
 
 
         while(!isRandom && Integer.parseInt(response) < 1 || Integer.parseInt(response) >2 ) {
-            System.out.print("Quin color vols que ataqui? " + '\n' +
-                    "1. Blanc" + '\n' +
-                    "2. Negre" + '\n');
+            System.out.print(ANSI_PURPLE +"Quin color vols que ataqui? " + '\n' +
+        ANSI_CYAN + "1. Blanc" + '\n' +
+                    "2. Negre" + '\n' + ANSI_RESET);
 
             response = scanner.next();
 
@@ -815,14 +831,14 @@ public class CtrlPresentation {
                     c = Color.negre;
                     break;
                 default:
-                    System.out.println("Siusplau, tria una opció vàlida");
+                    System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
             }
         }
         response = "0";
 
         while(!isRandom && Integer.parseInt(response) < 1 ) {
-            System.out.print("Mat en quants moviments " + '\n');
+            System.out.print(ANSI_PURPLE + "Mat en quants moviments " + '\n' + ANSI_RESET);
             response = scanner.next();
             try{
 
@@ -831,11 +847,11 @@ public class CtrlPresentation {
                 tema = new Tema(n, c);
 
             } catch (Exception e) {
-                System.out.println("Siusplau, tria una opció vàlida");
+                System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);
                 response ="0";
             }
         }
-        System.out.println("Els filtres encara no estan implementats");
+        System.out.println(ANSI_RED + "Els filtres encara no estan implementats" + ANSI_RESET);
         Start();
 
 /*
