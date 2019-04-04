@@ -355,7 +355,7 @@ public class CtrlPresentation {
                                 correcte = true;
 
                             } else {
-                                System.out.println(ANSI_RED + "Peça no valida, escriu la lletra de la peça que vols afegir" + ANSI_RESET);
+                                System.out.println(ANSI_RED + "Fitxa no valida, escriu la lletra de la peça que vols afegir" + ANSI_RESET);
                                 ResetInput();
 
                             }

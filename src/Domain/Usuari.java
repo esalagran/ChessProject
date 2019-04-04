@@ -17,6 +17,10 @@ public class Usuari{
         return _nickname;
     }
 
+    public ParInt GetRankingProblema(int idProblema){
+        return new ParInt(0,0);
+    }
+
 
 
 

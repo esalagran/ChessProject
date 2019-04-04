@@ -24,15 +24,14 @@ public class CtrlPersistence {
 
     public void guardarProblema(String FEN, Boolean valid){
     try{
-    boolean repetit = false;
-    for (Problema p: problemes
-         ) {
+        boolean repetit = false;
+        for (Problema p: problemes
+             ) {
 
-        if (p.GetFEN().equals(FEN)){
-             repetit = true;
-             break;
-    }
-
+            if (p.GetFEN().equals(FEN)){
+                 repetit = true;
+                 break;
+        }
     }
     if(!repetit){
         BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
