@@ -57,12 +57,23 @@ public class CtrlPersistence {
         int n = 0, uid = 0;
         int id = 0;
         boolean valid = false;
+        boolean tornBlanc = true;
+        String torn;
 
         while (sc.hasNext()){
              String s = sc.next();
              //System.out.println(s);
              if(s.equals("FEN:")){
-                 FEN = sc.next() + " " + sc.next() + " " + sc.next()+ " " + sc.next()+" " + sc.next() + " " + sc.next();
+
+                 FEN = sc.next();
+                 torn = sc.next();
+
+                 if(torn.equals("w"))
+                     tornBlanc = true;
+                 else tornBlanc = false;
+
+                 FEN +=   " " + torn + " " + sc.next()+ " " + sc.next()+" " + sc.next() + " " + sc.next();
+
                 //System.out.println(FEN);
              }
 
@@ -93,7 +104,7 @@ public class CtrlPersistence {
 
              if(s.equals("v:")){
                  valid = sc.nextBoolean();
-                 problemes.add(new Problema(FEN, valid));
+                 problemes.add(new Problema(FEN, valid, tornBlanc));
 
              }
 

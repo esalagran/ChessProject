@@ -10,7 +10,7 @@ package Domain;
 public class FitxaProblema{
 
     Fitxa fitxa;
-    boolean negre;
+    Color c;
     ParInt coord;
     TipusPeça tP;
 
@@ -34,8 +34,8 @@ public class FitxaProblema{
         return tP;
     }
 
-    public boolean GetColor(){
-        return negre;
+    public Color GetColor(){
+        return c;
     }
 
     void SetCoordenades(ParInt dest){
@@ -45,18 +45,18 @@ public class FitxaProblema{
     public Fitxa getIFitxa () { return fitxa;}
 
 
-    public FitxaProblema(TipusPeça nom, ParInt posIni, boolean color){
+    public FitxaProblema(TipusPeça nom, ParInt posIni, Color color){
         CreaFitxa(nom);
         tP = nom;
         coord = posIni;
-        negre = color;
+        c = color;
     }
 
-    public FitxaProblema(TipusPeça nom, int Col, int Fila, boolean color){
+    public FitxaProblema(TipusPeça nom, int Col, int Fila, Color color){
         CreaFitxa(nom);
         tP = nom;
         coord = new ParInt(Col, Fila);
-        negre = color;
+        c = color;
     }
 
     private void CreaFitxa(TipusPeça nom){

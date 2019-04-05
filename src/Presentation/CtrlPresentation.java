@@ -31,6 +31,7 @@ public class CtrlPresentation {
 
         String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
         String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println();
         System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
         for(int i = 0; i < 8; i++){
             System.out.print(ANSI_BLACK);
@@ -40,35 +41,35 @@ public class CtrlPresentation {
             for (int j = 0; j<8; j++){
                 if(tauler[i][j] != null){
                     TipusPeça tP = tauler[i][j].GetTipus();
-                    boolean negre = tauler[i][j].GetColor();
+                    Color c = tauler[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
 
-                        if(negre)
+                        if(c == Color.negre)
                             System.out.printf(formatB,  'C' );
                         else System.out.printf(formatW, 'C');
                     }
                     if(tP == TipusPeça.Peo){
-                        if(negre)
+                        if(c == Color.negre)
                             System.out.printf(formatB, 'P');
                         else System.out.printf(formatW, 'P');
                     }
                     if(tP == TipusPeça.Alfil){
-                        if(negre)
+                        if(c == Color.negre)
                             System.out.printf(formatB, 'A');
                         else System.out.printf(formatW, 'A');
 
                     }
 
                     if(tP == TipusPeça.Torre){
-                        if(negre)
+                        if(c == Color.negre)
                             System.out.printf(formatB, 'T');
                         else System.out.printf(formatW,'T');
                     }
 
                     if(tP == TipusPeça.Rei){
 
-                        if(negre)
+                        if(c == Color.negre)
                             System.out.printf(formatB, 'R');
                         else System.out.printf(formatW, 'R');
 
@@ -76,7 +77,7 @@ public class CtrlPresentation {
 
                     if(tP == TipusPeça.Dama){
 
-                        if(negre)
+                        if(c == Color.negre)
                             System.out.printf(formatB, 'D');
                         else System.out.printf(formatW, 'D');
                     }
@@ -133,7 +134,7 @@ public class CtrlPresentation {
 
             switch(response){
                 case "1":
-                    JugarPartida();
+                    DemanarInfoPartida();
                     break;
                 case "2":
                     CarregarProblema();
@@ -211,6 +212,189 @@ public class CtrlPresentation {
 
     }
 
+
+    private void JugarPartida(int indexP, Modalitat m){
+        boolean humaTorn = false;
+        FitxaProblema[][] tauler =   CD.CrearPartida(indexP, m);
+        Color torn =  CD.GetTornPartidaEnJoc();
+
+
+        if(m == Modalitat.HM){
+            humaTorn = true;
+
+            dibuixaTauler(tauler);
+
+            while(true) {                //No mat && jugades < jugadesPerMat
+
+                if(humaTorn){
+                    DemanarMoviment(tauler, torn);
+                    humaTorn = false;
+                    if(torn == Color.blanc)
+                        torn = Color.negre;
+                    else torn = Color.blanc;
+
+
+                }
+
+                else{
+                    // CD.DemanarTornMaquina(TaulerToFEN(tauler));
+                    humaTorn = true;
+                    if(torn == Color.blanc)
+                        torn = Color.negre;
+                    else torn = Color.blanc;
+
+
+                }
+
+            }
+        }
+
+        else if(m == Modalitat.MH){
+
+            humaTorn = false;
+            dibuixaTauler(tauler);
+
+            while (true) {      //No mat && jugades < jugadesPerMat
+
+                if (humaTorn) {
+                    DemanarMoviment(tauler, torn);
+                    humaTorn = false;
+                    if(torn == Color.blanc)
+                        torn = Color.negre;
+                    else torn = Color.blanc;
+
+                } else {
+                    // CD.DemanarTornMaquina(TaulerToFEN(tauler));
+                    humaTorn = true;
+                    if(torn == Color.blanc)
+                        torn = Color.negre;
+                    else torn = Color.blanc;
+
+                }
+
+            }
+        }
+
+        else if(m == Modalitat.HH){
+            dibuixaTauler(tauler);
+
+            humaTorn = true;
+
+            while (true) {      //No mat && jugades < jugadesPerMat
+
+                if (humaTorn) {
+
+                    if(torn == Color.blanc)
+                        System.out.println("Torn de les blanques");
+                    else
+                        System.out.println("Torn de les negres");
+
+                    DemanarMoviment(tauler, torn);
+
+
+                    if(torn == Color.blanc)
+                        torn = Color.negre;
+                    else torn = Color.blanc;
+
+
+
+                }
+
+            }
+
+        }
+
+
+
+
+    }
+
+
+    private void DemanarMoviment( FitxaProblema[][] tauler, Color torn){
+
+        ParInt origen = new ParInt(-1,-1);
+        ParInt desti = new ParInt(-1,-1);
+        boolean correcte = false;
+        boolean exit = false;
+
+
+        String response = scanner.next();
+
+
+                correcte = false;
+
+                while(!correcte) {
+                    System.out.print(ANSI_PURPLE + "Especifica la posició de la peça que vols moure:" + ANSI_RESET);
+                    response = scanner.next();
+                    origen = StringToCoordenada(response);
+
+                    if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
+                        if (tauler[origen.GetFirst()][origen.GetSecond()] != null)  {
+                            if(tauler[origen.GetFirst()][origen.GetSecond()].GetColor() != torn){
+
+                               correcte = true;
+
+                           }
+                            else{
+
+                                System.out.println( ANSI_RED + "Aquesta peça no es teva" + ANSI_RESET);
+                                ResetInput();
+
+                            }
+
+
+
+                        } else{
+                            System.out.println( ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
+                            ResetInput();
+
+                        }
+
+
+                    } else{
+                        System.out.println(ANSI_RED + "Coordenada no valida"+ ANSI_RESET);
+                        ResetInput();
+
+                    }
+
+                }
+                correcte = false;
+
+
+                while(!correcte) {
+                    System.out.print(ANSI_PURPLE + "Especifica la posició destí de la peça:" + ANSI_RESET);
+                    response = scanner.next();
+                    desti = StringToCoordenada(response);
+
+                    if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
+                        if (tauler[desti.GetFirst()][desti.GetSecond()] == null) {
+
+                            if(true) { //comprovar que el moviment es valid
+
+                                tauler[desti.GetFirst()][desti.GetSecond()] = tauler[origen.GetFirst()][origen.GetSecond()];
+                                tauler[origen.GetFirst()][origen.GetSecond()] = null;
+                                dibuixaTauler(tauler);
+                                correcte = true;
+                            }
+
+                        } else{
+                            System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
+                            ResetInput();
+
+                        }
+
+
+                    } else{
+                        System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
+                        ResetInput();
+
+                    }
+
+                }
+
+        }
+
+
     private void ModificaTauler(FitxaProblema[][] tauler){
 
         dibuixaTauler(tauler);
@@ -218,6 +402,7 @@ public class CtrlPresentation {
         ParInt desti = new ParInt(-1,-1);
         boolean correcte = false;
         boolean exit = false;
+        Color c = Color.blanc;
 
 
         System.out.println(ANSI_YELLOW + "Comandes disponibles: \"add\", \"move\", \"delete\", \"save\", \"help\", \"exit\". " + '\n' +
@@ -301,10 +486,13 @@ public class CtrlPresentation {
                             if (color.equals("w") || color.equals("W")){
                                 negre = false;
                                 correcte = true;
+                                c = Color.blanc;
                             }
                             else if (color.equals("b") || color.equals("B")){
                                 negre = true;
                                 correcte = true;
+                                c = Color.blanc;
+
                             }
                             else {
                                 System.out.println(ANSI_RED + "Color no valid, escriu \"w\" (blanc) o \"b\" (negre)" + ANSI_RESET);
@@ -375,7 +563,7 @@ public class CtrlPresentation {
 
                             if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
                                 if (tauler[desti.GetFirst()][desti.GetSecond()] == null) {
-                                    tauler[desti.GetFirst()][desti.GetSecond()] = new FitxaProblema(tp, desti.GetSecond(), desti.GetFirst(), negre);
+                                    tauler[desti.GetFirst()][desti.GetSecond()] = new FitxaProblema(tp, desti.GetSecond(), desti.GetFirst(), c);
                                     dibuixaTauler(tauler);
                                     correcte =true;
 
@@ -445,11 +633,11 @@ public class CtrlPresentation {
                         case "1":
                             System.out.println(ANSI_RED + "La funcionalitat de validar el problema encara no està implementada, per tant el problema " +
                                     "es guardarà sense validar." + ANSI_RESET);
-                            CD.AfegirProblema(new Problema(TaulerToFEN(tauler), false));
+                            CD.AfegirProblema(TaulerToFEN(tauler), false, true);
                             Start();
                             break;
                         case "2":
-                            CD.AfegirProblema(new Problema(TaulerToFEN(tauler), false));
+                            CD.AfegirProblema(TaulerToFEN(tauler), false, true);
                             Start();
                             break;
                         default:
@@ -510,7 +698,7 @@ public class CtrlPresentation {
                         spaces = 0;
                     }
                     if(tauler[i][j].GetTipus() == TipusPeça.Alfil){
-                        if(tauler[i][j].GetColor()){
+                        if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="b";
                         }
                         else FEN+="B";
@@ -518,14 +706,14 @@ public class CtrlPresentation {
 
                     }
                     if(tauler[i][j].GetTipus() == TipusPeça.Torre){
-                        if(tauler[i][j].GetColor()){
+                        if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="r";
                         }
                         else FEN+="R";
 
                     }
                     if(tauler[i][j].GetTipus() == TipusPeça.Peo){
-                        if(tauler[i][j].GetColor()){
+                        if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="p";
                         }
                         else FEN+="P";
@@ -533,7 +721,7 @@ public class CtrlPresentation {
 
                     }
                     if(tauler[i][j].GetTipus() == TipusPeça.Dama){
-                        if(tauler[i][j].GetColor()){
+                        if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="q";
                         }
                         else FEN+="Q";
@@ -541,7 +729,7 @@ public class CtrlPresentation {
 
                     }
                     if(tauler[i][j].GetTipus() == TipusPeça.Rei){
-                        if(tauler[i][j].GetColor()){
+                        if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="k";
                         }
                         else FEN+="K";
@@ -549,7 +737,7 @@ public class CtrlPresentation {
 
                     }
                     if(tauler[i][j].GetTipus() == TipusPeça.Cavall){
-                        if(tauler[i][j].GetColor()){
+                        if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="n";
                         }
                         else FEN+="N";
@@ -697,7 +885,8 @@ public class CtrlPresentation {
 
     }
 
-    private void JugarPartida(){
+    private void DemanarInfoPartida(){
+
         String response = "0";
         Modalitat mod = Modalitat.HH;
         Dificultat dif = Dificultat.facil;
@@ -761,10 +950,7 @@ public class CtrlPresentation {
                 case "1":
                     isRandom = true;
                     int randIndex = (int)(Math.random() * problemes.size());
-                    dibuixaTauler(problemes.get(randIndex).FENtoTauler());
-                    System.out.println(ANSI_RED + "La funcionalitat jugar encara no està implementada, per ara et dibuixo el taulell." + ANSI_RESET);
-                    Start();
-
+                    JugarPartida(randIndex, mod);
 
                     break;
                 case "2":

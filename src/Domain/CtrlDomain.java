@@ -1,5 +1,6 @@
 package Domain;
 
+import javax.swing.plaf.synth.ColorType;
 import java.lang.module.FindException;
 import java.util.HashMap;
 import java.util.List;
@@ -19,13 +20,33 @@ public class CtrlDomain {
         userLogged.AfegirProblema(p);
     }
 
-    public  void AfegirProblema(Problema p){
+    public  void AfegirProblema(String FEN, boolean valid, boolean tornBlanc){
 //        userLogged.AfegirProblema(p);
-        CP.guardarProblema(p.GetFEN(), p.GetValid());
+        Problema p = new Problema(FEN, valid, tornBlanc);
+        CP.guardarProblema(FEN,valid);
+        cjtProblemes = CP.GetProblemes();
+    }
+
+    public void CarregarProblema(String FEN, boolean valid, boolean tornBlanc){
+        Problema p = new Problema(FEN, valid, tornBlanc);
+        cjtProblemes.add(p);
+
     }
 
     public List<Problema> GetProblemes(){
         return cjtProblemes;
+    }
+
+    public FitxaProblema[][] CrearPartida(int indexP, Modalitat m){
+        Problema p = cjtProblemes.get(indexP);
+
+        partidaEnJoc = new Partida(p, m, p.GetTorn());
+        return p.FENtoTauler();
+
+    }
+
+    public Color GetTornPartidaEnJoc(){
+        return partidaEnJoc.GetTorn();
     }
 
 

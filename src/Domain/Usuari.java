@@ -5,7 +5,7 @@ public class Usuari{
 
     FitxaProblema MourePeça(TipusPeça a, int b){
         ParInt pos = new ParInt(b, b);
-        return new FitxaProblema(a,pos,true);
+        return new FitxaProblema(a,pos,Color.negre);
 
     }
 

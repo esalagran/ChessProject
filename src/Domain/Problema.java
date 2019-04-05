@@ -24,13 +24,24 @@ public class Problema{
     private int _id;
     private String _FEN;
     private Dificultat _dif;
+    private Color torn;
     private boolean _guardat;
+    private Tauler tauler;
     private boolean _valid;
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
     private Vector<FitxaProblema> _fitxesProblema;
     private NumMaxPeces _pecesMax;
     private HashMap<ParTipusPeçaBool,Integer> _numTipusPeça;
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_CYAN = "\u001B[37m";
+    public static final String ANSI_PURPLE = "\u001B[30m";
+    public static final String ANSI_BLACK = "\u001B[30m";
 
 
     private void FillDictionary(){
@@ -61,17 +72,176 @@ public class Problema{
     /**
      * Constructora 2
      */
+
     public Problema (int id, String FEN, Dificultat d, Huma h){
         _id = id;
         _FEN = FEN;
+        tauler =  new Tauler(FENtoTauler());
         _dif = d;
         _creador = h;
     }
 
-    public Problema(String FEN, boolean valid){
+    public Problema(String FEN, boolean valid, boolean _tornBlanc){
         _FEN = FEN;
         _valid = valid;
     }
+
+    public Color GetTorn(){
+        return torn;
+    }
+
+    public void dibuixaProblema(){
+
+        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println();
+        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+        for(int i = 0; i < 8; i++){
+            System.out.print(ANSI_BLACK);
+            System.out.print(8-i);
+            System.out.print(" " + ANSI_RESET);
+
+            for (int j = 0; j<8; j++){
+                if(tauler.FitxaAt(i,j) != null){
+                    TipusPeça tP = tauler.FitxaAt(i,j).GetTipus();
+                    Color c = tauler.FitxaAt(i,j).GetColor();
+
+                    if(tP == TipusPeça.Cavall){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB,  'C' );
+                        else System.out.printf(formatW, 'C');
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'P');
+                        else System.out.printf(formatW, 'P');
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'A');
+                        else System.out.printf(formatW, 'A');
+
+                    }
+
+                    if(tP == TipusPeça.Torre){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'T');
+                        else System.out.printf(formatW,'T');
+                    }
+
+                    if(tP == TipusPeça.Rei){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'R');
+                        else System.out.printf(formatW, 'R');
+
+                    }
+
+                    if(tP == TipusPeça.Dama){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'D');
+                        else System.out.printf(formatW, 'D');
+                    }
+
+                }
+                else {
+                    System.out.print("|   ");
+                }
+            }
+            System.out.print(ANSI_BLACK + '|');
+            System.out.println();
+            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+
+
+        }
+
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
+
+    }
+
+
+    public void AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
+
+
+
+        if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
+            if (tauler.FitxaAt(desti.GetFirst(),desti.GetSecond()) == null) {
+                tauler.AfegirPeçaAt(desti.GetFirst(),desti.GetSecond(), new FitxaProblema(tp, desti.GetSecond(), desti.GetFirst(), c));
+
+            } else {
+                System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
+
+            }
+        } else{
+            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
+
+        }
+
+
+        }
+
+    public void EliminarPeça(ParInt origen){
+
+
+        if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
+            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null) {
+
+                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+
+
+            } else{
+                System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
+
+            }
+
+
+        } else{
+            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
+
+        }
+
+    }
+    public void MourePeça(ParInt origen, ParInt desti){
+
+        if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
+            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null) {
+
+                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+
+
+            } else{
+                System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
+
+            }
+
+
+        } else{
+            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
+
+        }
+
+        if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
+            if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null) {
+                tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(),tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()));
+                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+
+
+            } else{
+                System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
+
+            }
+
+
+        } else{
+            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
+
+        }
+
+    }
+
+
 
 
     public void setDificultat (Dificultat d){
@@ -81,15 +251,16 @@ public class Problema{
         return _valid;
     }
 
+
     public void validarProblema (){
         Maquina aux = new Maquina();
         _valid = aux.validarProblema(_id);
     }
 
-    private boolean _isMayus(char ch){
+    private Color charToColor(char ch){
         if(ch >= 65 && ch<= 90)
-            return  true;
-        else return  false;
+            return  Color.blanc;
+        else return  Color.negre;
     }
 
 
@@ -159,28 +330,28 @@ public class Problema{
                 }
 
                 else if(ch == 'n' || ch == 'N') {
-                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
+                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'p' || ch == 'P') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
 
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 8, x - (x % 8) * 8), !_isMayus(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
                     x++;
                 }
 
@@ -197,15 +368,130 @@ public class Problema{
 
     }
 
+    public String TaulerToFEN( ){
+
+        String FEN ="";
+        int spaces = 0;
+        for(int i = 0; i< 8; i++){
+            for (int j = 0; j<8; j++){
+                if(tauler.FitxaAt(i, j) != null){
+
+                    if(spaces != 0){
+                        FEN+=spaces;
+                        spaces = 0;
+                    }
+                    if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Alfil){
+                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                            FEN+="b";
+                        }
+                        else FEN+="B";
+
+
+                    }
+                    if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Torre){
+                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                            FEN+="r";
+                        }
+                        else FEN+="R";
+
+                    }
+                    if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Peo){
+                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                            FEN+="p";
+                        }
+                        else FEN+="P";
+
+
+                    }
+                    if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Dama){
+                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                            FEN+="q";
+                        }
+                        else FEN+="Q";
+
+
+                    }
+                    if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Rei){
+                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                            FEN+="k";
+                        }
+                        else FEN+="K";
+
+
+                    }
+                    if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Cavall){
+                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                            FEN+="n";
+                        }
+                        else FEN+="N";
+
+
+                    }
+
+                }
+                else{
+                    spaces++;
+                }
+
+            }
+            if(spaces != 0){
+                FEN+=spaces;
+                spaces = 0;
+            }
+            if(i!=7)
+                FEN+="/";
+        }
+
+        FEN+=" w - - 0 1";
+        //System.out.println(FEN);
+        return  FEN;
+
+    }
+
+
 
     /**
      * A partir del vector de FitxaProblema genera el codi FEN
      */
 
 
-    public void AfegirPeça(FitxaProblema fp){
+    private ParInt StringToCoordenada(String str){
+        char primer = str.charAt(0);
+        char segon = str.charAt(1);
+
+        if((primer >= 'a' && primer <= 'h' ) || primer>='A' && primer<= 'H'){
+            char aux = primer;
+            primer = segon;
+            segon = aux;
+
+        }
+
+        return new ParInt(CharToCoordenadaInt(primer), CharToCoordenadaInt(segon));
+
 
     }
+    private int CharToCoordenadaInt( char ch ){
+
+        int res = 0;
+
+        if(ch >= 'a' && ch <= 'h'){
+            res = ch - 'a' ;
+        }
+
+        else if(ch >= 'A' && ch <= 'H'){
+            res = ch - 'A' ;
+        }
+
+        else if(ch > '0' && ch<= '8')
+            res = 8 - Integer.parseInt(String.valueOf(ch));
+
+        else return -1;
+
+        return  res;
+    }
+
+
+
 }
 
 

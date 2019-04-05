@@ -8,7 +8,6 @@ public class Possibilitats {
 
     public void validMoves(FitxaProblema x) {
         VectMov[] vm = x.getIFitxa().GetMoviments();
-
         ParInt ini = x.GetCoordenades();
         ParInt move;
         boolean stopd1,stopd2,stopd3,stopd4;
