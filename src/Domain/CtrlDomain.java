@@ -1,7 +1,7 @@
 package Domain;
 
 import javax.swing.plaf.synth.ColorType;
-import java.lang.module.FindException;
+//import java.lang.module.FindException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,7 +74,6 @@ public class CtrlDomain {
                 cjtUsuaris.put(u.GetNickName(), u);
             }
         }
-
         userLogged = cjtUsuaris.get(nickName);
         if (userLogged.equals(null))
             throw new FindException("No existeix aquest usuari");
@@ -105,6 +104,3 @@ public class CtrlDomain {
         pObert.ModificarPeça(ini, fi);
     }*/
 }
-
-
-

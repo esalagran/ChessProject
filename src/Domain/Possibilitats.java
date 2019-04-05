@@ -6,8 +6,12 @@ public class Possibilitats {
     private Vector <ParInt> moviments = new Vector<>();
     private Tauler a;
 
-    public void validMoves(FitxaProblema x) {
+    public Possibilitats (){}
+
+    public void validMoves(FitxaProblema x, Tauler actual, boolean white) {
+        a = actual;
         VectMov[] vm = x.getIFitxa().GetMoviments();
+
         ParInt ini = x.GetCoordenades();
         ParInt move;
         boolean stopd1,stopd2,stopd3,stopd4;
@@ -22,23 +26,23 @@ public class Possibilitats {
                 for (int j = 0; j < vm[i].getD(); j++){
                     move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond()+j+1);
                     if (!stopd1){
-                        addMove(move);
-                        stopd1 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd1 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                     move = new ParInt(ini.GetFirst()-j-1,ini.GetSecond()+j+1);
                     if (!stopd2){
-                        addMove(move);
-                        stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd2 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                     move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond()-j-1);
                     if (!stopd3){
-                        addMove(move);
-                        stopd3 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd3 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                     move = new ParInt(ini.GetFirst()-j-1,ini.GetSecond()-j-1);
                     if (!stopd4){
-                        addMove(move);
-                        stopd4 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd4 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                 }
                 stopd1 = false;
@@ -46,13 +50,13 @@ public class Possibilitats {
                 for (int j = 0; j < vm[i].getH(); j++){
                     move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond());
                     if (!stopd1){
-                        addMove(move);
-                        stopd1 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd1 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                     move = new ParInt(ini.GetFirst()-j-1,ini.GetSecond());
                     if (!stopd2){
-                        addMove(move);
-                        stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd2 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                 }
                 stopd1 = false;
@@ -60,22 +64,22 @@ public class Possibilitats {
                 for (int j = 0; j < vm[i].getV(); j++){
                     move = new ParInt(ini.GetFirst(),ini.GetSecond()+j+1);
                     if (!stopd1){
-                        addMove(move);
-                        stopd1 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd1 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                     move = new ParInt(ini.GetFirst(),ini.GetSecond()-j-1);
                     if (!stopd2){
-                        addMove(move);
-                        stopd2 = a.PeçaMeva(move) || a.PeçaRival(move);
+                        addMove(move,white);
+                        stopd2 = a.PeçaMeva(move,white) || a.PeçaRival(move,white);
                     }
                 }
 
             }
             if (x.getIFitxa().getClass().getName() == "Peo"){
                 move = new ParInt(ini.GetFirst(),ini.GetSecond()+1);
-                addMove(move);
+                addMove(move,white);
                 move = new ParInt(ini.GetFirst()+1,ini.GetSecond()+1);
-                if (a.PeçaRival(move)) addMove(move);
+                if (a.PeçaRival(move,white)) addMove(move,white);
 
             }
             if (x.getIFitxa().getClass().getName() == "Cavall"){
@@ -83,21 +87,21 @@ public class Possibilitats {
                 int h = vm[i].getH();
 
                 move = new ParInt(ini.GetFirst()+v, ini.GetSecond()+h);
-                addMove(move);
+                addMove(move,white);
                 move = new ParInt(ini.GetFirst()+v, ini.GetSecond()-h);
-                addMove(move);
+                addMove(move,white);
                 move = new ParInt(ini.GetFirst()-v, ini.GetSecond()+h);
-                addMove(move);
+                addMove(move,white);
                 move = new ParInt(ini.GetFirst()-v, ini.GetSecond()-h);
-                addMove(move);
+                addMove(move,white);
 
             }
         }
 
     }
 
-    public void addMove (ParInt move){
-        if (safe(move) && !a.PeçaMeva(move)) {
+    public void addMove (ParInt move,boolean white){
+        if (safe(move) && !a.PeçaMeva(move,white) ) {
             moviments.add(move);
         }
     }
@@ -105,4 +109,6 @@ public class Possibilitats {
     public Boolean safe(ParInt x) {
         return (x.GetFirst() >= 0 && x.GetFirst() < 8 && x.GetSecond() >= 0 && x.GetSecond() < 8 );
     }
+
+    public Vector<ParInt> getMoviments () {return moviments;}
 }

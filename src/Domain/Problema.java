@@ -180,7 +180,7 @@ public class Problema{
         }
 
 
-        }
+    }
 
     public void EliminarPeça(ParInt origen){
 
@@ -305,7 +305,7 @@ public class Problema{
                 char ch = _FEN.charAt(i);
                 int l = x / 8;
                 int k = x - (x / 8) * 8;
-               // System.out.println( "Pos: " + x + " X: "+ String.valueOf(k) + " Y: " + String.valueOf(l) + "CHAR: " + ch );
+                // System.out.println( "Pos: " + x + " X: "+ String.valueOf(k) + " Y: " + String.valueOf(l) + "CHAR: " + ch );
 
                 if(x >= 64)
                     break;

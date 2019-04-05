@@ -1,3 +1,4 @@
+
 package Domain;
 
 public class Partida{
@@ -24,4 +25,3 @@ public class Partida{
         return torn;
     }
 }
-
