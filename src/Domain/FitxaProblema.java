@@ -23,11 +23,11 @@ public class FitxaProblema{
     }
 
     public int GetCol(){
-        return coord.GetSecond();
+        return coord.GetFirst();
     }
 
     public int GetFila(){
-        return coord.GetFirst();
+        return coord.GetSecond();
     }
 
     public TipusPeça GetTipus(){

@@ -8,6 +8,10 @@ public class Possibilitats {
 
     public Possibilitats (){}
 
+    public Possibilitats (Tauler tauler){
+        a = tauler;
+    }
+
     public void validMoves(FitxaProblema x, Tauler actual, boolean white) {
         a = actual;
         VectMov[] vm = x.getIFitxa().GetMoviments();
@@ -15,14 +19,15 @@ public class Possibilitats {
         ParInt ini = x.GetCoordenades();
         ParInt move;
         boolean stopd1,stopd2,stopd3,stopd4;
-        boolean outLimits = false;
+
         for (int i = 0; i < vm.length; i++){
             stopd1 = false;
             stopd2 = false;
             stopd3 = false;
             stopd4 = false;
-            if (x.getIFitxa().getClass().getName() == "Torre" || x.getIFitxa().getClass().getName() == "Dama" ||
-                    x.getIFitxa().getClass().getName() == "Rei" || x.getIFitxa().getClass().getName() == "Alfil") {
+
+            if (x.getIFitxa().getClass().getName() == "Domain.Torre" || x.getIFitxa().getClass().getName() == "Domain.Dama" ||
+                    x.getIFitxa().getClass().getName() == "Domain.Rei" || x.getIFitxa().getClass().getName() == "Domain.Alfil") {
                 for (int j = 0; j < vm[i].getD(); j++){
                     move = new ParInt(ini.GetFirst()+j+1,ini.GetSecond()+j+1);
                     if (!stopd1){
@@ -75,14 +80,14 @@ public class Possibilitats {
                 }
 
             }
-            if (x.getIFitxa().getClass().getName() == "Peo"){
+            if (x.getIFitxa().getClass().getName() == "Domain.Peo"){
                 move = new ParInt(ini.GetFirst(),ini.GetSecond()+1);
                 addMove(move,white);
                 move = new ParInt(ini.GetFirst()+1,ini.GetSecond()+1);
                 if (a.PeçaRival(move,white)) addMove(move,white);
 
             }
-            if (x.getIFitxa().getClass().getName() == "Cavall"){
+            if (x.getIFitxa().getClass().getName() == "Domain.Cavall"){
                 int v = vm[i].getV();
                 int h = vm[i].getH();
 

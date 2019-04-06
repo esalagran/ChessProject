@@ -16,7 +16,7 @@ public class Dama extends Fitxa {
         _moviments = new VectMov[3];
         _moviments[0] = new VectMov(0, 7, 0);
         _moviments[1] = new VectMov(7, 0, 0);
-        _moviments[1] = new VectMov(0, 0, 7);
+        _moviments[2] = new VectMov(0, 0, 7);
         _pes = 8;
     }
 }
