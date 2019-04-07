@@ -14,10 +14,6 @@ public class FitxaProblema{
     ParInt coord;
     TipusPeça tP;
 
-    public int GetPes(){
-        return fitxa.GetPes();
-    }
-
     public ParInt GetCoordenades(){
         return coord;
     }
@@ -38,7 +34,7 @@ public class FitxaProblema{
         return c;
     }
 
-    void SetCoordenades(ParInt dest){
+    public void SetCoordenades(ParInt dest){
         coord = dest;
     }
 
