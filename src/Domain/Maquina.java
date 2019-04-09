@@ -50,7 +50,7 @@ public class Maquina extends Usuari{
         }
     }
 
-    private boolean check() { return true;}
+    private boolean check() { return false;}
 
     public boolean validarProblema(int idP){
         return false;
@@ -61,19 +61,21 @@ public class Maquina extends Usuari{
         int weight = 0;
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                if (actual[i][j] != null) weight += actual[i][j].GetPes();
+                if (actual[i][j] != null) weight += actual[i][j].getIFitxa().GetPes();
 
         return weight;
 
     }
 
-    private Vector<FitxaProblema> getFitxes (Tauler tauler, boolean white){
+    public Vector<FitxaProblema> getFitxes (Tauler tauler, boolean white){
         FitxaProblema[][] fitxes = tauler.getTaulell();
         Vector <FitxaProblema> sol = new Vector<>();
         for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                if (white && fitxes[i][j].GetColor() == blanc) sol.add(fitxes[i][j]);
-                if (!white && fitxes[i][j].GetColor() == negre) sol.add(fitxes[i][j]);
+            for (int j = 0; j < 8; j++) {
+                if (fitxes[i][j] != null) {
+                    if (white && fitxes[i][j].GetColor() == blanc) sol.add(fitxes[i][j]);
+                    if (!white && fitxes[i][j].GetColor() == negre) sol.add(fitxes[i][j]);
+                }
             }
         }
         return sol;
