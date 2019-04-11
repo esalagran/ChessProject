@@ -22,6 +22,10 @@ public class Maquina extends Usuari{
         return depth;
     }
 
+    public FitxaProblema getFitxa_move() {return fitxa_move;}
+
+    public ParInt getPos_move(){return pos_move;}
+
     public int Minimax (int d, boolean blanc, Tauler tauler) {
         if (d == 0 || check()) return estimacio(tauler);
         else {
@@ -32,18 +36,21 @@ public class Maquina extends Usuari{
                 Possibilitats p = new Possibilitats();
                 p.validMoves(aux, tauler,blanc);
                 Vector <ParInt> moviments = p.getMoviments();
+                ParInt ini = aux.GetCoordenades();
                 for (int j = 0; j < moviments.size(); j++){
-                    ParInt ini = aux.GetCoordenades();
                     tauler.moureFitxa(ini,moviments.get(j));
-                    ParInt pos = new ParInt(ini.GetFirst()+moviments.get(j).GetFirst(), ini.GetSecond()+moviments.get(j).GetSecond());
+                    System.out.println("Nom: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " de (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
+                    System.out.println("Nom: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " a (" + moviments.get(j).GetFirst() + "," + moviments.get(j).GetSecond() + ")");
+                    System.out.println();
+                    ParInt move = moviments.get(j);
                     int val = -Minimax (d-1,!blanc,tauler);
                     if (val > best_move){
                         best_move = val;
                         fitxa_move = peces.get(i);
-                        pos_move = pos;
+                        pos_move = moviments.get(j);
                     }
-                    ParInt undo = new ParInt(-moviments.get(j).GetFirst(), -moviments.get(j).GetSecond());
-                    tauler.moureFitxa(pos, undo);
+                    //Undo
+                    tauler.moureFitxa(move, ini);
                 }
             }
             return best_move;
@@ -60,9 +67,13 @@ public class Maquina extends Usuari{
         FitxaProblema[][] actual = tauler.getTaulell();
         int weight = 0;
         for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-                if (actual[i][j] != null) weight += actual[i][j].getIFitxa().GetPes();
-
+            for (int j = 0; j < 8; j++) {
+                if (actual[i][j] != null) {
+                    if (actual[i][j].GetColor() == blanc) weight += actual[i][j].getIFitxa().GetPes();
+                    if (actual[i][j].GetColor() == negre) weight -= actual[i][j].getIFitxa().GetPes();
+                }
+            }
+        System.out.println("EPA " + weight);
         return weight;
 
     }

@@ -40,6 +40,12 @@ public class Tauler {
     public void moureFitxa(ParInt ini, ParInt move){
         FitxaProblema fp = taulell[ini.GetFirst()][ini.GetSecond()];
         taulell[ini.GetFirst()][ini.GetSecond()] = null;
-        taulell[ini.GetFirst()+ move.GetFirst()][ini.GetSecond()+move.GetSecond()] = fp;
+        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0){
+            taulell[move.GetFirst()][move.GetSecond()] = fp;
+            System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " de (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
+            System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " a (" + move.GetFirst() + "," + move.GetSecond() + ")");
+
+            fp.SetCoordenades(move);
+        }
     }
 }
