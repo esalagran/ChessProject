@@ -12,7 +12,7 @@ public class Possibilitats {
         a = tauler;
     }
 
-    public void validMoves(FitxaProblema x, Tauler actual, boolean white) {
+    public void validMoves(FitxaProblema x, Tauler actual, Color white) {
         a = actual;
         VectMov[] vm = x.getIFitxa().GetMoviments();
 
@@ -105,7 +105,7 @@ public class Possibilitats {
 
     }
 
-    public void addMove (ParInt move,boolean white){
+    public void addMove (ParInt move,Color white){
         if (safe(move) && !a.PeçaMeva(move,white) ) {
             moviments.add(move);
         }

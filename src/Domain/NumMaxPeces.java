@@ -7,18 +7,18 @@ import java.util.HashMap;
 
 //Singleton que serveix per controla el nombre m&agrave;xim de peces en un problema
 public class NumMaxPeces {
-    private static HashMap<String, Integer> ourInstance = new HashMap<String, Integer>() {
+    private static HashMap<TipusPeça, Integer> ourInstance = new HashMap<TipusPeça, Integer>() {
         {
-            put("Peo", 8);
-            put("Cavall", 2);
-            put("Alfil", 2);
-            put("Torre", 2);
-            put("Dama", 1);
-            put("Rei", 1);
+            put(TipusPeça.Peo, 8);
+            put(TipusPeça.Cavall, 2);
+            put(TipusPeça.Alfil, 2);
+            put(TipusPeça.Torre, 2);
+            put(TipusPeça.Dama, 1);
+            put(TipusPeça.Rei, 1);
         }
     };
 
-    public static HashMap<String, Integer> getInstance() {
+    public static HashMap<TipusPeça, Integer> getInstance() {
         return ourInstance;
     }
 }

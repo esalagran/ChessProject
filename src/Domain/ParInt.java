@@ -4,7 +4,7 @@ public class ParInt {
 
     private int x, y;
 
-    ParInt(){
+    public ParInt(){
         x = 0;
         y = 0;
     }
