@@ -17,18 +17,18 @@ public class Tauler {
         taulell[i][j] = f;
     }
 
-    public boolean PeçaMeva(ParInt x, boolean white) {
+    public boolean PeçaMeva(ParInt x, Color color) {
         if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && !white) return true;
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && white) return true;
+            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.negre)) return true;
+            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.blanc)) return true;
         }
         return false;
     }
 
-    public boolean PeçaRival(ParInt x, boolean white){
+    public boolean PeçaRival(ParInt x, Color color){
         if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && white) return true;
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && !white) return true;
+            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.blanc)) return true;
+            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && !color.equals(Color.negre)) return true;
         }
         return false;
     }

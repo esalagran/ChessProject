@@ -26,15 +26,16 @@ public class Maquina extends Usuari{
 
     public ParInt getPos_move(){return pos_move;}
 
-    public int Minimax (int d, boolean blanc, Tauler tauler) {
+    public int Minimax (int d, Color color, Tauler tauler) {
         if (d == 0 || check()) return estimacio(tauler);
         else {
             int best_move = 0;
-            Vector <FitxaProblema> peces = getFitxes(tauler, blanc);
+            int val;
+            Vector <FitxaProblema> peces = getFitxes(tauler, color);
             for (int i = 0; i < peces.size(); i++){
                 FitxaProblema aux = peces.get(i);
                 Possibilitats p = new Possibilitats();
-                p.validMoves(aux, tauler,blanc);
+                p.validMoves(aux, tauler,color);
                 Vector <ParInt> moviments = p.getMoviments();
                 ParInt ini = aux.GetCoordenades();
                 for (int j = 0; j < moviments.size(); j++){
@@ -43,7 +44,10 @@ public class Maquina extends Usuari{
                     System.out.println("Nom: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " a (" + moviments.get(j).GetFirst() + "," + moviments.get(j).GetSecond() + ")");
                     System.out.println();
                     ParInt move = moviments.get(j);
-                    int val = -Minimax (d-1,!blanc,tauler);
+                    if (color.equals(blanc))
+                        val = -Minimax (d-1, negre,tauler);
+                    else
+                        val = -Minimax (d-1, blanc,tauler);
                     if (val > best_move){
                         best_move = val;
                         fitxa_move = peces.get(i);
@@ -78,19 +82,18 @@ public class Maquina extends Usuari{
 
     }
 
-    public Vector<FitxaProblema> getFitxes (Tauler tauler, boolean white){
+    public Vector<FitxaProblema> getFitxes (Tauler tauler, Color color){
         FitxaProblema[][] fitxes = tauler.getTaulell();
         Vector <FitxaProblema> sol = new Vector<>();
         for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 8; j++){
                 if (fitxes[i][j] != null) {
-                    if (white && fitxes[i][j].GetColor() == blanc) sol.add(fitxes[i][j]);
-                    if (!white && fitxes[i][j].GetColor() == negre) sol.add(fitxes[i][j]);
+                    if (color == blanc && fitxes[i][j].GetColor() == blanc) sol.add(fitxes[i][j]);
+                    if (color == negre && fitxes[i][j].GetColor() == negre) sol.add(fitxes[i][j]);
                 }
             }
         }
         return sol;
-
     }
 
 }

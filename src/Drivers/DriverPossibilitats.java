@@ -55,7 +55,7 @@ public class DriverPossibilitats {
 
     public void getMovimentsReina(){
         testConstructor2(TipusPeça.Dama);
-        b.validMoves(peça,tauler1,true);
+        b.validMoves(peça,tauler1,Color.blanc);
         Vector<ParInt> moves = b.getMoviments();
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
@@ -65,7 +65,7 @@ public class DriverPossibilitats {
 
     public void getMovimentsCavall(){
         testConstructor2(TipusPeça.Cavall);
-        b.validMoves(peça,tauler1,true);
+        b.validMoves(peça,tauler1,Color.blanc);
         Vector<ParInt> moves = b.getMoviments();
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
@@ -75,7 +75,7 @@ public class DriverPossibilitats {
 
     public void getMovimentsCavallComplexe(){
         Constructor3(TipusPeça.Cavall);
-        c.validMoves(peça,tauler2,true);
+        c.validMoves(peça,tauler2,Color.blanc);
         Vector<ParInt> moves = c.getMoviments();
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
