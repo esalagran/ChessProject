@@ -38,14 +38,14 @@ public class DriverMaquina {
 
     public void tryMinimax(){
         a = new Maquina();
-        int out = a.Minimax(3,true,tauler);
+        int out = a.Minimax(3,Color.blanc,tauler);
         System.out.println(out);
 
     }
 
     public void getPecesNegres(){
         a = new Maquina();
-        Vector<FitxaProblema> peces =  a.getFitxes(tauler,false);
+        Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
         for (FitxaProblema e : peces)
             if (e != null)
                 System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
@@ -53,7 +53,7 @@ public class DriverMaquina {
 
     public void getPecesBlanques(){
         a = new Maquina();
-        Vector<FitxaProblema> peces = a.getFitxes(tauler,true);
+        Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
         for (FitxaProblema e : peces)
             if (e != null)
                 System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
