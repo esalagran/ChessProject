@@ -253,8 +253,8 @@ public class Problema{
 
 
     public void validarProblema (){
-        Maquina aux = new Maquina();
-        _valid = aux.validarProblema(_id);
+        Algorisme aux = new Algorisme();
+        _valid = aux.validarProblema(torn,tauler);
     }
 
     private Color charToColor(char ch){
