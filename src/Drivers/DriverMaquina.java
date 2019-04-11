@@ -38,7 +38,7 @@ public class DriverMaquina {
 
     public void tryMinimax(){
         a = new Maquina();
-        int out = a.Minimax(3,true,tauler);
+        int out = a.Minimax(3,Color.blanc,tauler);
         System.out.println(out);
 
     }
