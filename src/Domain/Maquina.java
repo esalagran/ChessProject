@@ -54,7 +54,7 @@ public class Maquina extends Usuari{
         }
     }
 
-    private boolean check() { return true;}
+    private boolean check() { return false;}
 
     public boolean validarProblema(int idP){
         return false;
