@@ -1,8 +1,5 @@
 package Persistence;
-import Domain.Dificultat;
-import Domain.FitxaProblema;
-import Domain.Problema;
-import Domain.TipusPeça;
+import Domain.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -103,7 +100,7 @@ public class CtrlPersistence {
 
              if(s.equals("v:")){
                  valid = sc.nextBoolean();
-                 problemes.add(new Problema(FEN, valid, tornBlanc));
+                 problemes.add(new Problema(FEN, valid, Color.blanc));
 
              }
 

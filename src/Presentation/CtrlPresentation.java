@@ -633,11 +633,11 @@ public class CtrlPresentation {
                         case "1":
                             System.out.println(ANSI_RED + "La funcionalitat de validar el problema encara no està implementada, per tant el problema " +
                                     "es guardarà sense validar." + ANSI_RESET);
-                            CD.AfegirProblema(TaulerToFEN(tauler), false, true);
+                            CD.AfegirProblema(TaulerToFEN(tauler), false, Color.blanc);
                             Start();
                             break;
                         case "2":
-                            CD.AfegirProblema(TaulerToFEN(tauler), false, true);
+                            CD.AfegirProblema(TaulerToFEN(tauler), false, Color.blanc);
                             Start();
                             break;
                         default:
