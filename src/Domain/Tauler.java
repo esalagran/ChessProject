@@ -3,9 +3,7 @@ package Domain;
 public class Tauler {
     private FitxaProblema[][] taulell;
 
-    public Tauler (){
-        taulell = new FitxaProblema[8][8];
-    }
+    public Tauler (){ taulell = new FitxaProblema[8][8]; }
 
     public Tauler (FitxaProblema[][] t){
         taulell = t;
@@ -30,7 +28,7 @@ public class Tauler {
     public boolean PeçaRival(ParInt x, Color color){
         if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.blanc)) return true;
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && !color.equals(Color.negre)) return true;
+            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.negre)) return true;
         }
         return false;
     }

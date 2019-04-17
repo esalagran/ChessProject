@@ -85,6 +85,7 @@ public class Problema{
         _FEN = FEN;
         tauler = new Tauler(FENtoTauler());
         _valid = valid;
+        this.torn = torn;
     }
 
     public Color GetTorn(){

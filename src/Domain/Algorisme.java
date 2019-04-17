@@ -76,8 +76,8 @@ public class Algorisme {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if (fitxes[i][j] != null) {
-                    if (color == blanc && fitxes[i][j].GetColor() == blanc) sol.add(fitxes[i][j]);
-                    if (color == negre && fitxes[i][j].GetColor() == negre) sol.add(fitxes[i][j]);
+                    if (color.equals(blanc ) && fitxes[i][j].GetColor().equals(blanc)) sol.add(fitxes[i][j]);
+                    if (color.equals(negre) && fitxes[i][j].GetColor().equals(negre)) sol.add(fitxes[i][j]);
                 }
             }
         }
