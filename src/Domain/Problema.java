@@ -81,8 +81,9 @@ public class Problema{
         _creador = h;
     }
 
-    public Problema(String FEN, boolean valid, boolean _tornBlanc){
+    public Problema(String FEN, boolean valid, Color torn){
         _FEN = FEN;
+        tauler = new Tauler(FENtoTauler());
         _valid = valid;
     }
 
@@ -247,14 +248,15 @@ public class Problema{
     public void setDificultat (Dificultat d){
         _dif = d;
     }
+
     public boolean GetValid(){
         return _valid;
     }
 
 
     public void validarProblema (){
-        Maquina aux = new Maquina();
-        _valid = aux.validarProblema(_id);
+        Algorisme aux = new Algorisme();
+        _valid = aux.validarProblema(torn,tauler);
     }
 
     private Color charToColor(char ch){

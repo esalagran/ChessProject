@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class DriverMaquina {
 
-    private Maquina a;
+    private Algorisme a;
     private Tauler tauler;
 
     public void createTauler(){
@@ -37,14 +37,14 @@ public class DriverMaquina {
     }
 
     public void tryMinimax(){
-        a = new Maquina();
+        a = new Algorisme();
         int out = a.Minimax(3,Color.blanc,tauler);
         System.out.println(out);
 
     }
 
     public void getPecesNegres(){
-        a = new Maquina();
+        a = new Algorisme();
         Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
         for (FitxaProblema e : peces)
             if (e != null)
@@ -52,7 +52,7 @@ public class DriverMaquina {
     }
 
     public void getPecesBlanques(){
-        a = new Maquina();
+        a = new Algorisme();
         Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
         for (FitxaProblema e : peces)
             if (e != null)
