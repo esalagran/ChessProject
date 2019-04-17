@@ -3,7 +3,9 @@ package Domain;
 public class Tauler {
     private FitxaProblema[][] taulell;
 
-    public Tauler (){}
+    public Tauler (){
+        taulell = new FitxaProblema[8][8];
+    }
 
     public Tauler (FitxaProblema[][] t){
         taulell = t;
