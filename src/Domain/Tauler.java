@@ -2,11 +2,21 @@ package Domain;
 
 public class Tauler {
     private FitxaProblema[][] taulell;
+    private FitxaProblema whiteKing;
+    private FitxaProblema blackKing;
 
     public Tauler (){ taulell = new FitxaProblema[8][8]; }
 
     public Tauler (FitxaProblema[][] t){
         taulell = t;
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                if (t[i][j] != null){
+                    if (t[i][j].GetTipus() == TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
+                    if (t[i][j].GetTipus() == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
+                }
+            }
+        }
     }
 
     public FitxaProblema[][] getTaulell() {

@@ -92,6 +92,8 @@ public class Problema{
         return torn;
     }
 
+    public Tauler getTauler() { return tauler; }
+
     public void dibuixaProblema(){
 
         String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
@@ -333,28 +335,28 @@ public class Problema{
                 }
 
                 else if(ch == 'n' || ch == 'N') {
-                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'p' || ch == 'P') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
 
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
 

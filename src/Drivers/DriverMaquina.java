@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import static Domain.Dificultat.mitja;
+
 public class DriverMaquina {
 
     private Algorisme a;
@@ -35,6 +37,11 @@ public class DriverMaquina {
                 };
         tauler = new Tauler(aux);
     }
+
+    public void createTauler2(){
+            Problema p = new Problema (0000, "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", mitja, null);
+            tauler = p.getTauler();
+        }
 
     public void tryMinimax(){
         a = new Algorisme();
@@ -68,7 +75,7 @@ public class DriverMaquina {
             System.out.println("    Prem 2 per seleccionar les peces negres");
             System.out.println("    Prem 3 per provar el Minimax");
 
-            dm.createTauler();
+            dm.createTauler2();
 
             char aux = (char) System.in.read();
             String salto = help.nextLine();
