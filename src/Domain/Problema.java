@@ -30,7 +30,7 @@ public class Problema{
     private boolean _valid;
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
-    private Vector<FitxaProblema> _fitxesProblema;
+    //private Vector<FitxaProblema> _fitxesProblema;
     private NumMaxPeces _pecesMax;
     private HashMap<ParTipusPeçaBool,Integer> _numTipusPeça;
 
