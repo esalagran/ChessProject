@@ -23,6 +23,14 @@ public class Tauler {
         return taulell;
     }
 
+    public FitxaProblema getBlackKing() {
+        return blackKing;
+    }
+
+    public FitxaProblema getWhiteKing() {
+        return whiteKing;
+    }
+
     public void AfegirPeçaAt(int i, int j, FitxaProblema f){
         taulell[i][j] = f;
     }
@@ -48,14 +56,17 @@ public class Tauler {
     }
 
     public void moureFitxa(ParInt ini, ParInt move){
-        FitxaProblema fp = taulell[ini.GetFirst()][ini.GetSecond()];
-        taulell[ini.GetFirst()][ini.GetSecond()] = null;
-        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0){
-            taulell[move.GetFirst()][move.GetSecond()] = fp;
-            System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " de (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
-            System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " a (" + move.GetFirst() + "," + move.GetSecond() + ")");
+        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0 && taulell[ini.GetFirst()][ini.GetSecond()] != null){
+            taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
+            taulell[ini.GetFirst()][ini.GetSecond()] = null;
+            FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];
+
+            //System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " de (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
+            //System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " a (" + move.GetFirst() + "," + move.GetSecond() + ")");
 
             fp.SetCoordenades(move);
+            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
+            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
         }
     }
 }

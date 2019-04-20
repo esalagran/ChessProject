@@ -5,15 +5,15 @@ import java.util.Vector;
 import static Domain.Color.blanc;
 import static Domain.Color.negre;
 
-public class Algorisme {
+public class Algorisme extends Maquina{
 
     private FitxaProblema fitxa_move;
     private ParInt pos_move;
 
     public int Minimax (int d, Color color, Tauler tauler) {
-        if (d == 0 || check()) return estimacio(tauler);
+        if (d == 0 || check(tauler,color)) return estimacio(tauler);
         else {
-            int best_move = 0;
+            int best_move = -100000;
             int val;
             Vector<FitxaProblema> peces = getFitxes(tauler, color);
             for (int i = 0; i < peces.size(); i++){
@@ -23,10 +23,9 @@ public class Algorisme {
                 Vector <ParInt> moviments = p.getMoviments();
                 ParInt ini = aux.GetCoordenades();
                 for (int j = 0; j < moviments.size(); j++){
+                    //System.out.println("Nom2: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " a (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
+                    //System.out.println("Nom2: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " de (" + moviments.get(j).GetFirst() + "," + moviments.get(j).GetSecond() + ")");
                     tauler.moureFitxa(ini,moviments.get(j));
-                    System.out.println("Nom: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " de (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
-                    System.out.println("Nom: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " a (" + moviments.get(j).GetFirst() + "," + moviments.get(j).GetSecond() + ")");
-                    System.out.println();
                     if (color.equals(blanc))
                         val = -Minimax (d-1, negre,tauler);
                     else
@@ -36,8 +35,6 @@ public class Algorisme {
                         fitxa_move = peces.get(i);
                         pos_move = moviments.get(j);
                     }
-                    System.out.println("Nom2: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " de (" + moviments.get(j).GetFirst() + "," + moviments.get(j).GetSecond() + ")");
-                    System.out.println("Nom2: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " a (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
                     //Undo
                     tauler.moureFitxa(moviments.get(j), ini);
                 }
@@ -50,9 +47,9 @@ public class Algorisme {
 
     public ParInt getPos_move(){return pos_move;}
 
-    private boolean check() { return false;}
-
-    public boolean validarProblema(Color torn, Tauler tauler){return false;}
+    public boolean validarProblema(Color torn, Tauler tauler){
+        return false;
+    }
 
     private int estimacio (Tauler tauler){
         FitxaProblema[][] actual = tauler.getTaulell();

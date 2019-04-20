@@ -29,4 +29,17 @@ public class Maquina extends Usuari{
         return new Object[]{fitxa_move, pos_move};
     }
 
+    protected boolean check(Tauler tauler, Color color) {
+        if (color == negre) return isAttacked(tauler,tauler.getBlackKing()) && !mateEvitable(tauler,negre);
+        else return isAttacked(tauler, tauler.getWhiteKing()) && !mateEvitable(tauler,blanc);
+    }
+
+    private boolean isAttacked(Tauler tauler, FitxaProblema king) {
+        return false;
+    }
+
+    private boolean mateEvitable (Tauler tauler, Color color){
+        return false;
+    }
+
 }

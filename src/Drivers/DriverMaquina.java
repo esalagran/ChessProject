@@ -75,7 +75,7 @@ public class DriverMaquina {
             System.out.println("    Prem 2 per seleccionar les peces negres");
             System.out.println("    Prem 3 per provar el Minimax");
 
-            dm.createTauler2();
+            dm.createTauler();
 
             char aux = (char) System.in.read();
             String salto = help.nextLine();
