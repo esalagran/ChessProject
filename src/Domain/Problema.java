@@ -81,7 +81,7 @@ public class Problema{
         _creador = h;
     }
 
-    public Problema(String FEN, boolean valid, Color torn){
+    public Problema(String FEN, boolean valid){
         _FEN = FEN;
         tauler = new Tauler(FENtoTauler());
         _valid = valid;
@@ -172,7 +172,7 @@ public class Problema{
 
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti.GetFirst(),desti.GetSecond()) == null) {
-                tauler.AfegirPeçaAt(desti.GetFirst(),desti.GetSecond(), new FitxaProblema(tp, desti.GetSecond(), desti.GetFirst(), c));
+                tauler.AfegirPeçaAt(desti.GetFirst(),desti.GetSecond(), new FitxaProblema(tp, desti.GetFirst(), desti.GetSecond(), c));
 
             } else {
                 System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
