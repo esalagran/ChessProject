@@ -42,7 +42,7 @@ public class CtrlDomain {
     public FitxaProblema[][] CrearPartida(int indexP, Modalitat m){
         Problema p = cjtProblemes.get(indexP);
 
-        partidaEnJoc = new Partida(2p, m, p.GetTorn());
+        partidaEnJoc = new Partida(p, m, p.GetTorn());
         return p.FENtoTauler();
 
     }

@@ -1,6 +1,8 @@
 package Domain;
 
 
+import java.util.Vector;
+
 /**
  * @class: Fitxa problema
  * Classe que implementa els elements que té un problema
@@ -53,6 +55,10 @@ public class FitxaProblema{
         tP = nom;
         coord = new ParInt(Col, Fila);
         c = color;
+    }
+
+    public Vector<ParInt> GetMoviments(Tauler tauler){
+        return fitxa.GetMoviments(coord, tauler, c);
     }
 
     private void CreaFitxa(TipusPeça nom){

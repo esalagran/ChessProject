@@ -7,7 +7,11 @@ import java.util.Scanner;
 public class DriverFitxaProblema{
 
     static Scanner sc = new Scanner(System.in);
-    static FitxaProblema fp = new FitxaProblema(TipusPeça.Dama, new ParInt(4,4), Color.blanc );
+    private static FitxaProblema fp;
+
+    static {
+        fp = new FitxaProblema(TipusPeça.Dama, new ParInt(4, 4), Color.blanc);
+    }
 
     static private void init(){
 
@@ -24,7 +28,7 @@ public class DriverFitxaProblema{
                 + "~~~~~~~   4  -> GET TIPUS PEÇA    ~~~~~~~\n"
                 + "~~~~~~~   5  -> GET COLOR ~~~~~~~\n"
                 + "~~~~~~~   6  -> GET COLUMNA    ~~~~~~~\n";
-        System.out.printf(s);
+        System.out.println(s);
     }
 
     public static void start(int cas) {
@@ -64,7 +68,7 @@ public class DriverFitxaProblema{
                 break;
         }
     }
-    public static void main(String args[]){
+    public static void main(String[] args){
         init();
         int num;
         do{

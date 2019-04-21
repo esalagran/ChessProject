@@ -18,13 +18,9 @@ public class Algorisme extends Maquina{
             Vector<FitxaProblema> peces = getFitxes(tauler, color);
             for (int i = 0; i < peces.size(); i++){
                 FitxaProblema aux = peces.get(i);
-                Possibilitats p = new Possibilitats();
-                p.validMoves(aux, tauler,color);
-                Vector <ParInt> moviments = p.getMoviments();
+                Vector <ParInt> moviments = aux.GetMoviments(tauler);
                 ParInt ini = aux.GetCoordenades();
                 for (int j = 0; j < moviments.size(); j++){
-                    //System.out.println("Nom2: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " a (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
-                    //System.out.println("Nom2: " + peces.get(i).GetTipus() + " " + peces.get(i).GetColor() + " de (" + moviments.get(j).GetFirst() + "," + moviments.get(j).GetSecond() + ")");
                     tauler.moureFitxa(ini,moviments.get(j));
                     if (color.equals(blanc))
                         val = -Minimax (d-1, negre,tauler);

@@ -2,40 +2,34 @@ package Drivers;
 
 import Domain.*;
 
-import java.io.IOException;
 import java.util.*;
 
-public class DriverPossibilitats {
-    private Possibilitats a,b,c;
-    private FitxaProblema peça;
+public class DriverFitxa {
+
+    private FitxaProblema fitxa;
     private Tauler tauler1,tauler2;
 
-    public void testConstructor1(){
-        a = new Possibilitats();
-    }
-
-    public void testConstructor2(TipusPeça nom){
-        peça = new FitxaProblema(nom,4,4,Color.blanc);
+    private void testConstructor2(TipusPeça nom){
+        fitxa = new FitxaProblema(nom,4,4,Color.blanc);
         FitxaProblema[][] aux =
                 {
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,null,null,null},
-                        {null,null,null,null,peça,null,null,null},
+                        {null,null,null,null,fitxa,null,null,null},
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,null,null,null}
                 };
         tauler1 = new Tauler(aux);
-        b = new Possibilitats(tauler1);
     }
 
-    public void Constructor3(TipusPeça nom){
-        peça = new FitxaProblema(nom,4,4,Color.blanc);
+    private void ConstructorCavallComplex(){
+        fitxa = new FitxaProblema(TipusPeça.Cavall,4,4,Color.blanc);
 
         FitxaProblema rival1 = new FitxaProblema(TipusPeça.Alfil,3,2,Color.negre);
-        FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.blanc);
+        FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.negre);
         FitxaProblema meva = new FitxaProblema(TipusPeça.Peo,6,3,Color.blanc);
 
         FitxaProblema[][] aux =
@@ -44,20 +38,19 @@ public class DriverPossibilitats {
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,rival2,null,null},
                         {null,null,rival1,null,null,null,null,null},
-                        {null,null,null,null,peça,null,null,null},
+                        {null,null,null,null,fitxa,null,null,null},
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,meva,null,null,null,null},
                         {null,null,null,null,null,null,null,null}
                 };
         tauler2 = new Tauler(aux);
-        c = new Possibilitats(tauler2);
     }
 
-    public void Constructor4(TipusPeça nom){
-        peça = new FitxaProblema(nom,4,4,Color.blanc);
+    private void ConstructorDamaComplex(){
+        fitxa = new FitxaProblema(TipusPeça.Dama,4,4,Color.blanc);
 
         FitxaProblema rival1 = new FitxaProblema(TipusPeça.Alfil,2,2,Color.negre);
-        FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.blanc);
+        FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.negre);
         FitxaProblema meva = new FitxaProblema(TipusPeça.Peo,5,4,Color.blanc);
 
         FitxaProblema[][] aux =
@@ -66,92 +59,85 @@ public class DriverPossibilitats {
                         {null,null,null,null,null,null,null,null},
                         {null,null,rival1,null,null,rival2,null,null},
                         {null,null,null,null,null,null,null,null},
-                        {null,null,null,null,peça,null,null,null},
+                        {null,null,null,null,fitxa,null,null,null},
                         {null,null,null,null,meva,null,null,null},
                         {null,null,null,null,null,null,null,null},
                         {null,null,null,null,null,null,null,null}
                 };
         tauler2 = new Tauler(aux);
-        c = new Possibilitats(tauler2);
     }
 
-    public void getMovimentsReina(){
+    private void getMovimentsReina(){
         testConstructor2(TipusPeça.Dama);
-        b.validMoves(peça,tauler1,Color.blanc);
-        Vector<ParInt> moves = b.getMoviments();
+        var moves = fitxa.GetMoviments(tauler1);
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
             System.out.println("("+var.GetFirst()+","+var.GetSecond()+")");
         }
     }
 
-    public void getMovimentsCavall(){
+    private void getMovimentsCavall(){
         testConstructor2(TipusPeça.Cavall);
-        b.validMoves(peça,tauler1,Color.blanc);
-        Vector<ParInt> moves = b.getMoviments();
+        var moves = fitxa.GetMoviments(tauler1);
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
             System.out.println("("+var.GetFirst()+","+var.GetSecond()+")");
         }
     }
 
-    public void getMovimentsCavallComplexe(){
-        Constructor3(TipusPeça.Cavall);
-        c.validMoves(peça,tauler2,Color.blanc);
-        Vector<ParInt> moves = c.getMoviments();
+    private void getMovimentsCavallComplexe(){
+        ConstructorCavallComplex();
+        var moves = fitxa.GetMoviments(tauler2);
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
             System.out.println("("+var.GetFirst()+","+var.GetSecond()+")");
         }
     }
 
-    public void getMovimentsReinaComplexe(){
-        Constructor4(TipusPeça.Dama);
-        c.validMoves(peça,tauler2,Color.negre);
-        Vector<ParInt> moves = c.getMoviments();
+    private void getMovimentsReinaComplexe(){
+        ConstructorDamaComplex();
+        var moves = fitxa.GetMoviments(tauler2);
         System.out.println("Des de la posició (4,4) podem anar a:");
         for (ParInt var : moves){
             System.out.println("("+var.GetFirst()+","+var.GetSecond()+")");
         }
     }
 
-    public static void main(String [] args) throws IOException {
-        while (true){
-            Scanner help = new Scanner(System.in);
-            DriverPossibilitats dp = new DriverPossibilitats();
+    public static void main(String [] args){
+        int num;
+        Scanner sc = new Scanner(System.in);
+        do{
+            DriverFitxa dp = new DriverFitxa();
             System.out.println("Driver per la classe Possibilitats:");
-            System.out.println("    Prem 1 per provar la constructora basica");
-            System.out.println("    Prem 2 per provar la constructora amb arguments");
-            System.out.println("    Prem 3 per generar els moviments de la reina");
-            System.out.println("    Prem 4 per generar els moviments del cavall");
-            System.out.println("    Prem 5 per generar els moviments del cavall complexe");
-            System.out.println("    Prem 6 per generar els moviments del reina complexe");
+            System.out.println("    Prem 0 per sortir");
+            System.out.println("    Prem 1 per provar la constructora amb arguments");
+            System.out.println("    Prem 2 per generar els moviments de la reina");
+            System.out.println("    Prem 3 per generar els moviments del cavall");
+            System.out.println("    Prem 4 per generar els moviments del cavall complexe");
+            System.out.println("    Prem 5 per generar els moviments del reina complexe");
 
-
-            char aux = (char) System.in.read();
-            String salto = help.nextLine();
-            switch(aux){
-                case '1':
-                    dp.testConstructor1();
-                    System.out.println("Working");
+            num = sc.nextInt();
+            switch(num){
+                case 0:
+                    System.out.println("Bye bye");
                     break;
-                case '2':
+                case 1:
                     dp.testConstructor2(TipusPeça.Peo);
                     System.out.println("Working");
                     break;
-                case '3':
+                case 2:
                     dp.getMovimentsReina();
                     break;
-                case '4':
+                case 3:
                     dp.getMovimentsCavall();
                     break;
-                case '5':
+                case 4:
                     dp.getMovimentsCavallComplexe();
                     break;
-                case '6':
+                case 5:
                     dp.getMovimentsReinaComplexe();
                     break;
             }
-        }
+        }while(num != 0);
     }
 }
