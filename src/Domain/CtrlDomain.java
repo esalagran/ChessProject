@@ -20,15 +20,15 @@ public class CtrlDomain {
         userLogged.AfegirProblema(p);
     }
 
-    public  void AfegirProblema(String FEN, boolean valid, Color torn){
+    public  void AfegirProblema(String FEN, boolean valid){
 //        userLogged.AfegirProblema(p);
-        Problema p = new Problema(FEN, valid, torn);
+        Problema p = new Problema(FEN, valid);
         CP.guardarProblema(FEN,valid);
         cjtProblemes = CP.GetProblemes();
     }
 
     public void CarregarProblema(String FEN, boolean valid, Color torn){
-        Problema p = new Problema(FEN, valid, torn);
+        Problema p = new Problema(FEN, valid);
         cjtProblemes.add(p);
 
     }
