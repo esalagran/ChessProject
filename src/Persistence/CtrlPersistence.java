@@ -100,7 +100,7 @@ public class CtrlPersistence {
 
              if(s.equals("v:")){
                  valid = sc.nextBoolean();
-                 problemes.add(new Problema(FEN, valid));
+                 problemes.add(new Problema(FEN));
 
              }
 

@@ -16,20 +16,28 @@ public class DriverProblema {
     public static final String ANSI_BLACK = "\u001B[30m";
 
     static Scanner scanner = new Scanner(System.in);
-    static Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1", false);
+    static Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
 
 
 
     static void Index(){
         String response = "0";
 
-        while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >2){
+        while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >11){
 
             System.out.print(ANSI_PURPLE + "Driver de la classe problema " + '\n' +
                     ANSI_CYAN +  "1. Crear problema" + '\n' +
                     "2. Afegir peça" + '\n' +
                     "3. Eliminar peça" + '\n' +
-                    "4. Moure peça" + '\n'
+                    "4. Moure peça" + '\n' +
+                    "5. Valider problema" + '\n' +
+                    "6. FEN to tauler" + '\n' +
+                    "7. Tauler to FEN" + '\n' +
+                    "8. Get torn inicial" + '\n' +
+                    "9. Get tauler" + '\n' +
+                    "10. Get validesa" + '\n' +
+                    "11. Get FEN" + '\n'
+
                     + ANSI_RESET);
 
 
@@ -44,6 +52,47 @@ public class DriverProblema {
                     AfegirPeça();
 
                     break;
+
+                case "3":
+                    EliminarPeça();
+
+                    break;
+
+                case "4":
+                    MourePeça();
+
+                    break;
+
+                case "5":
+                    ValidarProblema();
+
+                    break;
+
+                case "6":
+                    FENtoTauler();
+                    break;
+
+                case "7":
+                    TaulerToFEN();
+                    break;
+
+                case "8":
+                    GetTornInicial();
+                    break;
+
+                case "9":
+                    GetTauler();
+                    break;
+
+                case "10":
+                    GetValidesa();
+                    break;
+
+                case "11":
+                    GetFEN();
+                    break;
+
+
 
                 case "exit":
 
@@ -64,6 +113,156 @@ public class DriverProblema {
 
     }
 
+    static  void GetFEN(){
+        System.out.println(p.GetFEN());
+    }
+
+    static void GetTauler(){
+        dibuixaTauler(p.getTauler());
+
+    }
+
+    static void GetValidesa(){
+        p.validarProblema();
+        if(p.GetValid())
+            System.out.println("El problema introduit es valid");
+        else
+            System.out.println("El problema introduit es invalid");
+
+    }
+
+    static void GetTornInicial(){
+        Color c = p.GetTorn();
+        if(c == Color.blanc)
+            System.out.println("El primer torn es de les blanques");
+        else
+            System.out.println("El primer torn es de les negres");
+
+
+
+    }
+
+    static void TaulerToFEN(){
+       System.out.println(p.TaulerToFEN());
+
+    }
+    static void FENtoTauler(){
+        dibuixaTauler(p.FENtoTauler());
+
+
+}
+
+    static void dibuixaTauler(Tauler tauler){
+
+        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println();
+        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+        for(int i = 0; i < 8; i++){
+            System.out.print(ANSI_BLACK);
+            System.out.print(8-i);
+            System.out.print(" " + ANSI_RESET);
+
+            for (int j = 0; j<8; j++){
+                if(tauler.FitxaAt(i,j) != null){
+                    TipusPeça tP = tauler.FitxaAt(i,j).GetTipus();
+                    Color c = tauler.FitxaAt(i,j).GetColor();
+
+                    if(tP == TipusPeça.Cavall){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB,  'C' );
+                        else System.out.printf(formatW, 'C');
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'P');
+                        else System.out.printf(formatW, 'P');
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'A');
+                        else System.out.printf(formatW, 'A');
+
+                    }
+
+                    if(tP == TipusPeça.Torre){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'T');
+                        else System.out.printf(formatW,'T');
+                    }
+
+                    if(tP == TipusPeça.Rei){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'R');
+                        else System.out.printf(formatW, 'R');
+
+                    }
+
+                    if(tP == TipusPeça.Dama){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'D');
+                        else System.out.printf(formatW, 'D');
+                    }
+
+                }
+                else {
+                    System.out.print("|   ");
+                }
+            }
+            System.out.print(ANSI_BLACK + '|');
+            System.out.println();
+            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+
+
+        }
+
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
+
+    }
+    static  void MourePeça(){
+        ParInt origen;
+        ParInt desti;
+
+        p.dibuixaProblema();
+        System.out.println(ANSI_PURPLE + "Especifica la coordenada de la peça que vols moure (sense espais, lletra+num)"+ ANSI_RESET);
+        origen = StringToCoordenada(scanner.next());
+
+        System.out.println(ANSI_PURPLE + "Especifica la coordenada destí de la peça (sense espais, lletra+num)"+ ANSI_RESET);
+        desti = StringToCoordenada(scanner.next());
+
+        p.MourePeça(origen,desti);
+        p.dibuixaProblema();
+
+
+    }
+
+    static  void ValidarProblema(){
+
+        p.validarProblema();
+        if(p.GetValid())
+            System.out.println("El problema introduit es valid");
+        else
+        System.out.println("El problema introduit es invalid");
+
+
+    }
+
+
+    static void EliminarPeça(){
+        ParInt origen;
+        String response = "0";
+
+        p.dibuixaProblema();
+        System.out.print(ANSI_PURPLE + "Especifica la posició de la peça que vols esborrar:" + ANSI_RESET);
+        response = scanner.next();
+        origen = StringToCoordenada(response);
+        p.EliminarPeça(origen);
+        p.dibuixaProblema();
+
+    }
 
     static void AfegirPeça(){
         TipusPeça tp = TipusPeça.Peo;
@@ -161,48 +360,35 @@ public class DriverProblema {
 }
 
     static void CrearProblema(){
-        String response = "0";
-        while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >2){
 
-            System.out.print(ANSI_PURPLE + "Com vols crear el problema: " + '\n' +
-                    ANSI_CYAN +  "1. Des de zero" + '\n' +
-                    "2. A partir d'un FEN" + '\n' + ANSI_RESET);
+        System.out.print(ANSI_PURPLE + "Introdueix un FEN valid (escriu \";\" un cop l'hagis escrit). " + ANSI_RESET);
 
+        String FEN = "";
+        Boolean limit = false;
 
-            response = scanner.next();
+        while (!limit){
 
-            switch (response) {
-                case "1":
-                    p = new Problema("8/8/8/8/8/8/8", false);
-                    p.dibuixaProblema();
-                    Index();
-
-                    break;
-                case "2":
-                    System.out.print(ANSI_PURPLE + "Introdueix un FEN valid: " + ANSI_RESET);
-                    String FEN = scanner.next();
-                    p = new Problema(0,FEN, Dificultat.facil, new Huma() );
-                    p = new Problema(FEN, false);
-                    p.dibuixaProblema();
-                    Index();
-
-                    break;
-
-                case "exit":
-
-                    break;
-                default:
-                    System.out.println( ANSI_RED +"Siusplau, tria una opció vàlida" + ANSI_RESET);
-                    response = "0";
-
+            String next =  scanner.next();
+            for(int i = 0; i< next.length(); i++){
+                if(next.charAt(i) == ';')
+                    limit = true;
             }
+
+            if(!limit){
+            FEN += next;
+            }
+        }
+        p = new Problema(0,FEN, Dificultat.facil, new Huma() );
+        p = new Problema(FEN);
+        p.dibuixaProblema();
+        Index();
+
 
 
 
 
         }
 
-    }
 
     static ParInt StringToCoordenada(String str){
         char primer = str.charAt(0);
