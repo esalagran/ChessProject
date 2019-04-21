@@ -53,6 +53,28 @@ public class DriverPossibilitats {
         c = new Possibilitats(tauler2);
     }
 
+    public void Constructor4(TipusPeça nom){
+        peça = new FitxaProblema(nom,4,4,Color.blanc);
+
+        FitxaProblema rival1 = new FitxaProblema(TipusPeça.Alfil,2,2,Color.negre);
+        FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.blanc);
+        FitxaProblema meva = new FitxaProblema(TipusPeça.Peo,5,4,Color.blanc);
+
+        FitxaProblema[][] aux =
+                {
+                        {null,null,null,null,null,null,null,null},
+                        {null,null,null,null,null,null,null,null},
+                        {null,null,rival1,null,null,rival2,null,null},
+                        {null,null,null,null,null,null,null,null},
+                        {null,null,null,null,peça,null,null,null},
+                        {null,null,null,null,meva,null,null,null},
+                        {null,null,null,null,null,null,null,null},
+                        {null,null,null,null,null,null,null,null}
+                };
+        tauler2 = new Tauler(aux);
+        c = new Possibilitats(tauler2);
+    }
+
     public void getMovimentsReina(){
         testConstructor2(TipusPeça.Dama);
         b.validMoves(peça,tauler1,Color.blanc);
@@ -83,6 +105,16 @@ public class DriverPossibilitats {
         }
     }
 
+    public void getMovimentsReinaComplexe(){
+        Constructor4(TipusPeça.Dama);
+        c.validMoves(peça,tauler2,Color.negre);
+        Vector<ParInt> moves = c.getMoviments();
+        System.out.println("Des de la posició (4,4) podem anar a:");
+        for (ParInt var : moves){
+            System.out.println("("+var.GetFirst()+","+var.GetSecond()+")");
+        }
+    }
+
     public static void main(String [] args) throws IOException {
         while (true){
             Scanner help = new Scanner(System.in);
@@ -93,6 +125,8 @@ public class DriverPossibilitats {
             System.out.println("    Prem 3 per generar els moviments de la reina");
             System.out.println("    Prem 4 per generar els moviments del cavall");
             System.out.println("    Prem 5 per generar els moviments del cavall complexe");
+            System.out.println("    Prem 6 per generar els moviments del reina complexe");
+
 
             char aux = (char) System.in.read();
             String salto = help.nextLine();
@@ -113,6 +147,9 @@ public class DriverPossibilitats {
                     break;
                 case '5':
                     dp.getMovimentsCavallComplexe();
+                    break;
+                case '6':
+                    dp.getMovimentsReinaComplexe();
                     break;
             }
         }

@@ -105,13 +105,13 @@ public class Possibilitats {
 
     }
 
-    public void addMove (ParInt move,Color white){
+    private void addMove (ParInt move,Color white){
         if (safe(move) && !a.PeçaMeva(move,white) ) {
             moviments.add(move);
         }
     }
 
-    public Boolean safe(ParInt x) {
+    private Boolean safe(ParInt x) {
         return (x.GetFirst() >= 0 && x.GetFirst() < 8 && x.GetSecond() >= 0 && x.GetSecond() < 8 );
     }
 

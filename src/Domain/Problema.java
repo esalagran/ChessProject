@@ -30,7 +30,7 @@ public class Problema{
     private boolean _valid;
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
-    private Vector<FitxaProblema> _fitxesProblema;
+    //private Vector<FitxaProblema> _fitxesProblema;
     private NumMaxPeces _pecesMax;
     private HashMap<ParTipusPeçaBool,Integer> _numTipusPeça;
 
@@ -85,11 +85,14 @@ public class Problema{
         _FEN = FEN;
         tauler = new Tauler(FENtoTauler());
         _valid = valid;
+        this.torn = torn;
     }
 
     public Color GetTorn(){
         return torn;
     }
+
+    public Tauler getTauler() { return tauler; }
 
     public void dibuixaProblema(){
 
@@ -255,8 +258,8 @@ public class Problema{
 
 
     public void validarProblema (){
-        Maquina aux = new Maquina();
-        _valid = aux.validarProblema(_id);
+        Algorisme aux = new Algorisme();
+        _valid = aux.validarProblema(torn,tauler);
     }
 
     private Color charToColor(char ch){
@@ -332,28 +335,28 @@ public class Problema{
                 }
 
                 else if(ch == 'n' || ch == 'N') {
-                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'p' || ch == 'P') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
 
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x % 8, x - (x % 8) * 8), charToColor(ch));
+                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     x++;
                 }
 

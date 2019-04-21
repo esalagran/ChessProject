@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import static Domain.Dificultat.mitja;
+
 public class DriverMaquina {
 
-    private Maquina a;
+    private Algorisme a;
     private Tauler tauler;
 
     public void createTauler(){
@@ -36,15 +38,20 @@ public class DriverMaquina {
         tauler = new Tauler(aux);
     }
 
+    public void createTauler2(){
+            Problema p = new Problema (0000, "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", mitja, null);
+            tauler = p.getTauler();
+        }
+
     public void tryMinimax(){
-        a = new Maquina();
+        a = new Algorisme();
         int out = a.Minimax(3,Color.blanc,tauler);
         System.out.println(out);
 
     }
 
     public void getPecesNegres(){
-        a = new Maquina();
+        a = new Algorisme();
         Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
         for (FitxaProblema e : peces)
             if (e != null)
@@ -52,7 +59,7 @@ public class DriverMaquina {
     }
 
     public void getPecesBlanques(){
-        a = new Maquina();
+        a = new Algorisme();
         Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
         for (FitxaProblema e : peces)
             if (e != null)
