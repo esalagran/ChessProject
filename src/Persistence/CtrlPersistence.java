@@ -20,27 +20,29 @@ public class CtrlPersistence {
 
 
     public void guardarProblema(String FEN, Boolean valid){
-    try{
-        boolean repetit = false;
-        for (Problema p: problemes
-             ) {
+        try{
+            boolean repetit = false;
+            for (Problema p: problemes
+                 ) {
 
-            if (p.GetFEN().equals(FEN)){
-                 repetit = true;
-                 break;
+                if (p.GetFEN().equals(FEN)){
+                     repetit = true;
+                     break;
+            }
+        }
+        if(!repetit){
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
+            writer.append('\n');
+            writer.append("FEN: " + FEN + " v: " + valid);
+            writer.close();
+        }
+
+        else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
+
+        }catch(Exception e){
+            System.out.println( "ERROR: " + e);
         }
     }
-    if(!repetit){
-        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
-        writer.append('\n');
-        writer.append("FEN: " + FEN + " v: " + valid);
-        writer.close();}
-
-    else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
-
-    }catch(Exception e){
-        System.out.println( "ERROR: " + e);
-        }}
 
 
     private List<Problema> carregarProblemes(){
