@@ -22,13 +22,13 @@ public class CtrlDomain {
 
     public void AfegirProblema(String FEN, boolean valid){
 //        userLogged.AfegirProblema(p);
-        Problema p = new Problema(FEN, valid);
+        Problema p = new Problema(FEN);
         CP.guardarProblema(FEN,valid);
         cjtProblemes = CP.GetProblemes();
     }
 
     public void CarregarProblema(String FEN, boolean valid, Color torn){
-        Problema p = new Problema(FEN, valid);
+        Problema p = new Problema(FEN);
         cjtProblemes.add(p);
 
     }
@@ -37,9 +37,7 @@ public class CtrlDomain {
         return cjtProblemes;
     }
 
-
-    //possible canvi: FitxaProblema per taulell
-    public FitxaProblema[][] CrearPartida(int indexP, Modalitat m){
+    public Tauler CrearPartida(int indexP, Modalitat m){
         Problema p = cjtProblemes.get(indexP);
 
         partidaEnJoc = new Partida(p, m, p.GetTorn());

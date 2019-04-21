@@ -181,7 +181,7 @@ public class CtrlPresentation {
                     System.out.print(ANSI_PURPLE + "Introdueix un FEN valid: " + ANSI_RESET);
                     String FEN = scanner.next();
                     Problema p = new Problema(0,FEN, Dificultat.facil, new  Huma() );
-                    ModificaTauler(p.FENtoTauler());
+                    ModificaTauler(p.FENtoTauler().getTaulell());
 
                     break;
 
@@ -215,7 +215,7 @@ public class CtrlPresentation {
 
     private void JugarPartida(int indexP, Modalitat m){
         boolean humaTorn = false;
-        FitxaProblema[][] tauler =   CD.CrearPartida(indexP, m);
+        FitxaProblema[][] tauler =   CD.CrearPartida(indexP, m).getTaulell();
         Color torn =  CD.GetTornPartidaEnJoc();
 
 
@@ -822,9 +822,9 @@ public class CtrlPresentation {
                         if (Integer.parseInt(response) >= 0 && Integer.parseInt(response) < 10) {
                             if (pagina < 0) {
                                 aux = problemes.size() / 10 - pagina - 1;
-                                ModificaTauler(problemes.get(Integer.parseInt(response) + aux * 10).FENtoTauler());
+                                ModificaTauler(problemes.get(Integer.parseInt(response) + aux * 10).FENtoTauler().getTaulell());
                             } else
-                                ModificaTauler(problemes.get(Integer.parseInt(response) + pagina * 10).FENtoTauler());
+                                ModificaTauler(problemes.get(Integer.parseInt(response) + pagina * 10).FENtoTauler().getTaulell());
                             done = true;
                         } else {
                             System.out.println(ANSI_RED + "Siusplau, tria una opció vàlida" + ANSI_RESET);

@@ -76,15 +76,15 @@ public class Problema{
     public Problema (int id, String FEN, Dificultat d, Huma h){
         _id = id;
         _FEN = FEN;
-        tauler =  new Tauler(FENtoTauler());
+        tauler =  FENtoTauler();
         _dif = d;
         _creador = h;
     }
 
-    public Problema(String FEN, boolean valid){
+    public Problema(String FEN){
         _FEN = FEN;
-        tauler = new Tauler(FENtoTauler());
-        _valid = valid;
+        tauler = FENtoTauler();
+        _valid = false;
         this.torn = torn;
     }
 
@@ -212,7 +212,7 @@ public class Problema{
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null) {
 
-                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+               // tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
 
 
             } else{
@@ -275,6 +275,7 @@ public class Problema{
     }
 
     public int GetId(){ return _id;}
+
     public String GetFEN(){ return _FEN;}
 
     //RANKING FUNCTIONS
@@ -299,12 +300,11 @@ public class Problema{
     /**
      * A partir del codi FEN genera el vector de FitxaProblema
      */
-    public FitxaProblema[][] FENtoTauler(){
+    public Tauler FENtoTauler(){
         try {
 
             int x = 0;
-            FitxaProblema[][] tauler = new FitxaProblema[8][8];
-
+           Tauler tauler = new  Tauler();
 
             for(int i = 0; i < _FEN.length(); i++){
                 char ch = _FEN.charAt(i);
@@ -335,28 +335,28 @@ public class Problema{
                 }
 
                 else if(ch == 'n' || ch == 'N') {
-                    tauler[x / 8][x -(x / 8) * 8] = new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Alfil, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Alfil, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
                     x++;
                 }
                 else if(ch == 'p' || ch == 'P') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Peo, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Peo, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
 
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
-                    tauler[x / 8][x - (x / 8) * 8] = new FitxaProblema(TipusPeça.Dama, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Dama, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
                     x++;
                 }
 
@@ -454,9 +454,8 @@ public class Problema{
     }
 
 
-
     /**
-     * A partir del vector de FitxaProblema genera el codi FEN
+     * A partir del tauler genera el codi FEN
      */
 
 
