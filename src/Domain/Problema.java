@@ -196,8 +196,8 @@ public class Problema{
             }
         }
         else{
-            System.out.println(ANSI_RED + "S'ha superat el nombre màxim de " + tp.toString()
-                    + "d'aqeust color: " + c.toString() + ANSI_RESET);
+            System.out.println(ANSI_RED + "S'ha superat el nombre màxim de la peça " + tp.toString()
+                    + " d'aquest color: " + c.toString() + ANSI_RESET);
         }
 
 
@@ -373,10 +373,12 @@ public class Problema{
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
-                    FitxaProblema aux = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    FitxaProblema aux = new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux );
                     if (aux.GetColor().equals(Color.blanc)) tauler.setWhiteKing(aux);
                     else tauler.setBlackKing(aux);
+                    char key = ParTipusPeçaBoolToChar(aux.tP, aux.c);
+                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {

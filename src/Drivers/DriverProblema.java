@@ -388,7 +388,7 @@ public class DriverProblema {
                     "2. Afegir peça" + '\n' +
                     "3. Eliminar peça" + '\n' +
                     "4. Moure peça" + '\n' +
-                    "5. Valider problema" + '\n' +
+                    "5. Validar problema" + '\n' +
                     "6. FEN to tauler" + '\n' +
                     "7. Tauler to FEN" + '\n' +
                     "8. Get torn inicial" + '\n' +
