@@ -27,9 +27,13 @@ public class Tauler {
         return blackKing;
     }
 
+    public void setBlackKing(FitxaProblema king){blackKing = king;}
+
     public FitxaProblema getWhiteKing() {
         return whiteKing;
     }
+
+    public void setWhiteKing(FitxaProblema king){whiteKing = king;}
 
     public void AfegirPeçaAt(int i, int j, FitxaProblema f){
         taulell[i][j] = f;

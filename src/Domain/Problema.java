@@ -45,19 +45,19 @@ public class Problema{
 
 
     private void FillDictionary(){
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Peo, true), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Cavall, true), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Alfil, true), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Torre, true), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Dama, true), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Rei, true), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Peo, Color.blanc), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Cavall, Color.blanc), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Alfil, Color.blanc), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Torre, Color.blanc), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Dama, Color.blanc), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Rei, Color.blanc), 0);
 
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Peo, false), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Cavall, false), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Alfil, false), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Torre, false), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Dama, false), 0);
-        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Rei, false), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Peo, Color.negre), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Cavall,Color.negre), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Alfil, Color.negre), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Torre, Color.negre), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Dama, Color.negre), 0);
+        _numTipusPeça.put(new ParTipusPeçaBool(TipusPeça.Rei, Color.negre), 0);
 
     }
     /**
@@ -65,6 +65,7 @@ public class Problema{
      */
     public Problema() {
         _pecesMax = new NumMaxPeces();
+
         _numTipusPeça = new HashMap<ParTipusPeçaBool, Integer>();
         FillDictionary();
     }
@@ -168,19 +169,26 @@ public class Problema{
 
     public void AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
 
+        ParTipusPeçaBool key = new ParTipusPeçaBool(tp,c);
+        Integer number = _numTipusPeça.get(key);
+        if ( number < _pecesMax.getNumMaxPeces(tp)) {
+            if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
+                if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null) {
+                    tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(), new FitxaProblema(tp, desti.GetFirst(), desti.GetSecond(), c));
 
+                } else {
+                    System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
 
-        if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-            if (tauler.FitxaAt(desti.GetFirst(),desti.GetSecond()) == null) {
-                tauler.AfegirPeçaAt(desti.GetFirst(),desti.GetSecond(), new FitxaProblema(tp, desti.GetFirst(), desti.GetSecond(), c));
-
+                }
+                _numTipusPeça.put(key, number + 1);
             } else {
-                System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
+                System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
             }
-        } else{
-            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
-
+        }
+        else{
+            System.out.println(ANSI_RED + "S'ha superat el nombre màxim de " + tp.toString()
+                    + "d'aqeust color: " + c.toString() + ANSI_RESET);
         }
 
 
@@ -191,9 +199,10 @@ public class Problema{
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null) {
-
+                FitxaProblema aux = tauler.FitxaAt(origen.GetFirst(), origen.GetSecond());
+                ParTipusPeçaBool key = new ParTipusPeçaBool(aux.tP, aux.c);
                 tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
-
+                _numTipusPeça.put(key, _numTipusPeça.get(key) - 1);
 
             } else{
                 System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
@@ -316,7 +325,7 @@ public class Problema{
                     break;
 
                 if(ch == 57){
-                    System.out.println("FEN invalidm 9 es massa gran" + ch);
+                    System.out.println("FEN invalid 9 es massa gran" + ch);
                     break;
 
                 }
@@ -351,8 +360,10 @@ public class Problema{
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
-
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8,  new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch)));
+                    FitxaProblema king = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
+                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, king );
+                    if (king.GetColor().equals(Color.blanc)) tauler.setWhiteKing(king);
+                    else tauler.setBlackKing(king);
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
@@ -375,60 +386,60 @@ public class Problema{
 
     public String TaulerToFEN( ){
 
-        String FEN ="";
+        StringBuilder FEN = new StringBuilder();
         int spaces = 0;
         for(int i = 0; i< 8; i++){
             for (int j = 0; j<8; j++){
                 if(tauler.FitxaAt(i, j) != null){
 
                     if(spaces != 0){
-                        FEN+=spaces;
+                        FEN.append(spaces);
                         spaces = 0;
                     }
                     if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Alfil){
                         if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
-                            FEN+="b";
+                            FEN.append("b");
                         }
-                        else FEN+="B";
+                        else FEN.append("B");
 
 
                     }
                     if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Torre){
                         if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
-                            FEN+="r";
+                            FEN.append("r");
                         }
-                        else FEN+="R";
+                        else FEN.append("R");
 
                     }
                     if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Peo){
                         if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
-                            FEN+="p";
+                            FEN.append("p");
                         }
-                        else FEN+="P";
+                        else FEN.append("P");
 
 
                     }
                     if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Dama){
                         if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
-                            FEN+="q";
+                            FEN.append("q");
                         }
-                        else FEN+="Q";
+                        else FEN.append("Q");
 
 
                     }
                     if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Rei){
                         if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
-                            FEN+="k";
+                            FEN.append("k");
                         }
-                        else FEN+="K";
+                        else FEN.append("K");
 
 
                     }
                     if(tauler.FitxaAt(i, j).GetTipus() == TipusPeça.Cavall){
                         if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
-                            FEN+="n";
+                            FEN.append("n");
                         }
-                        else FEN+="N";
+                        else FEN.append("N");
 
 
                     }
@@ -440,16 +451,16 @@ public class Problema{
 
             }
             if(spaces != 0){
-                FEN+=spaces;
+                FEN.append(spaces);
                 spaces = 0;
             }
             if(i!=7)
-                FEN+="/";
+                FEN.append("/");
         }
 
-        FEN+=" w - - 0 1";
+        FEN.append(" w - - 0 1");
         //System.out.println(FEN);
-        return  FEN;
+        return FEN.toString();
 
     }
 
@@ -478,9 +489,7 @@ public class Problema{
 
         int res = 0;
 
-        if(ch >= 'a' && ch <= 'h'){
-            res = ch - 'a' ;
-        }
+        if(ch >= 'a' && ch <= 'h') res = ch - 'a';
 
         else if(ch >= 'A' && ch <= 'H'){
             res = ch - 'A' ;
