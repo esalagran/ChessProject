@@ -27,12 +27,20 @@ public class Peo extends Fitxa {
 
         Vector<ParInt> mov = new Vector<>();
         ParInt move;
-        for (int i = 0; i < _moviments.length; i++) {
-            move = new ParInt(coord.GetFirst(), coord.GetSecond() + 1);
+        int incr;
+        if (color.equals(Color.blanc)) incr = -1;
+        else incr = 1;
+
+        move = new ParInt(coord.GetFirst() + incr, coord.GetSecond());
+        if (actual.FitxaAt(move.GetFirst(), move.GetSecond()) == null)
             super.addMove(move, color, actual, mov);
-            move = new ParInt(coord.GetFirst() + 1, coord.GetSecond() + 1);
-            if (actual.PeçaRival(move, color)) super.addMove(move, color, actual, mov);
-        }
+
+        move = new ParInt(coord.GetFirst() + incr, coord.GetSecond() + 1);
+        if (actual.PeçaRival(move, color))super.addMove(move, color, actual, mov);
+
+        move = new ParInt(coord.GetFirst() + incr, coord.GetSecond() - 1);
+        if (actual.PeçaRival(move, color))super.addMove(move, color, actual, mov);
+
         return mov;
     }
 }
