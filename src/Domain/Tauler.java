@@ -12,8 +12,8 @@ public class Tauler {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if (t[i][j] != null){
-                    if (t[i][j].GetTipus() == TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
-                    if (t[i][j].GetTipus() == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
+                    if (t[i][j].tP == TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
+                    if (t[i][j].tP == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
                 }
             }
         }
@@ -27,13 +27,15 @@ public class Tauler {
         return blackKing;
     }
 
+    public void setBlackKing(FitxaProblema king){blackKing = king;}
+
     public FitxaProblema getWhiteKing() {
         return whiteKing;
     }
 
-    public void AfegirPeçaAt(int i, int j, FitxaProblema f){
-        taulell[i][j] = f;
-    }
+    public void setWhiteKing(FitxaProblema king){whiteKing = king;}
+
+    public void AfegirPeçaAt(int i, int j, FitxaProblema f){ taulell[i][j] = f; }
 
     public boolean PeçaMeva(ParInt x, Color color) {
         if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {

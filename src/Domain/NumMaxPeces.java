@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 //Singleton que serveix per controla el nombre m&agrave;xim de peces en un problema
 public class NumMaxPeces {
+
     private static HashMap<TipusPeça, Integer> ourInstance = new HashMap<TipusPeça, Integer>() {
         {
             put(TipusPeça.Peo, 8);
@@ -19,4 +20,6 @@ public class NumMaxPeces {
     public static HashMap<TipusPeça, Integer> getInstance() {
         return ourInstance;
     }
+
+    public static Integer getNumMaxPeces(TipusPeça peça){ return ourInstance.get(peça);}
 }

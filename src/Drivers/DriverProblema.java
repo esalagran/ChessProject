@@ -20,97 +20,55 @@ public class DriverProblema {
 
 
 
-    static void Index(){
-        String response = "0";
+    static void Index(int num){
+        switch (num) {
+            case 0:
+                System.out.println("Bye Bye");
+                break;
+            case 1:
+               CrearProblema();
+                break;
 
-        while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >11){
+            case 2:
+                AfegirPeça();
+                break;
 
-            System.out.print(ANSI_PURPLE + "Driver de la classe problema " + '\n' +
-                    ANSI_CYAN +  "1. Crear problema" + '\n' +
-                    "2. Afegir peça" + '\n' +
-                    "3. Eliminar peça" + '\n' +
-                    "4. Moure peça" + '\n' +
-                    "5. Valider problema" + '\n' +
-                    "6. FEN to tauler" + '\n' +
-                    "7. Tauler to FEN" + '\n' +
-                    "8. Get torn inicial" + '\n' +
-                    "9. Get tauler" + '\n' +
-                    "10. Get validesa" + '\n' +
-                    "11. Get FEN" + '\n'
+            case 3:
+                EliminarPeça();
+                break;
 
-                    + ANSI_RESET);
+            case 4:
+                MourePeça();
+                break;
 
+            case 5:
+                ValidarProblema();
+                break;
 
-            response = scanner.next();
+            case 6:
+                FENtoTauler();
+                break;
 
-            switch (response) {
-                case "1":
-                   CrearProblema();
+            case 7:
+                TaulerToFEN();
+                break;
 
-                    break;
-                case "2":
-                    AfegirPeça();
+            case 8:
+                GetTornInicial();
+                break;
 
-                    break;
+            case 9:
+                GetTauler();
+                break;
 
-                case "3":
-                    EliminarPeça();
+            case 10:
+                GetValidesa();
+                break;
 
-                    break;
-
-                case "4":
-                    MourePeça();
-
-                    break;
-
-                case "5":
-                    ValidarProblema();
-
-                    break;
-
-                case "6":
-                    FENtoTauler();
-                    break;
-
-                case "7":
-                    TaulerToFEN();
-                    break;
-
-                case "8":
-                    GetTornInicial();
-                    break;
-
-                case "9":
-                    GetTauler();
-                    break;
-
-                case "10":
-                    GetValidesa();
-                    break;
-
-                case "11":
-                    GetFEN();
-                    break;
-
-
-
-                case "exit":
-
-                    break;
-
-                default:
-                    System.out.println( ANSI_RED +"Siusplau, tria una opció vàlida" + ANSI_RESET);
-                    response = "0";
-
-            }
-
-
-
-
+            case 11:
+                GetFEN();
+                break;
         }
-
-
-
     }
 
     static  void GetFEN(){
@@ -381,12 +339,6 @@ public class DriverProblema {
         p = new Problema(0,FEN, Dificultat.facil, new Huma() );
         p = new Problema(FEN);
         p.dibuixaProblema();
-        Index();
-
-
-
-
-
         }
 
 
@@ -427,7 +379,28 @@ public class DriverProblema {
     }
 
     public static void main(String args[]){
-       Index();
+        int num;
+        do{
+            System.out.print(ANSI_PURPLE + "Driver de la classe problema " + '\n' +
+                    ANSI_CYAN +
+                    "0. Tancar Driver" + '\n' +
+                    "1. Crear problema" + '\n' +
+                    "2. Afegir peça" + '\n' +
+                    "3. Eliminar peça" + '\n' +
+                    "4. Moure peça" + '\n' +
+                    "5. Validar problema" + '\n' +
+                    "6. FEN to tauler" + '\n' +
+                    "7. Tauler to FEN" + '\n' +
+                    "8. Get torn inicial" + '\n' +
+                    "9. Get tauler" + '\n' +
+                    "10. Get validesa" + '\n' +
+                    "11. Get FEN" + '\n'
+
+                    + ANSI_RESET);
+            System.out.println("Input a new number");
+            num = scanner.nextInt();
+            Index(num);
+        }while(num != 0);
 
 }
 

@@ -44,7 +44,8 @@ public class Algorisme extends Maquina{
     public ParInt getPos_move(){return pos_move;}
 
     public boolean validarProblema(Color torn, Tauler tauler){
-        return false;
+        int a = Minimax(20,torn,tauler);
+        return super.getGuanyador() != null;
     }
 
     private int estimacio (Tauler tauler){
@@ -52,16 +53,14 @@ public class Algorisme extends Maquina{
         int weight = 0;
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++) {
-        if (actual[i][j] != null) {
-            if (actual[i][j].GetColor() == blanc) weight += actual[i][j].getIFitxa().GetPes();
-            if (actual[i][j].GetColor() == negre) weight -= actual[i][j].getIFitxa().GetPes();
-        }
-    }
-        System.out.println("EPA " + weight);
+                if (actual[i][j] != null) {
+                    if (actual[i][j].GetColor() == blanc) weight += actual[i][j].getIFitxa().GetPes();
+                    if (actual[i][j].GetColor() == negre) weight -= actual[i][j].getIFitxa().GetPes();
+                }
+            }
         return weight;
 
     }
-
 
     public Vector<FitxaProblema> getFitxes (Tauler tauler, Color color){
         FitxaProblema[][] fitxes = tauler.getTaulell();
@@ -76,5 +75,4 @@ public class Algorisme extends Maquina{
         }
         return sol;
     }
-
 }

@@ -4,16 +4,16 @@ package Domain;
 import java.util.Vector;
 
 /**
- * @class: Fitxa problema
+ * Fitxa problema
  * Classe que implementa els elements que té un problema
  * @author esalagran
  * */
 
 public class FitxaProblema{
 
-    Fitxa fitxa;
+    private Fitxa fitxa;
     Color c;
-    ParInt coord;
+    private ParInt coord;
     TipusPeça tP;
 
     public ParInt GetCoordenades(){
@@ -50,7 +50,7 @@ public class FitxaProblema{
         c = color;
     }
 
-    public FitxaProblema(TipusPeça nom, int Col, int Fila, Color color){
+    public FitxaProblema(TipusPeça nom, int Fila, int Col, Color color){
         CreaFitxa(nom);
         tP = nom;
         coord = new ParInt(Col, Fila);
