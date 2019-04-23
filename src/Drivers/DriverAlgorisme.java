@@ -119,6 +119,7 @@ public class DriverAlgorisme {
                     break;
                 case '4':
                     da.tryValidarProblema();
+                    break;
             }
         }
     }
