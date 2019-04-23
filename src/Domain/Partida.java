@@ -3,11 +3,26 @@ package Domain;
 
 public class Partida{
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_CYAN = "\u001B[37m";
+    public static final String ANSI_PURPLE = "\u001B[30m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+
+
     Usuari atacant, defensor;
     Color torn;
     Modalitat mode;
+    boolean isBlackHuman;
+    boolean isWhiteHuman;
     String guanyador;
     Problema probl;
+    Tauler tauler;
+    boolean hasEnded = false;
+    int moviments =0;
 
     public Partida(Usuari u1, Usuari u2, Problema p){
         atacant = u1;
@@ -15,13 +30,211 @@ public class Partida{
         probl = p;
     }
 
-    public Partida(Problema p, Modalitat mod,  Color t){
-        torn = t;
+    public Partida(Problema p, Modalitat mod){
+
         probl = p;
+        torn = probl.GetTorn();
         mode = mod;
+        tauler = p.getTauler();
     }
 
     public Color GetTorn(){
         return torn;
     }
+
+
+    public void ComençarPartida(){
+
+        if(mode==Modalitat.MH){
+            if(torn == Color.blanc){
+                isWhiteHuman = false;
+                isBlackHuman = true;
+            } else {
+                isWhiteHuman = true;
+                isBlackHuman = false;
+            }
+            TornMaquina();
+
+        }
+        if(mode == Modalitat.HM){
+            if(torn == Color.blanc){
+                isWhiteHuman = true;
+                isBlackHuman = false;
+            } else {
+                isWhiteHuman = false;
+                isBlackHuman = true;
+            }
+        }
+
+        if(mode == Modalitat.MM){
+                isWhiteHuman = false;
+                isBlackHuman = false;
+                TornMaquina();
+
+        }
+
+        if(mode == Modalitat.HH){
+            isWhiteHuman = true;
+            isBlackHuman = true;
+
+        }
+
+        dibuixaProblema();
+
+    }
+
+
+    public void MourePeça(ParInt origen, ParInt desti){
+
+        if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
+            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null ) {
+                if(torn == tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()).GetColor()){
+                    System.out.println(torn);
+                    System.out.println(tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()).GetColor());
+                }
+                else return;
+
+
+            } else return;
+
+
+        } else{
+            return;
+
+        }
+
+        if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
+            if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null) {
+                tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(),tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()));
+                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+
+
+
+            } else{
+                return;
+
+
+            }
+
+
+        } else{
+            return;
+
+
+        }
+
+        FiTorn();
+
+    }
+
+
+
+
+   public void TornMaquina(){
+      //mourePeça
+       System.out.println("HA MOGUT LA MAQUINA");
+       FiTorn();
+
+    }
+
+
+    public boolean hasEnded(){
+            return hasEnded;
+    }
+
+
+    public void FiTorn(){
+        moviments++;
+        if(moviments >= probl.GetMovimentsPerGuanyar()){
+            hasEnded = true;
+            return;
+        }
+        dibuixaProblema();
+        //CHECK MATE OR MOVEMENTS
+        if(torn == Color.blanc){
+            torn = Color.negre;
+            if(!isBlackHuman)
+                TornMaquina();
+        }
+        else{
+            torn = Color.blanc;
+            if(!isWhiteHuman)
+                TornMaquina();
+
+
+    }
+}
+
+    public void dibuixaProblema(){
+
+        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println();
+        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+        for(int i = 0; i < 8; i++){
+            System.out.print(ANSI_BLACK);
+            System.out.print(8-i);
+            System.out.print(" " + ANSI_RESET);
+
+            for (int j = 0; j<8; j++){
+                if(tauler.FitxaAt(i,j) != null){
+                    TipusPeça tP = tauler.FitxaAt(i,j).GetTipus();
+                    Color c = tauler.FitxaAt(i,j).GetColor();
+
+                    if(tP == TipusPeça.Cavall){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB,  'C' );
+                        else System.out.printf(formatW, 'C');
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'P');
+                        else System.out.printf(formatW, 'P');
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'A');
+                        else System.out.printf(formatW, 'A');
+
+                    }
+
+                    if(tP == TipusPeça.Torre){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'T');
+                        else System.out.printf(formatW,'T');
+                    }
+
+                    if(tP == TipusPeça.Rei){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'R');
+                        else System.out.printf(formatW, 'R');
+
+                    }
+
+                    if(tP == TipusPeça.Dama){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'D');
+                        else System.out.printf(formatW, 'D');
+                    }
+
+                }
+                else {
+                    System.out.print("|   ");
+                }
+            }
+            System.out.print(ANSI_BLACK + '|');
+            System.out.println();
+            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+
+
+        }
+
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
+
+    }
+
+
 }

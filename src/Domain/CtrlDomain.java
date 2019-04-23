@@ -40,7 +40,7 @@ public class CtrlDomain {
     public Tauler CrearPartida(int indexP, Modalitat m){
         Problema p = cjtProblemes.get(indexP);
 
-        partidaEnJoc = new Partida(p, m, p.GetTorn());
+        partidaEnJoc = new Partida(p, m);
         return p.FENtoTauler();
 
     }

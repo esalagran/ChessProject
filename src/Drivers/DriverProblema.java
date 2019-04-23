@@ -346,7 +346,7 @@ public class DriverProblema {
 
         while (!correcte) {
             p.dibuixaProblema();
-        System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça sense espais (lletra num)"+ ANSI_RESET);
+        System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)"+ ANSI_RESET);
         desti = StringToCoordenada(scanner.next());
 
 

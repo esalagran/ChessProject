@@ -237,7 +237,8 @@ public class CtrlPresentation {
                 }
 
                 else{
-                    // CD.DemanarTornMaquina(TaulerToFEN(tauler));
+                    Maquina ma = new Maquina();
+                    ma.GetMoviment(10, torn, new Tauler(tauler));
                     humaTorn = true;
                     if(torn == Color.blanc)
                         torn = Color.negre;

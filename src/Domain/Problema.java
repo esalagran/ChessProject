@@ -24,10 +24,11 @@ public class Problema{
     private int _id;
     private String _FEN;
     private Dificultat _dif;
-    private Color torn;
+    private Color torn = Color.blanc;
     private boolean _guardat;
     private Tauler tauler;
     private boolean _valid;
+    private int movimentsPerGuanyar = 10;
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
     //private Vector<FitxaProblema> _fitxesProblema;
@@ -93,6 +94,10 @@ public class Problema{
     }
 
     public Tauler getTauler() { return tauler; }
+
+    public int GetMovimentsPerGuanyar(){
+        return movimentsPerGuanyar;
+    }
 
     public void dibuixaProblema(){
 
@@ -210,12 +215,8 @@ public class Problema{
     public void MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null) {
+            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) == null) {
 
-               // tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
-
-
-            } else{
                 System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
 
             }

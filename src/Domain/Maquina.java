@@ -10,7 +10,7 @@ public class Maquina extends Usuari{
     protected int depth;
     private FitxaProblema fitxa_move;
     private ParInt pos_move;
-    private Algorisme algorisme;
+    private Algorisme algorisme = new Algorisme();
 
     public Maquina(){}
 
@@ -23,7 +23,7 @@ public class Maquina extends Usuari{
     }
 
     public Object[] GetMoviment(int d, Color color, Tauler tauler) {
-        int puntuacio = algorisme.Minimax(depth, color, tauler);
+        int puntuacio = algorisme.Minimax(d, color, tauler);
         fitxa_move = algorisme.getFitxa_move();
         pos_move = algorisme.getPos_move();
         return new Object[]{fitxa_move, pos_move};
