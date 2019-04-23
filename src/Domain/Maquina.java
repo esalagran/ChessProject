@@ -23,7 +23,7 @@ public class Maquina extends Usuari{
         return depth;
     }
 
-    public Color getGuanyador() { return guanyador; }
+    protected Color getGuanyador() { return guanyador; }
 
     public Object[] GetMoviment(int d, Color color, Tauler tauler) {
         int puntuacio = algorisme.Minimax(depth, color, tauler);

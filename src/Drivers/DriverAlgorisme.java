@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import static Domain.Dificultat.mitja;
 
-public class DriverMaquina {
+public class DriverAlgorisme {
 
     private Algorisme a;
     private Tauler tauler;
@@ -74,31 +74,51 @@ public class DriverMaquina {
     }
 
     public static void main(String [] args) throws IOException {
-        while (true){
-            Scanner help = new Scanner(System.in);
-            DriverMaquina dm = new DriverMaquina();
-            System.out.println("Driver per la classe Maquina:");
-            System.out.println("    Prem 1 per seleccionar la peces blanques");
-            System.out.println("    Prem 2 per seleccionar les peces negres");
-            System.out.println("    Prem 3 per provar el Minimax");
-            System.out.println("    Prem 4 per provar la validacio de problemes");
+        Scanner help = new Scanner(System.in);
+        DriverAlgorisme da = new DriverAlgorisme();
+        String s = "---------------------------------------\n"
+                + "--------ALGORISME DRIVER GUIDE---------\n"
+                + "---------------------------------------\n\n";
 
-            dm.createTauler2();
+        System.out.println(s);
 
-            char aux = (char) System.in.read();
-            String salto = help.nextLine();
+        s =     "~~~~~~~   a  -> EASY MODE                       ~~~~~~~\n" +
+                "~~~~~~~   b  -> DIFFICULT MODE                  ~~~~~~~\n";
+        System.out.println(s);
+        char aux  = (char) System.in.read();
+        String salto = help.nextLine();
+        if (aux == 'a') da.createTauler();
+        else da.createTauler2();
+
+        boolean exit = false;
+
+        while (!exit){
+
+                s = "----------CHOOSE YOUR OPTION----------\n"
+                        + "~~~~~~~   0  -> EXIT                       ~~~~~~~\n"
+                        + "~~~~~~~   1  -> SELECCIONAR PECES BLANQUES ~~~~~~~\n"
+                        + "~~~~~~~   2  -> SELECCIONAR PECES NEGRES    ~~~~~~~\n"
+                        + "~~~~~~~   3  -> MINIMAX    ~~~~~~~\n"
+                        + "~~~~~~~   4  -> VALIDAR PROBLEMA    ~~~~~~~\n";
+                System.out.println(s);
+
+            aux = (char) System.in.read();
+            salto = help.nextLine();
             switch(aux){
+                case '0':
+                    exit = true;
+                    break;
                 case '1':
-                    dm.getPecesBlanques();
+                    da.getPecesBlanques();
                     break;
                 case '2':
-                    dm.getPecesNegres();
+                    da.getPecesNegres();
                     break;
                 case '3':
-                    dm.tryMinimax();
+                    da.tryMinimax();
                     break;
                 case '4':
-                    dm.tryValidarProblema();
+                    da.tryValidarProblema();
             }
         }
     }
