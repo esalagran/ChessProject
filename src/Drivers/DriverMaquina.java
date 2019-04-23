@@ -66,6 +66,13 @@ public class DriverMaquina {
                 System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
     }
 
+    public void tryValidarProblema(){
+        a = new Algorisme();
+        boolean b = a.validarProblema(Color.blanc,tauler);
+        if (b)System.out.println("El problema es valid");
+        else System.out.println("El problema no es valid");
+    }
+
     public static void main(String [] args) throws IOException {
         while (true){
             Scanner help = new Scanner(System.in);
@@ -74,8 +81,9 @@ public class DriverMaquina {
             System.out.println("    Prem 1 per seleccionar la peces blanques");
             System.out.println("    Prem 2 per seleccionar les peces negres");
             System.out.println("    Prem 3 per provar el Minimax");
+            System.out.println("    Prem 4 per provar la validacio de problemes");
 
-            dm.createTauler();
+            dm.createTauler2();
 
             char aux = (char) System.in.read();
             String salto = help.nextLine();
@@ -88,6 +96,9 @@ public class DriverMaquina {
                     break;
                 case '3':
                     dm.tryMinimax();
+                    break;
+                case '4':
+                    dm.tryValidarProblema();
             }
         }
     }
