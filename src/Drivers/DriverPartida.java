@@ -30,7 +30,7 @@ public class DriverPartida {
                     ANSI_CYAN +  "1. Crear partida" + '\n' +
                     "2. Jugar partida" + '\n' +
                     "2. Moure peça" + '\n' +
-                    "3. Torn contrari" + '\n' 
+                    "3. Torn contrari" + '\n'
                     + ANSI_RESET);
 
 
