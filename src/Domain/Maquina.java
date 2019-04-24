@@ -53,10 +53,11 @@ public class Maquina extends Usuari{
      * @return Objecte amb la fitxa a moure i la posicio
      */
     public Object[] GetMoviment(int d, Color color, Tauler tauler) {
+        algorisme = new Algorisme();
         int puntuacio = algorisme.Minimax(d, color, tauler);
         fitxa_move = algorisme.getFitxa_move();
         pos_move = algorisme.getPos_move();
-        return new Object[]{fitxa_move, pos_move};
+        return new Object[]{fitxa_move.GetCoordenades(), pos_move};
     }
 
     /**
