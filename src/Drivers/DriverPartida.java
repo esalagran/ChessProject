@@ -30,8 +30,7 @@ public class DriverPartida {
                     ANSI_CYAN +  "1. Crear partida" + '\n' +
                     "2. Jugar partida" + '\n' +
                     "2. Moure peça" + '\n' +
-                    "3. Torn contrari" + '\n' +
-                    "4. Jugar partida" + '\n'
+                    "3. Torn contrari" + '\n' 
                     + ANSI_RESET);
 
 
@@ -112,8 +111,8 @@ public class DriverPartida {
     public static void CrearPartida(){
 
         System.out.println(ANSI_PURPLE + "Selecciona una modalitat" + '\n' +
-                                 ANSI_CYAN +  "1. Crear partida" + '\n' +
-                                    "2. Humà vs humà" + '\n' +
+                                 ANSI_CYAN +
+                                    "1. Humà vs humà" + '\n' +
                                     "2. Humà vs màquina" + '\n'  +
                                     "3. Màquina vs  humà" + '\n'  +
                                     "4. Màquina vs màquina" + '\n'

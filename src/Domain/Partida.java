@@ -1,6 +1,10 @@
 
 package Domain;
 
+import java.io.Console;
+import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+
 public class Partida{
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -23,6 +27,8 @@ public class Partida{
     Tauler tauler;
     boolean hasEnded = false;
     int moviments =0;
+    Maquina m = new Maquina();
+
 
     public Partida(Usuari u1, Usuari u2, Problema p){
         atacant = u1;
@@ -89,7 +95,7 @@ public class Partida{
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null ) {
                 if(torn == tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()).GetColor()){
-                    System.out.println(torn);
+
                     System.out.println(tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()).GetColor());
                 }
                 else return;
@@ -104,9 +110,29 @@ public class Partida{
         }
 
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-            if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null) {
+            if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null || (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) != null && (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()).GetColor() != torn ) )) {
+
+                boolean possible = false;
+                Vector<ParInt> movimentsPossibles = tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()).GetMoviments(tauler);
+                for(int i = 0; i < movimentsPossibles.size();i++){
+                   ParInt pos = movimentsPossibles.elementAt(i);
+                   int posX = pos.GetFirst();
+                   int posY = pos.GetSecond();
+
+                   if(posX == desti.GetFirst() && posY == desti.GetSecond()){
+                       possible = true;
+                       System.out.println(posX + " " + posY);
+                   }
+                }
+
+                if(possible){
+
                 tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(),tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()));
                 tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+                } else{
+                    System.out.println("Moviment no possible");
+                    return;
+                }
 
 
 
@@ -131,8 +157,20 @@ public class Partida{
 
 
    public void TornMaquina(){
-      //mourePeça
-       System.out.println("HA MOGUT LA MAQUINA");
+
+       System.out.print("Es el torn de les: ");
+       if(torn == Color.blanc)
+           System.out.println("Blanques");
+       else System.out.println(("Negres"));
+
+       Object[] mov =  m.GetMoviment(20, torn, tauler);
+       ParInt a = (ParInt) mov[0];
+       ParInt b = (ParInt) mov[1];
+       System.out.println(a.GetFirst() + " " + a.GetSecond());
+       System.out.println(b.GetFirst() + " " + b.GetSecond());
+
+       tauler.moureFitxa(a,b);
+
        FiTorn();
 
     }
