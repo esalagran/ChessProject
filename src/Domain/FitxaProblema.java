@@ -12,25 +12,17 @@ import java.util.Vector;
 public class FitxaProblema{
 
     private Fitxa fitxa;
-    Color c;
+    private Color c;
     private ParInt coord;
-    TipusPeça tP;
+    private TipusPeça tP;
 
     public ParInt GetCoordenades(){
         return coord;
     }
 
-    public int GetCol(){
-        return coord.GetFirst();
-    }
-
-    public int GetFila(){
-        return coord.GetSecond();
-    }
-
-    public TipusPeça GetTipus(){
+    /*public TipusPeça GetTipus(){
         return tP;
-    }
+    }*/
 
     public Color GetColor(){
         return c;

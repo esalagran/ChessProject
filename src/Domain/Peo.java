@@ -30,7 +30,6 @@ public class Peo extends Fitxa {
         int incr;
         if (color.equals(Color.blanc)) incr = -1;
         else incr = 1;
-
         move = new ParInt(coord.GetFirst() + incr, coord.GetSecond());
         if (actual.FitxaAt(move.GetFirst(), move.GetSecond()) == null)
             super.addMove(move, color, actual, mov);

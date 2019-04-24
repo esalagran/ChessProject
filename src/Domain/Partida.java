@@ -178,7 +178,7 @@ public class Partida{
 
             for (int j = 0; j<8; j++){
                 if(tauler.FitxaAt(i,j) != null){
-                    TipusPeça tP = tauler.FitxaAt(i,j).GetTipus();
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString());
                     Color c = tauler.FitxaAt(i,j).GetColor();
 
                     if(tP == TipusPeça.Cavall){

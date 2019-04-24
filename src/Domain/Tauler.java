@@ -12,8 +12,8 @@ public class Tauler {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if (t[i][j] != null){
-                    if (t[i][j].tP == TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
-                    if (t[i][j].tP == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
+                    if (Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString())== TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
+                    if (Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
                 }
             }
         }
@@ -67,8 +67,8 @@ public class Tauler {
             //System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " a (" + move.GetFirst() + "," + move.GetSecond() + ")");
 
             fp.SetCoordenades(move);
-            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
-            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
+            if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
+            if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
         }
     }
 }

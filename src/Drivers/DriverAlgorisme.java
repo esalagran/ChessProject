@@ -55,7 +55,7 @@ public class DriverAlgorisme {
         Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
         for (FitxaProblema e : peces)
             if (e != null)
-                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
+                System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
     }
 
     public void getPecesBlanques(){
@@ -63,7 +63,7 @@ public class DriverAlgorisme {
         Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
         for (FitxaProblema e : peces)
             if (e != null)
-                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
+                System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
     }
 
     public void tryValidarProblema(){
