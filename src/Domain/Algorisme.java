@@ -40,7 +40,7 @@ public class Algorisme extends Maquina{
                     }
                     //Undo
                     if (!taken)tauler.moureFitxa(moviments.get(j), ini);
-                    else tauler.desferJugada(moviments.get(j),ini,substituida);
+                    else tauler.desferJugada(moviments.get(j),ini, substituida);
                 }
             }
             return best_move;
@@ -52,7 +52,7 @@ public class Algorisme extends Maquina{
     public ParInt getPos_move(){return pos_move;}
 
     public boolean validarProblema(Color torn, Tauler tauler){
-        int a = Minimax(12,torn,tauler);
+        int a = Minimax(10,torn,tauler);
         return super.getGuanyador() != null;
     }
 
