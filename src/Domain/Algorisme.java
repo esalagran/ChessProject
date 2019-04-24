@@ -16,11 +16,18 @@ public class Algorisme extends Maquina{
             int best_move = -100000;
             int val;
             Vector<FitxaProblema> peces = getFitxes(tauler, color);
+            FitxaProblema substituida = null;
+            boolean taken;
             for (int i = 0; i < peces.size(); i++){
                 FitxaProblema aux = peces.get(i);
                 Vector <ParInt> moviments = aux.GetMoviments(tauler);
                 ParInt ini = aux.GetCoordenades();
                 for (int j = 0; j < moviments.size(); j++){
+                    taken = false;
+                    if (tauler.FitxaAt(moviments.get(j).GetFirst(),moviments.get(j).GetSecond()) != null){
+                        substituida = tauler.FitxaAt(moviments.get(j).GetFirst(),moviments.get(j).GetSecond());
+                        taken =true;
+                    }
                     tauler.moureFitxa(ini,moviments.get(j));
                     if (color.equals(blanc))
                         val = -Minimax (d-1, negre,tauler);
@@ -32,7 +39,8 @@ public class Algorisme extends Maquina{
                         pos_move = moviments.get(j);
                     }
                     //Undo
-                    tauler.moureFitxa(moviments.get(j), ini);
+                    if (!taken)tauler.moureFitxa(moviments.get(j), ini);
+                    else tauler.desferJugada(moviments.get(j),ini,substituida);
                 }
             }
             return best_move;
@@ -44,7 +52,7 @@ public class Algorisme extends Maquina{
     public ParInt getPos_move(){return pos_move;}
 
     public boolean validarProblema(Color torn, Tauler tauler){
-        int a = Minimax(20,torn,tauler);
+        int a = Minimax(12,torn,tauler);
         return super.getGuanyador() != null;
     }
 

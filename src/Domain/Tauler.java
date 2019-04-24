@@ -57,15 +57,22 @@ public class Tauler {
         return taulell[i][j];
     }
 
+    public void desferJugada(ParInt ini, ParInt move, FitxaProblema peça){
+        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0 && taulell[ini.GetFirst()][ini.GetSecond()] != null) {
+            taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
+            taulell[ini.GetFirst()][ini.GetSecond()] = peça;
+            FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];
+            fp.SetCoordenades(move);
+            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
+            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
+        }
+    }
+
     public void moureFitxa(ParInt ini, ParInt move){
         if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0 && taulell[ini.GetFirst()][ini.GetSecond()] != null){
             taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
             taulell[ini.GetFirst()][ini.GetSecond()] = null;
             FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];
-
-            //System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " de (" + ini.GetFirst() + "," + ini.GetSecond() + ")");
-            //System.out.println("Mou: " + fp.GetTipus() + " " + fp.GetColor() + " a (" + move.GetFirst() + "," + move.GetSecond() + ")");
-
             fp.SetCoordenades(move);
             if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
             if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
