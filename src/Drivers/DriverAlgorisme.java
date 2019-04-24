@@ -23,7 +23,7 @@ public class DriverAlgorisme {
         FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.blanc);
         FitxaProblema meva = new FitxaProblema(TipusPeça.Peo,6,3,Color.blanc);
         FitxaProblema cavall = new FitxaProblema(TipusPeça.Cavall,5,6,Color.blanc);
-
+        /*
         FitxaProblema[][] aux =
                 {
                         {null,null,null,null,null,null,null,null},
@@ -34,18 +34,23 @@ public class DriverAlgorisme {
                         {null,null,null,null,null,null,cavall,null},
                         {null,null,null,meva,null,null,null,null},
                         {null,null,null,null,null,null,null,null}
-                };
+                };*/
+        FitxaProblema[][] aux = new FitxaProblema[8][8];
+        aux [4][4] = peça; aux[2][1] = peça2;
+        aux [2][3] = rival1; aux[5][2] = rival2;
+        aux [3][6] = meva; aux[6][5] = cavall;
+
         tauler = new Tauler(aux);
     }
 
     public void createTauler2(){
-            Problema p = new Problema (0000, "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2", mitja, null);
+            Problema p = new Problema (0000, "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1", mitja, null);
             tauler = p.getTauler();
         }
 
     public void tryMinimax(){
         a = new Algorisme();
-        int out = a.Minimax(3,Color.blanc,tauler);
+        int out = a.Minimax(3,Color.blanc,tauler,0);
         System.out.println(out);
 
     }
@@ -55,7 +60,7 @@ public class DriverAlgorisme {
         Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
         for (FitxaProblema e : peces)
             if (e != null)
-                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
+                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetCol() + "," + e.GetFila() + ")");
     }
 
     public void getPecesBlanques(){
@@ -63,14 +68,14 @@ public class DriverAlgorisme {
         Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
         for (FitxaProblema e : peces)
             if (e != null)
-                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetFila() + "," + e.GetCol() + ")");
+                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetCol() + "," + e.GetFila() + ")");
     }
 
     public void tryValidarProblema(){
         a = new Algorisme();
         boolean b = a.validarProblema(Color.blanc,tauler);
-        if (b)System.out.println("El problema es valid");
-        else System.out.println("El problema no es valid");
+        if (b) System.out.println("El problema es valid en " + a.getDepth() + " passos");
+        else System.out.println("El problema no es valid en 6 jugades");
     }
 
     public static void main(String [] args) throws IOException {
