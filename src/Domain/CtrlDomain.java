@@ -59,7 +59,7 @@ public class CtrlDomain {
         try {
             if (pObert.getTauler().FitxaAt(fi) != null)
                 System.out.println("Ja hi ha una peça a la posició final");
-            else if (pObert.getTauler().FitxaAt(ini) != null)
+            else if (pObert.getTauler().FitxaAt(ini) == null)
                 System.out.println("No hi ha cap peça a la posició inicial");
             else
                 pObert.MourePeça(ini, fi);
