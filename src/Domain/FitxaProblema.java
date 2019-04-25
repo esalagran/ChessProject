@@ -38,7 +38,7 @@ public class FitxaProblema{
 
     public FitxaProblema(TipusPeça nom, int Fila, int Col, Color color){
         CreaFitxa(nom);
-        coord = new ParInt(Col, Fila);
+        coord = new ParInt(Fila, Col);
         c = color;
     }
 
