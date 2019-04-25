@@ -21,7 +21,9 @@ public class Maquina extends Usuari{
     /**
      * Creadora buida
      */
-    public Maquina(){}
+    public Maquina(){
+        guanyador = null;
+    }
 
     /**
      * Setter de la profunditat de cerca
@@ -54,7 +56,7 @@ public class Maquina extends Usuari{
      */
     public Object[] GetMoviment(int d, Color color, Tauler tauler) {
         algorisme = new Algorisme();
-        int puntuacio = algorisme.Minimax(d, color, tauler);
+        int puntuacio = algorisme.Minimax(d, color, tauler,0);
         fitxa_move = algorisme.getFitxa_move();
         pos_move = algorisme.getPos_move();
         return new Object[]{fitxa_move.GetCoordenades(), pos_move};
@@ -109,18 +111,19 @@ public class Maquina extends Usuari{
                 if (aux != null && aux.GetColor() == color){
                     Vector<ParInt> moves = aux.getIFitxa().GetMoviments(new ParInt(i,j),tauler, aux.GetColor());
                     for (int k = 0; k < moves.size(); k++) {
+                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k).GetFirst(),moves.get(k).GetSecond());
                         tauler.moureFitxa(new ParInt(i, j), moves.get(k));
                         if (color == blanc) if (!isAttacked(tauler, tauler.getWhiteKing(), negre)) {
                             //Sino es atacat esfaig moviment i retorno evitable
-                            tauler.moureFitxa(moves.get(k), new ParInt(i, j));
+                            tauler.desferJugada(moves.get(k), new ParInt(i, j),substituida);
                             return true;
                         }
                         if (color == negre) if (!isAttacked(tauler, tauler.getBlackKing(), blanc)){
                             //Sino es atacat esfaig moviment i retorno evitable
-                            tauler.moureFitxa(moves.get(k), new ParInt(i, j));
+                            tauler.desferJugada(moves.get(k), new ParInt(i, j),substituida);
                             return true;
                         }
-                        tauler.moureFitxa(moves.get(k),new ParInt(i,j));
+                        tauler.desferJugada(moves.get(k),new ParInt(i,j),substituida);
                     }
                 }
             }
@@ -129,5 +132,4 @@ public class Maquina extends Usuari{
         else guanyador = negre;
         return false;
     }
-
 }

@@ -279,6 +279,7 @@ public class Problema{
 
     public void validarProblema (){
         Algorisme aux = new Algorisme();
+
         _valid = aux.validarProblema(torn,tauler);
     }
 
