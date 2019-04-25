@@ -133,21 +133,41 @@ public class Partida{
                    int posX = pos.GetFirst();
                    int posY = pos.GetSecond();
 
-                   if(posX == desti.GetFirst() && posY == desti.GetSecond()){
-                       possible = true;
+                    if(posX == desti.GetFirst() && posY == desti.GetSecond()){
+                       if(torn == Color.negre){
+                           FitxaProblema f = tauler.FitxaAt(desti);
+                           tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
+                           tauler.AfegirPeçaAt(origen, null);
+                           possible = true;
+                           if(m.isAttacked(tauler, tauler.getBlackKing(), torn)){
+                               System.out.println("No possible");
+                               tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
+                               tauler.AfegirPeçaAt(desti, f);
+                               return;
+                           }
+                       }
+
+                       else{
+                           FitxaProblema f = tauler.FitxaAt(desti);
+                           tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
+                           tauler.AfegirPeçaAt(origen, null);
+                           possible = true;
+                           if(m.isAttacked(tauler, tauler.getWhiteKing(), torn)){
+                               System.out.println("No possible");
+                               tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
+                               tauler.AfegirPeçaAt(desti, f);
+                               return;
+                           }}
+
                        System.out.println(posX + " " + posY);
                    }
                 }
 
-                if(possible){
+                if(!possible){
 
-                tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
-                tauler.AfegirPeçaAt(origen, null);
-                } else{
                     System.out.println("Moviment no possible");
                     return;
                 }
-
 
 
             } else{
@@ -181,7 +201,7 @@ public class Partida{
            System.out.println("Blanques");
        else System.out.println(("Negres"));
 
-       Object[] mov =  m.GetMoviment(5, torn, tauler);
+       Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
        System.out.println(a.GetFirst() + " " + a.GetSecond());

@@ -180,7 +180,7 @@ public class CtrlPresentation {
                 case "2":
                     System.out.print(ANSI_PURPLE + "Introdueix un FEN valid: " + ANSI_RESET);
                     String FEN = scanner.next();
-                    Problema p = new Problema(0,FEN, Dificultat.facil, new  Huma() );
+                    Problema p = new Problema(FEN);
                     ModificaTauler(p.FENtoTauler().getTaulell());
 
                     break;
