@@ -111,7 +111,7 @@ public class Maquina extends Usuari{
                 if (aux != null && aux.GetColor() == color){
                     Vector<ParInt> moves = aux.getIFitxa().GetMoviments(new ParInt(i,j),tauler, aux.GetColor());
                     for (int k = 0; k < moves.size(); k++) {
-                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k).GetFirst(),moves.get(k).GetSecond());
+                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k));
                         tauler.moureFitxa(new ParInt(i, j), moves.get(k));
                         if (color == blanc) if (!isAttacked(tauler, tauler.getWhiteKing(), negre)) {
                             //Sino es atacat esfaig moviment i retorno evitable

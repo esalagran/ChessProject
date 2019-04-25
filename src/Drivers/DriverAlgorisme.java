@@ -54,7 +54,7 @@ public class DriverAlgorisme {
         System.out.println(out);
         FitxaProblema sol = a.getFitxa_move();
         ParInt coord = a.getPos_move();
-        System.out.println(sol.GetTipus() + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
+        System.out.println(Convert.ClassToTipusPeça(sol.getIFitxa().getClass().toString()) + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
     }
 
     public void getPecesNegres(){

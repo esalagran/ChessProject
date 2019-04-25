@@ -42,7 +42,7 @@ public class Algorisme extends Maquina{
                 FitxaProblema aux = peces.get(i);
                 Vector <ParInt> moviments = aux.GetMoviments(tauler);
                 for (int j = 0; j < moviments.size(); j++){
-                    substituida = tauler.FitxaAt(moviments.get(j).GetFirst(),moviments.get(j).GetSecond());
+                    substituida = tauler.FitxaAt(moviments.get(j));
                     ParInt ini = aux.GetCoordenades();
                     tauler.moureFitxa(ini,moviments.get(j));
                     if (color.equals(blanc)) val = -Minimax (d-1, negre,tauler,step_counter+1);

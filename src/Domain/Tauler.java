@@ -129,8 +129,8 @@ public class Tauler {
 
         FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];
         fp.SetCoordenades(move);
-        if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
-        if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
+        if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
+        if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
     }
 
     /**
@@ -145,6 +145,5 @@ public class Tauler {
             fp.SetCoordenades(move);
             if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
             if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
-        }
     }
 }
