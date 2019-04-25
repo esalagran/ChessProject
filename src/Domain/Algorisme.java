@@ -8,6 +8,7 @@ import static Domain.Color.negre;
 public class Algorisme extends Maquina{
 
     private final int INFINIT = 100000;
+    protected final int depthValidar = 6;
     private FitxaProblema fitxa_move;
     private ParInt pos_move;
     private int depth;
@@ -32,12 +33,12 @@ public class Algorisme extends Maquina{
      *  @return Estimacio de la millor jugada
      */
     public int Minimax (int d, Color color, Tauler tauler, int step_counter) {
-        if (step_counter < depth && check(tauler,color)) {
-            System.out.println("MATE");
+        boolean check = check(tauler,color);
+        if (step_counter < depth && check) {
             depth = (step_counter + 1)/2;
             guanyador = Convert.InvertColor(color);
         }
-        if (d == 0 || check(tauler,color)) return estimacio(tauler);
+        if (d == 0 || check) return estimacio(tauler);
         else {
             int best_move = -INFINIT;
             int val;
@@ -49,13 +50,16 @@ public class Algorisme extends Maquina{
                     substituida = tauler.FitxaAt(moviment);
                     ParInt ini = aux.GetCoordenades();
                     tauler.moureFitxa(ini, moviment);
-                    if (color.equals(blanc)) val = -Minimax(d - 1, negre, tauler, step_counter + 1);
+
+                if (color.equals(blanc)) val = -Minimax(d - 1, negre, tauler, step_counter + 1);
                     else val = -Minimax(d - 1, blanc, tauler, step_counter + 1);
 
-                    if (torn.equals(color) && val > best_move) {
+                    if (val > best_move) {
                         best_move = val;
-                        fitxa_move = aux;
-                        pos_move = moviment;
+                        if (torn.equals(color)) {
+                            fitxa_move = aux;
+                            pos_move = moviment;
+                        }
                     }
                     tauler.desferJugada(moviment, ini, substituida);
                 }
@@ -97,7 +101,7 @@ public class Algorisme extends Maquina{
             return false;
         }
         else{
-            int a = Minimax(6,torn,tauler,0);
+            int a = Minimax(depthValidar,torn,tauler,0);
             return guanyador != null;
         }
     }

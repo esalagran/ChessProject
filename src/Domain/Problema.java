@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * @class Problema
- * \brief
+ * \brief Classe contenidora d'un problema
  */
 
 public class Problema{
@@ -264,9 +264,6 @@ public class Problema{
         }
 
     }
-
-
-
 
     public void setDificultat (Dificultat d){
         _dif = d;
