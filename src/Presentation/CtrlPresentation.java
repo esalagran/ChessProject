@@ -24,7 +24,7 @@ public class CtrlPresentation {
 
 
 
-    private Domain.CtrlDomain CD = new Domain.CtrlDomain("", this);
+    private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
 
     public void dibuixaTauler(FitxaProblema[][] tauler){
@@ -40,7 +40,7 @@ public class CtrlPresentation {
 
             for (int j = 0; j<8; j++){
                 if(tauler[i][j] != null){
-                    TipusPeça tP = tauler[i][j].GetTipus();
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString());
                     Color c = tauler[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
@@ -212,7 +212,7 @@ public class CtrlPresentation {
 
     }
 
-
+/*
     private void JugarPartida(int indexP, Modalitat m){
         boolean humaTorn = false;
         FitxaProblema[][] tauler =   CD.CrearPartida(indexP, m).getTaulell();
@@ -308,7 +308,7 @@ public class CtrlPresentation {
 
 
 
-    }
+    }*/
 
 
     private void DemanarMoviment( FitxaProblema[][] tauler, Color torn){
@@ -634,11 +634,11 @@ public class CtrlPresentation {
                         case "1":
                             System.out.println(ANSI_RED + "La funcionalitat de validar el problema encara no està implementada, per tant el problema " +
                                     "es guardarà sense validar." + ANSI_RESET);
-                            CD.AfegirProblema(TaulerToFEN(tauler), false);
+                            CD.CarregarProblema(TaulerToFEN(tauler));
                             Start();
                             break;
                         case "2":
-                            CD.AfegirProblema(TaulerToFEN(tauler), false);
+                            CD.CreaProblema();
                             Start();
                             break;
                         default:
@@ -698,7 +698,7 @@ public class CtrlPresentation {
                         FEN+=spaces;
                         spaces = 0;
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Alfil){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Alfil){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="b";
                         }
@@ -706,14 +706,14 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Torre){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Torre){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="r";
                         }
                         else FEN+="R";
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Peo){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Peo){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="p";
                         }
@@ -721,7 +721,7 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Dama){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Dama){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="q";
                         }
@@ -729,7 +729,7 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Rei){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="k";
                         }
@@ -737,7 +737,7 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Cavall){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Cavall){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="n";
                         }
@@ -790,7 +790,7 @@ public class CtrlPresentation {
 
         boolean done = false;
         String response = "0";
-        List<Problema> problemes =  CD.GetProblemes();
+        List<Problema> problemes =  null;
         int pagina = 0;
         int aux;
 
@@ -895,7 +895,7 @@ public class CtrlPresentation {
         Color c = Color.blanc;
         int n = 1;
         boolean isRandom = false;
-        List<Problema> problemes =  CD.GetProblemes();
+        List<Problema> problemes =  null;
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >4 ) {
             System.out.print(ANSI_PURPLE + "Tria la modalitat de la partida: " + '\n' +
@@ -951,7 +951,7 @@ public class CtrlPresentation {
                 case "1":
                     isRandom = true;
                     int randIndex = (int)(Math.random() * problemes.size());
-                    JugarPartida(randIndex, mod);
+                    //JugarPartida(randIndex, mod);
 
                     break;
                 case "2":

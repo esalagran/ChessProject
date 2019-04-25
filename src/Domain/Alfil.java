@@ -2,7 +2,7 @@ package Domain;
 
 
 /**
- * @Class: classe on hi ha la informació referent a àlfil
+ * @Class: classe on hi ha la informació referent a la peça àlfil
  * */
 public class Alfil extends Fitxa {
     private VectMov[] _moviments;

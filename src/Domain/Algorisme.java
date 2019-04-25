@@ -7,53 +7,57 @@ import static Domain.Color.negre;
 
 public class Algorisme extends Maquina{
 
-    protected final int INFINIT = 100000;
+    private final int INFINIT = 100000;
     private FitxaProblema fitxa_move;
     private ParInt pos_move;
-    private int step_counter;
     private int depth;
+    private Color torn;
+    private Color guanyador;
 
     /**
      * \pre:
      * \post: Inicialitzacio de les propietats basiques d'algorisme
      */
     public Algorisme (){
-        step_counter = 0;
         depth = INFINIT;
     }
 
+    public void setTorn(Color torn) { this.torn = torn;}
+
+    public Color getGuanyador(){ return guanyador;}
+
     /**
-     * \pre: d > 0, tauler representa un problema valid, step_counter = 0
+     * \pre: d > 0, tauler representa un problema valid, step_counter = 0, s'ha cridat setTorn
      * \post: Es guarden les propietats de la meva jugador amb profunditat d pel Color color
      *  @return Estimacio de la millor jugada
      */
     public int Minimax (int d, Color color, Tauler tauler, int step_counter) {
         if (step_counter < depth && check(tauler,color)) {
             System.out.println("MATE");
-            depth = step_counter;
+            depth = (step_counter + 1)/2;
+            guanyador = Convert.InvertColor(color);
         }
         if (d == 0 || check(tauler,color)) return estimacio(tauler);
         else {
             int best_move = -INFINIT;
             int val;
             Vector<FitxaProblema> peces = getFitxes(tauler, color);
-            FitxaProblema substituida = null;
-            for (int i = 0; i < peces.size(); i++){
-                FitxaProblema aux = peces.get(i);
-                Vector <ParInt> moviments = aux.GetMoviments(tauler);
-                for (int j = 0; j < moviments.size(); j++){
-                    substituida = tauler.FitxaAt(moviments.get(j).GetFirst(),moviments.get(j).GetSecond());
+            FitxaProblema substituida;
+            for (FitxaProblema aux : peces) {
+                Vector<ParInt> moviments = aux.GetMoviments(tauler);
+                for (ParInt moviment : moviments) {
+                    substituida = tauler.FitxaAt(moviment);
                     ParInt ini = aux.GetCoordenades();
-                    tauler.moureFitxa(ini,moviments.get(j));
-                    if (color.equals(blanc)) val = -Minimax (d-1, negre,tauler,step_counter+1);
-                    else val = -Minimax (d-1, blanc,tauler,step_counter+1);
+                    tauler.moureFitxa(ini, moviment);
+                    if (color.equals(blanc)) val = -Minimax(d - 1, negre, tauler, step_counter + 1);
+                    else val = -Minimax(d - 1, blanc, tauler, step_counter + 1);
 
-                    if (val > best_move){
+                    if (torn.equals(color) && val > best_move) {
                         best_move = val;
-                        fitxa_move = peces.get(i);
-                        pos_move = moviments.get(j);
+                        fitxa_move = aux;
+                        pos_move = moviment;
                     }
-                    tauler.desferJugada(moviments.get(j),ini, substituida);
+                    tauler.desferJugada(moviment, ini, substituida);
                 }
             }
             return best_move;
@@ -87,9 +91,15 @@ public class Algorisme extends Maquina{
      * @return Retorna true si el problema es valid, sino fals
      */
     public boolean validarProblema(Color torn, Tauler tauler){
-        int a = Minimax(6,torn,tauler,0);
-        System.out.println(a);
-        return super.getGuanyador() != null;
+        this.torn = torn;
+        if (tauler.getWhiteKing() == null || tauler.getBlackKing() == null){
+            System.out.println("Falten reis");
+            return false;
+        }
+        else{
+            int a = Minimax(6,torn,tauler,0);
+            return guanyador != null;
+        }
     }
 
     /**
