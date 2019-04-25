@@ -33,7 +33,7 @@ public class DriverAlgorisme {
     }
 
     public void createTauler2(){
-            Problema p = new Problema (0000, "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1", mitja, null);
+            Problema p = new Problema ( "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
             tauler = p.getTauler();
         }
 

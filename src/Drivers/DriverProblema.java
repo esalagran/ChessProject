@@ -337,7 +337,6 @@ public class DriverProblema {
             FEN += next;
             }
         }
-        p = new Problema(0,FEN, Dificultat.facil, new Huma() );
         p = new Problema(FEN);
         p.dibuixaProblema();
         }

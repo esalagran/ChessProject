@@ -35,7 +35,7 @@ class TaulerTest {
 
     @Test
     void afegirFitxaAt() {
-        FitxaProblema fp = new FitxaProblema(TipusPeça.Cavall,6,6, Color.blanc);
+        FitxaProblema fp = new FitxaProblema(TipusPeça.Cavall,coord, Color.blanc);
         t.AfegirPeçaAt(coord, fp);
         FitxaProblema[][] tauler = t.getTaulell();
         for (int i = 0; i<8; ++i) {
@@ -94,7 +94,7 @@ class TaulerTest {
     void fitxaMeva() {
         FitxaProblema fp = new FitxaProblema(TipusPeça.Cavall, coord,Color.blanc);
         t.AfegirPeçaAt(coord, fp);
-        ParInt pi = new ParInt(5,5);
+        ParInt pi = new ParInt(6,6);
         assertFalse(t.PeçaMeva(pi, Color.negre), "hi ha una peça, però no és del meu color");
         assertTrue(t.PeçaMeva(pi, Color.blanc), "hi ha una peça i és del meu color");
         pi.SetSecond(4);
@@ -105,7 +105,7 @@ class TaulerTest {
     void fitxaRival() {
         FitxaProblema fp = new FitxaProblema(TipusPeça.Cavall, coord,Color.blanc);
         t.AfegirPeçaAt(coord, fp);
-        ParInt pi = new ParInt(5,5);
+        ParInt pi = new ParInt(6,6);
         assertTrue(t.PeçaRival(pi, Color.negre), "hi ha una peça i és del color contrari");
         assertFalse(t.PeçaRival(pi, Color.blanc), "hi ha una peça i és del meu color");
         pi.SetSecond(4);
@@ -157,7 +157,7 @@ class TaulerTest {
 
         t.moureFitxa(rival1.GetCoordenades(), new ParInt(4, 3));
         t.desferJugada(rival1.GetCoordenades(), new ParInt(3, 2), null);
-        assertEquals(2, rival1.GetCoordenades().GetFirst());
-        assertEquals(3, rival1.GetCoordenades().GetSecond());
+        assertEquals(3, rival1.GetCoordenades().GetFirst());
+        assertEquals(2, rival1.GetCoordenades().GetSecond());
     }
 }
