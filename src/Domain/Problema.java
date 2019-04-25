@@ -260,17 +260,13 @@ public class Problema{
 
     }
 
-
-
-
     public void setDificultat (Dificultat d){
         _dif = d;
     }
 
     public boolean GetValid(){
 
-        return _valid
-                ;
+        return _valid;
     }
 
 
