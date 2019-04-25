@@ -44,11 +44,21 @@ public class Partida{
         tauler = p.getTauler();
     }
 
+    /**
+     * \pre:
+     * \post: retporna el torn actual, a quin color li toca tirar
+     * @return Retorna torn
+     */
     public Color GetTorn(){
         return torn;
     }
 
 
+    /**
+     * \pre: l'atribut mode conté una modalitat vàlida
+     * \post: els booleans isWhiteHuman i isBlackHuman s'inincialitzen correctament, en cas que el primer torn li toqui a la maquina, crida la funció TornMaquina
+     * @return
+     */
     public void ComençarPartida(){
 
         if(mode==Modalitat.MH){
@@ -89,7 +99,11 @@ public class Partida{
 
     }
 
-
+    /**
+     * \pre: posició origen i posició desti valides (entre 0 i 7)
+     * \post: mou la peça que hi ha a la posició origen a la posició destí (si el moviment és possible en el context de la partida)
+     * @return
+     */
     public void MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
@@ -155,7 +169,11 @@ public class Partida{
 
 
 
-
+    /**
+     * \pre: torn i tauler diferent de null
+     * \post:  ha mogut la maquina
+     * @return
+     */
    public void TornMaquina(){
 
        System.out.print("Es el torn de les: ");
@@ -163,7 +181,7 @@ public class Partida{
            System.out.println("Blanques");
        else System.out.println(("Negres"));
 
-       Object[] mov =  m.GetMoviment(20, torn, tauler);
+       Object[] mov =  m.GetMoviment(5, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
        System.out.println(a.GetFirst() + " " + a.GetSecond());
@@ -175,12 +193,21 @@ public class Partida{
 
     }
 
-
+    /**
+     * \pre:
+     * \post: retorna si la partida ha acabat
+     * @return hasEnded
+     */
     public boolean hasEnded(){
             return hasEnded;
     }
 
 
+    /**
+     * \pre: torn i problema diferent de null
+     * \post: ha acabat el torn
+     * @return
+     */
     public void FiTorn(){
         moviments++;
         if(moviments >= probl.GetMovimentsPerGuanyar()){

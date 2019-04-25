@@ -62,34 +62,9 @@ public class Problema{
 
 
     }
-    /**
-     * Constructora buida
-     */
-    public Problema() {
-        Initialize();
-    }
-
-    /**
-     * Constructora 2
-     */
-
-    public Problema (int id, String FEN, Dificultat d, Huma h){
-        _FEN = FEN;
-        Initialize();
-        _id = id;
-        tauler =  FENtoTauler();
-        _dif = d;
-        _creador = h;
-    }
 
     public Problema(String FEN){
         _FEN = FEN;
-        Initialize();
-        tauler = FENtoTauler();
-        _valid = false;
-    }
-
-    private void Initialize(){
         _pecesMax = NumMaxPeces.getInstance();
         _numTipusPeça = new HashMap<>();
         FillDictionary();
@@ -97,17 +72,37 @@ public class Problema{
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
             else this.torn = Color.negre;
         }
+        tauler = FENtoTauler();
+        _valid = false;
     }
 
+    /**
+     * \pre: torn es un color valid
+     * \post: retorna el color del jugador atacant
+     * @return torn
+     */
     public Color GetTorn(){
         return torn;
     }
 
+
+    /**
+     * \pre: tauler es un tauler valid
+     * \post: retorna el tauler del problema
+     * @return tauler
+     */
     public Tauler getTauler() { return tauler; }
 
+    /**
+     * \pre: movimentsPerGuanyar diferent de null
+     * \post: retorna els moviments necessaris per fer mat
+     * @return movimentsPerGuanyar
+     */
     public int GetMovimentsPerGuanyar(){
         return movimentsPerGuanyar;
     }
+
+
 
     public void dibuixaProblema(){
 
@@ -273,14 +268,16 @@ public class Problema{
     }
 
     public boolean GetValid(){
-        return _valid;
+
+        return _valid
+                ;
     }
 
 
     public void validarProblema (){
         Algorisme aux = new Algorisme();
-
         _valid = aux.validarProblema(torn,tauler);
+        movimentsPerGuanyar = aux.getDepth();
     }
 
     private Color charToColor(char ch){
