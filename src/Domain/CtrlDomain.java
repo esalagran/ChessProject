@@ -6,34 +6,112 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CtrlDomain {
-
-    private HashMap<String, Huma> cjtUsuaris;
-    private List<Problema> cjtProblemes;
-    private Huma userLogged;
     private Problema pObert;
     private Partida partidaEnJoc;
     private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
     private Presentation.CtrlPresentation cPres;
 
-    public void CreaProblema(){
-        Problema p = new Problema();
-        userLogged.AfegirProblema(p);
+    public void JugarPartidesMaquines(Problema[] probJugats) {
+        for (Problema p : probJugats) {
+            partidaEnJoc = new Partida(p, Modalitat.MM);
+            //Falta obtenir el guanyador i jugar la partida
+        }
     }
 
-    public void AfegirProblema(String FEN, boolean valid){
-//        userLogged.AfegirProblema(p);
-        Problema p = new Problema(FEN);
-        CP.guardarProblema(FEN,valid);
-        cjtProblemes = CP.GetProblemes();
+    public void JugarPartidaHuma(Modalitat mode, Problema p) {
+        partidaEnJoc = new Partida(p, mode);
+        partidaEnJoc.ComençarPartida();
     }
 
-    public void CarregarProblema(String FEN, boolean valid, Color torn){
-        Problema p = new Problema(FEN);
-        cjtProblemes.add(p);
-
+    public void CreaProblema() {
+        pObert = new Problema("");
     }
 
-    public List<Problema> GetProblemes(){
+    public void CarregarProblema(String FEN) {
+        if (pObert == null)
+            pObert = new Problema(FEN);
+        else
+            System.out.println("Primer has de tancar el problema");
+    }
+
+    public void TancarProblema() {
+        if (pObert != null)
+            pObert = null;
+        else
+            System.out.println("No tens cap problema obert");
+    }
+
+    public void AfegirFitxa(TipusPeça tp, Color c, ParInt coord) {
+        try {
+            if (pObert.getTauler().FitxaAt(coord) != null)
+                System.out.println("Ja hi ha una peça a la posició especificada");
+            else
+                pObert.AfegirPeça(tp, c, coord);
+        } catch (NullPointerException ex) {
+
+            System.out.println("Has de crear o carregar un problema ");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void MoureFitxa(ParInt ini, ParInt fi) {
+        try {
+            if (pObert.getTauler().FitxaAt(fi) != null)
+                System.out.println("Ja hi ha una peça a la posició final");
+            else if (pObert.getTauler().FitxaAt(ini) != null)
+                System.out.println("No hi ha cap peça a la posició inicial");
+            else
+                pObert.MourePeça(ini, fi);
+        } catch (NullPointerException ex) {
+
+            System.out.println("Has de crear o carregar un problema ");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void EliminarFitxa(ParInt coord) {
+        try {
+            if (pObert.getTauler().FitxaAt(coord) == null)
+                System.out.println("No hi ha cap peça a la posició especificada");
+            else
+                pObert.EliminarPeça(coord);
+        } catch (NullPointerException ex) {
+
+            System.out.println("Has de crear o carregar un problema ");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void ValidarProblema() {
+
+        try {
+            pObert.validarProblema();
+        } catch (NullPointerException ex) {
+            System.out.println("Has de crear o carregar un problema ");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public Problema getpObert() {
+        return pObert;
+    }
+
+    public Partida getPartidaEnJoc() {
+        return partidaEnJoc;
+    }
+}
+
+
+
+    /* Funcions que s'implementaran a la següent entrga
+    private HashMap<String, Huma> cjtUsuaris;
+    private List<Problema> cjtProblemes;
+    private Huma userLogged;
+    /*public List<Problema> GetProblemes(){
         return cjtProblemes;
     }
 
@@ -56,14 +134,14 @@ public class CtrlDomain {
         cPer.TaulerToFEN(t);
         cPres.dibuixaTaulell(t);
 */
-
+/*
     /**
      * Constructora amb logIn
      * @param nickName indica l'usuari que vol entrar
      * Pre:
      * Post: S'han carregat tots els usuaris i tots els problemes que hi ha al sistema.
      * Si l'usuari no existeix es llan+a una excepció*/
-    public CtrlDomain(String nickName, Presentation.CtrlPresentation cPr){
+    /*public CtrlDomain(String nickName, Presentation.CtrlPresentation cPr){
         Initialize();
 
         cPres = cPr;
@@ -78,9 +156,9 @@ public class CtrlDomain {
         if (userLogged.equals(null))
             throw new FindException("No existeix aquest usuari");
 */
-    }
+    //}
 
-
+/*
     private void Initialize(){
         /* NULL POINTER EXCEPTION
         Huma[] users = CP.GetUsuaris();
@@ -89,18 +167,15 @@ public class CtrlDomain {
         }
         */
 
-        cjtProblemes = CP.GetProblemes();
+        //cjtProblemes = CP.GetProblemes();
         /*for (Problema p:problemes) {
             cjtProblemes.put(p.GetId(), p);
         }*/
-    }
+    //}
 
-    public void CreaPartida(int u1, int u2, int p){
 
-        partidaEnJoc = new Partida(cjtUsuaris.get(u1), cjtUsuaris.get(u2), cjtProblemes.get(p));
-    }
 
     /*public void ModificarPeçaProblema(ParInt ini, ParInt fi){
         pObert.ModificarPeça(ini, fi);
     }*/
-}
+//}
