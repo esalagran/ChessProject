@@ -1,5 +1,7 @@
 package Domain;
 
+import javax.sql.rowset.RowSetWarning;
+
 public class Tauler {
     private FitxaProblema[][] taulell;
     private FitxaProblema whiteKing;
@@ -35,10 +37,21 @@ public class Tauler {
 
     public void setWhiteKing(FitxaProblema king){whiteKing = king;}
 
-    public void AfegirPeçaAt(int i, int j, FitxaProblema f){ taulell[i][j] = f; }
+    public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
+        if (Convert.InTheLimits(coord)) {
+            taulell[coord.GetFirst()][coord.GetSecond()] = f;
+            if (Convert.ClassToTipusPeça(f.getIFitxa().getClass().toString()) == TipusPeça.Rei){
+                if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
+                else setBlackKing(f);
+            }
+        }
+        else{
+            System.out.println("Coordenades fora dels límits");
+        }
+    }
 
     public boolean PeçaMeva(ParInt x, Color color) {
-        if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
+        if (Convert.InTheLimits(x) && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.negre)) return true;
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.blanc)) return true;
         }
@@ -46,30 +59,33 @@ public class Tauler {
     }
 
     public boolean PeçaRival(ParInt x, Color color){
-        if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
+        if (Convert.InTheLimits(x) && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.blanc)) return true;
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.negre)) return true;
         }
         return false;
     }
 
-    public FitxaProblema FitxaAt(int i, int j){
-        return taulell[i][j];
+    public FitxaProblema FitxaAt(ParInt coord){
+        if (Convert.InTheLimits(coord))
+            return taulell[coord.GetFirst()][coord.GetSecond()];
+        System.out.println("Coordenades fora dels límits");
+        return null;
     }
 
     public void desferJugada(ParInt ini, ParInt move, FitxaProblema peça){
-        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0 && taulell[ini.GetFirst()][ini.GetSecond()] != null) {
+        if (Convert.InTheLimits(ini) && taulell[ini.GetFirst()][ini.GetSecond()] != null) {
             taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
             taulell[ini.GetFirst()][ini.GetSecond()] = peça;
             FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];
             fp.SetCoordenades(move);
-            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
-            if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
+            if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
+            if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
         }
     }
 
     public void moureFitxa(ParInt ini, ParInt move){
-        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0 && taulell[ini.GetFirst()][ini.GetSecond()] != null){
+        if (Convert.InTheLimits(ini) && taulell[ini.GetFirst()][ini.GetSecond()] != null){
             taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
             taulell[ini.GetFirst()][ini.GetSecond()] = null;
             FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];

@@ -24,8 +24,8 @@ public class Algorisme extends Maquina{
                 ParInt ini = aux.GetCoordenades();
                 for (int j = 0; j < moviments.size(); j++){
                     taken = false;
-                    if (tauler.FitxaAt(moviments.get(j).GetFirst(),moviments.get(j).GetSecond()) != null){
-                        substituida = tauler.FitxaAt(moviments.get(j).GetFirst(),moviments.get(j).GetSecond());
+                    if (tauler.FitxaAt(moviments.get(j)) != null){
+                        substituida = tauler.FitxaAt(moviments.get(j));
                         taken =true;
                     }
                     tauler.moureFitxa(ini,moviments.get(j));

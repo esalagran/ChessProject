@@ -14,15 +14,10 @@ public class FitxaProblema{
     private Fitxa fitxa;
     private Color c;
     private ParInt coord;
-    private TipusPeça tP;
 
     public ParInt GetCoordenades(){
         return coord;
     }
-
-    /*public TipusPeça GetTipus(){
-        return tP;
-    }*/
 
     public Color GetColor(){
         return c;
@@ -37,14 +32,12 @@ public class FitxaProblema{
 
     public FitxaProblema(TipusPeça nom, ParInt posIni, Color color){
         CreaFitxa(nom);
-        tP = nom;
         coord = posIni;
         c = color;
     }
 
     public FitxaProblema(TipusPeça nom, int Fila, int Col, Color color){
         CreaFitxa(nom);
-        tP = nom;
         coord = new ParInt(Col, Fila);
         c = color;
     }

@@ -25,13 +25,13 @@ public abstract class Fitxa {
         ParInt move;
         boolean stopd1,stopd2,stopd3,stopd4;
 
-        for (int i = 0; i < vm.length; i++) {
+        for (VectMov vectMov : vm) {
             stopd1 = false;
             stopd2 = false;
             stopd3 = false;
             stopd4 = false;
 
-            for (int j = 0; j < vm[i].getD(); j++) {
+            for (int j = 0; j < vectMov.getD(); j++) {
                 move = new ParInt(coord.GetFirst() + j + 1, coord.GetSecond() + j + 1);
                 if (!stopd1) {
                     addMove(move, color, actual, moviments);
@@ -55,7 +55,7 @@ public abstract class Fitxa {
             }
             stopd1 = false;
             stopd2 = false;
-            for (int j = 0; j < vm[i].getH(); j++) {
+            for (int j = 0; j < vectMov.getH(); j++) {
                 move = new ParInt(coord.GetFirst() + j + 1, coord.GetSecond());
                 if (!stopd1) {
                     addMove(move, color, actual, moviments);
@@ -69,7 +69,7 @@ public abstract class Fitxa {
             }
             stopd1 = false;
             stopd2 = false;
-            for (int j = 0; j < vm[i].getV(); j++) {
+            for (int j = 0; j < vectMov.getV(); j++) {
                 move = new ParInt(coord.GetFirst(), coord.GetSecond() + j + 1);
                 if (!stopd1) {
                     addMove(move, color, actual, moviments);
@@ -85,13 +85,9 @@ public abstract class Fitxa {
         return moviments;
     }
 
-    public void addMove (ParInt move,Color white, Tauler actual, Vector<ParInt> moviments){
-        if (safe(move) && !actual.PeçaMeva(move,white) ) {
+    void addMove(ParInt move, Color white, Tauler actual, Vector<ParInt> moviments){
+        if (Convert.InTheLimits(move) && !actual.PeçaMeva(move,white) ) {
             moviments.add(move);
         }
-    }
-
-    private Boolean safe(ParInt x) {
-        return (x.GetFirst() >= 0 && x.GetFirst() < 8 && x.GetSecond() >= 0 && x.GetSecond() < 8 );
     }
 }

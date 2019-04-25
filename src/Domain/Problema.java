@@ -121,9 +121,10 @@ public class Problema{
             System.out.print(" " + ANSI_RESET);
 
             for (int j = 0; j<8; j++){
-                if(tauler.FitxaAt(i,j) != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(i,j).getIFitxa().getClass().toString());
-                    Color c = tauler.FitxaAt(i,j).GetColor();
+                ParInt coord = new ParInt(i,j);
+                if(tauler.FitxaAt(coord) != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
+                    Color c = tauler.FitxaAt(coord).GetColor();
 
                     if(tP == TipusPeça.Cavall){
 
@@ -187,8 +188,8 @@ public class Problema{
         Integer number = _numTipusPeça.get(key);
         if ( number < _pecesMax.get(tp)) {
             if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-                if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null) {
-                    tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(), new FitxaProblema(tp, desti.GetFirst(), desti.GetSecond(), c));
+                if (tauler.FitxaAt(desti) == null) {
+                    tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
 
                 } else {
                     System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
@@ -212,10 +213,10 @@ public class Problema{
 
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null) {
-                FitxaProblema aux = tauler.FitxaAt(origen.GetFirst(), origen.GetSecond());
+            if (tauler.FitxaAt(origen) != null) {
+                FitxaProblema aux = tauler.FitxaAt(origen);
                 char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+                tauler.AfegirPeçaAt(origen, null);
                 _numTipusPeça.put(key, _numTipusPeça.get(key) - 1);
 
             } else{
@@ -233,7 +234,7 @@ public class Problema{
     public void MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) == null) {
+            if (tauler.FitxaAt(origen) == null) {
 
                 System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
 
@@ -246,9 +247,9 @@ public class Problema{
         }
 
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-            if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null) {
-                tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(),tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()));
-                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+            if (tauler.FitxaAt(desti) == null) {
+                tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
+                tauler.AfegirPeçaAt(origen, null);
 
 
             } else{
@@ -347,7 +348,7 @@ public class Problema{
                         break;
                     }
                 }
-
+                ParInt coord = new ParInt(x/8, x - (x/8) * 8);
                 if(ch == '/' && k!= 0){
                     System.out.println("FEN invalid, / detectat massa d'hora " + k);
                     break;
@@ -355,27 +356,27 @@ public class Problema{
 
                 else if(ch == 'n' || ch == 'N') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux);
+                    tauler.AfegirPeçaAt(coord, aux);
                     char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
                     _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Alfil, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux);
+                    tauler.AfegirPeçaAt(coord, aux);
                     char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
                     _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);             x++;
                 }
                 else if(ch == 'p' || ch == 'P') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Peo, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux);
+                    tauler.AfegirPeçaAt(coord, aux);;
                     char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
                     _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux );
+                    tauler.AfegirPeçaAt(coord, aux);
                     if (aux.GetColor().equals(Color.blanc)) tauler.setWhiteKing(aux);
                     else tauler.setBlackKing(aux);
                     char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
@@ -384,14 +385,14 @@ public class Problema{
                 }
                 else if(ch == 'r' || ch == 'R') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux);
+                    tauler.AfegirPeçaAt(coord, aux);
                     char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
                     _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Dama, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(x / 8,x -(x / 8) * 8, aux);
+                    tauler.AfegirPeçaAt(coord, aux);
                     char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
                     _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
@@ -415,53 +416,54 @@ public class Problema{
         int spaces = 0;
         for(int i = 0; i< 8; i++){
             for (int j = 0; j<8; j++){
-                if(tauler.FitxaAt(i, j) != null){
+                ParInt coord = new ParInt(i, j);
+                if(tauler.FitxaAt(coord) != null){
 
                     if(spaces != 0){
                         FEN.append(spaces);
                         spaces = 0;
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString()) == TipusPeça.Alfil){
-                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Alfil){
+                        if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("b");
                         }
                         else FEN.append("B");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString()) == TipusPeça.Torre){
-                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Torre){
+                        if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("r");
                         }
                         else FEN.append("R");
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString()) == TipusPeça.Peo){
-                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Peo){
+                        if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("p");
                         }
                         else FEN.append("P");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString()) == TipusPeça.Dama){
-                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Dama){
+                        if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("q");
                         }
                         else FEN.append("Q");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString()) == TipusPeça.Rei){
-                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Rei){
+                        if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("k");
                         }
                         else FEN.append("K");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(i, j).getIFitxa().getClass().toString()) == TipusPeça.Cavall){
-                        if(tauler.FitxaAt(i, j).GetColor() == Color.negre){
+                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Cavall){
+                        if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("n");
                         }
                         else FEN.append("N");

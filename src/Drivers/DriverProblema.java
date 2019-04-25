@@ -122,9 +122,10 @@ public class DriverProblema {
             System.out.print(" " + ANSI_RESET);
 
             for (int j = 0; j<8; j++){
-                if(tauler.FitxaAt(i,j) != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(i,j).getIFitxa().getClass().toString());
-                    Color c = tauler.FitxaAt(i,j).GetColor();
+                ParInt coord = new ParInt(i, j);
+                if(tauler.FitxaAt(coord) != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
+                    Color c = tauler.FitxaAt(coord).GetColor();
 
                     if(tP == TipusPeça.Cavall){
 
