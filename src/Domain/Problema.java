@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * @class Problema
- * \brief
+ * \brief Classe contenidora d'un problema
  */
 
 public class Problema{

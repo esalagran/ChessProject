@@ -71,6 +71,7 @@ public class Tauler {
     public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
         if (Convert.InTheLimits(coord)) {
             taulell[coord.GetFirst()][coord.GetSecond()] = f;
+
             if (Convert.ClassToTipusPeça(f.getIFitxa().getClass().toString()) == TipusPeça.Rei){
                 if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
                 else setBlackKing(f);
