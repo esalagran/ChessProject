@@ -50,9 +50,11 @@ public class DriverAlgorisme {
 
     public void tryMinimax(){
         a = new Algorisme();
-        int out = a.Minimax(3,Color.blanc,tauler,0);
+        int out = a.Minimax(5,Color.blanc,tauler,0);
         System.out.println(out);
-
+        FitxaProblema sol = a.getFitxa_move();
+        ParInt coord = a.getPos_move();
+        System.out.println(sol.GetTipus() + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
     }
 
     public void getPecesNegres(){

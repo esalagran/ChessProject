@@ -13,11 +13,20 @@ public class Algorisme extends Maquina{
     private int step_counter;
     private int depth;
 
+    /**
+     * \pre:
+     * \post: Inicialitzacio de les propietats basiques d'algorisme
+     */
     public Algorisme (){
         step_counter = 0;
         depth = INFINIT;
     }
 
+    /**
+     * \pre: d > 0, tauler representa un problema valid, step_counter = 0
+     * \post: Es guarden les propietats de la meva jugador amb profunditat d pel Color color
+     *  @return Estimacio de la millor jugada
+     */
     public int Minimax (int d, Color color, Tauler tauler, int step_counter) {
         if (step_counter < depth && check(tauler,color)) {
             System.out.println("MATE");
@@ -51,18 +60,43 @@ public class Algorisme extends Maquina{
         }
     }
 
+    /**
+     * \pre: S'ha aplicat l'algorisme Minimax
+     * \post: Retorna la FitxaProblema de la millor jugada
+     * @return Retorna la FitxaProblema de la millor jugada
+     */
     public FitxaProblema getFitxa_move() {return fitxa_move;}
 
+    /**
+     * \pre: S'ha aplicat l'algorisme Minimax
+     * \post: Retorna la coordenada de la millor jugada
+     * @return Retorna la coordenada de la millor jugada
+     */
     public ParInt getPos_move(){return pos_move;}
 
+    /**
+     * \pre: S'ha validat el problema i es valid
+     * \post: Retorna el minim nombre de passos per resoldre
+     * @return Retorna el minim nombre de passos per resoldre
+     */
     public int getDepth() {return depth;}
 
+    /**
+     * \pre:
+     * \post: L'atribut guanyador conte el guanyador si el problema es valid
+     * @return Retorna true si el problema es valid, sino fals
+     */
     public boolean validarProblema(Color torn, Tauler tauler){
         int a = Minimax(6,torn,tauler,0);
         System.out.println(a);
         return super.getGuanyador() != null;
     }
 
+    /**
+     * \pre: Tauler no buit
+     * \post: Retorna un enter que representa la situacio del tauler
+     * @return Retorna un enter que representa la situacio del tauler
+     */
     private int estimacio (Tauler tauler){
         FitxaProblema[][] actual = tauler.getTaulell();
         int weight = 0;
@@ -76,17 +110,18 @@ public class Algorisme extends Maquina{
         return weight;
     }
 
+    /**
+     * \pre: Tauler no buit
+     * \post: Retorna totes les fitxes del tauler del Color color
+     * @return Retorna totes les fitxes del tauler del Color color
+     */
     public Vector<FitxaProblema> getFitxes (Tauler tauler, Color color){
         FitxaProblema[][] fitxes = tauler.getTaulell();
         Vector <FitxaProblema> sol = new Vector<>();
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                if (fitxes[i][j] != null) {
-                    if (color.equals(blanc ) && fitxes[i][j].GetColor().equals(blanc)) sol.add(fitxes[i][j]);
-                    if (color.equals(negre) && fitxes[i][j].GetColor().equals(negre)) sol.add(fitxes[i][j]);
-                }
-            }
-        }
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                if (fitxes[i][j] != null)
+                    if (color.equals(fitxes[i][j].GetColor())) sol.add(fitxes[i][j]);
         return sol;
     }
 }

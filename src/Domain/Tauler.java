@@ -5,8 +5,16 @@ public class Tauler {
     private FitxaProblema whiteKing;
     private FitxaProblema blackKing;
 
+    /**
+     * \pre:
+     * \post: Inicialitza un taullel buit
+     */
     public Tauler (){ taulell = new FitxaProblema[8][8]; }
 
+    /**
+     * \pre:
+     * \post: taulell = t, s'inicialitzen les FitxaProblema dels dos reis
+     */
     public Tauler (FitxaProblema[][] t){
         taulell = t;
         for (int i = 0; i < 8; i++){
@@ -19,24 +27,52 @@ public class Tauler {
         }
     }
 
+    /**
+     * \pre:
+     * \post: Retorna l'atribut taulell
+     * @return Retorna l'atribut taulell
+     */
     public FitxaProblema[][] getTaulell() {
         return taulell;
     }
 
-    public FitxaProblema getBlackKing() {
-        return blackKing;
-    }
+    /**
+     * \pre: Tauler no buit
+     * \post: Retorna l'atribut que representa el Rei negre
+     * @return Retorna blackKing
+     */
+    public FitxaProblema getBlackKing() { return blackKing;}
 
+    /**
+     * \pre: king conte la FitxaProblema del rei negre
+     * \post: S'ha modificat l'atribut blackKing
+     */
     public void setBlackKing(FitxaProblema king){blackKing = king;}
 
-    public FitxaProblema getWhiteKing() {
-        return whiteKing;
-    }
+    /**
+     * \pre: Tauler no buit
+     * \post: Retorna l'atribut que representa el Rei blanc
+     * @return Retorna whiteKing
+     */
+    public FitxaProblema getWhiteKing() { return whiteKing; }
 
+    /**
+     * \pre: king conte la FitxaProblema del rei blanc
+     * \post: S'ha modificat l'atribut whiteKing
+     */
     public void setWhiteKing(FitxaProblema king){whiteKing = king;}
 
+    /**
+     * \pre: Les coordenades (i,j) representen una coordenada valida
+     * \post: FitxaProblema es troba a la coordenada(i,j)
+     */
     public void AfegirPeçaAt(int i, int j, FitxaProblema f){ taulell[i][j] = f; }
 
+    /**
+     * \pre: x representa una coordenada
+     * \post: Retorna true si el color de la peça de la coordenada x es igual al Color color
+     * @return Retorna true si el color de la peça de la coordenada x es igual al Color color
+     */
     public boolean PeçaMeva(ParInt x, Color color) {
         if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.negre)) return true;
@@ -45,6 +81,11 @@ public class Tauler {
         return false;
     }
 
+    /**
+     * \pre: x representa una coordenada
+     * \post: Retorna true si el color de la peça de la coordenada x es diferent al Color color
+     * @return Retorna true si el color de la peça de la coordenada x es diferent al Color color
+     */
     public boolean PeçaRival(ParInt x, Color color){
         if (x.GetFirst() < 8 && x.GetFirst() >= 0 && x.GetSecond() < 8 && x.GetSecond() >=0 && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.blanc)) return true;
@@ -53,10 +94,19 @@ public class Tauler {
         return false;
     }
 
+    /**
+     * \pre: Coordenada (i,j) es una coordenada valida
+     * \post: Retorna la FitxaProblema de la coordenada (i,j)
+     * @return Retorna la FitxaProblema de la coordenada (i,j)
+     */
     public FitxaProblema FitxaAt(int i, int j){
         return taulell[i][j];
     }
 
+    /**
+     * \pre: Coordenades ini i move representen posicions valides
+     * \post: Coordenada move conte la FitxaProblema de la coordenada ini, que ara conte peça
+     */
     public void desferJugada(ParInt ini, ParInt move, FitxaProblema peça){
         taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
         taulell[ini.GetFirst()][ini.GetSecond()] = peça;
@@ -67,6 +117,10 @@ public class Tauler {
         if (taulell[move.GetFirst()][move.GetSecond()].GetTipus() == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;
     }
 
+    /**
+     * \pre: Coordenades ini i move representen posicions valides
+     * \post: Coordenada move conte la FitxaProblema de la coordenada ini, ini passa a ser null
+     */
     public void moureFitxa(ParInt ini, ParInt move){
             taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
             taulell[ini.GetFirst()][ini.GetSecond()] = null;
