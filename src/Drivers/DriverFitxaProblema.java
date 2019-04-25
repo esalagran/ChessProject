@@ -24,10 +24,8 @@ public class DriverFitxaProblema{
                 + "~~~~~~~   0  -> EXIT                       ~~~~~~~\n"
                 + "~~~~~~~   1  -> SET COORDENADES ~~~~~~~\n"
                 + "~~~~~~~   2  -> GET COORDENADES    ~~~~~~~\n"
-                + "~~~~~~~   3  -> GET FILA    ~~~~~~~\n"
-                + "~~~~~~~   4  -> GET TIPUS PEÇA    ~~~~~~~\n"
-                + "~~~~~~~   5  -> GET COLOR ~~~~~~~\n"
-                + "~~~~~~~   6  -> GET COLUMNA    ~~~~~~~\n";
+                + "~~~~~~~   3  -> GET TIPUS PEÇA    ~~~~~~~\n"
+                + "~~~~~~~   4  -> GET COLOR ~~~~~~~\n";
         System.out.println(s);
     }
 
@@ -44,8 +42,8 @@ public class DriverFitxaProblema{
                 int col = sc.nextInt();
                 fp.SetCoordenades(new ParInt(fil, col));
                 System.out.println("Les coordenades de la peça són: ");
-                System.out.println("Fila: " + fp.GetFila());
-                System.out.println("Columna: " + fp.GetCol());
+                System.out.println("Fila: " + fp.GetCoordenades().GetFirst());
+                System.out.println("Columna: " + fp.GetCoordenades().GetSecond());
                 System.out.print("\n");
                 break;
             case 2:
@@ -55,16 +53,10 @@ public class DriverFitxaProblema{
                 System.out.println("Columna: " + par.GetSecond());
                 break;
             case 3:
-                System.out.println("La fila de la peça és la " + fp.GetFila());
+                System.out.println("La peça és del tipus " + Convert.ClassToTipusPeça(fp.getIFitxa().getClass().toString()));
                 break;
             case 4:
-                System.out.println("La peça és del tipus " + fp.GetTipus().toString());
-                break;
-            case 5:
                 System.out.println("La fitxa és de color " + fp.GetColor().toString());
-                break;
-            case 6:
-                System.out.println("La columna de la peça és la " + fp.GetFila());
                 break;
         }
     }

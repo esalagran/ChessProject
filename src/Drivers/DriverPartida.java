@@ -26,7 +26,7 @@ public class DriverPartida {
 
         while(Integer.parseInt(response) < 1 || Integer.parseInt(response) >11){
 
-            System.out.print(ANSI_PURPLE + "Driver de la classe problema " + '\n' +
+            System.out.print(ANSI_PURPLE + "Driver de la classe partida " + '\n' +
                     ANSI_CYAN +  "1. Crear partida" + '\n' +
                     "2. Jugar partida" + '\n' +
                     "2. Moure peça" + '\n' +

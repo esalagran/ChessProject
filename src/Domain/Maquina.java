@@ -16,14 +16,11 @@ public class Maquina extends Usuari{
     private FitxaProblema fitxa_move;
     private ParInt pos_move;
     private Algorisme algorisme;
-    private Color guanyador;
 
     /**
      * Creadora buida
      */
-    public Maquina(){
-        guanyador = null;
-    }
+    public Maquina(){}
 
     /**
      * Setter de la profunditat de cerca
@@ -45,7 +42,6 @@ public class Maquina extends Usuari{
      * Consulta el color guanyador després d'aplicar un algorisme de cerca
      * @return Color guanyador
      */
-    protected Color getGuanyador() { return guanyador; }
 
     /**
      * Genera un moviment optim pel jugador Maquina
@@ -84,12 +80,12 @@ public class Maquina extends Usuari{
     public boolean isAttacked(Tauler tauler, FitxaProblema fitxa, Color color) {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
-                FitxaProblema aux = tauler.FitxaAt(i,j);
+                FitxaProblema aux = tauler.FitxaAt(new ParInt(i, j));
                 if (aux != null &&  aux.GetColor() != color){
                     Vector<ParInt> moves = aux.getIFitxa().GetMoviments(new ParInt(i,j),tauler, aux.GetColor());
-                    for (int k = 0; k < moves.size(); k++){
-                        if (moves.get(k).GetFirst() == fitxa.GetFila() &&
-                                moves.get(k).GetSecond() == fitxa.GetCol()) {
+                    for (ParInt move : moves) {
+                        if (move.GetFirst() == fitxa.GetCoordenades().GetFirst() &&
+                                move.GetSecond() == fitxa.GetCoordenades().GetSecond()) {
                             return true;
                         }
                     }
@@ -108,11 +104,11 @@ public class Maquina extends Usuari{
     public boolean mateEvitable (Tauler tauler, Color color){
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++){
-                FitxaProblema aux = tauler.FitxaAt(i,j);
+                FitxaProblema aux = tauler.FitxaAt(new ParInt(i, j));
                 if (aux != null && aux.GetColor() == color){
                     Vector<ParInt> moves = aux.getIFitxa().GetMoviments(new ParInt(i,j),tauler, aux.GetColor());
                     for (int k = 0; k < moves.size(); k++) {
-                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k).GetFirst(),moves.get(k).GetSecond());
+                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k));
                         tauler.moureFitxa(new ParInt(i, j), moves.get(k));
                         if (color == blanc) if (!isAttacked(tauler, tauler.getWhiteKing(), negre)) {
                             //Sino es atacat esfaig moviment i retorno evitable
@@ -129,8 +125,6 @@ public class Maquina extends Usuari{
                 }
             }
         }
-        if (color == negre) guanyador = blanc;
-        else guanyador = negre;
         return false;
     }
 }

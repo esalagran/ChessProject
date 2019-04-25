@@ -12,24 +12,11 @@ import java.util.Vector;
 public class FitxaProblema{
 
     private Fitxa fitxa;
-    Color c;
+    private Color c;
     private ParInt coord;
-    TipusPeça tP;
 
     public ParInt GetCoordenades(){
         return coord;
-    }
-
-    public int GetCol(){
-        return coord.GetFirst();
-    }
-
-    public int GetFila(){
-        return coord.GetSecond();
-    }
-
-    public TipusPeça GetTipus(){
-        return tP;
     }
 
     public Color GetColor(){
@@ -45,14 +32,12 @@ public class FitxaProblema{
 
     public FitxaProblema(TipusPeça nom, ParInt posIni, Color color){
         CreaFitxa(nom);
-        tP = nom;
         coord = posIni;
         c = color;
     }
 
     public FitxaProblema(TipusPeça nom, int Fila, int Col, Color color){
         CreaFitxa(nom);
-        tP = nom;
         coord = new ParInt(Col, Fila);
         c = color;
     }

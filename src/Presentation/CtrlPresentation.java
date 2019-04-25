@@ -40,7 +40,7 @@ public class CtrlPresentation {
 
             for (int j = 0; j<8; j++){
                 if(tauler[i][j] != null){
-                    TipusPeça tP = tauler[i][j].GetTipus();
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString());
                     Color c = tauler[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
@@ -698,7 +698,7 @@ public class CtrlPresentation {
                         FEN+=spaces;
                         spaces = 0;
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Alfil){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Alfil){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="b";
                         }
@@ -706,14 +706,14 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Torre){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Torre){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="r";
                         }
                         else FEN+="R";
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Peo){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Peo){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="p";
                         }
@@ -721,7 +721,7 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Dama){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Dama){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="q";
                         }
@@ -729,7 +729,7 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Rei){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="k";
                         }
@@ -737,7 +737,7 @@ public class CtrlPresentation {
 
 
                     }
-                    if(tauler[i][j].GetTipus() == TipusPeça.Cavall){
+                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Cavall){
                         if(tauler[i][j].GetColor() == Color.negre){
                             FEN+="n";
                         }

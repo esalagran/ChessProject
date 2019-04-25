@@ -93,10 +93,10 @@ public class Partida{
     public void MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()) != null ) {
-                if(torn == tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()).GetColor()){
+            if (tauler.FitxaAt(origen) != null ) {
+                if(torn == tauler.FitxaAt(origen).GetColor()){
 
-                    System.out.println(tauler.FitxaAt(origen.GetFirst(), origen.GetSecond()).GetColor());
+                    System.out.println(tauler.FitxaAt(origen).GetColor());
                 }
                 else return;
 
@@ -110,10 +110,10 @@ public class Partida{
         }
 
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-            if (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) == null || (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()) != null && (tauler.FitxaAt(desti.GetFirst(), desti.GetSecond()).GetColor() != torn ) )) {
+            if (tauler.FitxaAt(desti) == null || (tauler.FitxaAt(desti) != null && (tauler.FitxaAt(desti).GetColor() != torn ) )) {
 
                 boolean possible = false;
-                Vector<ParInt> movimentsPossibles = tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()).GetMoviments(tauler);
+                Vector<ParInt> movimentsPossibles = tauler.FitxaAt(origen).GetMoviments(tauler);
                 for(int i = 0; i < movimentsPossibles.size();i++){
                    ParInt pos = movimentsPossibles.elementAt(i);
                    int posX = pos.GetFirst();
@@ -127,8 +127,8 @@ public class Partida{
 
                 if(possible){
 
-                tauler.AfegirPeçaAt(desti.GetFirst(), desti.GetSecond(),tauler.FitxaAt(origen.GetFirst(),origen.GetSecond()));
-                tauler.AfegirPeçaAt(origen.GetFirst(), origen.GetSecond(), null);
+                tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
+                tauler.AfegirPeçaAt(origen, null);
                 } else{
                     System.out.println("Moviment no possible");
                     return;
@@ -215,9 +215,10 @@ public class Partida{
             System.out.print(" " + ANSI_RESET);
 
             for (int j = 0; j<8; j++){
-                if(tauler.FitxaAt(i,j) != null){
-                    TipusPeça tP = tauler.FitxaAt(i,j).GetTipus();
-                    Color c = tauler.FitxaAt(i,j).GetColor();
+                ParInt coord = new ParInt(i,j);
+                if(tauler.FitxaAt(coord) != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
+                    Color c = tauler.FitxaAt(coord).GetColor();
 
                     if(tP == TipusPeça.Cavall){
 

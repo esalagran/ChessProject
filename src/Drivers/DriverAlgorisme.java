@@ -39,12 +39,12 @@ public class DriverAlgorisme {
 
     public void tryMinimax(){
         a = new Algorisme();
-        a.setTorn(Color.negre);
-        int out = a.Minimax(5,Color.negre,tauler,0);
+        a.setTorn(Color.blanc);
+        int out = a.Minimax(5,Color.blanc,tauler,0);
         System.out.println(out);
         FitxaProblema sol = a.getFitxa_move();
         ParInt coord = a.getPos_move();
-        System.out.println(sol.GetTipus() + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
+        System.out.println(Convert.ClassToTipusPeça(sol.getIFitxa().getClass().toString()) + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
     }
 
     public void getPecesNegres(){
@@ -52,7 +52,7 @@ public class DriverAlgorisme {
         Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
         for (FitxaProblema e : peces)
             if (e != null)
-                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetCol() + "," + e.GetFila() + ")");
+                System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
     }
 
     public void getPecesBlanques(){
@@ -60,12 +60,13 @@ public class DriverAlgorisme {
         Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
         for (FitxaProblema e : peces)
             if (e != null)
-                System.out.println("Nom: " + e.GetTipus() + " a (" + e.GetCol() + "," + e.GetFila() + ")");
+                System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
     }
 
     public void tryValidarProblema(){
         a = new Algorisme();
         boolean b = a.validarProblema(Color.negre,tauler);
+        System.out.println(a.getGuanyador());
         if (b) System.out.println("El problema es valid en " + a.getDepth() + " passos");
         else System.out.println("El problema no es valid en 6 jugades");
     }

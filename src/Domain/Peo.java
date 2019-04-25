@@ -30,10 +30,8 @@ public class Peo extends Fitxa {
         int incr;
         if (color.equals(Color.blanc)) incr = -1;
         else incr = 1;
-
         move = new ParInt(coord.GetFirst() + incr, coord.GetSecond());
-        if (move.GetFirst() < 8 && move.GetFirst() >= 0 && move.GetSecond() < 8 && move.GetSecond() >=0
-                && actual.FitxaAt(move.GetFirst(), move.GetSecond()) == null)
+        if (Convert.InTheLimits(move) && actual.FitxaAt(move) == null)
             super.addMove(move, color, actual, mov);
 
         move = new ParInt(coord.GetFirst() + incr, coord.GetSecond() + 1);
