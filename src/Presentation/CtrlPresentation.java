@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.time.Instant;
 import java.util.*;
 
+/**Mètode no rellevant per aquesta entrega*/
 
 public class CtrlPresentation {
     public static final String ANSI_RESET = "\u001B[0m";

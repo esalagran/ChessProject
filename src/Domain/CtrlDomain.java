@@ -1,16 +1,16 @@
 package Domain;
 
-import javax.swing.plaf.synth.ColorType;
-//import java.lang.module.FindException;
-import java.util.HashMap;
-import java.util.List;
-
 public class CtrlDomain {
     private Problema pObert;
     private Partida partidaEnJoc;
     private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
     private Presentation.CtrlPresentation cPres;
 
+    /**
+     * \pre: probJugats conté els problemes que s'han de jugar entre les màquines
+     * \post: S'han jugat tots els problemes de probJugats i es van imprimint
+     * els guanyador del problema en cada cas.
+     * */
     public void JugarPartidesMaquines(Problema[] probJugats) {
         for (Problema p : probJugats) {
             partidaEnJoc = new Partida(p, Modalitat.MM);
@@ -18,15 +18,31 @@ public class CtrlDomain {
         }
     }
 
+    /**
+     * \pre: p conté el problema que es jugara i mode la modalitat de la partida.
+     * \post: Es juga la partida amb la modalitat mode i
+     * s'imprimeix el guanyador quan es finalitzi
+     * */
     public void JugarPartidaHuma(Modalitat mode, Problema p) {
         partidaEnJoc = new Partida(p, mode);
         partidaEnJoc.ComençarPartida();
     }
 
+    /**
+     * \pre:
+     * \post: En cas que no hi hagi cap problema obert, es crea un problema buit,
+     * altrament es mostra un missatge*/
     public void CreaProblema() {
-        pObert = new Problema("");
+        if (pObert == null)
+            pObert = new Problema("");
+        else
+            System.out.println("Primer has de tancar el problema");
     }
 
+    /**
+     * \pre: FEN conté el codi FEN del problema que es vol carregar
+     * \post: En cas que no hi hagi cap problema obert, es carregar
+     * el problema del codi FEN, altrament, es mostra un missatge*/
     public void CarregarProblema(String FEN) {
         if (pObert == null)
             pObert = new Problema(FEN);
@@ -34,6 +50,10 @@ public class CtrlDomain {
             System.out.println("Primer has de tancar el problema");
     }
 
+    /**
+     * \pre:
+     * \post: En cas que hi hagi un problema obert, es tanca el problema,
+     * altrament es mostra un missatge*/
     public void TancarProblema() {
         if (pObert != null)
             pObert = null;
@@ -41,6 +61,10 @@ public class CtrlDomain {
             System.out.println("No tens cap problema obert");
     }
 
+    /**
+     * \pre: tp conté el tipus, c el color i coord la posició de la peça que es vol afegir.
+     * \post: Si hi ha un problema obert, s'ha afegit una peça en el tauler del problema,
+     * altrament es mostra un misstage*/
     public void AfegirFitxa(TipusPeça tp, Color c, ParInt coord) {
         try {
             if (pObert.getTauler().FitxaAt(coord) != null)
@@ -55,6 +79,11 @@ public class CtrlDomain {
         }
     }
 
+    /**
+     * \pre: Hi ha d'haver un problema obert, ini indica la posició inicial de la peça,
+     * fi indica la posició a la qual es vol moure
+     * \post: Si a la posició ini hi ha una peça i a la fi no n'hi ha cap,
+     * es mou la peça de la posició ini a la fi, altrament es mostra un missatge*/
     public void MoureFitxa(ParInt ini, ParInt fi) {
         try {
             if (pObert.getTauler().FitxaAt(fi) != null)
@@ -71,6 +100,11 @@ public class CtrlDomain {
         }
     }
 
+    /**
+     * \pre: Hi ha d'haver un problema obert, coord indica
+     * les coordenades de la peça que es vol esborrar
+     * \post: Si a la posició coord hi ha una peça, s'elimina una peça,
+     * altrament, es mostra un missatge*/
     public void EliminarFitxa(ParInt coord) {
         try {
             if (pObert.getTauler().FitxaAt(coord) == null)
@@ -85,10 +119,16 @@ public class CtrlDomain {
         }
     }
 
+    /**
+     * \pre pObert no pot ser null
+     * \post S'ha validat el problema i es mostra si és valid o no
+     */
     public void ValidarProblema() {
 
         try {
             pObert.validarProblema();
+            if (pObert.GetValid()) System.out.println("El problema és valid");
+            else System.out.println("El problema no és valid");
         } catch (NullPointerException ex) {
             System.out.println("Has de crear o carregar un problema ");
         } catch (Exception ex) {

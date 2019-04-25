@@ -15,7 +15,7 @@ public class DriverAlgorisme {
 
     public void createTauler(){
         //REIS
-        FitxaProblema peça = new FitxaProblema(TipusPeça.Rei,4,4,Color.blanc);
+        FitxaProblema peça = new FitxaProblema(TipusPeça.Rei,new ParInt(4,4),Color.blanc);
         FitxaProblema peça2 = new FitxaProblema(TipusPeça.Rei,1,2,Color.negre);
 
         //ALTRES FITXES
@@ -39,8 +39,9 @@ public class DriverAlgorisme {
 
     public void tryMinimax(){
         a = new Algorisme();
+        //tauler.moureFitxa(new Pa);
         a.setTorn(Color.blanc);
-        int out = a.Minimax(5,Color.blanc,tauler,0);
+        int out = a.Minimax(4,Color.blanc,tauler,0);
         System.out.println(out);
         FitxaProblema sol = a.getFitxa_move();
         ParInt coord = a.getPos_move();

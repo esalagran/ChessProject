@@ -12,7 +12,7 @@ import static Domain.Color.negre;
 
 public class Maquina extends Usuari{
 
-    protected int depth;
+    protected int depthMinimax;
     private FitxaProblema fitxa_move;
     private ParInt pos_move;
     private Algorisme algorisme;
@@ -27,7 +27,7 @@ public class Maquina extends Usuari{
      * @param d enter amb la profunditat desitjada
      */
     public void setDepth(int d){
-        if (depth > 0) depth = d;
+        if (depthMinimax > 0) depthMinimax = d;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Maquina extends Usuari{
      * @return enter amb la profunditat de cerca
      */
     public int getDepth(){
-        return depth;
+        return depthMinimax;
     }
 
     /**

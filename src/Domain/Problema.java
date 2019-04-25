@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * @class Problema
- * \brief
+ * \brief Classe contenidora d'un problema
  */
 
 public class Problema{
@@ -224,8 +224,7 @@ public class Problema{
      */
     public boolean GetValid(){
 
-        return _valid
-                ;
+        return _valid;
     }
 
     /**
