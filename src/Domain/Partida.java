@@ -26,7 +26,7 @@ public class Partida{
     Problema probl;
     Tauler tauler;
     boolean hasEnded = false;
-    int moviments =0;
+    int moviments = 0;
     Maquina m = new Maquina();
 
 
@@ -95,7 +95,7 @@ public class Partida{
 
         }
 
-        dibuixaProblema();
+
 
     }
 
@@ -139,8 +139,10 @@ public class Partida{
                            tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
                            tauler.AfegirPeçaAt(origen, null);
                            possible = true;
+                           System.out.println(tauler.getBlackKing().GetCoordenades().GetFirst());
+                           System.out.println(tauler.getBlackKing().GetCoordenades().GetSecond());
                            if(m.isAttacked(tauler, tauler.getBlackKing(), torn)){
-                               System.out.println("No possible");
+                               System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
                                tauler.AfegirPeçaAt(desti, f);
                                return;
@@ -152,8 +154,12 @@ public class Partida{
                            tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
                            tauler.AfegirPeçaAt(origen, null);
                            possible = true;
+                           System.out.println(tauler.getWhiteKing().GetCoordenades().GetFirst());
+                           System.out.println(tauler.getWhiteKing().GetCoordenades().GetSecond());
+
+
                            if(m.isAttacked(tauler, tauler.getWhiteKing(), torn)){
-                               System.out.println("No possible");
+                               System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
                                tauler.AfegirPeçaAt(desti, f);
                                return;
@@ -196,21 +202,19 @@ public class Partida{
      */
    public void TornMaquina(){
 
-       System.out.print("Es el torn de les: ");
-       if(torn == Color.blanc)
-           System.out.println("Blanques");
-       else System.out.println(("Negres"));
 
        Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
-       System.out.println(a.GetFirst() + " " + a.GetSecond());
-       System.out.println(b.GetFirst() + " " + b.GetSecond());
 
        tauler.moureFitxa(a,b);
 
        FiTorn();
 
+    }
+
+    public Tauler GetTauler(){
+       return tauler;
     }
 
     /**
@@ -230,12 +234,14 @@ public class Partida{
      */
     public void FiTorn(){
         moviments++;
-        if(moviments >= probl.GetMovimentsPerGuanyar()){
+        boolean mate;
+        mate = (m.check(tauler, Color.blanc) | m.check(tauler,Color.negre ));
+        if(moviments >= probl.GetMovimentsPerGuanyar() || mate){
+            if(mate)
+                System.out.println("MATE");
             hasEnded = true;
             return;
         }
-        dibuixaProblema();
-        //CHECK MATE OR MOVEMENTS
         if(torn == Color.blanc){
             torn = Color.negre;
             if(!isBlackHuman)
@@ -250,77 +256,7 @@ public class Partida{
     }
 }
 
-    public void dibuixaProblema(){
 
-        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
-        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
-        System.out.println();
-        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-        for(int i = 0; i < 8; i++){
-            System.out.print(ANSI_BLACK);
-            System.out.print(8-i);
-            System.out.print(" " + ANSI_RESET);
-
-            for (int j = 0; j<8; j++){
-                ParInt coord = new ParInt(i,j);
-                if(tauler.FitxaAt(coord) != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
-                    Color c = tauler.FitxaAt(coord).GetColor();
-
-                    if(tP == TipusPeça.Cavall){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB,  'C' );
-                        else System.out.printf(formatW, 'C');
-                    }
-                    if(tP == TipusPeça.Peo){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'P');
-                        else System.out.printf(formatW, 'P');
-                    }
-                    if(tP == TipusPeça.Alfil){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'A');
-                        else System.out.printf(formatW, 'A');
-
-                    }
-
-                    if(tP == TipusPeça.Torre){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'T');
-                        else System.out.printf(formatW,'T');
-                    }
-
-                    if(tP == TipusPeça.Rei){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'R');
-                        else System.out.printf(formatW, 'R');
-
-                    }
-
-                    if(tP == TipusPeça.Dama){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'D');
-                        else System.out.printf(formatW, 'D');
-                    }
-
-                }
-                else {
-                    System.out.print("|   ");
-                }
-            }
-            System.out.print(ANSI_BLACK + '|');
-            System.out.println();
-            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-
-
-        }
-
-        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
-
-    }
 
 
 }

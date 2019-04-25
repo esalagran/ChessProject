@@ -68,6 +68,7 @@ public class DriverProblema {
             case 11:
                 GetFEN();
                 break;
+
         }
     }
 
@@ -76,7 +77,7 @@ public class DriverProblema {
     }
 
     static void GetTauler(){
-        dibuixaTauler(p.getTauler());
+        dibuixaProblema(p.getTauler());
 
     }
 
@@ -105,87 +106,17 @@ public class DriverProblema {
 
     }
     static void FENtoTauler(){
-        dibuixaTauler(p.FENtoTauler());
+        dibuixaProblema(p.getTauler());
 
 
 }
 
-    static void dibuixaTauler(Tauler tauler){
 
-        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
-        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
-        System.out.println();
-        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-        for(int i = 0; i < 8; i++){
-            System.out.print(ANSI_BLACK);
-            System.out.print(8-i);
-            System.out.print(" " + ANSI_RESET);
-
-            for (int j = 0; j<8; j++){
-                ParInt coord = new ParInt(i, j);
-                if(tauler.FitxaAt(coord) != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
-                    Color c = tauler.FitxaAt(coord).GetColor();
-
-                    if(tP == TipusPeça.Cavall){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB,  'C' );
-                        else System.out.printf(formatW, 'C');
-                    }
-                    if(tP == TipusPeça.Peo){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'P');
-                        else System.out.printf(formatW, 'P');
-                    }
-                    if(tP == TipusPeça.Alfil){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'A');
-                        else System.out.printf(formatW, 'A');
-
-                    }
-
-                    if(tP == TipusPeça.Torre){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'T');
-                        else System.out.printf(formatW,'T');
-                    }
-
-                    if(tP == TipusPeça.Rei){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'R');
-                        else System.out.printf(formatW, 'R');
-
-                    }
-
-                    if(tP == TipusPeça.Dama){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'D');
-                        else System.out.printf(formatW, 'D');
-                    }
-
-                }
-                else {
-                    System.out.print("|   ");
-                }
-            }
-            System.out.print(ANSI_BLACK + '|');
-            System.out.println();
-            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-
-
-        }
-
-        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
-
-    }
     static  void MourePeça(){
         ParInt origen;
         ParInt desti;
 
-        p.dibuixaProblema();
+        dibuixaProblema(p.getTauler());
         System.out.println(ANSI_PURPLE + "Especifica la coordenada de la peça que vols moure (sense espais, lletra+num)"+ ANSI_RESET);
         origen = StringToCoordenada(scanner.next());
 
@@ -193,7 +124,7 @@ public class DriverProblema {
         desti = StringToCoordenada(scanner.next());
 
         p.MourePeça(origen,desti);
-        p.dibuixaProblema();
+        dibuixaProblema(p.getTauler());
 
 
     }
@@ -214,12 +145,12 @@ public class DriverProblema {
         ParInt origen;
         String response = "0";
 
-        p.dibuixaProblema();
-        System.out.print(ANSI_PURPLE + "Especifica la posició de la peça que vols esborrar:" + ANSI_RESET);
+        dibuixaProblema(p.getTauler());
+        System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)" + ANSI_RESET);
         response = scanner.next();
         origen = StringToCoordenada(response);
         p.EliminarPeça(origen);
-        p.dibuixaProblema();
+        dibuixaProblema(p.getTauler());
 
     }
 
@@ -304,13 +235,13 @@ public class DriverProblema {
         correcte = false;
 
         while (!correcte) {
-            p.dibuixaProblema();
-        System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)"+ ANSI_RESET);
+            dibuixaProblema(p.getTauler());
+            System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)"+ ANSI_RESET);
         desti = StringToCoordenada(scanner.next());
 
 
         p.AfegirPeça(tp,c,desti);
-        p.dibuixaProblema();
+        dibuixaProblema(p.getTauler());
         correcte = true;
 
 
@@ -338,7 +269,7 @@ public class DriverProblema {
             }
         }
         p = new Problema(FEN);
-        p.dibuixaProblema();
+        dibuixaProblema(p.getTauler());
         }
 
 
@@ -378,12 +309,85 @@ public class DriverProblema {
         return  res;
     }
 
+    static void dibuixaProblema(Tauler tauler){
+
+        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println();
+        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+        for(int i = 0; i < 8; i++){
+            System.out.print(ANSI_BLACK);
+            System.out.print(8-i);
+            System.out.print(" " + ANSI_RESET);
+
+            for (int j = 0; j<8; j++){
+                ParInt coord = new ParInt(i,j);
+                if(tauler.FitxaAt(coord) != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
+                    Color c = tauler.FitxaAt(coord).GetColor();
+
+                    if(tP == TipusPeça.Cavall){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB,  'C' );
+                        else System.out.printf(formatW, 'C');
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'P');
+                        else System.out.printf(formatW, 'P');
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'A');
+                        else System.out.printf(formatW, 'A');
+
+                    }
+
+                    if(tP == TipusPeça.Torre){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'T');
+                        else System.out.printf(formatW,'T');
+                    }
+
+                    if(tP == TipusPeça.Rei){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'R');
+                        else System.out.printf(formatW, 'R');
+
+                    }
+
+                    if(tP == TipusPeça.Dama){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'D');
+                        else System.out.printf(formatW, 'D');
+                    }
+
+                }
+                else {
+                    System.out.print("|   ");
+                }
+            }
+            System.out.print(ANSI_BLACK + '|');
+            System.out.println();
+            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+
+
+        }
+
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
+
+    }
+
+
+
     public static void main(String args[]){
         int num;
         do{
             System.out.print(ANSI_PURPLE + "Driver de la classe problema " + '\n' +
                     ANSI_CYAN +
-                    "0. Tancar Driver" + '\n' +
                     "1. Crear problema" + '\n' +
                     "2. Afegir peça" + '\n' +
                     "3. Eliminar peça" + '\n' +
@@ -394,8 +398,8 @@ public class DriverProblema {
                     "8. Get torn inicial" + '\n' +
                     "9. Get tauler" + '\n' +
                     "10. Get validesa" + '\n' +
-                    "11. Get FEN" + '\n'
-
+                    "11. Get FEN" + '\n' +
+                    "0. Tancar Driver" + '\n'
                     + ANSI_RESET);
             System.out.println("Input a new number");
             num = scanner.nextInt();

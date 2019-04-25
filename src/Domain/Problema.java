@@ -93,6 +93,7 @@ public class Problema{
      */
     public Tauler getTauler() { return tauler; }
 
+
     /**
      * \pre: movimentsPerGuanyar diferent de null
      * \post: retorna els moviments necessaris per fer mat
@@ -104,79 +105,11 @@ public class Problema{
 
 
 
-    public void dibuixaProblema(){
-
-        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
-        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
-        System.out.println();
-        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-        for(int i = 0; i < 8; i++){
-            System.out.print(ANSI_BLACK);
-            System.out.print(8-i);
-            System.out.print(" " + ANSI_RESET);
-
-            for (int j = 0; j<8; j++){
-                ParInt coord = new ParInt(i,j);
-                if(tauler.FitxaAt(coord) != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
-                    Color c = tauler.FitxaAt(coord).GetColor();
-
-                    if(tP == TipusPeça.Cavall){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB,  'C' );
-                        else System.out.printf(formatW, 'C');
-                    }
-                    if(tP == TipusPeça.Peo){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'P');
-                        else System.out.printf(formatW, 'P');
-                    }
-                    if(tP == TipusPeça.Alfil){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'A');
-                        else System.out.printf(formatW, 'A');
-
-                    }
-
-                    if(tP == TipusPeça.Torre){
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'T');
-                        else System.out.printf(formatW,'T');
-                    }
-
-                    if(tP == TipusPeça.Rei){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'R');
-                        else System.out.printf(formatW, 'R');
-
-                    }
-
-                    if(tP == TipusPeça.Dama){
-
-                        if(c == Color.negre)
-                            System.out.printf(formatB, 'D');
-                        else System.out.printf(formatW, 'D');
-                    }
-
-                }
-                else {
-                    System.out.print("|   ");
-                }
-            }
-            System.out.print(ANSI_BLACK + '|');
-            System.out.println();
-            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-
-
-        }
-
-        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
-
-    }
-
-
+    /**
+     * \pre: tp, c i desti son parametres valids
+     * \post: afegida peça tipus tp de color c a la posició desti
+     * @return
+     */
     public void AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
 
         char key = ParTipusPeçaBoolToChar(tp, c);
@@ -204,6 +137,11 @@ public class Problema{
 
     }
 
+    /**
+     * \pre: origen valid
+     * \post: la peça que hi havia a la posicio origen ha estat eliminada
+     * @return
+     */
     public void EliminarPeça(ParInt origen){
 
 
@@ -226,6 +164,12 @@ public class Problema{
         }
 
     }
+
+    /**
+     * \pre: origen i desti son parametres valids
+     * \post: la peça que hi havia a origen ara esta a dessti
+     * @return
+     */
     public void MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
@@ -247,6 +191,7 @@ public class Problema{
                 tauler.AfegirPeçaAt(origen, null);
 
 
+
             } else{
                 System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
 
@@ -262,24 +207,45 @@ public class Problema{
 
 
 
-
+    /**
+     * \pre: d es un parametre valid
+     * \post: la variable dif te valor d
+     * @return
+     */
     public void setDificultat (Dificultat d){
         _dif = d;
     }
 
+
+    /**
+     * \pre:
+     * \post: retorna si la partida es considerada valida
+     * @return _valid
+     */
     public boolean GetValid(){
 
         return _valid
                 ;
     }
 
-
+    /**
+     * \pre:
+     * \post: si el problema es valid es posa _valid a true i es guarda la profuncitat del problema
+     * @return
+     */
     public void validarProblema (){
         Algorisme aux = new Algorisme();
         _valid = aux.validarProblema(torn,tauler);
-        movimentsPerGuanyar = aux.getDepth();
+        if(_valid){
+            movimentsPerGuanyar = aux.getDepth();}
     }
 
+
+    /**
+     * \pre: ch es un char valid
+     * \post: retorna un color segons el char es majuscules o minuscules, serveix per traduir FEN
+     * @return
+     */
     private Color charToColor(char ch){
         if(ch >= 65 && ch<= 90)
             return  Color.blanc;
@@ -287,14 +253,14 @@ public class Problema{
     }
 
 
-
-    public HashMap<String, Integer> getRanking() {
-        return _ranking;
-    }
-
-    public int GetId(){ return _id;}
-
-    public String GetFEN(){ return _FEN;}
+    /**
+     * \pre:
+     * \post: retorna el FEN actualitzat del problema
+     * @return
+     */
+    public String GetFEN(){
+        _FEN = TaulerToFEN();
+        return _FEN;}
 
     //RANKING FUNCTIONS
 
@@ -313,10 +279,11 @@ public class Problema{
         return _ranking.get(nickname);
     }
 
-    //PRIVATES
 
     /**
-     * A partir del codi FEN genera el vector de FitxaProblema
+     * \pre: problema te un FEN valid
+     * \post: retorna un tauler a partir de el FEN del problema
+     * @return tauler
      */
     public Tauler FENtoTauler(){
         try {
@@ -402,12 +369,16 @@ public class Problema{
 
         }catch (Exception e){
 
-            System.out.print("ERROOOOOR: " + e);
             return  null;
         }
 
     }
 
+    /**
+     * \pre: el tauler del problema es valid
+     * \post: retorna el FEN correponent al tauler del problema
+     * @return
+     */
     public String TaulerToFEN( ){
 
         StringBuilder FEN = new StringBuilder();
@@ -491,42 +462,10 @@ public class Problema{
 
 
     /**
-     * A partir del tauler genera el codi FEN
+     * \pre: tipusPeça i color valids
+     * \post: retorna el char equivalent a la peça en codi FEN
+     * @return
      */
-
-
-    private ParInt StringToCoordenada(String str){
-        char primer = str.charAt(0);
-        char segon = str.charAt(1);
-
-        if((primer >= 'a' && primer <= 'h' ) || primer>='A' && primer<= 'H'){
-            char aux = primer;
-            primer = segon;
-            segon = aux;
-
-        }
-
-        return new ParInt(CharToCoordenadaInt(primer), CharToCoordenadaInt(segon));
-
-
-    }
-    private int CharToCoordenadaInt( char ch ){
-
-        int res = 0;
-
-        if(ch >= 'a' && ch <= 'h') res = ch - 'a';
-
-        else if(ch >= 'A' && ch <= 'H'){
-            res = ch - 'A' ;
-        }
-
-        else if(ch > '0' && ch<= '8')
-            res = 8 - Integer.parseInt(String.valueOf(ch));
-
-        else return -1;
-
-        return  res;
-    }
 
     private char ParTipusPeçaBoolToChar(TipusPeça tipusPeça, Color color){
         char result = '0';

@@ -110,6 +110,8 @@ public class DriverPartida {
 
     public static void CrearPartida(){
 
+
+        System.out.println(p.GetMovimentsPerGuanyar());
         System.out.println(ANSI_PURPLE + "Selecciona una modalitat" + '\n' +
                                  ANSI_CYAN +
                                     "1. Humà vs humà" + '\n' +
@@ -145,11 +147,6 @@ public class DriverPartida {
     public static void MourePeça(){
         ParInt origen;
         ParInt desti;
-        System.out.print("Es el torn de les: ");
-        Color t = partida.GetTorn();
-        if(t == Color.blanc)
-            System.out.println("Blanques");
-        else System.out.println(("Negres"));
 
         System.out.println(ANSI_PURPLE + "Especifica la coordenada de la peça que vols moure (sense espais, lletra+num)"+ ANSI_RESET);
         origen = StringToCoordenada(scanner.next());
@@ -165,6 +162,13 @@ public class DriverPartida {
     public static void JugarPartida(){
         partida.ComençarPartida();
         while (!partida.hasEnded()){
+
+            dibuixaPartida(partida.GetTauler());
+            Color t = partida.GetTorn();
+            System.out.print("Es el torn de les: ");
+            if(t == Color.blanc)
+                System.out.println("Blanques");
+            else System.out.println(("Negres"));
             MourePeça();
         }
 
@@ -209,6 +213,78 @@ public class DriverPartida {
         else return -1;
 
         return  res;
+    }
+
+     static void dibuixaPartida(Tauler tauler){
+
+        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+        System.out.println();
+        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+        for(int i = 0; i < 8; i++){
+            System.out.print(ANSI_BLACK);
+            System.out.print(8-i);
+            System.out.print(" " + ANSI_RESET);
+
+            for (int j = 0; j<8; j++){
+                ParInt coord = new ParInt(i,j);
+                if(tauler.FitxaAt(coord) != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
+                    Color c = tauler.FitxaAt(coord).GetColor();
+
+                    if(tP == TipusPeça.Cavall){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB,  'C' );
+                        else System.out.printf(formatW, 'C');
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'P');
+                        else System.out.printf(formatW, 'P');
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'A');
+                        else System.out.printf(formatW, 'A');
+
+                    }
+
+                    if(tP == TipusPeça.Torre){
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'T');
+                        else System.out.printf(formatW,'T');
+                    }
+
+                    if(tP == TipusPeça.Rei){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'R');
+                        else System.out.printf(formatW, 'R');
+
+                    }
+
+                    if(tP == TipusPeça.Dama){
+
+                        if(c == Color.negre)
+                            System.out.printf(formatB, 'D');
+                        else System.out.printf(formatW, 'D');
+                    }
+
+                }
+                else {
+                    System.out.print("|   ");
+                }
+            }
+            System.out.print(ANSI_BLACK + '|');
+            System.out.println();
+            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
+
+
+        }
+
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
+
     }
 
     public static void main(String args[]){
