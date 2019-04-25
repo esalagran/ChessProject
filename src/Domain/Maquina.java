@@ -56,6 +56,7 @@ public class Maquina extends Usuari{
      */
     public Object[] GetMoviment(int d, Color color, Tauler tauler) {
         algorisme = new Algorisme();
+        algorisme.setTorn(color);
         int puntuacio = algorisme.Minimax(d, color, tauler,0);
         fitxa_move = algorisme.getFitxa_move();
         pos_move = algorisme.getPos_move();

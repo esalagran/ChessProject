@@ -23,18 +23,7 @@ public class DriverAlgorisme {
         FitxaProblema rival2 = new FitxaProblema(TipusPeça.Peo,2,5,Color.blanc);
         FitxaProblema meva = new FitxaProblema(TipusPeça.Peo,6,3,Color.blanc);
         FitxaProblema cavall = new FitxaProblema(TipusPeça.Cavall,5,6,Color.blanc);
-        /*
-        FitxaProblema[][] aux =
-                {
-                        {null,null,null,null,null,null,null,null},
-                        {null,null,peça2,null,null,null,null,null},
-                        {null,null,null,null,null,rival2,null,null},
-                        {null,null,rival1,null,null,null,null,null},
-                        {null,null,null,null,peça,null,null,null},
-                        {null,null,null,null,null,null,cavall,null},
-                        {null,null,null,meva,null,null,null,null},
-                        {null,null,null,null,null,null,null,null}
-                };*/
+
         FitxaProblema[][] aux = new FitxaProblema[8][8];
         aux [4][4] = peça; aux[2][1] = peça2;
         aux [2][3] = rival1; aux[5][2] = rival2;
@@ -50,7 +39,8 @@ public class DriverAlgorisme {
 
     public void tryMinimax(){
         a = new Algorisme();
-        int out = a.Minimax(5,Color.blanc,tauler,0);
+        a.setTorn(Color.negre);
+        int out = a.Minimax(5,Color.negre,tauler,0);
         System.out.println(out);
         FitxaProblema sol = a.getFitxa_move();
         ParInt coord = a.getPos_move();
@@ -75,7 +65,7 @@ public class DriverAlgorisme {
 
     public void tryValidarProblema(){
         a = new Algorisme();
-        boolean b = a.validarProblema(Color.blanc,tauler);
+        boolean b = a.validarProblema(Color.negre,tauler);
         if (b) System.out.println("El problema es valid en " + a.getDepth() + " passos");
         else System.out.println("El problema no es valid en 6 jugades");
     }
