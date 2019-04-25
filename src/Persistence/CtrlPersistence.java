@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
 
+/** Classe rellevant per aquesta entrega*/
 public class CtrlPersistence {
 
     public Domain.Huma[] GetUsuaris(){

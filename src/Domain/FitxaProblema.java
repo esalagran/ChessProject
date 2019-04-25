@@ -6,7 +6,6 @@ import java.util.Vector;
 /**
  * Fitxa problema
  * Classe que implementa els elements que té un problema
- * @author esalagran
  * */
 
 public class FitxaProblema{
@@ -42,6 +41,9 @@ public class FitxaProblema{
         c = color;
     }
 
+    /**
+     * \pre: tauler conté la informació de la peça en la situació
+     * \post: tots els possibles moviments de la peça en el tauler*/
     public Vector<ParInt> GetMoviments(Tauler tauler){
         return fitxa.GetMoviments(coord, tauler, c);
     }
