@@ -146,7 +146,7 @@ public class DriverProblema {
         String response = "0";
 
         dibuixaProblema(p.getTauler());
-        System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)" + ANSI_RESET);
+        System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols eliminar la peça (sense espais, lletra+num)" + ANSI_RESET);
         response = scanner.next();
         origen = StringToCoordenada(response);
         p.EliminarPeça(origen);
