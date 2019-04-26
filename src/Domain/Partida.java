@@ -94,6 +94,15 @@ public class Partida{
     }
 
     /**
+     * \pre: mode valid
+     * \post: retorna la modalitat de la partida
+     * @return
+     */
+    public Modalitat GetModalitat(){
+        return mode;
+    }
+
+    /**
      * \pre: posició origen i posició desti valides (entre 0 i 7)
      * \post: mou la peça que hi ha a la posició origen a la posició destí (si el moviment és possible en el context de la partida)
      * @return
@@ -202,6 +211,14 @@ public class Partida{
         return mat;
     }
 
+
+
+
+    public boolean ComprovarMat(){
+
+        return (m.check(tauler, Color.blanc) | m.check(tauler,Color.negre ));
+    }
+
     /**
      * \pre: la partida a acabat
      * \post: retorna el color del guanyador
@@ -257,7 +274,7 @@ public class Partida{
     public void FiTorn(){
         moviments++;
         boolean mate;
-        mate = (m.check(tauler, Color.blanc) | m.check(tauler,Color.negre ));
+        mate = ComprovarMat();
         if(moviments >= probl.GetMovimentsPerGuanyar() || mate){
             if(mate){
                 guanyador = tornInicial;

@@ -17,7 +17,9 @@ public class DriverPartida {
 
     static Scanner scanner = new Scanner(System.in);
     static Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
+    static  Problema pMat =  new Problema("k6R/6R1/8/8/8/8/6K1/8 w ");
     static Partida partida = new Partida(p,Modalitat.HH );
+    static Partida partidaMat = new Partida(pMat, Modalitat.HH);
 
 
 
@@ -37,23 +39,26 @@ public class DriverPartida {
                     "8. Va ser mat?" + '\n' +
                     "9. Get guanyador" + '\n' +
                     "10. Get tauler" + '\n' +
-                    "11. Get Torn" + '\n'
+                    "11. Get torn" + '\n' +
+                    "12. Get modalitat" + '\n' +
+                    "13. Comprovar mat (amb partida en estat de mat)"+ '\n'
+
                     + ANSI_RESET);
 
 
             partida.ComençarPartida();
+            partidaMat.ComençarPartida();
             response = scanner.next();
 
             switch (response) {
                 case "1":
                     CrearPartida();
-
+                    response = "0";
                     break;
                 case "2":
 
                     JugarPartida();
-
-
+                    response = "0";
                     break;
 
                 case "3":
@@ -65,7 +70,7 @@ public class DriverPartida {
                     dibuixaPartida(partida.GetTauler());
                     MourePeça();
                     dibuixaPartida(partida.GetTauler());
-                    Index();
+                    response = "0";
 
                     break;
 
@@ -74,7 +79,7 @@ public class DriverPartida {
                     System.out.println("PENSANT MOVIMENT");
                     partida.TornMaquina();
                     dibuixaPartida(partida.GetTauler());
-                    Index();
+                    response = "0";
 
                     break;
 
@@ -95,7 +100,7 @@ public class DriverPartida {
                     else
                         System.out.println(" I és la màquina");
 
-                    Index();
+                    response = "0";
                     break;
 
                 case "6":
@@ -113,17 +118,16 @@ public class DriverPartida {
         }
         else{
             System.out.println("No has especificat el color correctament");
-            Index();
-            return;
+            response = "0";
+            break;
+
         }
 
         System.out.print("El color " + c );
         if(partida.isColorHuman(c))
             System.out.println(" és humà");
         else System.out.println(" es la màquina");
-        Index();
-
-
+                    response = "0";
                     break;
 
 
@@ -133,7 +137,7 @@ public class DriverPartida {
               System.out.println("La partida ja ha acabat");
           else System.out.println("La partida encara no ha acabat");
 
-          Index();
+                    response = "0";
                     break;
 
                 case "8":
@@ -145,7 +149,7 @@ public class DriverPartida {
                    System.out.println("Va acabar per mat");
                else System.out.println("Va acabar per excés de torns");
                     }
-                    Index();
+                    response = "0";
                     break;
 
                 case "9":
@@ -156,17 +160,45 @@ public class DriverPartida {
                     else
                         System.out.println("El guanyador va ser: " + partida.getGuanyador());
 
-                    Index();
+                    response = "0";
                     break;
 
                 case "10":
             dibuixaPartida(partida.GetTauler());
-            Index();
+                    response = "0";
 
             break;
                 case "11":
         System.out.println("És el torn de les: " + partida.GetTorn());
-        Index();
+                    response = "0";
+                    break;
+
+
+                case "12":
+                    System.out.print("La modalitat es: ");
+                    Modalitat m =  partida.GetModalitat();
+                    if(m == Modalitat.HM)
+                        System.out.println("Humà vs Màquina");
+                        else if(m== Modalitat.HH)
+                        System.out.println("Humà vs Humà");
+                            else if(m==Modalitat.MH)
+                                System.out.println("Màquina vs Humà");
+                                else if(m== Modalitat.MM)
+                                    System.out.println("Màquina vs Màquina");
+
+                    response = "0";
+                    break;
+
+                case "13":
+                    dibuixaPartida(partidaMat.GetTauler());
+                    if(partidaMat.ComprovarMat()){
+                        System.out.println("És mat!");
+                    }
+                    else  System.out.println("No és mat!");
+
+                    response = "0";
+                    break;
+
 
                 case "exit":
 
