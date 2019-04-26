@@ -34,12 +34,12 @@ public class DriverAlgorisme {
 
     public void createTauler2(){
             Problema p = new Problema ( "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
+            //Problema p = new Problema ( "3K4/8/8/p2k4/pp1B4/N5N1/P2Q4/8 w - - 0 0");
             tauler = p.getTauler();
-        }
+    }
 
     public void tryMinimax(){
         a = new Algorisme();
-        //tauler.moureFitxa(new Pa);
         a.setTorn(Color.blanc);
         int out = a.Minimax(4,Color.blanc,tauler,0);
         System.out.println(out);

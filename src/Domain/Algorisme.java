@@ -50,8 +50,10 @@ public class Algorisme extends Maquina{
                     substituida = tauler.FitxaAt(moviment);
                     ParInt ini = aux.GetCoordenades();
                     tauler.moureFitxa(ini, moviment);
+                if (color.equals(blanc) && !super.isAttacked(tauler,tauler.getWhiteKing(),negre) ||
+                color.equals(negre) && !super.isAttacked(tauler, tauler.getBlackKing(),blanc)) {
 
-                if (color.equals(blanc)) val = -Minimax(d - 1, negre, tauler, step_counter + 1);
+                    if (color.equals(blanc)) val = -Minimax(d - 1, negre, tauler, step_counter + 1);
                     else val = -Minimax(d - 1, blanc, tauler, step_counter + 1);
 
                     if (val > best_move) {
@@ -61,7 +63,8 @@ public class Algorisme extends Maquina{
                             pos_move = moviment;
                         }
                     }
-                    tauler.desferJugada(moviment, ini, substituida);
+                }
+                tauler.desferJugada(moviment, ini, substituida);
                 }
             }
             return best_move;
