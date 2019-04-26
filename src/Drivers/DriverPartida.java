@@ -56,135 +56,147 @@ public class DriverPartida {
                     response = "0";
                     break;
                 case "2":
-
-                    JugarPartida();
+                    if (!partida.hasEnded())
+                        JugarPartida();
+                    else
+                        System.out.println("La partida no s'ha creat");
                     response = "0";
                     break;
 
                 case "3":
-
-                    System.out.print("Es el torn de les: ");
-                    if(partida.GetTorn()== Color.blanc)
-                        System.out.println("Blanques (a aquest tauler les vermelles)");
-                    else System.out.println(("Negres (a aquest tauler les blaves)"));
-                    dibuixaPartida(partida.GetTauler());
-                    MourePeça();
-                    dibuixaPartida(partida.GetTauler());
-                    response = "0";
-
+                    if (!partida.hasEnded()) {
+                        System.out.print("Es el torn de les: ");
+                        if (partida.GetTorn() == Color.blanc)
+                            System.out.println("Blanques (a aquest tauler les vermelles)");
+                        else System.out.println(("Negres (a aquest tauler les blaves)"));
+                        dibuixaPartida(partida.GetTauler());
+                        MourePeça();
+                        dibuixaPartida(partida.GetTauler());
+                        response = "0";
+                    }
+                    else {
+                        System.out.println("La partida ja ha acabat");
+                    }
                     break;
 
                 case "4":
-
-                    System.out.println("PENSANT MOVIMENT");
-                    partida.TornMaquina();
-                    dibuixaPartida(partida.GetTauler());
-                    response = "0";
-
+                    if (!partida.hasEnded()){
+                        System.out.println("PENSANT MOVIMENT");
+                        partida.TornMaquina();
+                        dibuixaPartida(partida.GetTauler());
+                        response = "0";
+                    }
+                    else {
+                        System.out.println("La partida ja ha acabat");
+                    }
                     break;
 
                 case "5":
+                    if (!partida.hasEnded()){
 
-                    System.out.print("Ara li tocava a les: " + partida.GetTorn());
+                        System.out.print("Ara li tocava a les: " + partida.GetTorn());
 
-                    if(partida.isColorHuman(partida.GetTorn()))
-                        System.out.println(" I és un humà");
-                    else
-                        System.out.println(" I és la màquina");
+                        if(partida.isColorHuman(partida.GetTorn()))
+                            System.out.println(" I és un humà");
+                        else
+                            System.out.println(" I és la màquina");
 
-                    partida.FiTorn();
-                    System.out.print("Ara li toca a les: " + partida.GetTorn());
+                        partida.FiTorn();
+                        System.out.print("Ara li toca a les: " + partida.GetTorn());
 
-                    if(partida.isColorHuman(partida.GetTorn()))
-                        System.out.println(" I és un humà");
-                    else
-                        System.out.println(" I és la màquina");
+                        if(partida.isColorHuman(partida.GetTorn()))
+                            System.out.println(" I és un humà");
+                        else
+                            System.out.println(" I és la màquina");
 
-                    response = "0";
+                        response = "0";
+                    }
+                    else {
+                        System.out.println("La partida ja ha acabat");
+                    }
                     break;
 
                 case "6":
 
                     System.out.println("Escriu la lletra del color que vols comprovar, \"w\" per blanc i \"b\" per negre");
-        String colStr = scanner.next();
-        Color c;
+                    String colStr = scanner.next();
+                    Color c;
 
 
-        if(colStr.equals("w")){
-            c = Color.blanc;
-        }
-        else if(colStr.equals("b")){
-            c = Color.negre;
-        }
-        else{
-            System.out.println("No has especificat el color correctament");
-            response = "0";
-            break;
+                    if(colStr.equals("w")){
+                        c = Color.blanc;
+                    }
+                    else if(colStr.equals("b")){
+                        c = Color.negre;
+                    }
+                    else{
+                        System.out.println("No has especificat el color correctament");
+                        response = "0";
+                        break;
 
-        }
+                    }
 
-        System.out.print("El color " + c );
-        if(partida.isColorHuman(c))
-            System.out.println(" és humà");
-        else System.out.println(" es la màquina");
-                    response = "0";
+                    System.out.print("El color " + c );
+                    if(partida.isColorHuman(c))
+                        System.out.println(" és humà");
+                    else System.out.println(" es la màquina");
+                                response = "0";
                     break;
-
-
                 case "7":
-
-          if(partida.hasEnded())
-              System.out.println("La partida ja ha acabat");
-          else System.out.println("La partida encara no ha acabat");
-
-                    response = "0";
+                    if(partida.hasEnded())
+                        System.out.println("La partida ja ha acabat");
+                    else System.out.println("La partida encara no ha acabat");
+                        response = "0";
                     break;
 
                 case "8":
-
                     if(!partida.hasEnded()){
                         System.out.println("La partida encara no ha acabat, per tant el valor de wasMat no és valid");
                     } else{
-               if(partida.wasMat())
-                   System.out.println("Va acabar per mat");
-               else System.out.println("Va acabar per excés de torns");
+                        if(partida.wasMat())
+                            System.out.println("Va acabar per mat");
+                        else System.out.println("Va acabar per excés de torns");
                     }
                     response = "0";
                     break;
+            case "9":
 
-                case "9":
+                if(!partida.hasEnded()){
+                    System.out.println("La partida encara no ha acabat, per tant el valor de getGuanyador no és valid");
+                }
+                else
+                    System.out.println("El guanyador va ser: " + partida.getGuanyador());
 
-                    if(!partida.hasEnded()){
-                        System.out.println("La partida encara no ha acabat, per tant el valor de getGuanyador no és valid");
-                    }
-                    else
-                        System.out.println("El guanyador va ser: " + partida.getGuanyador());
+                response = "0";
+                break;
 
+            case "10":
+                if (!partida.hasEnded())
+                    dibuixaPartida(partida.GetTauler());
+                else System.out.println("La partida ja s'ha acabat");
                     response = "0";
-                    break;
+                break;
 
-                case "10":
-            dibuixaPartida(partida.GetTauler());
-                    response = "0";
+            case "11":
+                if (!partida.hasEnded()){
+                    System.out.println("És el torn de les: " + partida.GetTorn());
+                }
+                else System.out.println("La partida ja s'ha acabat");
 
-            break;
-                case "11":
-        System.out.println("És el torn de les: " + partida.GetTorn());
-                    response = "0";
-                    break;
+                response = "0";
+                break;
 
-
-                case "12":
-                    System.out.print("La modalitat es: ");
-                    Modalitat m =  partida.GetModalitat();
-                    if(m == Modalitat.HM)
-                        System.out.println("Humà vs Màquina");
-                        else if(m== Modalitat.HH)
-                        System.out.println("Humà vs Humà");
-                            else if(m==Modalitat.MH)
-                                System.out.println("Màquina vs Humà");
-                                else if(m== Modalitat.MM)
-                                    System.out.println("Màquina vs Màquina");
+            case "12":
+                System.out.print("La modalitat es: ");
+                Modalitat m =  partida.GetModalitat();
+                if(m == Modalitat.HM)
+                    System.out.println("Humà vs Màquina");
+                else if(m== Modalitat.HH)
+                    System.out.println("Humà vs Humà");
+                else if(m==Modalitat.MH)
+                    System.out.println("Màquina vs Humà");
+                else if(m== Modalitat.MM)
+                    System.out.println("Màquina vs Màquina");
 
                     response = "0";
                     break;
@@ -207,22 +219,12 @@ public class DriverPartida {
                 default:
                     System.out.println( ANSI_RED +"Siusplau, tria una opció vàlida" + ANSI_RESET);
                     response = "0";
-
             }
-
-
-
-
         }
-
-
-
     }
 
 
     public static void CrearPartida(){
-
-
         System.out.println(p.GetMovimentsPerGuanyar());
         System.out.println(ANSI_PURPLE + "Selecciona una modalitat" + '\n' +
                                  ANSI_CYAN +
@@ -250,11 +252,29 @@ public class DriverPartida {
                 break;
         }
 
+        System.out.print(ANSI_PURPLE + "Introdueix un FEN valid (escriu \";\" un cop l'hagis escrit). " + ANSI_RESET);
+
+        String FEN = "";
+        Boolean limit = false;
+
+        while (!limit){
+
+            String next =  scanner.next();
+            for(int i = 0; i< next.length(); i++){
+                if(next.charAt(i) == ';')
+                    limit = true;
+            }
+
+            if(!limit){
+                FEN += next;
+            }
+        }
+        p = new Problema(FEN);
         partida = new Partida(p, mod);
         partida.ComençarPartida();
         Index();
-
     }
+
 
 
     public static void MourePeça(){

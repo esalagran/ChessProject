@@ -1,9 +1,7 @@
 
 package Domain;
 
-import java.io.Console;
 import java.util.Vector;
-import java.util.logging.ConsoleHandler;
 
 public class Partida{
 
@@ -237,7 +235,7 @@ public class Partida{
      */
    public void TornMaquina(){
 
-       Object[] mov =  m.GetMoviment(5, torn, tauler);
+       Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
 
@@ -295,8 +293,6 @@ public class Partida{
         }
         else{
             torn = Color.blanc;
-
-
     }
 }
 
