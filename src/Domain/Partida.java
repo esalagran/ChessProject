@@ -31,12 +31,6 @@ public class Partida{
     Maquina m = new Maquina();
 
 
-    public Partida(Usuari u1, Usuari u2, Problema p){
-        atacant = u1;
-        defensor = u2;
-        probl = p;
-    }
-
     public Partida(Problema p, Modalitat mod){
 
         probl = p;
@@ -71,7 +65,6 @@ public class Partida{
                 isWhiteHuman = true;
                 isBlackHuman = false;
             }
-            TornMaquina();
 
         }
         if(mode == Modalitat.HM){
@@ -87,7 +80,6 @@ public class Partida{
         if(mode == Modalitat.MM){
                 isWhiteHuman = false;
                 isBlackHuman = false;
-                TornMaquina();
 
         }
 
@@ -189,11 +181,32 @@ public class Partida{
 
     }
 
+    /**
+     * \pre: Color es un color valid
+     * \post: retorna si el color passat com a parametre correspon a un humà o no
+     * @return
+     */
+    public boolean isColorHuman(Color color){
+        if(color == Color.blanc)
+            return isWhiteHuman;
+        else return isBlackHuman;
 
-    public boolean isMat(){
+    }
+
+    /**
+     * \pre: la partida ha acabat
+     * \post: retorna si la partida va acabar en mat o no
+     * @return mat
+     */
+    public boolean wasMat(){
         return mat;
     }
 
+    /**
+     * \pre: la partida a acabat
+     * \post: retorna el color del guanyador
+     * @return guanyador
+     */
     public Color getGuanyador(){
         return guanyador;
     }
@@ -238,7 +251,7 @@ public class Partida{
 
     /**
      * \pre: torn i problema diferent de null
-     * \post: ha acabat el torn
+     * \post: acaba la partida si es mat o moviments > moviments per guanyar, si no toca acabar la partida, es canvia el torn
      * @return
      */
     public void FiTorn(){
@@ -261,13 +274,10 @@ public class Partida{
         }
         if(torn == Color.blanc){
             torn = Color.negre;
-            if(!isBlackHuman)
-                TornMaquina();
+
         }
         else{
             torn = Color.blanc;
-            if(!isWhiteHuman)
-                TornMaquina();
 
 
     }

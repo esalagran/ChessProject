@@ -29,11 +29,19 @@ public class DriverPartida {
             System.out.print(ANSI_PURPLE + "Driver de la classe partida " + '\n' +
                     ANSI_CYAN +  "1. Crear partida" + '\n' +
                     "2. Jugar partida" + '\n' +
-                    "2. Moure peça" + '\n' +
-                    "3. Torn contrari" + '\n'
+                    "3. Moure peça" + '\n' +
+                            "4. Torn maquina" + '\n' +
+                    "5. Fi Torn" + '\n' +
+                    "6. Qui juga amb aquest color?" + '\n' +
+                    "7 Ha acabat la partida? " + '\n' +
+                    "8. Va ser mat?" + '\n' +
+                    "9. Get guanyador" + '\n' +
+                    "10. Get tauler" + '\n' +
+                    "11. Get Torn" + '\n'
                     + ANSI_RESET);
 
 
+            partida.ComençarPartida();
             response = scanner.next();
 
             switch (response) {
@@ -50,43 +58,115 @@ public class DriverPartida {
 
                 case "3":
 
+                    System.out.print("Es el torn de les: ");
+                    if(partida.GetTorn()== Color.blanc)
+                        System.out.println("Blanques (a aquest tauler les vermelles)");
+                    else System.out.println(("Negres (a aquest tauler les blaves)"));
+                    dibuixaPartida(partida.GetTauler());
+                    MourePeça();
+                    dibuixaPartida(partida.GetTauler());
+                    Index();
 
                     break;
 
                 case "4":
 
+                    System.out.println("PENSANT MOVIMENT");
+                    partida.TornMaquina();
+                    dibuixaPartida(partida.GetTauler());
+                    Index();
+
                     break;
 
                 case "5":
 
+                    System.out.print("Ara li tocava a les: " + partida.GetTorn());
 
+                    if(partida.isColorHuman(partida.GetTorn()))
+                        System.out.println(" I és un humà");
+                    else
+                        System.out.println(" I és la màquina");
+
+                    partida.FiTorn();
+                    System.out.print("Ara li toca a les: " + partida.GetTorn());
+
+                    if(partida.isColorHuman(partida.GetTorn()))
+                        System.out.println(" I és un humà");
+                    else
+                        System.out.println(" I és la màquina");
+
+                    Index();
                     break;
 
                 case "6":
 
+                    System.out.println("Escriu la lletra del color que vols comprovar, \"w\" per blanc i \"b\" per negre");
+        String colStr = scanner.next();
+        Color c;
+
+
+        if(colStr.equals("w")){
+            c = Color.blanc;
+        }
+        else if(colStr.equals("b")){
+            c = Color.negre;
+        }
+        else{
+            System.out.println("No has especificat el color correctament");
+            Index();
+            return;
+        }
+
+        System.out.print("El color " + c );
+        if(partida.isColorHuman(c))
+            System.out.println(" és humà");
+        else System.out.println(" es la màquina");
+        Index();
+
+
                     break;
+
 
                 case "7":
 
+          if(partida.hasEnded())
+              System.out.println("La partida ja ha acabat");
+          else System.out.println("La partida encara no ha acabat");
+
+          Index();
                     break;
 
                 case "8":
 
+                    if(!partida.hasEnded()){
+                        System.out.println("La partida encara no ha acabat, per tant el valor de wasMat no és valid");
+                    } else{
+               if(partida.wasMat())
+                   System.out.println("Va acabar per mat");
+               else System.out.println("Va acabar per excés de torns");
+                    }
+                    Index();
                     break;
 
                 case "9":
 
+                    if(!partida.hasEnded()){
+                        System.out.println("La partida encara no ha acabat, per tant el valor de getGuanyador no és valid");
+                    }
+                    else
+                        System.out.println("El guanyador va ser: " + partida.getGuanyador());
+
+                    Index();
                     break;
 
                 case "10":
+            dibuixaPartida(partida.GetTauler());
+            Index();
 
-                    break;
-
+            break;
                 case "11":
-
-                    break;
-
-
+        System.out.println("És el torn de les: " + partida.GetTorn());
+        Index();
 
                 case "exit":
 
@@ -139,6 +219,7 @@ public class DriverPartida {
         }
 
         partida = new Partida(p, mod);
+        partida.ComençarPartida();
         Index();
 
     }
@@ -160,22 +241,30 @@ public class DriverPartida {
 
 
     public static void JugarPartida(){
-        partida.ComençarPartida();
 
+        partida.ComençarPartida();
         Color guanyador = Color.negre;
         boolean mat = false;
         while (!partida.hasEnded()){
-
-            dibuixaPartida(partida.GetTauler());
             Color t = partida.GetTorn();
             System.out.print("Es el torn de les: ");
             if(t == Color.blanc)
-                System.out.println("Blanques");
-            else System.out.println(("Negres"));
-            MourePeça();
+                System.out.println("Blanques (a aquest tauler les vermelles)");
+            else System.out.println(("Negres (a aquest tauler les blaves)"));
+
+            if(partida.isColorHuman(partida.GetTorn())){
+                dibuixaPartida(partida.GetTauler());
+                MourePeça();
+            }
+            else{
+                System.out.println("PENSANT MOVIMENT");
+                partida.TornMaquina();
+            }
+
+
         }
 
-        if(partida.isMat())
+        if(partida.wasMat())
             System.out.println("MAT!");
         System.out.println("El guanyador és : " + partida.getGuanyador());
 
