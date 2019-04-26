@@ -401,7 +401,7 @@ public class DriverProblema {
                     "11. Get FEN" + '\n' +
                     "0. Tancar Driver" + '\n'
                     + ANSI_RESET);
-            System.out.println("Input a new number");
+
             num = scanner.nextInt();
             Index(num);
         }while(num != 0);

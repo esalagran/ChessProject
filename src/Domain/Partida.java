@@ -1,9 +1,7 @@
 
 package Domain;
 
-import java.io.Console;
 import java.util.Vector;
-import java.util.logging.ConsoleHandler;
 
 public class Partida{
 
@@ -30,12 +28,6 @@ public class Partida{
     int moviments = 0;
     Maquina m = new Maquina();
 
-
-    public Partida(Usuari u1, Usuari u2, Problema p){
-        atacant = u1;
-        defensor = u2;
-        probl = p;
-    }
 
     public Partida(Problema p, Modalitat mod){
 
@@ -71,7 +63,6 @@ public class Partida{
                 isWhiteHuman = true;
                 isBlackHuman = false;
             }
-            TornMaquina();
 
         }
         if(mode == Modalitat.HM){
@@ -87,7 +78,6 @@ public class Partida{
         if(mode == Modalitat.MM){
                 isWhiteHuman = false;
                 isBlackHuman = false;
-                TornMaquina();
 
         }
 
@@ -99,6 +89,15 @@ public class Partida{
 
 
 
+    }
+
+    /**
+     * \pre: mode valid
+     * \post: retorna la modalitat de la partida
+     * @return
+     */
+    public Modalitat GetModalitat(){
+        return mode;
     }
 
     /**
@@ -189,11 +188,40 @@ public class Partida{
 
     }
 
+    /**
+     * \pre: Color es un color valid
+     * \post: retorna si el color passat com a parametre correspon a un humà o no
+     * @return
+     */
+    public boolean isColorHuman(Color color){
+        if(color == Color.blanc)
+            return isWhiteHuman;
+        else return isBlackHuman;
 
-    public boolean isMat(){
+    }
+
+    /**
+     * \pre: la partida ha acabat
+     * \post: retorna si la partida va acabar en mat o no
+     * @return mat
+     */
+    public boolean wasMat(){
         return mat;
     }
 
+
+
+
+    public boolean ComprovarMat(){
+
+        return (m.check(tauler, Color.blanc) | m.check(tauler,Color.negre ));
+    }
+
+    /**
+     * \pre: la partida a acabat
+     * \post: retorna el color del guanyador
+     * @return guanyador
+     */
     public Color getGuanyador(){
         return guanyador;
     }
@@ -207,7 +235,7 @@ public class Partida{
      */
    public void TornMaquina(){
 
-       Object[] mov =  m.GetMoviment(5, torn, tauler);
+       Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
 
@@ -238,13 +266,13 @@ public class Partida{
 
     /**
      * \pre: torn i problema diferent de null
-     * \post: ha acabat el torn
+     * \post: acaba la partida si es mat o moviments > moviments per guanyar, si no toca acabar la partida, es canvia el torn
      * @return
      */
     public void FiTorn(){
         moviments++;
         boolean mate;
-        mate = (m.check(tauler, Color.blanc) | m.check(tauler,Color.negre ));
+        mate = ComprovarMat();
         if(moviments >= probl.GetMovimentsPerGuanyar() || mate){
             if(mate){
                 guanyador = tornInicial;
@@ -261,15 +289,10 @@ public class Partida{
         }
         if(torn == Color.blanc){
             torn = Color.negre;
-            if(!isBlackHuman)
-                TornMaquina();
+
         }
         else{
             torn = Color.blanc;
-            if(!isWhiteHuman)
-                TornMaquina();
-
-
     }
 }
 

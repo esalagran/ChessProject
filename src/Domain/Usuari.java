@@ -12,9 +12,6 @@ public class Usuari{
 
     }
 
-    Partida IniciarPartida(Usuari u1, Usuari u2, Problema p){
-        return new Partida(u1, u2, p);
-    }
 
     public String GetNickName(){
         return _nickname;
