@@ -1,5 +1,8 @@
 package Domain;
 
+
+/**Classe no rellevant per aquesta entrega*/
+
 public class Usuari{
     String _nickname;
 

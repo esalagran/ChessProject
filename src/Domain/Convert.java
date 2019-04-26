@@ -3,17 +3,23 @@ package Domain;
 import static Domain.Color.blanc;
 import static Domain.Color.negre;
 
+/**
+ * @Classe: Calaix de sastre de les conversions utilitzades
+ */
+
 public class Convert {
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_CYAN = "\u001B[37m";
-    public static final String ANSI_PURPLE = "\u001B[30m";
-    public static final String ANSI_BLACK = "\u001B[30m";
+    static final String ANSI_RESET = "\u001B[0m";
+    static final String ANSI_RED = "\u001B[31m";
+    static final String ANSI_BLUE = "\u001B[34m";
+    static final String ANSI_BLACK = "\u001B[30m";
 
+
+    /**
+     * \pre: classe conté la classe que es vol convertir a TipusPeça
+     * \post: Es retorna quin el TipusPeça de la classe enviada
+     * @return Tipus de peça de la classe enviada
+     */
     public static TipusPeça ClassToTipusPeça(String classe){
         if (classe.contains("Rei")) return TipusPeça.Rei;
         if (classe.contains("Dama")) return TipusPeça.Dama;
@@ -25,15 +31,32 @@ public class Convert {
         return null;
     }
 
+    /**
+     * \pre:
+     * \post: Es retorna true si coord està en els límits del tauler, false altrament
+     * @return true si coord està als límits, false altrament
+     */
     public static boolean InTheLimits(ParInt coord){
         return (coord.GetFirst() >= 0 && coord.GetFirst() < 8 && coord.GetSecond() >= 0 && coord.GetSecond() < 8 );
     }
+
+    /**
+     * \pre:
+     * \post: Es retorna  blanc si color es negre i negre si color es blanc
+     * @return blanc si color es negre i negre si color es blanc
+     */
 
     public static Color InvertColor (Color color){
         if (color == negre) return blanc;
         return negre;
     }
 
+    /**
+     * \pre: str conté dos characters: el primer indica la columna del tauler(lletra)
+     * i el segon la fila del tauler(numero)
+     * \post: Es converteix les coordenades de tauler a coordenades de matriu
+     * @return les coordenades de tauler derivades de str
+     */
     public static ParInt StringToCoordenada(String str){
         char primer = str.charAt(0);
         char segon = str.charAt(1);
@@ -47,6 +70,11 @@ public class Convert {
         return new ParInt(CharToCoordenadaInt(primer), CharToCoordenadaInt(segon));
     }
 
+    /**
+     * \pre: ch conté la columna del tauler en coordenades de tauler
+     * \post: converteix la variabale ch en un número en coordenades de tauler
+     * @return el nombre en coordenades de tauler de la variable ch
+     * */
     public static int CharToCoordenadaInt( char ch ){
 
         int res = 0;
@@ -67,6 +95,11 @@ public class Convert {
         return  res;
     }
 
+
+    /**
+     * \pre: t conté el tauler que es vol dibuixar i no és null
+     * \post: es dibuixa per consola el tauler t
+     */
     public static void DibuixaTauler(Tauler t){
         String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
         String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
@@ -130,10 +163,7 @@ public class Convert {
             System.out.print(ANSI_BLACK + '|');
             System.out.println();
             System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-
-
         }
-
         System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
     }
 

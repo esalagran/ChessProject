@@ -2,14 +2,29 @@ package Domain;
 
 import java.util.Vector;
 
+/**
+ * @class Peo
+ * \brief Classe que conté la informació de la peça peo
+ */
+
 public class Peo extends Fitxa {
     private VectMov[] _moviments;
     private int _pes;
 
+    /**
+     * Pre:
+     * Post: S'obtenen els moviments mínims i màxims del peó en una posició
+     * @return Un set dels moviemnts que pot fer;
+     */
     public VectMov[] GetMoviments() {
         return _moviments;
     }
 
+    /**
+     * Pre:
+     * Post: Getter que retorna el pes heurístic del peó
+     * @return el pes heurístic del peó
+     * */
     public int GetPes() {
         return _pes;
     }
@@ -22,6 +37,11 @@ public class Peo extends Fitxa {
         _pes = 1;
     }
 
+    /**
+     * Pre: coord indica la posició del peó en el Tauler actual,
+     * Tauler indica el tauler on s'han de calcular les possibilitats i color
+     * indica el color de la peça en el tauler
+     * */
     @Override
     public Vector<ParInt> GetMoviments(ParInt coord, Tauler actual, Color color) {
 

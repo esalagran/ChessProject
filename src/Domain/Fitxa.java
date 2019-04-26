@@ -18,6 +18,12 @@ public abstract class Fitxa {
      */
     public abstract int GetPes();
 
+    /**
+     * \pre: coord indica la posició de la peça en el Tauler actual,
+     * tauler, el Tauler actual que s'està jugant, el color de la peça en el tauler
+     * \post: S'obtenen tots els possibles moviments de la peça a coord en el Tauler actual
+     * @return els possibles moviments de la peça a coord en el Tauler actual*/
+
     public Vector<ParInt>GetMoviments(ParInt coord, Tauler actual, Color color){
 
         Vector<ParInt> moviments = new Vector<>();
@@ -85,6 +91,11 @@ public abstract class Fitxa {
         return moviments;
     }
 
+    /**
+     * \pre: move indica el moviment a analitzar, white el color de la peça, actual el tauler
+     * on hi ha la peça i moviments conté els moviments que es poden fer fins al moment
+     * \post: Si el moviment és possible, s'afegeix a moviments
+     */
     void addMove(ParInt move, Color white, Tauler actual, Vector<ParInt> moviments){
         if (Convert.InTheLimits(move) && !actual.PeçaMeva(move,white) ) {
             moviments.add(move);

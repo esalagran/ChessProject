@@ -6,7 +6,7 @@ public class Tauler {
     private FitxaProblema[][] taulell;
     private FitxaProblema whiteKing;
     private FitxaProblema blackKing;
-
+    private  Convert Convert = new Convert();
     /**
      * \pre:
      * \post: Inicialitza un taullel buit
@@ -71,11 +71,13 @@ public class Tauler {
     public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
         if (Convert.InTheLimits(coord)) {
             taulell[coord.GetFirst()][coord.GetSecond()] = f;
+            if(f!=null){
+            f.SetCoordenades(coord);
 
-            if (Convert.ClassToTipusPeça(f.getIFitxa().getClass().toString()) == TipusPeça.Rei){
+            if ( Convert.ClassToTipusPeça(f.getIFitxa().getClass().toString()).equals(TipusPeça.Rei)){
                 if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
                 else setBlackKing(f);
-            }
+            }}
         }
         else{
             System.out.println("Coordenades fora dels límits");
