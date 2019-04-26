@@ -161,6 +161,9 @@ public class DriverPartida {
 
     public static void JugarPartida(){
         partida.ComençarPartida();
+
+        Color guanyador = Color.negre;
+        boolean mat = false;
         while (!partida.hasEnded()){
 
             dibuixaPartida(partida.GetTauler());
@@ -171,6 +174,11 @@ public class DriverPartida {
             else System.out.println(("Negres"));
             MourePeça();
         }
+
+        if(partida.isMat())
+            System.out.println("MAT!");
+        System.out.println("El guanyador és : " + partida.getGuanyador());
+
 
 
 

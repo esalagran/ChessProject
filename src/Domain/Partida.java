@@ -18,11 +18,12 @@ public class Partida{
 
 
     Usuari atacant, defensor;
-    Color torn;
+    Color torn, tornInicial;
     Modalitat mode;
     boolean isBlackHuman;
     boolean isWhiteHuman;
-    String guanyador;
+    boolean mat;
+    Color guanyador;
     Problema probl;
     Tauler tauler;
     boolean hasEnded = false;
@@ -40,6 +41,7 @@ public class Partida{
 
         probl = p;
         torn = probl.GetTorn();
+        tornInicial = torn;
         mode = mod;
         tauler = p.getTauler();
     }
@@ -110,7 +112,6 @@ public class Partida{
             if (tauler.FitxaAt(origen) != null ) {
                 if(torn == tauler.FitxaAt(origen).GetColor()){
 
-                    System.out.println(tauler.FitxaAt(origen).GetColor());
                 }
                 else return;
 
@@ -139,8 +140,6 @@ public class Partida{
                            tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
                            tauler.AfegirPeçaAt(origen, null);
                            possible = true;
-                           System.out.println(tauler.getBlackKing().GetCoordenades().GetFirst());
-                           System.out.println(tauler.getBlackKing().GetCoordenades().GetSecond());
                            if(m.isAttacked(tauler, tauler.getBlackKing(), torn)){
                                System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
@@ -154,8 +153,6 @@ public class Partida{
                            tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
                            tauler.AfegirPeçaAt(origen, null);
                            possible = true;
-                           System.out.println(tauler.getWhiteKing().GetCoordenades().GetFirst());
-                           System.out.println(tauler.getWhiteKing().GetCoordenades().GetSecond());
 
 
                            if(m.isAttacked(tauler, tauler.getWhiteKing(), torn)){
@@ -165,7 +162,6 @@ public class Partida{
                                return;
                            }}
 
-                       System.out.println(posX + " " + posY);
                    }
                 }
 
@@ -194,6 +190,15 @@ public class Partida{
     }
 
 
+    public boolean isMat(){
+        return mat;
+    }
+
+    public Color getGuanyador(){
+        return guanyador;
+    }
+
+
 
     /**
      * \pre: torn i tauler diferent de null
@@ -202,8 +207,7 @@ public class Partida{
      */
    public void TornMaquina(){
 
-
-       Object[] mov =  m.GetMoviment(4, torn, tauler);
+       Object[] mov =  m.GetMoviment(5, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
 
@@ -213,6 +217,11 @@ public class Partida{
 
     }
 
+    /**
+     * \pre:
+     * \post:  retorna el tauler de la partida
+     * @return tauler
+     */
     public Tauler GetTauler(){
        return tauler;
     }
@@ -223,7 +232,7 @@ public class Partida{
      * @return hasEnded
      */
     public boolean hasEnded(){
-            return hasEnded;
+        return hasEnded;
     }
 
 
@@ -237,8 +246,16 @@ public class Partida{
         boolean mate;
         mate = (m.check(tauler, Color.blanc) | m.check(tauler,Color.negre ));
         if(moviments >= probl.GetMovimentsPerGuanyar() || mate){
-            if(mate)
-                System.out.println("MATE");
+            if(mate){
+                guanyador = tornInicial;
+                mat = true;
+            }
+            else{
+                if(tornInicial == Color.blanc)
+                    guanyador = Color.negre;
+                else guanyador = Color.blanc;
+            }
+
             hasEnded = true;
             return;
         }

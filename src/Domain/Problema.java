@@ -28,7 +28,7 @@ public class Problema{
     private boolean _guardat;
     private Tauler tauler;
     private boolean _valid;
-    private int movimentsPerGuanyar = 10;
+    private int movimentsPerGuanyar = 3;
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
     //private Vector<FitxaProblema> _fitxesProblema;
