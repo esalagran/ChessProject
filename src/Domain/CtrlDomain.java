@@ -3,8 +3,12 @@ package Domain;
 public class CtrlDomain {
     private Problema pObert;
     private Partida partidaEnJoc;
-    private Persistence.CtrlPersistence CP = new Persistence.CtrlPersistence();
+    private Persistence.CtrlPersistence CP;
     private Presentation.CtrlPresentation cPres;
+
+    public void inicializarCtrlDominio() {
+        CP = new Persistence.CtrlPersistence();
+    }
 
     /**
      * \pre: probJugats conté els problemes que s'han de jugar entre les màquines

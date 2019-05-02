@@ -20,13 +20,64 @@ public class CtrlPresentation {
     public static final String ANSI_PURPLE = "\u001B[30m";
     public static final String ANSI_BLACK = "\u001B[30m";
 
-
-
-
-
-
+    private VistaPrincipal vistaPrincipal = null;
+    private VistaSecundaria vistaSecundaria = null;
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
+
+
+    public CtrlPresentation() {
+        CD = new CtrlDomain();
+        if (vistaPrincipal == null)  // innecesario
+            vistaPrincipal = new VistaPrincipal(this);
+    }
+
+    public void initializePresentation() {
+        CD.inicializarCtrlDominio();
+        vistaPrincipal.hacerVisible();
+    }
+
+
+    //////////////////////// Metodos de sincronizacion entre vistas
+
+
+    public void sincronizacionVistaPrincipal_a_Secundaria() {
+        vistaPrincipal.desactivar();
+        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
+        if (vistaSecundaria == null)
+            vistaSecundaria = new VistaSecundaria(this);
+        vistaSecundaria.hacerVisible();
+    }
+
+    public void sincronizacionVistaSecundaria_a_Principal() {
+        // Se hace invisible la vista secundaria (podria anularse)
+        vistaSecundaria.hacerInvisible();
+        vistaPrincipal.activar();
+    }
+
+
+//////////////////////// Llamadas al controlador de dominio
+
+
+    public ArrayList<String> llamadaDominio1 (String selectedItem) {
+        return null;
+    }
+
+    public ArrayList<String> llamadaDominio2() {
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void dibuixaTauler(FitxaProblema[][] tauler){
 
