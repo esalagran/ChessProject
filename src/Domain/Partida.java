@@ -15,7 +15,7 @@ public class Partida{
     public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    Usuari atacant, defensor;
+    String atacant, defensor;
     Color torn, tornInicial;
     Modalitat mode;
     boolean isBlackHuman;
@@ -29,13 +29,15 @@ public class Partida{
     Maquina m = new Maquina();
 
 
-    public Partida(Problema p, Modalitat mod){
+    public Partida(Problema p, Modalitat mod, String atac, String defensa){
 
         probl = p;
         torn = probl.GetTorn();
         tornInicial = torn;
         mode = mod;
         tauler = p.getTauler();
+        atacant = atac;
+        defensor = defensa;
     }
 
     /**
@@ -283,7 +285,7 @@ public class Partida{
                     guanyador = Color.negre;
                 else guanyador = Color.blanc;
             }
-
+            //guanyador
             hasEnded = true;
             return;
         }

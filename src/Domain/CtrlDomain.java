@@ -13,7 +13,7 @@ public class CtrlDomain {
      * */
     public void JugarPartidesMaquines(Problema[] probJugats) {
         for (Problema p : probJugats) {
-            partidaEnJoc = new Partida(p, Modalitat.MM);
+            partidaEnJoc = new Partida(p, Modalitat.MM,null,null);
             //Falta obtenir el guanyador i jugar la partida
         }
     }
@@ -23,8 +23,8 @@ public class CtrlDomain {
      * \post: Es juga la partida amb la modalitat mode i
      * s'imprimeix el guanyador quan es finalitzi
      * */
-    public void JugarPartidaHuma(Modalitat mode, Problema p) {
-        partidaEnJoc = new Partida(p, mode);
+    public void JugarPartidaHuma(Modalitat mode, Problema p, String atac, String defensa) {
+        partidaEnJoc = new Partida(p, mode, atac, defensa);
         partidaEnJoc.ComençarPartida();
     }
 
