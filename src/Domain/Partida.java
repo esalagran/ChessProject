@@ -107,21 +107,21 @@ public class Partida{
      * \post: mou la peça que hi ha a la posició origen a la posició destí (si el moviment és possible en el context de la partida)
      * @return
      */
-    public void MourePeça(ParInt origen, ParInt desti){
+    public FitxaProblema[][] MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen) != null ) {
                 if(torn == tauler.FitxaAt(origen).GetColor()){
 
                 }
-                else return;
+                else return null;
 
 
-            } else return;
+            } else return null;
 
 
         } else{
-            return;
+            return null;
 
         }
 
@@ -145,7 +145,7 @@ public class Partida{
                                System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
                                tauler.AfegirPeçaAt(desti, f);
-                               return;
+                               return null;
                            }
                        }
 
@@ -160,7 +160,7 @@ public class Partida{
                                System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
                                tauler.AfegirPeçaAt(desti, f);
-                               return;
+                               return null;
                            }}
 
                    }
@@ -169,24 +169,26 @@ public class Partida{
                 if(!possible){
 
                     System.out.println("Moviment no possible");
-                    return;
+                    return null;
                 }
 
 
             } else{
-                return;
+                return null;
 
 
             }
 
 
         } else{
-            return;
+            return null;
 
 
         }
 
+
         FiTorn();
+        return tauler.getTaulell();
 
     }
 

@@ -20,13 +20,106 @@ public class CtrlPresentation {
     public static final String ANSI_PURPLE = "\u001B[30m";
     public static final String ANSI_BLACK = "\u001B[30m";
 
-
-
-
-
-
+    private VistaLogin login = null;
+    private MenuPrincipal menu = null;
+    private VistaTipusProblema vistaTipus = null;
+    private TaulerGUI tauler = null;
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
+
+
+    public CtrlPresentation() {
+        CD = new CtrlDomain();
+        if (login == null)  // innecesario
+            login= new VistaLogin(this);
+    }
+
+    public void initializePresentation() {
+        CD.inicializarCtrlDominio();
+        login.hacerVisible();
+    }
+
+
+    //////////////////////// Metodos de sincronizacion entre vistas
+
+
+    public void sincronizacionVistaMenu_a_Tipus() {
+        menu.desactivar();
+        menu.visible(false);
+
+        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
+        if (vistaTipus == null)
+            vistaTipus = new VistaTipusProblema(this);
+        vistaTipus.hacerVisible();
+    }
+
+    public void sincronizacionVistaTipus_a_Menu() {
+        // Se hace invisible la vista secundaria (podria anularse)
+        vistaTipus.desactivar();
+        vistaTipus.visible(false);
+        menu.activar();
+    }
+
+    public void sincronizacionLogin_a_Menu() {
+        // Se hace invisible la vista secundaria (podria anularse)
+        login.desactivar();
+        login.visible(false);
+
+        if(menu== null)
+            menu = new MenuPrincipal(this );
+        menu.activar();
+        menu.visible(true);
+    }
+
+    public void sincronizacionMenu_a_Login() {
+        // Se hace invisible la vista secundaria (podria anularse)
+        menu.desactivar();
+        menu.visible(false);
+        login.activar();
+    }
+
+    public void sincronizacionVistaTipus_a_Tauler(){
+        vistaTipus.desactivar();
+        vistaTipus.visible(false);
+        if(tauler==null){
+            Color torn = CD.JugarPartidaHuma(Modalitat.MH, Dificultat.facil, 10);
+            Tauler t  = CD.getTaulerPartidaEnJouc();
+            tauler = new TaulerGUI(t, torn,  this);}
+        tauler.run();
+    }
+
+
+
+
+
+
+
+//////////////////////// Llamadas al controlador de dominio
+
+
+    public ArrayList<String> llamadaDominio1 (String selectedItem) {
+        return null;
+    }
+
+    public ArrayList<String> llamadaDominio2() {
+        return null;
+    }
+
+    public FitxaProblema[][] mourePeçaPartida(ParInt first, ParInt second){
+        return CD.MourePeçaPartida(first, second);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void dibuixaTauler(FitxaProblema[][] tauler){
 

@@ -1,18 +1,19 @@
 package Presentation;
 
+import javax.swing.*;
+
 public class MainClass {
 
 
 
     public static void main(String[] args) {
-
-        CtrlPresentation CP = new CtrlPresentation();
+        SwingUtilities.invokeLater(
+            () -> {
+                CtrlPresentation CP = new CtrlPresentation();
+                CP.initializePresentation();
+            }
+        );
         //CP.PGNtoFEN();
-        CP.Start();
-
-
-
-
     }
 
 
