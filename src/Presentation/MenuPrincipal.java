@@ -8,30 +8,25 @@ import java.util.*;
 
 ////////////////////////
 
-public class VistaPrincipal {
+public class MenuPrincipal {
 
     // Controlador de presentacion
     private CtrlPresentation iCtrlPresentacion;
 
     // Componentes de la interficie grafica
-    private JFrame frameVista = new JFrame("Vista Principal");
+    private JFrame frameVista = new JFrame("Menu " +
+            "principal");
     private JPanel panelContenidos = new JPanel();
     private JPanel panelInformacion = new JPanel();
     private JPanel panelInformacionA = new JPanel();
     private JPanel panelInformacion1 = new JPanel();
     private JPanel panelInformacion2 = new JPanel();
     private JPanel panelBotones = new JPanel();
-    private JButton buttonLlamadaDominio = new JButton("Llamada Dominio");
-    private JButton buttonAbrirJFrame = new JButton("Abrir JFrame");
-    private JButton buttonCambiarPanel = new JButton("Cambiar Panel");
-    private JButton buttonAbrirDialog = new JButton("Abrir Dialog (modal)");
-    private JLabel labelPanelInformacion1 = new JLabel("Panel Informacion 1");
-    private JComboBox comboboxInformacion1 = new JComboBox();
-    private JTextArea textareaInformacion1 = new JTextArea(15,25);
-    private JLabel labelPanelInformacion2 = new JLabel("Panel Informacion 2");
-    private JTextField textfieldInformacion2 = new JTextField();
-    private JSpinner spinnerInformacion2 = new JSpinner();
-    private JSlider sliderInformacion2 = new JSlider();
+    private JButton buttonJugarPartida= new JButton("Jugar partida");
+    private JButton buttonCarregarProblema = new JButton("Carregar problema");
+    private JButton buttonCrearProblema = new JButton("Crear problema");
+    private JButton buttonVeureRanking = new JButton("Veure ranking");
+
 
     // Menus
     private JMenuBar menubarVista = new JMenuBar();
@@ -50,7 +45,7 @@ public class VistaPrincipal {
 //////////////////////// Constructor y metodos publicos
 
 
-    public VistaPrincipal (CtrlPresentation pCtrlPresentacion) {
+    public MenuPrincipal (CtrlPresentation pCtrlPresentacion) {
         System.out.println
                 ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
         iCtrlPresentacion = pCtrlPresentacion;
@@ -64,6 +59,7 @@ public class VistaPrincipal {
         frameVista.setVisible(true);
     }
 
+
     public void activar() {
         frameVista.setEnabled(true);
     }
@@ -72,32 +68,26 @@ public class VistaPrincipal {
         frameVista.setEnabled(false);
     }
 
+    public void visible(boolean vis){
+        frameVista.setVisible(vis);
+    }
+
 
 //////////////////////// Metodos de las interfaces Listener
 
 
-    public void actionPerformed_buttonLlamadaDominio (ActionEvent event) {
-        String comboboxSelectedItem =
-                (String) comboboxInformacion1.getModel().getSelectedItem();
-        ArrayList<String> resulDominio =
-                iCtrlPresentacion.llamadaDominio1(comboboxSelectedItem);
-        for (int i = 0; i < resulDominio.size(); i++)
-            System.out.println("Obtenido de dominio: " + resulDominio.get(i));
-        // Informa el contenido de algunos componentes (es un ejemplo)
-        for (int i = 0; i < resulDominio.size(); i++)
-            textareaInformacion1.append("\n" + resulDominio.get(i));
-        SpinnerListModel spinnerModel =
-                (SpinnerListModel) spinnerInformacion2.getModel();
-        spinnerModel.setList(resulDominio);
+    public void actionPerformed_buttonJugarPartida (ActionEvent event) {
+            iCtrlPresentacion.sincronizacionVistaMenu_a_Tipus();
+
     }
 
-    public void actionPerformed_buttonAbrirJFrame (ActionEvent event) {
+    public void actionPerformed_buttonCarregarProblema (ActionEvent event) {
         System.out.println("Antes de crear la vista secundaria");
-        iCtrlPresentacion.sincronizacionVistaPrincipal_a_Secundaria();
+        iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
         System.out.println("Despues de crear la vista secundaria");
     }
 
-    public void actionPerformed_buttonCambiarPanel (ActionEvent event) {
+    public void actionPerformed_buttonCrearProblema (ActionEvent event) {
         // Cambio de panel
         if (iPanelActivo != 0) {
             iPanelActivo = iPanelActivo%2 + 1;
@@ -113,12 +103,8 @@ public class VistaPrincipal {
         }
     }
 
-    public void actionPerformed_buttonAbrirDialog (ActionEvent event) {
-        // Abre una ventana con un dialogo
-        VistaDialogo vistaDialogo = new VistaDialogo();
-        String[] strBotones = {"Si","No","Cancel"};
-        int isel = vistaDialogo.setDialogo("Titulo del Dialogo","Pregunta del Dialogo",strBotones,3);
-        System.out.println("Resultado del dialogo: " + isel + " " + strBotones[isel]);
+    public void actionPerformed_buttonVeureRanking (ActionEvent event) {
+
     }
 
 
@@ -129,39 +115,39 @@ public class VistaPrincipal {
 
         // Listeners para los botones
 
-        buttonLlamadaDominio.addActionListener
+        buttonJugarPartida.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JButton) event.getSource()).getText();
                         System.out.println("Has clickado el boton con texto: " + texto);
-                        actionPerformed_buttonLlamadaDominio(event);
+                        actionPerformed_buttonJugarPartida(event);
                     }
                 });
 
-        buttonAbrirJFrame.addActionListener
+        buttonCarregarProblema.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JButton) event.getSource()).getText();
                         System.out.println("Has clickado el boton con texto: " + texto);
-                        actionPerformed_buttonAbrirJFrame(event);
+                        actionPerformed_buttonCarregarProblema(event);
                     }
                 });
 
-        buttonCambiarPanel.addActionListener
+        buttonCrearProblema.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JButton) event.getSource()).getText();
                         System.out.println("Has clickado el boton con texto: " + texto);
-                        actionPerformed_buttonCambiarPanel(event);
+                        actionPerformed_buttonCrearProblema(event);
                     }
                 });
 
-        buttonAbrirDialog.addActionListener
+        buttonVeureRanking.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JButton) event.getSource()).getText();
                         System.out.println("Has clickado el boton con texto: " + texto);
-                        actionPerformed_buttonAbrirDialog(event);
+                        actionPerformed_buttonVeureRanking(event);
                     }
                 });
 
@@ -172,7 +158,7 @@ public class VistaPrincipal {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JMenuItem) event.getSource()).getText();
                         System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonLlamadaDominio(event);
+                        actionPerformed_buttonJugarPartida(event);
                     }
                 });
 
@@ -181,7 +167,7 @@ public class VistaPrincipal {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JMenuItem) event.getSource()).getText();
                         System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonAbrirJFrame(event);
+                        actionPerformed_buttonCarregarProblema(event);
                     }
                 });
 
@@ -190,7 +176,7 @@ public class VistaPrincipal {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JMenuItem) event.getSource()).getText();
                         System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonCambiarPanel(event);
+                        actionPerformed_buttonCrearProblema(event);
                     }
                 });
 
@@ -199,7 +185,7 @@ public class VistaPrincipal {
                     public void actionPerformed (ActionEvent event) {
                         String texto = ((JMenuItem) event.getSource()).getText();
                         System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonAbrirDialog(event);
+                        actionPerformed_buttonVeureRanking(event);
                     }
                 });
 
@@ -214,14 +200,7 @@ public class VistaPrincipal {
 
         // Listeners para el resto de componentes
 
-        sliderInformacion2.addChangeListener
-                (new ChangeListener() {
-                    public void stateChanged (ChangeEvent event) {
-                        int sliderValue = sliderInformacion2.getValue();
-                        System.out.println(sliderValue);
-                        textfieldInformacion2.setText(Integer.toString(sliderValue));
-                    }
-                });
+
 
 
     }
@@ -234,9 +213,8 @@ public class VistaPrincipal {
         inicializar_frameVista();
         inicializar_menubarVista();
         inicializar_panelContenidos();
-        inicializar_panelInformacion();
-        inicializar_panelInformacion1();
-        inicializar_panelInformacion2();
+        //inicializar_panelInformacion();
+        //inicializar_panelInformacion1();
         inicializar_panelBotones();
         asignar_listenersComponentes();
     }
@@ -272,8 +250,8 @@ public class VistaPrincipal {
         // Layout
         panelContenidos.setLayout(new BorderLayout());
         // Paneles
-        panelContenidos.add(panelBotones,BorderLayout.NORTH);
-        panelContenidos.add(panelInformacion,BorderLayout.CENTER);
+        panelContenidos.add(panelBotones, BorderLayout.CENTER);
+
     }
 
     private void inicializar_panelInformacion() {
@@ -284,56 +262,31 @@ public class VistaPrincipal {
         panelInformacion.add(panelInformacionA);
     }
 
-    private void inicializar_panelInformacion1() {
-        // Layout
-        panelInformacion1.setLayout(new BorderLayout());
-        // Componentes
-        panelInformacion1.add(labelPanelInformacion1,BorderLayout.NORTH);
-        comboboxInformacion1.addItem("combobox opcion1");
-        comboboxInformacion1.addItem("combobox opcion2");
-        comboboxInformacion1.addItem("combobox opcion3");
-        panelInformacion1.add(comboboxInformacion1,BorderLayout.EAST);
-        textareaInformacion1.setText("Text Area Informacion1");
-        panelInformacion1.add(new JScrollPane(textareaInformacion1),BorderLayout.SOUTH);
-    }
-
-    private void inicializar_panelInformacion2() {
-        // Layout
-        panelInformacion2.setLayout(new BorderLayout());
-        // Componentes
-        panelInformacion2.add(labelPanelInformacion2,BorderLayout.NORTH);
-        textfieldInformacion2.setText("30");
-        textfieldInformacion2.setPreferredSize(new Dimension(40,40));
-        panelInformacion2.add(textfieldInformacion2,BorderLayout.WEST);
-        String[] spinnerStrings = {"spinner string1","spinner string2"};
-        SpinnerListModel spinnerStringsModel = new SpinnerListModel(spinnerStrings);
-        spinnerInformacion2.setModel(spinnerStringsModel);
-        spinnerInformacion2.setPreferredSize(new Dimension(500,20));
-        panelInformacion2.add(spinnerInformacion2,BorderLayout.SOUTH);
-        sliderInformacion2.setMinimum(0);
-        sliderInformacion2.setMaximum(50);
-        sliderInformacion2.setValue(30);
-        sliderInformacion2.setMajorTickSpacing(10);
-        sliderInformacion2.setOrientation(JSlider.HORIZONTAL);
-        sliderInformacion2.setPaintLabels(true);
-        sliderInformacion2.setPaintTicks(false);
-        sliderInformacion2.setPreferredSize(new Dimension(100,50));
-        panelInformacion2.add(sliderInformacion2,BorderLayout.CENTER);
-    }
-
     private void inicializar_panelBotones() {
         // Layout
-        panelBotones.setLayout(new FlowLayout());
+        panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
+
         // Componentes
-        panelBotones.add(buttonLlamadaDominio);
-        panelBotones.add(buttonAbrirJFrame);
-        panelBotones.add(buttonCambiarPanel);
-        panelBotones.add(buttonAbrirDialog);
+        buttonJugarPartida.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonCarregarProblema.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonCrearProblema.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonVeureRanking.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Buttons
+        int n  = 40; //SPACING
+        panelBotones.add(Box.createVerticalStrut(20));
+        panelBotones.add(buttonJugarPartida);
+        panelBotones.add(Box.createVerticalStrut(n));
+        panelBotones.add(buttonCarregarProblema);
+        panelBotones.add(Box.createVerticalStrut(n));
+        panelBotones.add(buttonCrearProblema);
+        panelBotones.add(Box.createVerticalStrut(n));
+        panelBotones.add(buttonVeureRanking);
         // Tooltips
-        buttonLlamadaDominio.setToolTipText("Llama al controlador de dominio con la informacion del ComboBox");
-        buttonAbrirJFrame.setToolTipText("Abre una nueva ventana sincronizada");
-        buttonCambiarPanel.setToolTipText("Cambia el panel de informacion");
-        buttonAbrirDialog.setToolTipText("Abre un Dialogo modal simple");
+        buttonJugarPartida.setToolTipText("Llama al controlador de dominio con la informacion del ComboBox");
+        buttonCarregarProblema.setToolTipText("Abre una nueva ventana sincronizada");
+        buttonCrearProblema.setToolTipText("Cambia el panel de informacion");
+        buttonVeureRanking.setToolTipText("Abre un Dialogo modal simple");
     }
 
 }

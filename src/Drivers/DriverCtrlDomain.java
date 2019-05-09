@@ -136,7 +136,7 @@ public class DriverCtrlDomain{
                     ctrlDomain.JugarPartidesMaquines(null);
                     break;
                 case 2:
-                    ctrlDomain.JugarPartidaHuma(Modalitat.HH, new Problema(FEN));
+                    ctrlDomain.JugarPartidaHuma(Modalitat.HH, Dificultat.facil, 10);
                     break;
                 case 3:
                     ctrlDomain.CreaProblema();

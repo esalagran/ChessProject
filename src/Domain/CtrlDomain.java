@@ -27,9 +27,11 @@ public class CtrlDomain {
      * \post: Es juga la partida amb la modalitat mode i
      * s'imprimeix el guanyador quan es finalitzi
      * */
-    public void JugarPartidaHuma(Modalitat mode, Problema p) {
+    public Color JugarPartidaHuma(Modalitat mode, Dificultat dif, int torns) {
+        Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
         partidaEnJoc = new Partida(p, mode);
         partidaEnJoc.ComençarPartida();
+        return p.GetTorn();
     }
 
     /**
@@ -123,6 +125,10 @@ public class CtrlDomain {
         }
     }
 
+    public FitxaProblema[][] MourePeçaPartida(ParInt first, ParInt second){
+       return partidaEnJoc.MourePeça(first, second);
+    }
+
     /**
      * \pre pObert no pot ser null
      * \post S'ha validat el problema i es mostra si és valid o no
@@ -147,6 +153,11 @@ public class CtrlDomain {
     public Partida getPartidaEnJoc() {
         return partidaEnJoc;
     }
+
+    public Tauler getTaulerPartidaEnJouc() {
+        return partidaEnJoc.GetTauler();
+    }
+
 }
 
 
