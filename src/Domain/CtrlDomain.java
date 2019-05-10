@@ -17,7 +17,7 @@ public class CtrlDomain {
      * */
     public void JugarPartidesMaquines(Problema[] probJugats) {
         for (Problema p : probJugats) {
-            partidaEnJoc = new Partida(p, Modalitat.MM);
+            partidaEnJoc = new Partida(p, Modalitat.MM,null,null);
             //Falta obtenir el guanyador i jugar la partida
         }
     }
