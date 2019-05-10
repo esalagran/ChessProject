@@ -1,123 +1,121 @@
 package Persistence;
 import Domain.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
 
-/** Classe rellevant per aquesta entrega*/
+/**
+ * @class CtrlPersistence
+ * \brief Classe encarregada de gestionar el .txt que actua com a base de dades
+ *        Per cada problema s'encarregade guardar:
+ *              - Codi FEN
+ *              - Validesa (true/false)
+ *              - Numero de passos fins el mat
+ *              - Color del jugador que realitza el mat
+ */
+
 public class CtrlPersistence {
 
-    public Domain.Huma[] GetUsuaris(){
+    public Domain.Huma[] GetUsuaris() {
         return null;
     }
 
 
-    public List<Problema> GetProblemes(){
-        return  carregarProblemes();
+    public List<Problema> GetProblemes() {
+        return carregarProblemes();
     }
+
     List<Problema> problemes = new ArrayList<>();
 
-
-    public void guardarProblema(String FEN, Boolean valid){
-        try{
-            boolean repetit = false;
-            for (Problema p: problemes
-                 ) {
-
-                if (p.GetFEN().equals(FEN)){
-                     repetit = true;
-                     break;
+    private boolean hiHaProblema(String FEN) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
+            String fen = reader.readLine();
+            boolean trobat = false;
+            while (fen != null && !trobat) {
+                if (fen.contains(FEN)) trobat = true;
+                fen = reader.readLine();
             }
+            reader.close();
+            return trobat;
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
-        if(!repetit){
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes.txt"),true));
-            writer.append('\n');
-            writer.append("FEN: " + FEN + " v: " + valid);
-            writer.close();
-        }
+        return false;
+    }
 
-        else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
+    public void guardarProblema(Problema p) {
+        try {
+            if (!hiHaProblema(p.GetFEN())) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes2.txt"), true));
+                writer.append(p.GetFEN() + '\n' + p.GetValid() + '\n');                            //Guardo codi FEN i validesa
+                writer.append(String.valueOf(p.getTema().getMovimentsFinsMat()) + '\n');    //Guardo numero moviments
+                if (p.getTema().getCol() == Color.blanc) {
+                    writer.append("blanc"+'\n');    //Guardo color blanc
+                }
+                else{
+                    writer.append("negre"+'\n');    //Guardo color negre
+                }
+                writer.close();
+            } else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
 
-        }catch(Exception e){
-            System.out.println( "ERROR: " + e);
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
         }
     }
 
+    public void eliminarProblema(String FEN){
+        try{
+            if (hiHaProblema(FEN)){
+                File temp = new File("localData/problemestemp.txt");
+                File input = new File ("localData/problemes2.txt");
+                BufferedReader reader = new BufferedReader(new FileReader(input));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(temp,true));
+                String currentLine;
+                while ((currentLine = reader.readLine()) != null){
+                    if (currentLine.contains(FEN)){
+                        for(int i = 0; i < 4;i++){
+                            currentLine = reader.readLine();
+                        }
+                    }
+                    if (currentLine != null) writer.write(currentLine + '\n');
+                }
+                writer.close();
+                reader.close();
+                temp.renameTo(input);
+            }
+            else System.out.println ("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
-    private List<Problema> carregarProblemes(){
-    try{
-
-        File file = new File("localData/problemes.txt");
-        Scanner sc = new Scanner(file);
-        String FEN = "";
-        Domain.Dificultat dif = Dificultat.facil;
-        int n = 0, uid = 0;
-        int id = 0;
-        boolean valid = false;
-        boolean tornBlanc = true;
-        String torn;
-
-        while (sc.hasNext()){
-             String s = sc.next();
-             //System.out.println(s);
-             if(s.equals("FEN:")){
-
-                 FEN = sc.next();
-                 torn = sc.next();
-
-                 if(torn.equals("w"))
-                     tornBlanc = true;
-                 else tornBlanc = false;
-
-                 FEN +=   " " + torn + " " + sc.next()+ " " + sc.next()+" " + sc.next() + " " + sc.next();
-
-                //System.out.println(FEN);
-             }
-
-             /*
-             if(s.equals("dif:")){
-                 String difS = sc.next();
-                 if(difS.equals("facil"))
-                     dif = Dificultat.facil;
-                 else if (difS.equals("mitja"))
-                    dif = Dificultat.mitja;
-                 else if (difS.equals("dificil"))
-                     dif = Dificultat.dificil;
-             }
-
-             if( s.equals("n:")) {
-                 n = Integer.valueOf(sc.next());
-
-             }
-
-             if(s.equals("uid:")){
-                 uid = sc.nextInt();
-                 problemes.add(new Problema(id, FEN, dif, new Domain.Huma()));
-                // System.out.println("El FEN es: " + FEN + ", la dificultat es: " + dif.toString() + " el mat es en " + n + " jugades i el creador te l'id: " + uid );
-                 id++;
-
-             }
-             */
-
-             if(s.equals("v:")){
-                 valid = sc.nextBoolean();
-                 problemes.add(new Problema(FEN));
-
-             }
-
+    private List<Problema> carregarProblemes() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
+            Problema aux;
+            String fen;
+            boolean valid;
+            int pasos;
+            Color color;
+            String s = reader.readLine();
+            while (s != null){
+                fen = s;
+                s = reader.readLine();
+                if (s.equals("true")) valid = true;
+                else valid = false;
+                pasos = Integer.parseInt(reader.readLine());
+                s = reader.readLine();
+                if (s.equals("blanc")) color = Color.blanc;
+                else color = Color.negre;
+                aux = new Problema(fen, new Tema(pasos,color),valid);
+                problemes.add(aux);
+                s = reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return problemes;
     }
-    catch(Exception e) {
-        System.out.println("ERROOOOR");
-        return null;
-
-    }
 }
-
-
-
-    }
 

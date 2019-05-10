@@ -29,6 +29,8 @@ public class Problema{
     private Tauler tauler;
     private boolean _valid;
     private int movimentsPerGuanyar = 6;
+    private SortedMap<String,Integer> ranking;
+    private Tema tema;
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
     //private Vector<FitxaProblema> _fitxesProblema;
@@ -53,6 +55,22 @@ public class Problema{
         tauler = FENtoTauler();
         _valid = false;
     }
+
+    public Problema(String FEN, Tema tema,boolean valid){
+        _FEN = FEN;
+        _pecesMax = NumMaxPeces.getInstance();
+        _numTipusPeça = new HashMap<>();
+        FillDictionary();
+        if (!_FEN.isEmpty()) {
+            if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
+            else this.torn = Color.negre;
+        }
+        tauler = FENtoTauler();
+        _valid = valid;
+        this.tema = tema;
+    }
+
+    public Tema getTema() {return tema;}
 
     /**
      * \pre: torn es un color valid
@@ -212,16 +230,15 @@ public class Problema{
     /**
      * Si el jugador ja existeix en el ranking actualiza la seva puntacio,
      * sino crea una nova instancia amb el nickname i la puntuacio
-     * @param nickname Nom del jugador a inscriure al ranking
+     * @param nomJugador Nom del jugador a inscriure al ranking
      * @param puntuacio Puntuacio del jugador en el problema
      */
-    public void inscriureRanking(String nickname, Integer puntuacio) {
-        //Replaces the entry for the specified key only if it is currently mapped to some value, otherwise returns NULL
-        if (_ranking.replace (nickname, puntuacio) == null) _ranking.put(nickname,puntuacio);
+    public void inscriureRanking (String nomJugador, int puntuacio){
+        if (ranking.replace(nomJugador,puntuacio) == null) ranking.put(nomJugador,puntuacio);
     }
 
     public Integer consultarPuntuacioJugador(String nickname) {
-        return _ranking.get(nickname);
+        return ranking.get(nickname);
     }
 
 

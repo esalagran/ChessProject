@@ -7,7 +7,7 @@ import java.util.*;
 
 ////////////////////////
 
-public class VistaSecundaria {
+public class VistaJugarPartida {
 
     // Controlador de presentacion
     private CtrlPresentation iCtrlPresentacion;
@@ -25,7 +25,7 @@ public class VistaSecundaria {
 //////////////////////// Constructor y metodos publicos
 
 
-    public VistaSecundaria (CtrlPresentation pCtrlPresentacion) {
+    public VistaJugarPartida (CtrlPresentation pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
@@ -53,7 +53,7 @@ public class VistaSecundaria {
     }
 
     public void actionPerformed_buttonVolver (ActionEvent event) {
-        iCtrlPresentacion.sincronizacionVistaSecundaria_a_Principal();
+        iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
     }
 
 

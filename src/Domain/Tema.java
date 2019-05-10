@@ -10,4 +10,11 @@ public class Tema {
         movimentsFinsMat = n;
     }
 
+    public Color getCol() {
+        return col;
+    }
+
+    public int getMovimentsFinsMat() {
+        return movimentsFinsMat;
+    }
 }

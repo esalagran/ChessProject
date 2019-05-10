@@ -15,7 +15,7 @@ public class Partida{
     public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    Usuari atacant, defensor;
+    String atacant, defensor;
     Color torn, tornInicial;
     Modalitat mode;
     boolean isBlackHuman;
@@ -29,13 +29,15 @@ public class Partida{
     Maquina m = new Maquina();
 
 
-    public Partida(Problema p, Modalitat mod){
+    public Partida(Problema p, Modalitat mod, String atac, String defensa){
 
         probl = p;
         torn = probl.GetTorn();
         tornInicial = torn;
         mode = mod;
         tauler = p.getTauler();
+        atacant = atac;
+        defensor = defensa;
     }
 
     /**
@@ -105,21 +107,21 @@ public class Partida{
      * \post: mou la peça que hi ha a la posició origen a la posició destí (si el moviment és possible en el context de la partida)
      * @return
      */
-    public void MourePeça(ParInt origen, ParInt desti){
+    public FitxaProblema[][] MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen) != null ) {
                 if(torn == tauler.FitxaAt(origen).GetColor()){
 
                 }
-                else return;
+                else return null;
 
 
-            } else return;
+            } else return null;
 
 
         } else{
-            return;
+            return null;
 
         }
 
@@ -143,7 +145,7 @@ public class Partida{
                                System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
                                tauler.AfegirPeçaAt(desti, f);
-                               return;
+                               return null;
                            }
                        }
 
@@ -158,7 +160,7 @@ public class Partida{
                                System.out.println("moviment il·legal");
                                tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
                                tauler.AfegirPeçaAt(desti, f);
-                               return;
+                               return null;
                            }}
 
                    }
@@ -167,24 +169,26 @@ public class Partida{
                 if(!possible){
 
                     System.out.println("Moviment no possible");
-                    return;
+                    return null;
                 }
 
 
             } else{
-                return;
+                return null;
 
 
             }
 
 
         } else{
-            return;
+            return null;
 
 
         }
 
+
         FiTorn();
+        return tauler.getTaulell();
 
     }
 
@@ -233,7 +237,7 @@ public class Partida{
      * \post:  ha mogut la maquina
      * @return
      */
-   public void TornMaquina(){
+   public FitxaProblema[][] TornMaquina(){
 
        Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
@@ -242,9 +246,17 @@ public class Partida{
        tauler.moureFitxa(m);
 
        FiTorn();
+       return tauler.getTaulell();
 
     }
 
+    public String EndedReason(){
+
+       if(mat)
+           return "Guanyen les " + guanyador.toString() + " per mat";
+       else  return "Guanyen les " + guanyador.toString() + " per sobreviure " + probl.GetMovimentsPerGuanyar() + " torns";
+
+    }
     /**
      * \pre:
      * \post:  retorna el tauler de la partida
@@ -283,7 +295,7 @@ public class Partida{
                     guanyador = Color.negre;
                 else guanyador = Color.blanc;
             }
-
+            //guanyador
             hasEnded = true;
             return;
         }

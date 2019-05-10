@@ -17,7 +17,7 @@ public class CtrlDomain {
      * */
     public void JugarPartidesMaquines(Problema[] probJugats) {
         for (Problema p : probJugats) {
-            partidaEnJoc = new Partida(p, Modalitat.MM);
+            partidaEnJoc = new Partida(p, Modalitat.MM,null,null);
             //Falta obtenir el guanyador i jugar la partida
         }
     }
@@ -27,9 +27,11 @@ public class CtrlDomain {
      * \post: Es juga la partida amb la modalitat mode i
      * s'imprimeix el guanyador quan es finalitzi
      * */
-    public void JugarPartidaHuma(Modalitat mode, Problema p) {
+    public Color JugarPartidaHuma(Modalitat mode, Dificultat dif, int torns) {
+        Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
         partidaEnJoc = new Partida(p, mode);
         partidaEnJoc.ComençarPartida();
+        return p.GetTorn();
     }
 
     /**
@@ -65,6 +67,21 @@ public class CtrlDomain {
             System.out.println("No tens cap problema obert");
     }
 
+    public boolean isColorHuman(Color color){
+       return partidaEnJoc.isColorHuman(color);
+    }
+
+    public FitxaProblema[][] TornMaquina(){
+        return partidaEnJoc.TornMaquina();
+    }
+
+    public boolean hasEnded(){
+        return partidaEnJoc.hasEnded();
+    }
+
+    public String EndedReason(){
+        return partidaEnJoc.EndedReason();
+    }
     /**
      * \pre: tp conté el tipus, c el color i coord la posició de la peça que es vol afegir.
      * \post: Si hi ha un problema obert, s'ha afegit una peça en el tauler del problema,
@@ -123,6 +140,10 @@ public class CtrlDomain {
         }
     }
 
+    public FitxaProblema[][] MourePeçaPartida(ParInt first, ParInt second){
+       return partidaEnJoc.MourePeça(first, second);
+    }
+
     /**
      * \pre pObert no pot ser null
      * \post S'ha validat el problema i es mostra si és valid o no
@@ -147,6 +168,11 @@ public class CtrlDomain {
     public Partida getPartidaEnJoc() {
         return partidaEnJoc;
     }
+
+    public Tauler getTaulerPartidaEnJouc() {
+        return partidaEnJoc.GetTauler();
+    }
+
 }
 
 
