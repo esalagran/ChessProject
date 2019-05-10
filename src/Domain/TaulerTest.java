@@ -125,9 +125,9 @@ class TaulerTest {
     void moureFitxa() {
         FitxaProblema fp = new FitxaProblema(TipusPeça.Cavall, coord,Color.blanc);
         t.AfegirPeçaAt(coord, fp);
-        ParInt newPosition = new ParInt(4,7);
-        t.moureFitxa(coord,newPosition);
-        assertSame(fp, t.FitxaAt(newPosition));
+        Move m = new Move(null, coord, new ParInt(4,7));
+        t.moureFitxa(m);
+        assertSame(fp, t.FitxaAt(m.getEndPos()));
         assertNull(t.FitxaAt(coord));
     }
 
@@ -155,8 +155,9 @@ class TaulerTest {
         assertEquals(peça2, t.getBlackKing());
         assertNotNull(t.getTaulell());
 
-        t.moureFitxa(rival1.GetCoordenades(), new ParInt(4, 3));
-        t.desferJugada(rival1.GetCoordenades(), new ParInt(3, 2), null);
+        Move original = new Move(rival1, meva.GetCoordenades(), rival1.GetCoordenades());
+        t.moureFitxa(original);
+        t.desferJugada(original);
         assertEquals(3, rival1.GetCoordenades().GetFirst());
         assertEquals(2, rival1.GetCoordenades().GetSecond());
     }

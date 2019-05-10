@@ -238,8 +238,8 @@ public class Partida{
        Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];
-
-       tauler.moureFitxa(a,b);
+       Move m = new Move(null, a, b);
+       tauler.moureFitxa(m);
 
        FiTorn();
 

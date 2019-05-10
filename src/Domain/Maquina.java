@@ -108,19 +108,18 @@ public class Maquina extends Usuari{
                 if (aux != null && aux.GetColor() == color){
                     Vector<ParInt> moves = aux.getIFitxa().GetMoviments(new ParInt(i,j),tauler, aux.GetColor());
                     for (int k = 0; k < moves.size(); k++) {
-                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k));
-                        tauler.moureFitxa(new ParInt(i, j), moves.get(k));
+                        Move m = new Move(tauler.FitxaAt(moves.get(k)), new ParInt(i,j), moves.get(k));
                         if (color == blanc) if (!isAttacked(tauler, tauler.getWhiteKing(), blanc)) {
                             //Sino es atacat esfaig moviment i retorno evitable
-                            tauler.desferJugada(moves.get(k), new ParInt(i, j),substituida);
+                            tauler.desferJugada(m);
                             return true;
                         }
                         if (color == negre) if (!isAttacked(tauler, tauler.getBlackKing(), negre)){
                             //Sino es atacat esfaig moviment i retorno evitable
-                            tauler.desferJugada(moves.get(k), new ParInt(i, j),substituida);
+                            tauler.desferJugada(m);
                             return true;
                         }
-                        tauler.desferJugada(moves.get(k),new ParInt(i,j),substituida);
+                        tauler.desferJugada(m);
                     }
                 }
             }

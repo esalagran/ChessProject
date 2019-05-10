@@ -32,8 +32,7 @@ public class Problema{
     private Huma _creador;
     private HashMap<String, Integer> _ranking;
     //private Vector<FitxaProblema> _fitxesProblema;
-    private HashMap<TipusPeça, Integer> _pecesMax;
-    private HashMap<Character,Integer> _numTipusPeça;
+
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -45,29 +44,8 @@ public class Problema{
     public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    private void FillDictionary(){
-        _numTipusPeça.put('P', 0);
-        _numTipusPeça.put('T', 0);
-        _numTipusPeça.put('C', 0);
-        _numTipusPeça.put('A', 0);
-        _numTipusPeça.put('D', 0);
-        _numTipusPeça.put('R', 0);
-
-        _numTipusPeça.put('p', 0);
-        _numTipusPeça.put('t', 0);
-        _numTipusPeça.put('c', 0);
-        _numTipusPeça.put('a', 0);
-        _numTipusPeça.put('d', 0);
-        _numTipusPeça.put('r', 0);
-
-
-    }
-
     public Problema(String FEN){
         _FEN = FEN;
-        _pecesMax = NumMaxPeces.getInstance();
-        _numTipusPeça = new HashMap<>();
-        FillDictionary();
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
             else this.torn = Color.negre;
@@ -111,30 +89,11 @@ public class Problema{
      * @return
      */
     public void AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
-
-        char key = ParTipusPeçaBoolToChar(tp, c);
-        Integer number = _numTipusPeça.get(key);
-        if ( number < _pecesMax.get(tp)) {
-            if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-                if (tauler.FitxaAt(desti) == null) {
-                    tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
-
-                } else {
-                    System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
-
-                }
-                _numTipusPeça.put(key, number + 1);
-            } else {
-                System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
-
-            }
+        try {
+            tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else{
-            System.out.println(ANSI_RED + "S'ha superat el nombre màxim de la peça " + tp.toString()
-                    + " d'aquest color: " + c.toString() + ANSI_RESET);
-        }
-
-
     }
 
     /**
@@ -143,24 +102,11 @@ public class Problema{
      * @return
      */
     public void EliminarPeça(ParInt origen){
-
-
-        if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen) != null) {
-                FitxaProblema aux = tauler.FitxaAt(origen);
-                char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                tauler.AfegirPeçaAt(origen, null);
-                _numTipusPeça.put(key, _numTipusPeça.get(key) - 1);
-
-            } else{
-                System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
-
-            }
-
-
-        } else{
-            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
-
+        try{
+            tauler.EliminarPeçaAt(origen);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
         }
 
     }
@@ -288,7 +234,7 @@ public class Problema{
         try {
 
             int x = 0;
-           Tauler tauler = new  Tauler();
+           Tauler tauler = new Tauler();
 
             for(int i = 0; i < _FEN.length(); i++){
                 char ch = _FEN.charAt(i);
@@ -321,44 +267,31 @@ public class Problema{
                 else if(ch == 'n' || ch == 'N') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     tauler.AfegirPeçaAt(coord, aux);
-                    char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'b' || ch == 'B') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Alfil, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     tauler.AfegirPeçaAt(coord, aux);
-                    char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);             x++;
+                    ++x;
                 }
                 else if(ch == 'p' || ch == 'P') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Peo, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
-                    tauler.AfegirPeçaAt(coord, aux);;
-                    char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
+                    tauler.AfegirPeçaAt(coord, aux);
                     x++;
                 }
                 else if(ch == 'k' || ch == 'K') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Rei, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     tauler.AfegirPeçaAt(coord, aux);
-                    if (aux.GetColor().equals(Color.blanc)) tauler.setWhiteKing(aux);
-                    else tauler.setBlackKing(aux);
-                    char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'r' || ch == 'R') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Torre, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     tauler.AfegirPeçaAt(coord, aux);
-                    char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
                 else if(ch == 'q' || ch == 'Q') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Dama, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
                     tauler.AfegirPeçaAt(coord, aux);
-                    char key = ParTipusPeçaBoolToChar(Convert.ClassToTipusPeça(aux.getIFitxa().getClass().toString()), aux.GetColor());
-                    _numTipusPeça.put(key, _numTipusPeça.get(key) + 1);
                     x++;
                 }
 
@@ -460,42 +393,9 @@ public class Problema{
     }
 
 
-    /**
-     * \pre: tipusPeça i color valids
-     * \post: retorna el char equivalent a la peça en codi FEN
-     * @return
-     */
 
-    private char ParTipusPeçaBoolToChar(TipusPeça tipusPeça, Color color){
-        char result = '0';
-        switch (tipusPeça){
-            case Peo:
-                if (color.equals(Color.blanc)) result = 'P';
-                else result = 'p';
-                break;
-            case Cavall:
-                if (color.equals(Color.blanc)) result =  'C';
-                else result =  'c';
-                break;
-            case Rei:
-                if (color.equals(Color.blanc)) result =  'R';
-                else result =  'r';
-                break;
-            case Dama:
-                if (color.equals(Color.blanc)) result = 'D';
-                else result = 'd';
-                break;
-            case Alfil:
-                if (color.equals(Color.blanc)) result =  'A';
-                else result = 'a';
-                break;
-            case Torre:
-                if (color.equals(Color.blanc)) result = 'T';
-                else result = 't';
-                break;
-        }
-        return result;
-    }
+
+
 
 
 
