@@ -1,16 +1,22 @@
 package Presentation;
-import Domain.*;
 
-import java.awt.*;
-import java.awt.Color;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import javax.swing.*;
-import javax.swing.border.*;
-import java.net.URL;
+import Domain.Convert;
+import Domain.FitxaProblema;
+import Domain.ParInt;
+import Domain.TipusPeça;
+
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 
-public class TaulerGUI {
+public class TaulerGUICrearProblema {
 
 
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -38,16 +44,10 @@ public class TaulerGUI {
     private boolean hasEnded;
 
 
-    TaulerGUI( FitxaProblema[][] t, Domain.Color pt,  CtrlPresentation pr) {
+    TaulerGUICrearProblema(CtrlPresentation pr) {
         CP = pr;
-        tauler = t;
-        torn = pt;
-        message = new JLabel(pt.toString());
         initializeGui();
-        if(!CP.isColorHuman(torn)){
-         tauler =  CP.TornMaquina();
-         tornContrari();
-        }
+        tauler = new FitxaProblema[8][8];
         dibuixarTauler(tauler);
     }
 
@@ -145,6 +145,16 @@ public class TaulerGUI {
 
         gui.add(new JLabel("?"), BorderLayout.LINE_START);
 
+        JPanel lateralButtons = new JPanel(new GridLayout(6, 2));
+
+        for(int i = 0; i < 2; i++){
+            for(int j = 0; j < 6 ; j++){
+            JButton button = new JButton();
+            button.setIcon(new ImageIcon(chessPieceImages[i][j]));
+            lateralButtons.add(button);
+        }}
+
+        gui.add(lateralButtons);
         chessBoard = new JPanel(new GridLayout(0, 9)) {
 
             /**
@@ -319,41 +329,8 @@ public class TaulerGUI {
             System.out.println("MOVE FROM " + firstCoord.GetFirst() +"," + firstCoord.GetSecond()  + " TO " + secondCoord.GetFirst() +"," + secondCoord.GetSecond() );
             chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
             firstColor = null;
-            FitxaProblema[][] t = CP.mourePeçaPartida(firstCoord, secondCoord);
-            if(t!= null){
-                dibuixarTauler(t);
-                tornContrari();
-                tools.remove(message);
-                message = new JLabel(torn.toString());
-                tools.add(message);
 
-            }
-            firstCoord = null;
-            firstClick = true;
-
-            if (!CP.isColorHuman(torn)) {
-               t = CP.TornMaquina();
-               dibuixarTauler(t);
-                tornContrari();
-
-
-
-            tools.remove(message);
-            message = new JLabel(torn.toString());
-            tools.add(message);
-            }
-
-            hasEnded = CP.hasEnded();
-
-            if(hasEnded){
-                VistaDialogo vistaDialogo = new VistaDialogo();
-                String[] strBotones = {"Rematch", "Sortir"};
-                int isel = vistaDialogo.setDialogo("Fi de la partida", CP.EndedReason(),strBotones,3);
-                System.out.println("Resultado del dialogo: " + isel + " " + strBotones[isel]);
-            }
-
-
-        }
+    }
     }
 
     private void tornContrari(){
@@ -363,7 +340,7 @@ public class TaulerGUI {
     }
 
             public void run() {
-                TaulerGUI cg = new TaulerGUI(tauler, torn, CP);
+                TaulerGUICrearProblema cg = new TaulerGUICrearProblema(CP);
 
                 JFrame f = new JFrame("ChessChamp");
                 f.add(cg.getGui());

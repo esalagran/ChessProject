@@ -88,19 +88,8 @@ public class MenuPrincipal {
     }
 
     public void actionPerformed_buttonCrearProblema (ActionEvent event) {
-        // Cambio de panel
-        if (iPanelActivo != 0) {
-            iPanelActivo = iPanelActivo%2 + 1;
-            System.out.println("Cambiando a panel " + iPanelActivo + "...");
-            panelInformacion.remove(panelInformacionA);
-            if (iPanelActivo == 1)
-                panelInformacionA = panelInformacion1;
-            else
-                panelInformacionA = panelInformacion2;
-            panelInformacion.add(panelInformacionA);
-            frameVista.pack();
-            frameVista.repaint();
-        }
+        iCtrlPresentacion.sincronizacionMenu_a_CrearProblema();
+
     }
 
     public void actionPerformed_buttonVeureRanking (ActionEvent event) {

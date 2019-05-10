@@ -23,7 +23,9 @@ public class CtrlPresentation {
     private VistaLogin login = null;
     private MenuPrincipal menu = null;
     private VistaTipusProblema vistaTipus = null;
-    private TaulerGUI tauler = null;
+    private TaulerGUI taulerPartida = null;
+    private TaulerGUICrearProblema taulerProblema = null;
+
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
 
@@ -78,16 +80,34 @@ public class CtrlPresentation {
         login.activar();
     }
 
-    public void sincronizacionVistaTipus_a_Tauler(){
-        vistaTipus.desactivar();
-        vistaTipus.visible(false);
-        if(tauler==null){
-            Color torn = CD.JugarPartidaHuma(Modalitat.MH, Dificultat.facil, 10);
-            Tauler t  = CD.getTaulerPartidaEnJouc();
-            tauler = new TaulerGUI(t, torn,  this);}
-        tauler.run();
+    public void sincronizacionMenu_a_CrearProblema(){
+        menu.desactivar();
+        menu.visible(false);
+
+        if(taulerProblema==null) {
+            CD.CreaProblema();
+            taulerProblema = new TaulerGUICrearProblema(this);
+        }
+        taulerProblema.run();
     }
 
+    public void sincronizacionVistaTipus_a_Tauler(Modalitat mod){
+        vistaTipus.desactivar();
+        vistaTipus.visible(false);
+        if(taulerPartida==null){
+            Color torn = CD.JugarPartidaHuma(mod, Dificultat.facil, 10);
+            Tauler t  = CD.getTaulerPartidaEnJouc();
+            taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);}
+        taulerPartida.run();
+    }
+
+    public boolean hasEnded(){
+        return CD.hasEnded();
+    }
+
+    public String EndedReason(){
+        return CD.EndedReason();
+    }
 
 
 
@@ -109,6 +129,14 @@ public class CtrlPresentation {
         return CD.MourePeçaPartida(first, second);
     }
 
+
+    public boolean isColorHuman(Color color) {
+        return CD.isColorHuman(color);
+    }
+
+    public FitxaProblema[][] TornMaquina(){
+        return CD.TornMaquina();
+    }
 
 
 

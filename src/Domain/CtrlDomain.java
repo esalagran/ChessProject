@@ -67,6 +67,21 @@ public class CtrlDomain {
             System.out.println("No tens cap problema obert");
     }
 
+    public boolean isColorHuman(Color color){
+       return partidaEnJoc.isColorHuman(color);
+    }
+
+    public FitxaProblema[][] TornMaquina(){
+        return partidaEnJoc.TornMaquina();
+    }
+
+    public boolean hasEnded(){
+        return partidaEnJoc.hasEnded();
+    }
+
+    public String EndedReason(){
+        return partidaEnJoc.EndedReason();
+    }
     /**
      * \pre: tp conté el tipus, c el color i coord la posició de la peça que es vol afegir.
      * \post: Si hi ha un problema obert, s'ha afegit una peça en el tauler del problema,

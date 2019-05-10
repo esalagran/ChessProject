@@ -235,7 +235,7 @@ public class Partida{
      * \post:  ha mogut la maquina
      * @return
      */
-   public void TornMaquina(){
+   public FitxaProblema[][] TornMaquina(){
 
        Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
@@ -244,9 +244,17 @@ public class Partida{
        tauler.moureFitxa(a,b);
 
        FiTorn();
+       return tauler.getTaulell();
 
     }
 
+    public String EndedReason(){
+
+       if(mat)
+           return "Guanyen les " + guanyador.toString() + " per mat";
+       else  return "Guanyen les " + guanyador.toString() + " per sobreviure " + probl.GetMovimentsPerGuanyar() + " torns";
+
+    }
     /**
      * \pre:
      * \post:  retorna el tauler de la partida

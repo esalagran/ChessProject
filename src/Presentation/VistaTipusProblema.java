@@ -1,5 +1,7 @@
 package Presentation;
 
+import Domain.Modalitat;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,14 +63,25 @@ public class VistaTipusProblema {
         // Informa el contenido de algunos componentes (es un ejemplo)
         for (int i = 0; i < resulDominio.size(); i++)
             textareaInformacion.append("\n" + resulDominio.get(i));
-    }
 
+    }
     public void actionPerformed_buttonVolver (ActionEvent event) {
         iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
     }
 
     public void actionPerformed_buttonJugar (ActionEvent event) {
-        iCtrlPresentacion.sincronizacionVistaTipus_a_Tauler();
+       String mod = (String) modalitat.getSelectedItem();
+            Modalitat mode = Modalitat.HH;
+       if (mod.equals("Humà vs humà"))
+           mode = Modalitat.HH;
+       else if (mod.equals("Humà vs màquina"))
+           mode = Modalitat.HM;
+       else if (mod.equals("Màquina vs màquina"))
+           mode = Modalitat.MM;
+       else if (mod.equals("Màquina vs humà"))
+           mode = Modalitat.MH;
+
+        iCtrlPresentacion.sincronizacionVistaTipus_a_Tauler(mode);
     }
 
 
