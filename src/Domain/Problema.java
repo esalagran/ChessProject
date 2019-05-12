@@ -58,9 +58,6 @@ public class Problema{
 
     public Problema(String FEN, Tema tema,boolean valid){
         _FEN = FEN;
-        _pecesMax = NumMaxPeces.getInstance();
-        _numTipusPeça = new HashMap<>();
-        FillDictionary();
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
             else this.torn = Color.negre;

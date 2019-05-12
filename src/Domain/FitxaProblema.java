@@ -95,6 +95,7 @@ public class FitxaProblema{
                          return true;
                      if (tp.equals(TipusPeça.Cavall))
                          ++numCavalls;
+                     break;
                 }
             }
         }
@@ -111,6 +112,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
         }
@@ -128,6 +130,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
         }
@@ -143,6 +146,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
         }
@@ -161,6 +165,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
             ++dj;
@@ -178,6 +183,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
             --dj;
@@ -197,6 +203,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
             --dj;
@@ -214,6 +221,7 @@ public class FitxaProblema{
                         return true;
                     if (tp.equals(TipusPeça.Cavall))
                         ++numCavalls;
+                    break;
                 }
             }
             ++dj;

@@ -27,17 +27,16 @@ public class Partida{
     boolean hasEnded = false;
     int moviments = 0;
     Maquina m = new Maquina();
+    AlgorismeMinMax alg = new AlgorismeMinMax();
 
 
-    public Partida(Problema p, Modalitat mod, String atac, String defensa){
+    public Partida(Problema p, Modalitat mod, int torns){
 
         probl = p;
         torn = probl.GetTorn();
         tornInicial = torn;
         mode = mod;
         tauler = p.getTauler();
-        atacant = atac;
-        defensor = defensa;
     }
 
     /**
@@ -109,83 +108,38 @@ public class Partida{
      */
     public FitxaProblema[][] MourePeça(ParInt origen, ParInt desti){
 
-        if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen) != null ) {
-                if(torn == tauler.FitxaAt(origen).GetColor()){
+        if (!Convert.InTheLimits(origen)) return null;
+        if (tauler.FitxaAt(origen) == null) return null;
+        if(!torn.equals(tauler.FitxaAt(origen).GetColor())) return null;
+        if (!Convert.InTheLimits(desti)) return null;
+        if (tauler.FitxaAt(desti) != null && tauler.FitxaAt(desti).GetColor() == torn) return null;
 
+        boolean possible = false;
+        Vector<ParInt> movimentsPossibles = tauler.FitxaAt(origen).GetMoviments(tauler);
+        for (ParInt move : movimentsPossibles) {
+            Move m = new Move(tauler.FitxaAt(move), origen, move);
+            if (move.GetFirst() == desti.GetFirst() && move.GetSecond() == desti.GetSecond()){
+                tauler.moureFitxa(m);
+                boolean isAttacked;
+                if (torn.equals(Color.blanc)){
+                    isAttacked = tauler.getWhiteKing().isAttacked(tauler.getTaulell());
                 }
-                else return null;
-
-
-            } else return null;
-
-
-        } else{
-            return null;
-
-        }
-
-        if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
-            if (tauler.FitxaAt(desti) == null || (tauler.FitxaAt(desti) != null && (tauler.FitxaAt(desti).GetColor() != torn ) )) {
-
-                boolean possible = false;
-                Vector<ParInt> movimentsPossibles = tauler.FitxaAt(origen).GetMoviments(tauler);
-                for(int i = 0; i < movimentsPossibles.size();i++){
-                   ParInt pos = movimentsPossibles.elementAt(i);
-                   int posX = pos.GetFirst();
-                   int posY = pos.GetSecond();
-
-                    if(posX == desti.GetFirst() && posY == desti.GetSecond()){
-                       if(torn == Color.negre){
-                           FitxaProblema f = tauler.FitxaAt(desti);
-                           tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
-                           tauler.AfegirPeçaAt(origen, null);
-                           possible = true;
-                           if(m.isAttacked(tauler, tauler.getBlackKing(), torn)){
-                               System.out.println("moviment il·legal");
-                               tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
-                               tauler.AfegirPeçaAt(desti, f);
-                               return null;
-                           }
-                       }
-
-                       else{
-                           FitxaProblema f = tauler.FitxaAt(desti);
-                           tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
-                           tauler.AfegirPeçaAt(origen, null);
-                           possible = true;
-
-
-                           if(m.isAttacked(tauler, tauler.getWhiteKing(), torn)){
-                               System.out.println("moviment il·legal");
-                               tauler.AfegirPeçaAt(origen, tauler.FitxaAt(desti));
-                               tauler.AfegirPeçaAt(desti, f);
-                               return null;
-                           }}
-
-                   }
+                else{
+                    isAttacked = tauler.getBlackKing().isAttacked(tauler.getTaulell());
                 }
-
-                if(!possible){
-
-                    System.out.println("Moviment no possible");
+                if (isAttacked){
+                    tauler.desferJugada(m);
+                    System.out.println("Moviment il·legal");
                     return null;
                 }
-
-
-            } else{
-                return null;
-
-
+                possible = true;
+                break;
             }
-
-
-        } else{
-            return null;
-
-
         }
-
+        if(!possible){
+            System.out.println("Moviment no possible");
+            return null;
+        }
 
         FiTorn();
         return tauler.getTaulell();
@@ -239,10 +193,10 @@ public class Partida{
      */
    public FitxaProblema[][] TornMaquina(){
 
-       Object[] mov =  m.GetMoviment(4, torn, tauler);
+       /*Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
-       ParInt b = (ParInt) mov[1];
-       Move m = new Move(null, a, b);
+       ParInt b = (ParInt) mov[1];*/
+       Move m = alg.FindBestMoveUsingMinMaxAtDepth(tauler, torn, 6);
        tauler.moureFitxa(m);
 
        FiTorn();

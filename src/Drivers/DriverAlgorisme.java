@@ -79,7 +79,25 @@ public class DriverAlgorisme {
         String FEN4 = "2B5/7p/5K2/7k/7p/8/6P1/5R2 w - - 0 1 v: true";
         Problema p = new Problema(FEN4);
         AlgorismeMinMax alg = new AlgorismeMinMax();
-        System.out.println(alg.MinMax(p.getTauler(), Color.blanc, 6, false));
+        Color torn = Color.negre;
+        for (int i = 6; i> 0; --i){
+            torn = Convert.InvertColor(torn);
+            Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
+            if (m == null){
+                Convert.DibuixaTauler(p.getTauler());
+                System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
+                break;
+            }
+            else {
+                Convert.DibuixaTauler(p.getTauler());
+                p.getTauler().moureFitxa(m);
+                System.out.println("S'ha mogut de (" + m.getStartPos().GetFirst() + "," +
+                        m.getStartPos().GetSecond() + ") a (" + m.getEndPos().GetFirst() + ","+
+                        m.getEndPos().GetSecond() + ")");
+            }
+        }
+        //System.out.println(alg.MinMax(p.getTauler(), Color.blanc, 6, false));
+
     }
 
     public void JugarPartidaFake(){

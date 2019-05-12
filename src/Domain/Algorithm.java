@@ -41,10 +41,10 @@ public abstract class Algorithm {
         }
         Move move = new Move(null, new ParInt(),new ParInt());
 
-        bRetVal = FindBestMoveConcr(board, ePlayer, moveList, arrIndex, BestMove, profunditat);
+        // = FindBestMoveConcr(board, ePlayer, moveList, arrIndex, BestMove, profunditat);
     }
 
-    protected abstract boolean FindBestMoveConcr(Tauler chessBoard,Color ePlayer, ArrayList<Move> moveList,
+    protected abstract Move FindBestMoveConcr(Tauler chessBoard,Color ePlayer, ArrayList<Move> moveList,
                                             int[] arrIndex, Move moveBest,int iMaxDepth);
 }
 

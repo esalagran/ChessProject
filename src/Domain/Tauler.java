@@ -275,14 +275,12 @@ public class Tauler {
 
     public ArrayList<Move> GetMoviments(Color jugador) {
         ArrayList<Move> moves = new ArrayList<>();
-        //boolean isChecked = false;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j){
                 if (taulell[i][j] != null && taulell[i][j].GetColor().equals(jugador)) {
                     Vector<ParInt> movements = taulell[i][j].GetMoviments(this);
                     ParInt origen = new ParInt(i, j);
                     for (ParInt desti : movements) {
-                        //isChecked = IsChecked(jugador, desti);
                         Move v = new Move(FitxaAt(desti), origen, desti);
                         moves.add(v);
                     }
