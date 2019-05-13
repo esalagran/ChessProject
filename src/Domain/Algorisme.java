@@ -47,9 +47,8 @@ public class Algorisme extends Maquina{
             for (FitxaProblema aux : peces) {
                 Vector<ParInt> moviments = aux.GetMoviments(tauler);
                 for (ParInt moviment : moviments) {
-                    substituida = tauler.FitxaAt(moviment);
-                    ParInt ini = aux.GetCoordenades();
-                    tauler.moureFitxa(ini, moviment);
+                    Move m = new Move(tauler.FitxaAt(moviment), aux.GetCoordenades(), moviment);
+                    tauler.moureFitxa(m);
                 if (color.equals(blanc) && !super.isAttacked(tauler,tauler.getWhiteKing(),negre) ||
                 color.equals(negre) && !super.isAttacked(tauler, tauler.getBlackKing(),blanc)) {
 
@@ -64,7 +63,7 @@ public class Algorisme extends Maquina{
                         }
                     }
                 }
-                tauler.desferJugada(moviment, ini, substituida);
+                tauler.desferJugada(m);
                 }
             }
             return best_move;

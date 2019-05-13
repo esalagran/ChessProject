@@ -17,7 +17,7 @@ public class CtrlDomain {
      * */
     public void JugarPartidesMaquines(Problema[] probJugats) {
         for (Problema p : probJugats) {
-            partidaEnJoc = new Partida(p, Modalitat.MM,null,null);
+            partidaEnJoc = new Partida(p, Modalitat.MM,p.GetMovimentsPerGuanyar());
             //Falta obtenir el guanyador i jugar la partida
         }
     }
@@ -28,8 +28,9 @@ public class CtrlDomain {
      * s'imprimeix el guanyador quan es finalitzi
      * */
     public Color JugarPartidaHuma(Modalitat mode, Dificultat dif, int torns) {
+        // en realitat es busca un problema aletatori de la base de dades amb la dificultat
         Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
-        partidaEnJoc = new Partida(p, mode, "", "");
+        partidaEnJoc = new Partida(p, mode, torns);
         partidaEnJoc.ComençarPartida();
         return p.GetTorn();
     }
@@ -174,78 +175,3 @@ public class CtrlDomain {
     }
 
 }
-
-
-
-    /* Funcions que s'implementaran a la següent entrga
-    private HashMap<String, Huma> cjtUsuaris;
-    private List<Problema> cjtProblemes;
-    private Huma userLogged;
-    /*public List<Problema> GetProblemes(){
-        return cjtProblemes;
-    }
-
-    public Tauler CrearPartida(int indexP, Modalitat m){
-        Problema p = cjtProblemes.get(indexP);
-
-        partidaEnJoc = new Partida(p, m);
-        return p.FENtoTauler();
-
-    }
-
-    public Color GetTornPartidaEnJoc(){
-        return partidaEnJoc.GetTorn();
-    }
-
-
-        /*
-        FitxaProblema[][] t = cjtProblemes.get(0).FENtoTauler();
-        System.out.println("ORIGINAL: " + cjtProblemes.get(0).GetFEN());
-        cPer.TaulerToFEN(t);
-        cPres.dibuixaTaulell(t);
-*/
-/*
-    /**
-     * Constructora amb logIn
-     * @param nickName indica l'usuari que vol entrar
-     * Pre:
-     * Post: S'han carregat tots els usuaris i tots els problemes que hi ha al sistema.
-     * Si l'usuari no existeix es llan+a una excepció*/
-    /*public CtrlDomain(String nickName, Presentation.CtrlPresentation cPr){
-        Initialize();
-
-        cPres = cPr;
-        /* HO HE COMENTAT PK PRODUEIX java.lang.NullPointerException
-        if (cjtUsuaris.isEmpty()){
-            Huma[] users = CP.GetUsuaris();
-            for (Huma u: users) {
-                cjtUsuaris.put(u.GetNickName(), u);
-            }
-        }
-        userLogged = cjtUsuaris.get(nickName);
-        if (userLogged.equals(null))
-            throw new FindException("No existeix aquest usuari");
-*/
-    //}
-
-/*
-    private void Initialize(){
-        /* NULL POINTER EXCEPTION
-        Huma[] users = CP.GetUsuaris();
-        for (Huma u: users) {
-            cjtUsuaris.put(u.GetNickName(), u);
-        }
-        */
-
-        //cjtProblemes = CP.GetProblemes();
-        /*for (Problema p:problemes) {
-            cjtProblemes.put(p.GetId(), p);
-        }*/
-    //}
-
-
-
-    /*public void ModificarPeçaProblema(ParInt ini, ParInt fi){
-        pObert.ModificarPeça(ini, fi);
-    }*/
-//}

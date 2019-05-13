@@ -72,6 +72,45 @@ public class DriverAlgorisme {
         else System.out.println("El problema no es valid en 6 jugades");
     }
 
+    public void MinImax(){
+        String FEN1 = "6k1/4Rppp/8/8/8/3K4/8/8 w - - 1 0";
+        String FEN2 = "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 1 0";
+        String FEN3 = "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1";
+        String FEN4 = "2B5/7p/5K2/7k/7p/8/6P1/5R2 w - - 0 1 v: true";
+        Problema p = new Problema(FEN4);
+        AlgorismeMinMax alg = new AlgorismeMinMax();
+        Color torn = Color.negre;
+        for (int i = 6; i> 0; --i){
+            torn = Convert.InvertColor(torn);
+            Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
+            if (m == null){
+                Convert.DibuixaTauler(p.getTauler());
+                System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
+                break;
+            }
+            else {
+                Convert.DibuixaTauler(p.getTauler());
+                p.getTauler().moureFitxa(m);
+                System.out.println("S'ha mogut de (" + m.getStartPos().GetFirst() + "," +
+                        m.getStartPos().GetSecond() + ") a (" + m.getEndPos().GetFirst() + ","+
+                        m.getEndPos().GetSecond() + ")");
+            }
+        }
+        //System.out.println(alg.MinMax(p.getTauler(), Color.blanc, 6, false));
+
+    }
+
+    public void JugarPartidaFake(){
+        String FEN3 = "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1";
+        Problema p = new Problema(FEN3);
+        Tauler t = p.getTauler();
+        AlgorismeMinMax amm = new AlgorismeMinMax();
+        Move[] conjMov = new Move[5];
+        for (int i = 6; i > 0; --i){
+
+        }
+    }
+
     public static void main(String [] args) throws IOException {
         Scanner help = new Scanner(System.in);
         DriverAlgorisme da = new DriverAlgorisme();
@@ -118,6 +157,8 @@ public class DriverAlgorisme {
                     break;
                 case '4':
                     da.tryValidarProblema();
+                case '5':
+                    da.MinImax();
                     break;
             }
         }

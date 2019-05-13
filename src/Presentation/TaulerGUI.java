@@ -302,9 +302,6 @@ public class TaulerGUI {
             firstColor = chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].getBackground();
             chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(Color.orange);
         }
-
-
-
         else if(firstCoord.GetFirst() == coord.GetFirst() && firstCoord.GetSecond() == coord.GetSecond()){
             firstClick = true;
             chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);

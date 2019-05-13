@@ -66,8 +66,11 @@ public class Maquina extends Usuari{
      * @return Retorna cert si el jugador de Color color es troba en escac i mat
      */
     protected boolean check(Tauler tauler, Color color) {
+        if (color.equals(blanc)) return tauler.getWhiteKing().isAttacked(tauler.getTaulell());
+        else return tauler.getBlackKing().isAttacked(tauler.getTaulell());
+        /*
         if (color == negre) return isAttacked(tauler,tauler.getBlackKing(), negre) && !mateEvitable(tauler,negre);
-        else return isAttacked(tauler, tauler.getWhiteKing(),blanc) && !mateEvitable(tauler,blanc);
+        else return isAttacked(tauler, tauler.getWhiteKing(),blanc) && !mateEvitable(tauler,blanc);*/
     }
 
     /**
@@ -102,29 +105,21 @@ public class Maquina extends Usuari{
      * @return Retorna true si el mat es evitable i per tant no hi ha escac i mat
      */
     public boolean mateEvitable (Tauler tauler, Color color){
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++){
-                FitxaProblema aux = tauler.FitxaAt(new ParInt(i, j));
-                if (aux != null && aux.GetColor() == color){
-                    Vector<ParInt> moves = aux.getIFitxa().GetMoviments(new ParInt(i,j),tauler, aux.GetColor());
-                    for (int k = 0; k < moves.size(); k++) {
-                        FitxaProblema substituida = tauler.FitxaAt(moves.get(k));
-                        tauler.moureFitxa(new ParInt(i, j), moves.get(k));
-                        if (color == blanc) if (!isAttacked(tauler, tauler.getWhiteKing(), blanc)) {
-                            //Sino es atacat esfaig moviment i retorno evitable
-                            tauler.desferJugada(moves.get(k), new ParInt(i, j),substituida);
-                            return true;
-                        }
-                        if (color == negre) if (!isAttacked(tauler, tauler.getBlackKing(), negre)){
-                            //Sino es atacat esfaig moviment i retorno evitable
-                            tauler.desferJugada(moves.get(k), new ParInt(i, j),substituida);
-                            return true;
-                        }
-                        tauler.desferJugada(moves.get(k),new ParInt(i,j),substituida);
-                    }
-                }
-            }
+        ArrayList<Move> movesList = tauler.GetMoviments(color);
+        FitxaProblema king;
+        if (color.equals(blanc)){
+            king = tauler.getWhiteKing();
+        }
+        else {
+            king = tauler.getBlackKing();
+        }
+        for (Move move: movesList) {
+            tauler.moureFitxa(move);
+            if (!king.isAttacked(tauler.getTaulell()))
+                return true;
+
         }
         return false;
+
     }
 }
