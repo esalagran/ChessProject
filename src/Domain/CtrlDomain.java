@@ -29,7 +29,7 @@ public class CtrlDomain {
      * */
     public Color JugarPartidaHuma(Modalitat mode, Dificultat dif, int torns) {
         Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
-        partidaEnJoc = new Partida(p, mode);
+        partidaEnJoc = new Partida(p, mode, "", "");
         partidaEnJoc.ComençarPartida();
         return p.GetTorn();
     }
