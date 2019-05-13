@@ -1,20 +1,14 @@
 package Presentation;
+import Domain.*;
 
-import Domain.Convert;
-import Domain.FitxaProblema;
-import Domain.ParInt;
-import Domain.TipusPeça;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import javax.swing.*;
+import javax.swing.border.*;
 import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class TaulerGUICrearProblema {
 
@@ -34,10 +28,9 @@ public class TaulerGUICrearProblema {
     };
     public static final int BLACK = 0, WHITE = 1;
 
-    private boolean firstClick = true;
-    private ParInt firstCoord;
-    private ParInt secondCoord;
-    private Color firstColor;
+    private boolean clicked = false;
+    private ParInt clickCoord;
+    private Color clickColor;
     private CtrlPresentation CP;
     private Domain.Color torn;
     private JToolBar tools = new JToolBar();
@@ -48,7 +41,7 @@ public class TaulerGUICrearProblema {
         CP = pr;
         initializeGui();
         tauler = new FitxaProblema[8][8];
-        dibuixarTauler(tauler);
+        //dibuixarTauler(tauler);
     }
 
     private void dibuixarTauler(FitxaProblema[][] t ){
@@ -57,61 +50,61 @@ public class TaulerGUICrearProblema {
             for(int j = 0; j< 8; j++){
 
                 if(t[i][j] != null){
-                TipusPeça tP = Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString());
-                Domain.Color c = t[i][j].GetColor();
+                    TipusPeça tP = Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString());
+                    Domain.Color c = t[i][j].GetColor();
 
-                if(tP == TipusPeça.Cavall){
+                    if(tP == TipusPeça.Cavall){
 
-                    if(c == Domain.Color.negre)
-                        chessBoardSquares[j][i].setIcon(new ImageIcon(
-                                chessPieceImages[BLACK][KNIGHT]));
-                    else chessBoardSquares[j][i].setIcon(new ImageIcon(
-                            chessPieceImages[WHITE][KNIGHT]));
-                }
-                if(tP == TipusPeça.Peo){
-                    if(c == Domain.Color.negre)
-                        chessBoardSquares[j][i].setIcon(new ImageIcon(
-                                chessPieceImages[BLACK][PAWN]));
-                    else chessBoardSquares[j][i].setIcon(new ImageIcon(
-                            chessPieceImages[WHITE][PAWN]));
-                }
-                if(tP == TipusPeça.Alfil){
-                    if(c == Domain.Color.negre)
-                        chessBoardSquares[j][i].setIcon(new ImageIcon(
-                                chessPieceImages[BLACK][BISHOP]));
-                    else chessBoardSquares[j][i].setIcon(new ImageIcon(
-                            chessPieceImages[WHITE][BISHOP]));
+                        if(c == Domain.Color.negre)
+                            chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                    chessPieceImages[BLACK][KNIGHT]));
+                        else chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                chessPieceImages[WHITE][KNIGHT]));
+                    }
+                    if(tP == TipusPeça.Peo){
+                        if(c == Domain.Color.negre)
+                            chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                    chessPieceImages[BLACK][PAWN]));
+                        else chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                chessPieceImages[WHITE][PAWN]));
+                    }
+                    if(tP == TipusPeça.Alfil){
+                        if(c == Domain.Color.negre)
+                            chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                    chessPieceImages[BLACK][BISHOP]));
+                        else chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                chessPieceImages[WHITE][BISHOP]));
 
-                }
+                    }
 
-                if(tP == TipusPeça.Torre){
-                    if(c == Domain.Color.negre)
-                        chessBoardSquares[j][i].setIcon(new ImageIcon(
-                                chessPieceImages[BLACK][ROOK]));
-                    else chessBoardSquares[j][i].setIcon(new ImageIcon(
-                            chessPieceImages[WHITE][ROOK]));
-                }
+                    if(tP == TipusPeça.Torre){
+                        if(c == Domain.Color.negre)
+                            chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                    chessPieceImages[BLACK][ROOK]));
+                        else chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                chessPieceImages[WHITE][ROOK]));
+                    }
 
-                if(tP == TipusPeça.Rei){
+                    if(tP == TipusPeça.Rei){
 
-                    if(c == Domain.Color.negre)
-                        chessBoardSquares[j][i].setIcon(new ImageIcon(
-                                chessPieceImages[BLACK][KING]));
-                    else chessBoardSquares[j][i].setIcon(new ImageIcon(
-                            chessPieceImages[WHITE][KING]));
+                        if(c == Domain.Color.negre)
+                            chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                    chessPieceImages[BLACK][KING]));
+                        else chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                chessPieceImages[WHITE][KING]));
 
-                }
+                    }
 
-                if(tP == TipusPeça.Dama){
+                    if(tP == TipusPeça.Dama){
 
-                    if(c == Domain.Color.negre)
-                        chessBoardSquares[j][i].setIcon(new ImageIcon(
-                                chessPieceImages[BLACK][QUEEN]));
-                    else chessBoardSquares[j][i].setIcon(new ImageIcon(
-                            chessPieceImages[WHITE][QUEEN]));
-                }
+                        if(c == Domain.Color.negre)
+                            chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                    chessPieceImages[BLACK][QUEEN]));
+                        else chessBoardSquares[j][i].setIcon(new ImageIcon(
+                                chessPieceImages[WHITE][QUEEN]));
+                    }
 
-            }else{
+                }else{
                     chessBoardSquares[j][i].setIcon(null);
                 }
 
@@ -143,18 +136,20 @@ public class TaulerGUICrearProblema {
         tools.addSeparator();
         tools.add(message);
 
-        gui.add(new JLabel("?"), BorderLayout.LINE_START);
+        //gui.add(new JLabel("?"), BorderLayout.LINE_START);
 
         JPanel lateralButtons = new JPanel(new GridLayout(6, 2));
 
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < 6 ; j++){
-            JButton button = new JButton();
-            button.setIcon(new ImageIcon(chessPieceImages[i][j]));
-            lateralButtons.add(button);
-        }}
+                JButton button = new JButton();
+                button.setIcon(new ImageIcon(chessPieceImages[i][j]));
+                lateralButtons.add(button);
+            }}
 
-        gui.add(lateralButtons);
+        gui.add(lateralButtons,  BorderLayout.LINE_START);
+
+
         chessBoard = new JPanel(new GridLayout(0, 9)) {
 
             /**
@@ -304,34 +299,32 @@ public class TaulerGUICrearProblema {
 
     private void clickOnCoord(ParInt coord){
 
-        System.out.println(coord.GetFirst() + " " + coord.GetSecond());
+        if(!clicked){
+            clickCoord = coord;
+            clickColor = chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].getBackground();
+            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(Color.orange);
+            clicked = true;
+        }
+        else if(clickCoord.GetFirst() == coord.GetFirst() && clickCoord.GetSecond() == coord.GetSecond()){
+            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(clickColor);
+            clicked = false;
 
-        if(firstClick){
-            firstCoord = coord;
-            firstClick = false;
-            firstColor = chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].getBackground();
-            chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(Color.orange);
+        }
+
+        else {
+            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(clickColor);
+            clickCoord = coord;
+            clickColor = chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].getBackground();
+            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(Color.orange);
+        }
+
+
         }
 
 
 
-        else if(firstCoord.GetFirst() == coord.GetFirst() && firstCoord.GetSecond() == coord.GetSecond()){
-            firstClick = true;
-            chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
-            firstColor = null;
 
 
-
-        }
-
-        else{
-            secondCoord = coord;
-            System.out.println("MOVE FROM " + firstCoord.GetFirst() +"," + firstCoord.GetSecond()  + " TO " + secondCoord.GetFirst() +"," + secondCoord.GetSecond() );
-            chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
-            firstColor = null;
-
-    }
-    }
 
     private void tornContrari(){
         if(torn == Domain.Color.blanc)
@@ -339,25 +332,25 @@ public class TaulerGUICrearProblema {
         else torn = Domain.Color.blanc;
     }
 
-            public void run() {
-                TaulerGUICrearProblema cg = new TaulerGUICrearProblema(CP);
+    public void run() {
+        TaulerGUICrearProblema cg = new TaulerGUICrearProblema(CP);
 
-                JFrame f = new JFrame("ChessChamp");
-                f.add(cg.getGui());
-                // Ensures JVM closes after frame(s) closed and
-                // all non-daemon threads are finished
-                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                // See https://stackoverflow.com/a/7143398/418556 for demo.
-                f.setLocationByPlatform(true);
+        JFrame f = new JFrame("ChessChamp");
+        f.add(cg.getGui());
+        // Ensures JVM closes after frame(s) closed and
+        // all non-daemon threads are finished
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // See https://stackoverflow.com/a/7143398/418556 for demo.
+        f.setLocationByPlatform(true);
+        f.setResizable(false);
+        // ensures the frame is the minimum size it needs to be
+        // in order display the components within it
+        f.pack();
+        // ensures the minimum size is enforced.
+        f.setMinimumSize(f.getSize());
+        f.setVisible(true);
+    }
 
-                // ensures the frame is the minimum size it needs to be
-                // in order display the components within it
-                f.pack();
-                // ensures the minimum size is enforced.
-                f.setMinimumSize(f.getSize());
-                f.setVisible(true);
-            }
-
-        // Swing GUIs should be created and updated on the EDT
-        // http://docs.oracle.com/javase/tutorial/uiswing/concurrency
+    // Swing GUIs should be created and updated on the EDT
+    // http://docs.oracle.com/javase/tutorial/uiswing/concurrency
 }

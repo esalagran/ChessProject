@@ -369,6 +369,7 @@ public class TaulerGUI {
                 f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 // See https://stackoverflow.com/a/7143398/418556 for demo.
                 f.setLocationByPlatform(true);
+                f.setResizable(false);
 
                 // ensures the frame is the minimum size it needs to be
                 // in order display the components within it
