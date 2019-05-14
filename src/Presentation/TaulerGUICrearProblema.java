@@ -14,6 +14,8 @@ import javax.swing.plaf.FontUIResource;
 public class TaulerGUICrearProblema {
 
 
+
+    private JFrame f = new JFrame("Crear problema");
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] chessBoardSquares = new JButton[8][8];
     private Image[][] chessPieceImages = new Image[2][6];
@@ -21,7 +23,7 @@ public class TaulerGUICrearProblema {
     private FitxaProblema[][] tauler;
     private JLabel message = new JLabel(
             "Selecciona una casella per començar!");
-    private JLabel FEN = new JLabel("8/8/8/8/8/8/8/8  ");
+    private JLabel FEN = new JLabel("FEN: 8/8/8/8/8/8/8/8  ");
     private static final String COLS = "ABCDEFGH";
     public static final int QUEEN = 1, KING = 0,
             ROOK = 2, KNIGHT = 3, BISHOP = 4, PAWN = 5;
@@ -39,25 +41,48 @@ public class TaulerGUICrearProblema {
     private boolean isPieceSelected = false;
     private ParInt pieceCoord;
     private boolean moving = false;
+    private boolean imported = false;
 
+
+    public void visible(boolean vis){
+        f.setVisible(vis);
+    }
+    public void desactivar() {
+        f.setEnabled(false);
+    }
+
+
+
+    TaulerGUICrearProblema(CtrlPresentation pr, FitxaProblema[][] t) {
+        CP = pr;
+        initializeGui();
+        tauler = t;
+        dibuixarTauler();
+        imported = true;
+    }
 
     TaulerGUICrearProblema(CtrlPresentation pr) {
         CP = pr;
         initializeGui();
         tauler = new FitxaProblema[8][8];
+
     }
 
-    private void dibuixarTauler(FitxaProblema[][] t ){
+
+    public void close(){
+        System.exit(0);
+    }
+    private void dibuixarTauler( ){
         if(tauler!= null){
 
-            FEN.setText(CP.GetFENProblema().split(" ")[0] + " ");
+            FEN.setText("FEN: " + CP.GetFENProblema().split(" ")[0]);
 
         for(int i = 0; i< 8; i++){
             for(int j = 0; j< 8; j++){
 
-                if(t[i][j] != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString());
-                    Domain.Color c = t[i][j].GetColor();
+                if(tauler[i][j] != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString());
+                    Domain.Color c = tauler[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
 
@@ -158,17 +183,12 @@ public class TaulerGUICrearProblema {
                 });
         tools.addSeparator();
 
-
-        tools.add(new JLabel("FEN:"));
-        tools.add(FEN);
         Action importarFEN = new AbstractAction("Importar") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                VistaDialogoConInput vistaDiagInp = new VistaDialogoConInput();
-                String[] strBotones = {"Acceptar", "Tornar"};
-                int isel = vistaDiagInp.setDialogo("Introdueix el FEN", "Encara no està implementat",strBotones,3);
+                CP.sincronizacionVistaProblema_a_FEN();
             }
         };
         tools.add(importarFEN);
@@ -219,6 +239,9 @@ public class TaulerGUICrearProblema {
         //gui.add(new JLabel("?"), BorderLayout.LINE_START);
 
         JPanel lateralButtons = new JPanel(new GridLayout(6, 2));
+        //lateralButtons.add(new JLabel("FEN: "));
+        //lateralButtons.add(FEN);
+        gui.add(FEN, BorderLayout.SOUTH);
 
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < 6 ; j++){
@@ -355,7 +378,7 @@ public class TaulerGUICrearProblema {
 
         ParInt inv1 = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
         tauler =  CP.EliminarFitxa(inv1);
-        dibuixarTauler(tauler);
+        dibuixarTauler();
     }
 
     public final JComponent getGui() {
@@ -408,7 +431,7 @@ public class TaulerGUICrearProblema {
     }
 
     private void clickOnCoord(ParInt coord){
-        dibuixarTauler(tauler);
+        dibuixarTauler();
         if(moving){
             ParInt inv1 = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
             ParInt inv2 = new ParInt(coord.GetSecond(), coord.GetFirst());
@@ -451,7 +474,7 @@ public class TaulerGUICrearProblema {
             }
         }
 
-        dibuixarTauler(tauler);
+        dibuixarTauler();
 
         }
 
@@ -471,7 +494,7 @@ public class TaulerGUICrearProblema {
        // chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setIcon(new ImageIcon(chessPieceImages[pieceCoord.GetFirst()][pieceCoord.GetSecond()]));
         ParInt inv = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
         tauler = CP.AfegirPeçaProblema(pieceCoord.GetSecond(), pieceCoord.GetFirst(), inv );
-        dibuixarTauler(tauler);
+        dibuixarTauler();
 
 
     }
@@ -482,10 +505,17 @@ public class TaulerGUICrearProblema {
         else torn = Domain.Color.blanc;
     }
 
+
     public void run() {
+
         TaulerGUICrearProblema cg = new TaulerGUICrearProblema(CP);
 
-        JFrame f = new JFrame("ChessChamp");
+
+        if(imported)
+            cg = new TaulerGUICrearProblema(CP, tauler);
+
+
+
         f.add(cg.getGui());
         // Ensures JVM closes after frame(s) closed and
         // all non-daemon threads are finished

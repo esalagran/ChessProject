@@ -60,6 +60,13 @@ public class CtrlDomain {
             System.out.println("Primer has de tancar el problema");
     }
 
+    public void CreaProblema(String FEN) {
+        if (pObert == null)
+            pObert = new Problema(FEN);
+        else
+            System.out.println("Primer has de tancar el problema");
+    }
+
     /**
      * \pre: FEN conté el codi FEN del problema que es vol carregar
      * \post: En cas que no hi hagi cap problema obert, es carregar
@@ -96,6 +103,17 @@ public class CtrlDomain {
 
     public String EndedReason(){
         return partidaEnJoc.EndedReason();
+    }
+
+    public FitxaProblema[][] ImportarProblema(String FEN){
+        GuardarProblema();
+        TancarProblema();
+        CreaProblema(FEN);
+        FitxaProblema[ ][ ] t = pObert.getTauler().getTaulell();
+        for (int i = 0; i< t.length; i++){
+            System.out.println(t[i].getClass().getName());
+        }
+        return pObert.getTauler().getTaulell();
     }
 
     public String GetFEN(){

@@ -25,6 +25,7 @@ public class CtrlPresentation {
     private VistaTipusProblema vistaTipus = null;
     private TaulerGUI taulerPartida = null;
     private TaulerGUICrearProblema taulerProblema = null;
+    private VistaGetFEN vistaGetFEN = null;
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
@@ -85,12 +86,34 @@ public class CtrlPresentation {
         menu.visible(false);
 
         if(taulerProblema==null) {
-            CD.CreaProblema();
-            taulerProblema = new TaulerGUICrearProblema(this);
+           CD.CreaProblema();
+           taulerProblema = new TaulerGUICrearProblema(this);
         }
         taulerProblema.run();
     }
 
+    public FitxaProblema[][] ImportarProblema(String FEN){
+        return CD.ImportarProblema(FEN);
+    }
+
+
+    public void sincronizacionVistaProblema_a_FEN(){
+        if(vistaGetFEN == null){
+            vistaGetFEN = new VistaGetFEN(this);
+            vistaGetFEN.visible(true);
+        }
+
+    }
+
+
+    public void sincronizacionVistaFEN_a_ProblemaImport( FitxaProblema[][] tauler){
+        vistaGetFEN.visible(false);
+        taulerProblema.visible(false);
+        taulerProblema.desactivar();
+        taulerProblema = new TaulerGUICrearProblema(this, tauler);
+        taulerProblema.run();
+
+    }
 
 
     public void sincronizacionVistaTipus_a_Tauler(Modalitat mod){
