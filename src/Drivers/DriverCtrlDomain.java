@@ -123,7 +123,7 @@ public class DriverCtrlDomain{
             System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)"+ ANSI_RESET);
             desti = Convert.StringToCoordenada(sc.next());
 
-            ctrlDomain.AfegirFitxa(tp,c,desti);
+            ctrlDomain.AfegirFitxa(0,0,desti);
             Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
             correcte = true;
         }

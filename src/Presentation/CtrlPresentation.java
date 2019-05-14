@@ -91,6 +91,8 @@ public class CtrlPresentation {
         taulerProblema.run();
     }
 
+
+
     public void sincronizacionVistaTipus_a_Tauler(Modalitat mod){
         vistaTipus.desactivar();
         vistaTipus.visible(false);
@@ -101,13 +103,6 @@ public class CtrlPresentation {
         taulerPartida.run();
     }
 
-    public boolean hasEnded(){
-        return CD.hasEnded();
-    }
-
-    public String EndedReason(){
-        return CD.EndedReason();
-    }
 
 
 
@@ -115,6 +110,14 @@ public class CtrlPresentation {
 
 
 //////////////////////// Llamadas al controlador de dominio
+
+    public boolean hasEnded(){
+        return CD.hasEnded();
+    }
+
+    public String EndedReason(){
+        return CD.EndedReason();
+    }
 
 
     public ArrayList<String> llamadaDominio1 (String selectedItem) {
@@ -127,6 +130,18 @@ public class CtrlPresentation {
 
     public FitxaProblema[][] mourePeçaPartida(ParInt first, ParInt second){
         return CD.MourePeçaPartida(first, second);
+    }
+
+    public FitxaProblema[][] mourePeçaProblema(ParInt first, ParInt second){
+        return CD.MoureFitxa(first, second);
+    }
+
+    public FitxaProblema[][] afegirPeçaProblema(int peça, int color, ParInt coord){
+        return  CD.AfegirFitxa(peça, color ,coord);
+    }
+
+    public FitxaProblema[][] eliminarFitxa(ParInt coord){
+       return CD.EliminarFitxa(coord);
     }
 
 

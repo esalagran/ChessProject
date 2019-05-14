@@ -103,12 +103,14 @@ public class Problema{
      * \post: afegida peça tipus tp de color c a la posició desti
      * @return
      */
-    public void AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
+    public FitxaProblema[][] AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
         try {
             tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
+            return tauler.getTaulell();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
@@ -116,14 +118,15 @@ public class Problema{
      * \post: la peça que hi havia a la posicio origen ha estat eliminada
      * @return
      */
-    public void EliminarPeça(ParInt origen){
+    public FitxaProblema[][] EliminarPeça(ParInt origen){
         try{
             tauler.EliminarPeçaAt(origen);
+            return tauler.getTaulell();
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
-
+return null;
     }
 
     /**
@@ -131,7 +134,7 @@ public class Problema{
      * \post: la peça que hi havia a origen ara esta a dessti
      * @return
      */
-    public void MourePeça(ParInt origen, ParInt desti){
+    public FitxaProblema[][] MourePeça(ParInt origen, ParInt desti){
 
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen) == null) {
@@ -151,6 +154,7 @@ public class Problema{
                 tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
                 tauler.AfegirPeçaAt(origen, null);
 
+                return tauler.getTaulell();
 
 
             } else{
@@ -163,7 +167,7 @@ public class Problema{
             System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
         }
-
+return null;
     }
 
 

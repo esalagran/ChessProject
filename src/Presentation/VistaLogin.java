@@ -120,7 +120,7 @@ public class VistaLogin {
         inicializar_panelContenidos();
         inicializar_panelBotones();
         inicializar_panelUsuario();
-        inicializar_panelContraseña();
+
         asignar_listenersComponentes();
     }
 
@@ -152,8 +152,9 @@ public class VistaLogin {
         // Layout
         panelContenidos.setLayout(new BoxLayout(panelContenidos, BoxLayout.Y_AXIS));
         // Paneles
+        panelContenidos.add(Box.createVerticalStrut(100));
+
         panelContenidos.add(panelUsuario);
-        panelContenidos.add(panelContraseña);
         panelContenidos.add(panelBotones);
     }
 
@@ -169,13 +170,6 @@ public class VistaLogin {
         // Tooltips
     }
 
-
-    private void inicializar_panelContraseña(){
-        panelContraseña.setLayout(new FlowLayout());
-        JLabel label = new JLabel("Contrasenya");
-        panelContraseña.add(label);
-        panelContraseña.add(contraseñaField);
-    }
 
     private void inicializar_panelUsuario(){
         JLabel label = new JLabel("Nom d'usuari");

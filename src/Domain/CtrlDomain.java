@@ -1,10 +1,14 @@
 package Domain;
 
+import java.nio.file.attribute.FileTime;
+
 public class CtrlDomain {
     private Problema pObert;
     private Partida partidaEnJoc;
     private Persistence.CtrlPersistence CP;
     private Presentation.CtrlPresentation cPres;
+    private TipusPeça[] peçesEscacs = {TipusPeça.Rei, TipusPeça.Dama, TipusPeça.Torre, TipusPeça.Cavall, TipusPeça.Alfil, TipusPeça.Peo};
+    private Color[] colorPeça = {Color.negre, Color.blanc};
 
     public void inicializarCtrlDominio() {
         CP = new Persistence.CtrlPersistence();
@@ -87,18 +91,20 @@ public class CtrlDomain {
      * \pre: tp conté el tipus, c el color i coord la posició de la peça que es vol afegir.
      * \post: Si hi ha un problema obert, s'ha afegit una peça en el tauler del problema,
      * altrament es mostra un misstage*/
-    public void AfegirFitxa(TipusPeça tp, Color c, ParInt coord) {
+    public FitxaProblema[][] AfegirFitxa(int peça, int color, ParInt coord) {
         try {
             if (pObert.getTauler().FitxaAt(coord) != null)
                 System.out.println("Ja hi ha una peça a la posició especificada");
             else
-                pObert.AfegirPeça(tp, c, coord);
+               return pObert.AfegirPeça(peçesEscacs[peça], colorPeça[color], coord);
+
         } catch (NullPointerException ex) {
 
             System.out.println("Has de crear o carregar un problema ");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        return null;
     }
 
     /**
@@ -106,20 +112,24 @@ public class CtrlDomain {
      * fi indica la posició a la qual es vol moure
      * \post: Si a la posició ini hi ha una peça i a la fi no n'hi ha cap,
      * es mou la peça de la posició ini a la fi, altrament es mostra un missatge*/
-    public void MoureFitxa(ParInt ini, ParInt fi) {
+    public FitxaProblema[][] MoureFitxa(ParInt ini, ParInt fi) {
         try {
             if (pObert.getTauler().FitxaAt(fi) != null)
                 System.out.println("Ja hi ha una peça a la posició final");
-            else if (pObert.getTauler().FitxaAt(ini) == null)
+            else if (pObert.getTauler().FitxaAt(ini) == null){
                 System.out.println("No hi ha cap peça a la posició inicial");
-            else
-                pObert.MourePeça(ini, fi);
+
+            }
+            else{
+                return pObert.MourePeça(ini, fi);
+            }
         } catch (NullPointerException ex) {
 
             System.out.println("Has de crear o carregar un problema ");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        return null;
     }
 
     /**
@@ -127,18 +137,19 @@ public class CtrlDomain {
      * les coordenades de la peça que es vol esborrar
      * \post: Si a la posició coord hi ha una peça, s'elimina una peça,
      * altrament, es mostra un missatge*/
-    public void EliminarFitxa(ParInt coord) {
+    public FitxaProblema[][] EliminarFitxa(ParInt coord) {
         try {
             if (pObert.getTauler().FitxaAt(coord) == null)
                 System.out.println("No hi ha cap peça a la posició especificada");
             else
-                pObert.EliminarPeça(coord);
+                return pObert.EliminarPeça(coord);
         } catch (NullPointerException ex) {
 
             System.out.println("Has de crear o carregar un problema ");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        return null;
     }
 
     public FitxaProblema[][] MourePeçaPartida(ParInt first, ParInt second){

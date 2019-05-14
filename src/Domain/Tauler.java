@@ -84,11 +84,13 @@ public class Tauler {
      * \post: FitxaProblema es troba a la coordenada(i,j)
      */
     public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
+        if(f!= null){
         try {
             TipusPeça tp = Convert.ClassToTipusPeça(f.getIFitxa().getClass().toString());
             char key = Convert.ParTipusPeçaBoolToChar(tp, f.GetColor());
+
             int value = _numTipusPeça.get(key);
-            if (value < _pecesMax.get(tp)){
+            if (true){
                 if (taulell[coord.GetFirst()][coord.GetSecond()] == null){
                     taulell[coord.GetFirst()][coord.GetSecond()] = f;
                     f.SetCoordenades(coord);
@@ -109,6 +111,10 @@ public class Tauler {
         catch (Exception ex){
                 ex.printStackTrace();
         }
+    }else{
+            taulell[coord.GetFirst()][coord.GetSecond()] = null;
+        }
+
     }
 
     public void EliminarPeçaAt(ParInt origin){

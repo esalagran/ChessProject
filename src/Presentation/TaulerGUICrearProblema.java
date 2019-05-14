@@ -34,7 +34,9 @@ public class TaulerGUICrearProblema {
     private CtrlPresentation CP;
     private Domain.Color torn;
     private JToolBar tools = new JToolBar();
-    private boolean hasEnded;
+    private boolean isPieceSelected = false;
+    private ParInt pieceCoord;
+    private boolean moving = false;
 
 
     TaulerGUICrearProblema(CtrlPresentation pr) {
@@ -45,6 +47,7 @@ public class TaulerGUICrearProblema {
     }
 
     private void dibuixarTauler(FitxaProblema[][] t ){
+        if(tauler!= null){
 
         for(int i = 0; i< 8; i++){
             for(int j = 0; j< 8; j++){
@@ -112,6 +115,7 @@ public class TaulerGUICrearProblema {
         }
 
     }
+    }
 
     public final void initializeGui() {
         // create the images for the chess pieces
@@ -121,18 +125,38 @@ public class TaulerGUICrearProblema {
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        Action newGameAction = new AbstractAction("New") {
+        Action newGameAction = new AbstractAction("Try") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                setupNewGame();
+                System.out.println("No implementat encara");
             }
         };
         tools.add(newGameAction);
-        tools.add(new JButton("Save")); // TODO - add functionality!
-        tools.add(new JButton("Restore")); // TODO - add functionality!
+        JButton moveButton = new JButton("Move");
+        tools.add(moveButton);
+        moveButton.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        if(clicked && chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() != null )
+                            moving = true;
+
+                    }
+                });
+        JButton deleteButton = new JButton("Delete");
+
+        tools.add(deleteButton);
+        deleteButton.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        if(clicked && chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() != null )
+                            delete();
+
+                    }
+                });
         tools.addSeparator();
-        tools.add(new JButton("Resign")); // TODO - add functionality!
+        tools.add(new JButton("Validate"));
+        tools.add(new JButton("Save"));
         tools.addSeparator();
         tools.add(message);
 
@@ -145,6 +169,24 @@ public class TaulerGUICrearProblema {
                 JButton button = new JButton();
                 button.setIcon(new ImageIcon(chessPieceImages[i][j]));
                 lateralButtons.add(button);
+
+                button.addActionListener
+                        (new ActionListener() {
+                            public void actionPerformed (ActionEvent event) {
+                                String texto = ((JButton) event.getSource()).getText();
+                                int i = (button.getY()/108);
+                                int j = (button.getX()/98);
+                                int a = i/3;
+                                int b = (j + i*2)%6;
+
+                                selectPiece(new ParInt(a,b));
+
+                                //clickOnCoord(new ParInt(i,j));
+
+
+                            }
+                        });
+
             }}
 
         gui.add(lateralButtons,  BorderLayout.LINE_START);
@@ -209,7 +251,7 @@ public class TaulerGUICrearProblema {
                                 String texto = ((JButton) event.getSource()).getText();
                                 int i = (b.getY()/70-1);
                                 int j = (b.getX()/70-1);
-                                clickOnCoord(new ParInt(i,j));
+                                clickOnCoord(new ParInt(j,i));
 
 
                             }
@@ -250,6 +292,13 @@ public class TaulerGUICrearProblema {
                 }
             }
         }
+    }
+
+    private void delete(){
+
+        ParInt inv1 = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
+        tauler =  CP.eliminarFitxa(inv1);
+        dibuixarTauler(tauler);
     }
 
     public final JComponent getGui() {
@@ -298,33 +347,58 @@ public class TaulerGUICrearProblema {
     }
 
     private void clickOnCoord(ParInt coord){
+        if(moving){
+            ParInt inv1 = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
+            ParInt inv2 = new ParInt(coord.GetSecond(), coord.GetFirst());
+            tauler = CP.mourePeçaProblema(inv1, inv2);
+            dibuixarTauler(tauler);
+            moving = false;
+
+        }
 
         if(!clicked){
             clickCoord = coord;
-            clickColor = chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].getBackground();
-            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(Color.orange);
+            clickColor = chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getBackground();
+            chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(Color.orange);
             clicked = true;
         }
         else if(clickCoord.GetFirst() == coord.GetFirst() && clickCoord.GetSecond() == coord.GetSecond()){
-            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(clickColor);
+            chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(clickColor);
             clicked = false;
 
         }
 
+
         else {
-            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(clickColor);
+            chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(clickColor);
             clickCoord = coord;
-            clickColor = chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].getBackground();
-            chessBoardSquares[clickCoord.GetSecond()][clickCoord.GetFirst()].setBackground(Color.orange);
+            clickColor = chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getBackground();
+            chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(Color.orange);
         }
 
 
+
         }
 
 
 
+    private void selectPiece(ParInt p){
+        isPieceSelected = true;
+        pieceCoord = p;
+        if(clicked){
+            afegeixPeça();
+        }
+    }
 
 
+    private void afegeixPeça(){
+        chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setIcon(new ImageIcon(chessPieceImages[pieceCoord.GetFirst()][pieceCoord.GetSecond()]));
+        ParInt inv = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
+        tauler = CP.afegirPeçaProblema(pieceCoord.GetSecond(), pieceCoord.GetFirst(), inv );
+        dibuixarTauler(tauler);
+
+
+    }
 
     private void tornContrari(){
         if(torn == Domain.Color.blanc)
