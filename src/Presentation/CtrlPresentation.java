@@ -128,22 +128,33 @@ public class CtrlPresentation {
         return null;
     }
 
-    public FitxaProblema[][] mourePeçaPartida(ParInt first, ParInt second){
+    public FitxaProblema[][] MourePeçaPartida(ParInt first, ParInt second){
         return CD.MourePeçaPartida(first, second);
     }
 
-    public FitxaProblema[][] mourePeçaProblema(ParInt first, ParInt second){
+    public FitxaProblema[][] MourePeçaProblema(ParInt first, ParInt second){
         return CD.MoureFitxa(first, second);
     }
 
-    public FitxaProblema[][] afegirPeçaProblema(int peça, int color, ParInt coord){
+    public FitxaProblema[][] AfegirPeçaProblema(int peça, int color, ParInt coord){
         return  CD.AfegirFitxa(peça, color ,coord);
     }
 
-    public FitxaProblema[][] eliminarFitxa(ParInt coord){
+    public FitxaProblema[][] EliminarFitxa(ParInt coord){
        return CD.EliminarFitxa(coord);
     }
 
+    public void GuardarProblema(){
+        CD.GuardarProblema();
+    }
+
+    public boolean ValidarProblema(){
+        return CD.ValidarProblema();
+    }
+
+    public String GetFENProblema(){
+        return  CD.GetFEN();
+    }
 
     public boolean isColorHuman(Color color) {
         return CD.isColorHuman(color);

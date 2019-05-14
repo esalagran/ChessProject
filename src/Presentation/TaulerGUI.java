@@ -316,7 +316,7 @@ public class TaulerGUI {
             System.out.println("MOVE FROM " + firstCoord.GetFirst() +"," + firstCoord.GetSecond()  + " TO " + secondCoord.GetFirst() +"," + secondCoord.GetSecond() );
             chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
             firstColor = null;
-            FitxaProblema[][] t = CP.mourePeçaPartida(firstCoord, secondCoord);
+            FitxaProblema[][] t = CP.MourePeçaPartida(firstCoord, secondCoord);
             if(t!= null){
                 dibuixarTauler(t);
                 tornContrari();

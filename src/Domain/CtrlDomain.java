@@ -1,10 +1,14 @@
 package Domain;
 
 import java.nio.file.attribute.FileTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CtrlDomain {
     private Problema pObert;
     private Partida partidaEnJoc;
+    private List<Problema> problemes  = new ArrayList<Problema>();
+
     private Persistence.CtrlPersistence CP;
     private Presentation.CtrlPresentation cPres;
     private TipusPeça[] peçesEscacs = {TipusPeça.Rei, TipusPeça.Dama, TipusPeça.Torre, TipusPeça.Cavall, TipusPeça.Alfil, TipusPeça.Peo};
@@ -24,6 +28,12 @@ public class CtrlDomain {
             partidaEnJoc = new Partida(p, Modalitat.MM,p.GetMovimentsPerGuanyar());
             //Falta obtenir el guanyador i jugar la partida
         }
+    }
+
+    public void GuardarProblema(){
+        if(problemes.contains(pObert))
+            problemes.remove(pObert);
+        problemes.add(pObert);
     }
 
     /**
@@ -86,6 +96,10 @@ public class CtrlDomain {
 
     public String EndedReason(){
         return partidaEnJoc.EndedReason();
+    }
+
+    public String GetFEN(){
+        return pObert.GetFEN();
     }
     /**
      * \pre: tp conté el tipus, c el color i coord la posició de la peça que es vol afegir.
@@ -160,10 +174,10 @@ public class CtrlDomain {
      * \pre pObert no pot ser null
      * \post S'ha validat el problema i es mostra si és valid o no
      */
-    public void ValidarProblema() {
-
+    public boolean ValidarProblema() {
+        boolean valid = false;
         try {
-            pObert.validarProblema();
+            valid = pObert.validarProblema();
             if (pObert.GetValid()) System.out.println("El problema és valid");
             else System.out.println("El problema no és valid");
         } catch (NullPointerException ex) {
@@ -171,6 +185,7 @@ public class CtrlDomain {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        return valid;
     }
 
     public Problema getpObert() {
