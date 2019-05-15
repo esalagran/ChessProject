@@ -247,16 +247,26 @@ public class TaulerGUICrearProblema {
             for(int j = 0; j < 6 ; j++){
                 JButton button = new JButton();
                 button.setIcon(new ImageIcon(chessPieceImages[i][j]));
+                button.setBackground(Color.WHITE);
+                button.setSize(20,20);
                 lateralButtons.add(button);
 
                 button.addActionListener
                         (new ActionListener() {
                             public void actionPerformed (ActionEvent event) {
                                 String texto = ((JButton) event.getSource()).getText();
-                                int i = (button.getY()/108);
+
+                                int i = (button.getY()/96);
                                 int j = (button.getX()/98);
                                 int a = i/3;
                                 int b = (j + i*2)%6;
+                                /*
+                                int i = (button.getY());
+                                int j = (button.getX());
+
+                                System.out.println(i);
+                                System.out.println(j);
+                                */
 
                                 selectPiece(new ParInt(a,b));
 
@@ -272,7 +282,7 @@ public class TaulerGUICrearProblema {
         gui.add(lateralButtons,  BorderLayout.LINE_START);
 
 
-        chessBoard = new JPanel(new GridLayout(0, 9)) {
+        chessBoard = new JPanel(new GridLayout(0, 8)) {
 
             /**
              * Override the preferred size to return the largest it can, in
@@ -307,7 +317,7 @@ public class TaulerGUICrearProblema {
                 new LineBorder(Color.BLACK)
         ));
         // Set the BG to be ochre
-        Color ochre = new Color(204,119,34);
+        Color ochre = Color.gray;
         chessBoard.setBackground(ochre);
         JPanel boardConstrain = new JPanel(new GridBagLayout());
         boardConstrain.setBackground(ochre);
@@ -329,8 +339,10 @@ public class TaulerGUICrearProblema {
                         (new ActionListener() {
                             public void actionPerformed (ActionEvent event) {
                                 String texto = ((JButton) event.getSource()).getText();
-                                int i = (b.getY()/70-1);
-                                int j = (b.getX()/70-1);
+                                int i = (b.getY()/70);
+                                int j = (b.getX()/70);
+                                System.out.println(i);
+                                System.out.println(j);
                                 clickOnCoord(new ParInt(j,i));
 
 
@@ -353,20 +365,21 @@ public class TaulerGUICrearProblema {
         /*
          * fill the chess board
          */
-        chessBoard.add(new JLabel(""));
+
         // fill the top row
         for (int ii = 0; ii < 8; ii++) {
-            chessBoard.add(
+          /*  chessBoard.add(
                     new JLabel(COLS.substring(ii, ii + 1),
-                            SwingConstants.CENTER));
+                            SwingConstants.CENTER));*/
         }
         // fill the black non-pawn piece row
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
                 switch (jj) {
-                    case 0:
-                        chessBoard.add(new JLabel("" + (9-(ii + 1)),
-                                SwingConstants.CENTER));
+                    //case 0:
+                       //chessBoard.add(new JLabel("" + (9-(ii + 1)),
+                         //       SwingConstants.CENTER));
+                   //     break;
                     default:
                         chessBoard.add(chessBoardSquares[jj][ii]);
                 }
