@@ -15,7 +15,7 @@ public class Partida{
     public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    String atacant, defensor;
+    private String atacant, defensor;
     Color torn, tornInicial;
     Modalitat mode;
     boolean isBlackHuman;
@@ -55,7 +55,6 @@ public class Partida{
      * @return
      */
     public void ComençarPartida(){
-
         if(mode==Modalitat.MH){
             if(torn == Color.blanc){
                 isWhiteHuman = false;
@@ -87,9 +86,6 @@ public class Partida{
             isBlackHuman = true;
 
         }
-
-
-
     }
 
     /**
@@ -249,20 +245,21 @@ public class Partida{
                     guanyador = Color.negre;
                 else guanyador = Color.blanc;
             }
-            //guanyador
+            inscriureRanking();
             hasEnded = true;
             return;
         }
         if(torn == Color.blanc){
             torn = Color.negre;
-
         }
         else{
             torn = Color.blanc;
+        }
     }
-}
-
-
-
+    private void inscriureRanking(){
+        int puntuacio = probl.calculPuntuacio(moviments,guanyador);
+        if (mode == Modalitat.HM)probl.inscriureRanking(atacant,puntuacio);
+        if (mode == Modalitat.MH)probl.inscriureRanking(defensor,puntuacio);
+    }
 
 }

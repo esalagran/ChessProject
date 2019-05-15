@@ -1,0 +1,8 @@
+2B5/2p1B1nn/2PR2p1/1K2k3/1p2p3/2b1P3/5R2/8 w - - 0 1
+true
+4
+blanc
+8/5K2/5p2/5Qbk/8/8/5P2/8 w - - 0 1
+false
+7
+negre

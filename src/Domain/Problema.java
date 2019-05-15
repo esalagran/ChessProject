@@ -29,11 +29,10 @@ public class Problema{
     private Tauler tauler;
     private boolean _valid;
     private int movimentsPerGuanyar = 6;
+    private int nPeces;
     private SortedMap<String,Integer> ranking;
     private Tema tema;
     private Huma _creador;
-    private HashMap<String, Integer> _ranking;
-    //private Vector<FitxaProblema> _fitxesProblema;
 
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -53,6 +52,7 @@ public class Problema{
             else this.torn = Color.negre;
         }
         tauler = FENtoTauler();
+        nPeces = getNPeces();
         _valid = false;
     }
 
@@ -63,6 +63,7 @@ public class Problema{
             else this.torn = Color.negre;
         }
         tauler = FENtoTauler();
+        nPeces = getNPeces();
         _valid = valid;
         this.tema = tema;
     }
@@ -106,6 +107,7 @@ public class Problema{
     public FitxaProblema[][] AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
         try {
             tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
+            nPeces +=1;
             return tauler.getTaulell();
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,6 +123,7 @@ public class Problema{
     public FitxaProblema[][] EliminarPeça(ParInt origen){
         try{
             tauler.EliminarPeçaAt(origen);
+            nPeces-=1;
             return tauler.getTaulell();
         }
         catch (Exception ex){
@@ -167,20 +170,8 @@ return null;
             System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
         }
-return null;
+        return null;
     }
-
-
-
-    /**
-     * \pre: d es un parametre valid
-     * \post: la variable dif te valor d
-     * @return
-     */
-    public void setDificultat (Dificultat d){
-        _dif = d;
-    }
-
 
     /**
      * \pre:
@@ -188,7 +179,6 @@ return null;
      * @return _valid
      */
     public boolean GetValid(){
-
         return _valid;
     }
 
@@ -201,7 +191,8 @@ return null;
         Algorisme aux = new Algorisme();
         _valid = aux.validarProblema(torn,tauler);
         if(_valid){
-            movimentsPerGuanyar = aux.getDepth();}
+            movimentsPerGuanyar = aux.getDepth();
+        }
     }
 
 
@@ -224,23 +215,55 @@ return null;
      */
     public String GetFEN(){
         _FEN = TaulerToFEN();
-        return _FEN;}
+        return _FEN;
+    }
+
+    private int getNPeces(){
+        FitxaProblema [][] t = tauler.getTaulell();
+        int cont = 0;
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                if (t[i][j] != null) cont++;
+
+        return cont;
+    }
 
     //RANKING FUNCTIONS
 
     /**
+     *
+     * @param nmoviments numero de moviments realitzats a la partida
+     * @param guanyador guanyador de la partida
+     * @return Puntacio del jugador en el problema segons els parametres passats
+     */
+    public int calculPuntuacio( int nmoviments, Color guanyador){
+        int maxPuntuacio = nPeces * movimentsPerGuanyar * 10;
+        if (guanyador == torn && (nmoviments+1)/2 <= movimentsPerGuanyar) return maxPuntuacio;
+        else{
+
+            maxPuntuacio = nPeces * (movimentsPerGuanyar - ((nmoviments+1)/2 - movimentsPerGuanyar)) * 10;
+            return maxPuntuacio/2;
+        }
+    }
+
+    /**
      * Si el jugador ja existeix en el ranking actualiza la seva puntacio,
-     * sino crea una nova instancia amb el nickname i la puntuacio
+     * sino rep la informacio necessaria per calcular la puntuacio
      * @param nomJugador Nom del jugador a inscriure al ranking
-     * @param puntuacio Puntuacio del jugador en el problema
+     * @param puntuacio Puntuacio del jugador
      */
     public void inscriureRanking (String nomJugador, int puntuacio){
         if (ranking.replace(nomJugador,puntuacio) == null) ranking.put(nomJugador,puntuacio);
+
     }
 
     public Integer consultarPuntuacioJugador(String nickname) {
         return ranking.get(nickname);
     }
+
+
+
+    //FEN-TAULER FUNCTIONS
 
 
     /**
