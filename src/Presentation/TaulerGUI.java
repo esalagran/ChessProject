@@ -143,9 +143,7 @@ public class TaulerGUI {
         tools.addSeparator();
         tools.add(message);
 
-        gui.add(new JLabel("?"), BorderLayout.LINE_START);
-
-        chessBoard = new JPanel(new GridLayout(0, 9)) {
+        chessBoard = new JPanel(new GridLayout(0, 8)) {
 
             /**
              * Override the preferred size to return the largest it can, in
@@ -180,7 +178,7 @@ public class TaulerGUI {
                 new LineBorder(Color.BLACK)
         ));
         // Set the BG to be ochre
-        Color ochre = new Color(204,119,34);
+        Color ochre = Color.white;
         chessBoard.setBackground(ochre);
         JPanel boardConstrain = new JPanel(new GridBagLayout());
         boardConstrain.setBackground(ochre);
@@ -202,8 +200,8 @@ public class TaulerGUI {
                         (new ActionListener() {
                             public void actionPerformed (ActionEvent event) {
                                 String texto = ((JButton) event.getSource()).getText();
-                                int i = (b.getY()/70-1);
-                                int j = (b.getX()/70-1);
+                                int i = (b.getY()/70);
+                                int j = (b.getX()/70);
                                 clickOnCoord(new ParInt(i,j));
 
 
@@ -226,20 +224,11 @@ public class TaulerGUI {
         /*
          * fill the chess board
          */
-        chessBoard.add(new JLabel(""));
         // fill the top row
-        for (int ii = 0; ii < 8; ii++) {
-            chessBoard.add(
-                    new JLabel(COLS.substring(ii, ii + 1),
-                            SwingConstants.CENTER));
-        }
         // fill the black non-pawn piece row
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
                 switch (jj) {
-                    case 0:
-                        chessBoard.add(new JLabel("" + (9-(ii + 1)),
-                                SwingConstants.CENTER));
                     default:
                         chessBoard.add(chessBoardSquares[jj][ii]);
                 }
@@ -316,7 +305,7 @@ public class TaulerGUI {
             System.out.println("MOVE FROM " + firstCoord.GetFirst() +"," + firstCoord.GetSecond()  + " TO " + secondCoord.GetFirst() +"," + secondCoord.GetSecond() );
             chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
             firstColor = null;
-            FitxaProblema[][] t = CP.mourePeçaPartida(firstCoord, secondCoord);
+            FitxaProblema[][] t = CP.MourePeçaPartida(firstCoord, secondCoord);
             if(t!= null){
                 dibuixarTauler(t);
                 tornContrari();

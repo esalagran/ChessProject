@@ -187,12 +187,13 @@ return null;
      * \post: si el problema es valid es posa _valid a true i es guarda la profuncitat del problema
      * @return
      */
-    public void validarProblema (){
+    public boolean validarProblema (){
         Algorisme aux = new Algorisme();
         _valid = aux.validarProblema(torn,tauler);
         if(_valid){
             movimentsPerGuanyar = aux.getDepth();
         }
+        return _valid;
     }
 
 

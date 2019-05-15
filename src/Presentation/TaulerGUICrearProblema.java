@@ -9,17 +9,21 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.plaf.FontUIResource;
 
 public class TaulerGUICrearProblema {
 
 
+
+    private JFrame f = new JFrame("Crear problema");
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] chessBoardSquares = new JButton[8][8];
     private Image[][] chessPieceImages = new Image[2][6];
     private JPanel chessBoard;
     private FitxaProblema[][] tauler;
     private JLabel message = new JLabel(
-            "Chess Champ is ready to play!");
+            "Selecciona una casella per començar!");
+    private JLabel FEN = new JLabel("FEN: 8/8/8/8/8/8/8/8  ");
     private static final String COLS = "ABCDEFGH";
     public static final int QUEEN = 1, KING = 0,
             ROOK = 2, KNIGHT = 3, BISHOP = 4, PAWN = 5;
@@ -37,24 +41,48 @@ public class TaulerGUICrearProblema {
     private boolean isPieceSelected = false;
     private ParInt pieceCoord;
     private boolean moving = false;
+    private boolean imported = false;
 
+
+    public void visible(boolean vis){
+        f.setVisible(vis);
+    }
+    public void desactivar() {
+        f.setEnabled(false);
+    }
+
+
+
+    TaulerGUICrearProblema(CtrlPresentation pr, FitxaProblema[][] t) {
+        CP = pr;
+        initializeGui();
+        tauler = t;
+        dibuixarTauler();
+        imported = true;
+    }
 
     TaulerGUICrearProblema(CtrlPresentation pr) {
         CP = pr;
         initializeGui();
         tauler = new FitxaProblema[8][8];
-        //dibuixarTauler(tauler);
+
     }
 
-    private void dibuixarTauler(FitxaProblema[][] t ){
+
+    public void close(){
+        System.exit(0);
+    }
+    private void dibuixarTauler( ){
         if(tauler!= null){
+
+            FEN.setText("FEN: " + CP.GetFENProblema().split(" ")[0]);
 
         for(int i = 0; i< 8; i++){
             for(int j = 0; j< 8; j++){
 
-                if(t[i][j] != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString());
-                    Domain.Color c = t[i][j].GetColor();
+                if(tauler[i][j] != null){
+                    TipusPeça tP = Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString());
+                    Domain.Color c = tauler[i][j].GetColor();
 
                     if(tP == TipusPeça.Cavall){
 
@@ -120,66 +148,128 @@ public class TaulerGUICrearProblema {
     public final void initializeGui() {
         // create the images for the chess pieces
         createImages();
+        message.setFont(new Font(message.getFont().getName(), Font.BOLD, 10));
+        FEN.setFont(new Font(message.getFont().getName(), Font.BOLD, 10));
 
         // set up the main GUI
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        Action newGameAction = new AbstractAction("Try") {
+        JButton moveButton = new JButton("Moure");
+        tools.add(moveButton);
+        moveButton.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        if(clicked && chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() != null ) {
+                            Write("Clicka a la posició destí de la peça");
+                            moving = true;
+                        }
+                        else Write("No hi ha cap peça seleccionada");
+                    }
+                });
+        JButton deleteButton = new JButton("Eliminar");
+
+        tools.add(deleteButton);
+        deleteButton.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        if(clicked && chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() != null ){
+                            delete();
+                            Write("Peça eliminada");
+                        }
+                        else Write("No hi ha cap peça seleccionada");
+
+                    }
+                });
+        tools.addSeparator();
+
+        Action importarFEN = new AbstractAction("Importar") {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                CP.sincronizacionVistaProblema_a_FEN();
+            }
+        };
+        tools.add(importarFEN);
+
+        Action tryProblemaAction = new AbstractAction("Provar problema") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("No implementat encara");
             }
         };
-        tools.add(newGameAction);
-        JButton moveButton = new JButton("Move");
-        tools.add(moveButton);
-        moveButton.addActionListener
+        tools.add(tryProblemaAction);
+        JButton validarButton = new JButton("Validar");
+        tools.add(validarButton);
+
+        validarButton.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        if(clicked && chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() != null )
-                            moving = true;
+                        if(CP.ValidarProblema()){
+                            VistaDialogo vistaDialogo = new VistaDialogo();
+                            String[] strBotones = {"Acceptar", "Tornar"};
+                            int isel = vistaDialogo.setDialogo("Validar problema", "El problema és vàlid",strBotones,3);
+                        }
+
+                        else{
+                            VistaDialogo vistaDialogo = new VistaDialogo();
+                            String[] strBotones = {"Acceptar", "Tornar"};
+                            int isel = vistaDialogo.setDialogo("Validar problema", "El problema no és vàlid",strBotones,3);
+                        }
 
                     }
                 });
-        JButton deleteButton = new JButton("Delete");
 
-        tools.add(deleteButton);
-        deleteButton.addActionListener
+        JButton saveButton = new JButton("Guardar");
+
+        saveButton.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        if(clicked && chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() != null )
-                            delete();
+                        CP.GuardarProblema();
+                        Write("S'ha guardat el problema");
 
                     }
                 });
-        tools.addSeparator();
-        tools.add(new JButton("Validate"));
-        tools.add(new JButton("Save"));
+        tools.add(saveButton);
         tools.addSeparator();
         tools.add(message);
 
         //gui.add(new JLabel("?"), BorderLayout.LINE_START);
 
         JPanel lateralButtons = new JPanel(new GridLayout(6, 2));
+        //lateralButtons.add(new JLabel("FEN: "));
+        //lateralButtons.add(FEN);
+        gui.add(FEN, BorderLayout.SOUTH);
 
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < 6 ; j++){
                 JButton button = new JButton();
                 button.setIcon(new ImageIcon(chessPieceImages[i][j]));
+                button.setBackground(Color.WHITE);
+                button.setSize(20,20);
                 lateralButtons.add(button);
 
                 button.addActionListener
                         (new ActionListener() {
                             public void actionPerformed (ActionEvent event) {
                                 String texto = ((JButton) event.getSource()).getText();
-                                int i = (button.getY()/108);
+
+                                int i = (button.getY()/96);
                                 int j = (button.getX()/98);
                                 int a = i/3;
                                 int b = (j + i*2)%6;
+                                /*
+                                int i = (button.getY());
+                                int j = (button.getX());
+
+                                System.out.println(i);
+                                System.out.println(j);
+                                */
 
                                 selectPiece(new ParInt(a,b));
+
 
                                 //clickOnCoord(new ParInt(i,j));
 
@@ -192,7 +282,7 @@ public class TaulerGUICrearProblema {
         gui.add(lateralButtons,  BorderLayout.LINE_START);
 
 
-        chessBoard = new JPanel(new GridLayout(0, 9)) {
+        chessBoard = new JPanel(new GridLayout(0, 8)) {
 
             /**
              * Override the preferred size to return the largest it can, in
@@ -227,7 +317,7 @@ public class TaulerGUICrearProblema {
                 new LineBorder(Color.BLACK)
         ));
         // Set the BG to be ochre
-        Color ochre = new Color(204,119,34);
+        Color ochre = Color.gray;
         chessBoard.setBackground(ochre);
         JPanel boardConstrain = new JPanel(new GridBagLayout());
         boardConstrain.setBackground(ochre);
@@ -249,8 +339,10 @@ public class TaulerGUICrearProblema {
                         (new ActionListener() {
                             public void actionPerformed (ActionEvent event) {
                                 String texto = ((JButton) event.getSource()).getText();
-                                int i = (b.getY()/70-1);
-                                int j = (b.getX()/70-1);
+                                int i = (b.getY()/70);
+                                int j = (b.getX()/70);
+                                System.out.println(i);
+                                System.out.println(j);
                                 clickOnCoord(new ParInt(j,i));
 
 
@@ -273,20 +365,21 @@ public class TaulerGUICrearProblema {
         /*
          * fill the chess board
          */
-        chessBoard.add(new JLabel(""));
+
         // fill the top row
         for (int ii = 0; ii < 8; ii++) {
-            chessBoard.add(
+          /*  chessBoard.add(
                     new JLabel(COLS.substring(ii, ii + 1),
-                            SwingConstants.CENTER));
+                            SwingConstants.CENTER));*/
         }
         // fill the black non-pawn piece row
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
                 switch (jj) {
-                    case 0:
-                        chessBoard.add(new JLabel("" + (9-(ii + 1)),
-                                SwingConstants.CENTER));
+                    //case 0:
+                       //chessBoard.add(new JLabel("" + (9-(ii + 1)),
+                         //       SwingConstants.CENTER));
+                   //     break;
                     default:
                         chessBoard.add(chessBoardSquares[jj][ii]);
                 }
@@ -297,8 +390,8 @@ public class TaulerGUICrearProblema {
     private void delete(){
 
         ParInt inv1 = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
-        tauler =  CP.eliminarFitxa(inv1);
-        dibuixarTauler(tauler);
+        tauler =  CP.EliminarFitxa(inv1);
+        dibuixarTauler();
     }
 
     public final JComponent getGui() {
@@ -319,6 +412,10 @@ public class TaulerGUICrearProblema {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    private void Write(String str){
+        message.setText(str);
     }
 
     /**
@@ -347,24 +444,33 @@ public class TaulerGUICrearProblema {
     }
 
     private void clickOnCoord(ParInt coord){
+        dibuixarTauler();
         if(moving){
             ParInt inv1 = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
             ParInt inv2 = new ParInt(coord.GetSecond(), coord.GetFirst());
-            tauler = CP.mourePeçaProblema(inv1, inv2);
-            dibuixarTauler(tauler);
+            tauler = CP.MourePeçaProblema(inv1, inv2);
             moving = false;
+            Write("Pots moure o eliminar la peça amb els botons de la part superior");
 
         }
 
         if(!clicked){
+
             clickCoord = coord;
             clickColor = chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getBackground();
             chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(Color.orange);
+            if (chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() == null)
+                Write("Prem sobre una peça de la barra lateral per afegir-la al tauler");
+            else{
+                Write("Pots moure o eliminar la peça amb els botons de la part superior");
+            }
             clicked = true;
         }
         else if(clickCoord.GetFirst() == coord.GetFirst() && clickCoord.GetSecond() == coord.GetSecond()){
             chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(clickColor);
             clicked = false;
+
+            Write("Seleciona una casella");
 
         }
 
@@ -374,9 +480,14 @@ public class TaulerGUICrearProblema {
             clickCoord = coord;
             clickColor = chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getBackground();
             chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setBackground(Color.orange);
+            if (chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].getIcon() == null)
+                Write("Prem sobre una peça de la barra lateral per afegir-la al tauler");
+            else{
+                Write("Pots moure o eliminar la peça amb els botons de la part superior");
+            }
         }
 
-
+        dibuixarTauler();
 
         }
 
@@ -387,15 +498,16 @@ public class TaulerGUICrearProblema {
         pieceCoord = p;
         if(clicked){
             afegeixPeça();
+            Write("Pots moure o eliminar la peça amb els botons de la part superior");
         }
     }
 
 
     private void afegeixPeça(){
-        chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setIcon(new ImageIcon(chessPieceImages[pieceCoord.GetFirst()][pieceCoord.GetSecond()]));
+       // chessBoardSquares[clickCoord.GetFirst()][clickCoord.GetSecond()].setIcon(new ImageIcon(chessPieceImages[pieceCoord.GetFirst()][pieceCoord.GetSecond()]));
         ParInt inv = new ParInt(clickCoord.GetSecond(), clickCoord.GetFirst());
-        tauler = CP.afegirPeçaProblema(pieceCoord.GetSecond(), pieceCoord.GetFirst(), inv );
-        dibuixarTauler(tauler);
+        tauler = CP.AfegirPeçaProblema(pieceCoord.GetSecond(), pieceCoord.GetFirst(), inv );
+        dibuixarTauler();
 
 
     }
@@ -406,10 +518,17 @@ public class TaulerGUICrearProblema {
         else torn = Domain.Color.blanc;
     }
 
+
     public void run() {
+
         TaulerGUICrearProblema cg = new TaulerGUICrearProblema(CP);
 
-        JFrame f = new JFrame("ChessChamp");
+
+        if(imported)
+            cg = new TaulerGUICrearProblema(CP, tauler);
+
+
+
         f.add(cg.getGui());
         // Ensures JVM closes after frame(s) closed and
         // all non-daemon threads are finished
