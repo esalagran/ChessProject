@@ -52,7 +52,7 @@ public class Problema{
             else this.torn = Color.negre;
         }
         tauler = FENtoTauler();
-        nPeces = getNPeces();
+        nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
     }
 
@@ -63,7 +63,7 @@ public class Problema{
             else this.torn = Color.negre;
         }
         tauler = FENtoTauler();
-        nPeces = getNPeces();
+        nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = valid;
         this.tema = tema;
     }
@@ -192,8 +192,28 @@ return null;
         _valid = aux.validarProblema(torn,tauler);
         if(_valid){
             movimentsPerGuanyar = aux.getDepth();
+            setDificultat();
         }
         return _valid;
+    }
+
+    public void setDificultat(){
+        ParInt peces = getNPeces(); //First: Blanques Second: Negres
+        if (movimentsPerGuanyar < 2) _dif = Dificultat.moltfacil;
+        else if (torn == Color.blanc && peces.GetFirst()/2 >= peces.GetSecond()) _dif = Dificultat.moltfacil;
+        else if (torn == Color.negre && peces.GetSecond()/2 >= peces.GetFirst()) _dif = Dificultat.moltfacil;
+
+        else if (movimentsPerGuanyar < 3) _dif = Dificultat.facil;
+        else if (movimentsPerGuanyar < 3 && torn == Color.blanc && peces.GetFirst() >= 4) _dif = Dificultat.facil;
+        else if (movimentsPerGuanyar < 3 && torn == Color.negre && peces.GetSecond() >= 4) _dif = Dificultat.facil;
+
+        else if (movimentsPerGuanyar < 4 && torn == Color.blanc && peces.GetFirst() < 4) _dif = Dificultat.mitja;
+        else if (movimentsPerGuanyar < 4 && torn == Color.negre && peces.GetSecond() < 4) _dif = Dificultat.mitja;
+
+        else if (movimentsPerGuanyar < 4 && torn == Color.blanc && peces.GetFirst() < peces.GetSecond()) _dif = Dificultat.dificil;
+        else if (movimentsPerGuanyar < 4 && torn == Color.negre && peces.GetFirst() > peces.GetSecond()) _dif = Dificultat.dificil;
+
+        else _dif = Dificultat.moltdificil;
     }
 
 
@@ -219,14 +239,16 @@ return null;
         return _FEN;
     }
 
-    private int getNPeces(){
+    private ParInt getNPeces(){
         FitxaProblema [][] t = tauler.getTaulell();
-        int cont = 0;
+        int contB = 0;
+        int contN = 0;
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                if (t[i][j] != null) cont++;
+                if (t[i][j] != null && t[i][j].GetColor().equals(Color.blanc)) contB++;
+                else if (t[i][j] != null && t[i][j].GetColor().equals(Color.negre)) contN++;
 
-        return cont;
+        return new ParInt(contB,contN);
     }
 
     //RANKING FUNCTIONS
@@ -237,14 +259,14 @@ return null;
      * @param guanyador guanyador de la partida
      * @return Puntacio del jugador en el problema segons els parametres passats
      */
-    public int calculPuntuacio( int nmoviments, Color guanyador){
+    public int calculPuntuacio( int nmoviments, Color guanyador, int accumTime){
         int maxPuntuacio = nPeces * movimentsPerGuanyar * 10;
-        if (guanyador == torn && (nmoviments+1)/2 <= movimentsPerGuanyar) return maxPuntuacio;
-        else{
-
-            maxPuntuacio = nPeces * (movimentsPerGuanyar - ((nmoviments+1)/2 - movimentsPerGuanyar)) * 10;
-            return maxPuntuacio/2;
-        }
+        int tempsMig = accumTime/nmoviments;
+        int boost;
+        if (tempsMig > 60) boost = 1;
+        else boost = 60 - tempsMig;
+        //GUANYA EL QUE COMENÇA AMB MENYS O EL NUMERO QUE TOCA DE JUGADES
+        return maxPuntuacio*boost;
     }
 
     /**
@@ -433,14 +455,4 @@ return null;
         return FEN.toString();
 
     }
-
-
-
-
-
-
-
-
 }
-
-
