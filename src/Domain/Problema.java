@@ -30,7 +30,7 @@ public class Problema{
     private boolean _valid;
     private int movimentsPerGuanyar = 6;
     private int nPeces;
-    private SortedMap<String,Integer> ranking;
+    private Map<String,Integer> ranking;
     private Tema tema;
     private Huma _creador;
 
@@ -54,6 +54,7 @@ public class Problema{
         tauler = FENtoTauler();
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
+        ranking = new HashMap<String,Integer>();
     }
 
     public Problema(String FEN, Tema tema,boolean valid){
@@ -66,6 +67,7 @@ public class Problema{
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = valid;
         this.tema = tema;
+        ranking = new HashMap<String,Integer>();
     }
 
     public Tema getTema() {return tema;}
@@ -276,18 +278,24 @@ return null;
      * @param puntuacio Puntuacio del jugador
      */
     public void inscriureRanking (String nomJugador, int puntuacio){
-        if (ranking.replace(nomJugador,puntuacio) == null) ranking.put(nomJugador,puntuacio);
-
+        if (ranking.containsKey(nomJugador)) {
+            if (ranking.get(nomJugador) < puntuacio) ranking.replace(nomJugador, puntuacio);
+        }
+        else {
+            ranking.put(nomJugador,puntuacio);
+        }
     }
+
+    public Map<String,Integer> getRanking(){return ranking;}
+
+    public void setRanking(Map<String,Integer> r){ranking = r;}
 
     public Integer consultarPuntuacioJugador(String nickname) {
         return ranking.get(nickname);
     }
 
 
-
     //FEN-TAULER FUNCTIONS
-
 
     /**
      * \pre: problema te un FEN valid
