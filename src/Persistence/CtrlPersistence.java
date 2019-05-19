@@ -135,25 +135,13 @@ public class CtrlPersistence {
         }
         return problemes;
     }
-    /*
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Map.Entry.comparingByValue());
-        list = Collections.reverse(list);
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
 
-        return result;
-    }*/
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue
     (Map<K, V> map) {
 
         return map.entrySet()
                 .stream()
                 .sorted(Map.Entry.<K, V> comparingByValue().reversed())
-                // Type here -----^ reversed() here -------^
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
@@ -161,23 +149,5 @@ public class CtrlPersistence {
                         LinkedHashMap::new
                 ));
     }
-
-    /*
-    static <K,V extends Comparable<? super V>>
-    List<Map.Entry<K, V>> sortByValue(Map<K,V> map) {
-
-        List<Map.Entry<K,V>> sortedEntries = new ArrayList<Map.Entry<K,V>>(map.entrySet());
-
-        Collections.sort(sortedEntries,
-                new Comparator<Map.Entry<K,V>>() {
-                    @Override
-                    public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
-                        return e2.getValue().compareTo(e1.getValue());
-                    }
-                }
-        );
-
-        return sortedEntries;
-    }*/
 }
 

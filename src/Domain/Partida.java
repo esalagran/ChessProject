@@ -288,6 +288,7 @@ public class Partida{
                 probl.inscriureRanking(defensor,puntuacio);
             }
         }
+
     }
 
 }

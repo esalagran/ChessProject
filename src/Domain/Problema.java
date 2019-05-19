@@ -99,7 +99,7 @@ public class Problema{
         return movimentsPerGuanyar;
     }
 
-
+    public Dificultat getDificultat(){return _dif;}
 
     /**
      * \pre: tp, c i desti son parametres valids
