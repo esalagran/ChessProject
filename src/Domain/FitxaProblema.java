@@ -81,7 +81,6 @@ public class FitxaProblema{
     public boolean isAttacked(FitxaProblema[][] tauler) {
         int fil = coord.GetFirst();
         int col = coord.GetSecond();
-        int numCavalls = 0;
         //Fila
         for (int i = fil - 1; i >= 0; i--){
             if (tauler[i][col] != null){
@@ -93,8 +92,6 @@ public class FitxaProblema{
                          return true;
                      if (i == fil - 1 && tp.equals(TipusPeça.Rei))
                          return true;
-                     if (tp.equals(TipusPeça.Cavall))
-                         ++numCavalls;
                      break;
                 }
             }
@@ -110,8 +107,6 @@ public class FitxaProblema{
                         return true;
                     if (i == fil + 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
@@ -128,8 +123,6 @@ public class FitxaProblema{
                         return true;
                     if (j == col - 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
@@ -144,8 +137,6 @@ public class FitxaProblema{
                         return true;
                     if (j == col + 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
@@ -163,15 +154,13 @@ public class FitxaProblema{
                         return true;
                     if (di == fil + 1 && dj == col + 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
             ++dj;
         }
         dj = col - 1;
-        for (int di = fil - 1; di > 0 && dj > 0; --di){
+        for (int di = fil - 1; di >= 0 && dj >= 0; --di){
             if (tauler[di][dj] != null) {
                 if (tauler[di][dj].GetColor().equals(c))
                     break;
@@ -181,8 +170,6 @@ public class FitxaProblema{
                         return true;
                     if (di == fil - 1 && dj == col - 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
@@ -201,8 +188,6 @@ public class FitxaProblema{
                         return true;
                     if (di == fil + 1 && dj == col - 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
@@ -219,8 +204,6 @@ public class FitxaProblema{
                         return true;
                     if (di == fil - 1 && dj == col + 1 && tp.equals(TipusPeça.Rei))
                         return true;
-                    if (tp.equals(TipusPeça.Cavall))
-                        ++numCavalls;
                     break;
                 }
             }
@@ -228,22 +211,45 @@ public class FitxaProblema{
         }
 
         //cavall
-        if (numCavalls < 2){
-            ParInt[] cavMov = new ParInt[]{new ParInt(1, 2), new ParInt(-1, 2),
-                    new ParInt(1, -2), new ParInt(-1, -2), new ParInt(2, 1),
-                    new ParInt(2, -1), new ParInt(-2, 1), new ParInt(-2, -1)};
-            for (ParInt mov: cavMov) {
-                if (Convert.InTheLimits(mov)) {
-                    if (tauler[mov.GetFirst()][mov.GetSecond()] != null) {
-                        if (tauler[mov.GetFirst()][mov.GetSecond()].GetColor().equals(Convert.InvertColor(c)) &&
-                                Convert.ClassToTipusPeça(tauler[mov.GetFirst()][mov.GetSecond()].
-                                        getIFitxa().getClass().toString()).equals(TipusPeça.Cavall))
-                            return true;
-                    }
+        ParInt[] cavMov = new ParInt[]{new ParInt( fil + 1, col + 2), new ParInt(fil -1, col + 2),
+                new ParInt(fil + 1, col - 2), new ParInt(fil - 1, col - 2), new ParInt(fil + 2, col + 1),
+                new ParInt(fil + 2, col - 1), new ParInt(fil - 2, col + 1), new ParInt(fil - 2, col - 1)};
+        for (ParInt mov: cavMov) {
+            if (Convert.InTheLimits(mov)) {
+                if (tauler[mov.GetFirst()][mov.GetSecond()] != null) {
+                    if (tauler[mov.GetFirst()][mov.GetSecond()].GetColor().equals(Convert.InvertColor(c)) &&
+                            Convert.ClassToTipusPeça(tauler[mov.GetFirst()][mov.GetSecond()].
+                                    getIFitxa().getClass().toString()).equals(TipusPeça.Cavall))
+                        return true;
                 }
-
             }
+
         }
+
+        //peo
+        if (c.equals(Color.blanc)){
+            int row = fil - 1;
+            int co = col + 1;
+            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.negre) &&
+                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
+                return true;
+            co = col - 1;
+            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.negre) &&
+                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
+                return true;
+        }
+        else{
+            int row = fil + 1;
+            int co = col + 1;
+            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.blanc) &&
+                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
+                return true;
+            co = col - 1;
+            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.blanc) &&
+                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
+                return true;
+        }
+
         return false;
     }
 

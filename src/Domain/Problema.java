@@ -29,11 +29,10 @@ public class Problema{
     private Tauler tauler;
     private boolean _valid;
     private int movimentsPerGuanyar = 6;
-    private SortedMap<String,Integer> ranking;
+    private int nPeces;
+    private Map<String,Integer> ranking;
     private Tema tema;
     private Huma _creador;
-    private HashMap<String, Integer> _ranking;
-    //private Vector<FitxaProblema> _fitxesProblema;
 
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -53,7 +52,9 @@ public class Problema{
             else this.torn = Color.negre;
         }
         tauler = FENtoTauler();
+        nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
+        ranking = new HashMap<String,Integer>();
     }
 
     public Problema(String FEN, Tema tema,boolean valid){
@@ -63,8 +64,10 @@ public class Problema{
             else this.torn = Color.negre;
         }
         tauler = FENtoTauler();
+        nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = valid;
         this.tema = tema;
+        ranking = new HashMap<String,Integer>();
     }
 
     public Tema getTema() {return tema;}
@@ -96,7 +99,7 @@ public class Problema{
         return movimentsPerGuanyar;
     }
 
-
+    public Dificultat getDificultat(){return _dif;}
 
     /**
      * \pre: tp, c i desti son parametres valids
@@ -106,6 +109,7 @@ public class Problema{
     public FitxaProblema[][] AfegirPeça(TipusPeça tp, Color c, ParInt desti ){
         try {
             tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
+            nPeces +=1;
             return tauler.getTaulell();
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,6 +125,7 @@ public class Problema{
     public FitxaProblema[][] EliminarPeça(ParInt origen){
         try{
             tauler.EliminarPeçaAt(origen);
+            nPeces-=1;
             return tauler.getTaulell();
         }
         catch (Exception ex){
@@ -167,20 +172,8 @@ return null;
             System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
         }
-return null;
+        return null;
     }
-
-
-
-    /**
-     * \pre: d es un parametre valid
-     * \post: la variable dif te valor d
-     * @return
-     */
-    public void setDificultat (Dificultat d){
-        _dif = d;
-    }
-
 
     /**
      * \pre:
@@ -188,7 +181,6 @@ return null;
      * @return _valid
      */
     public boolean GetValid(){
-
         return _valid;
     }
 
@@ -201,8 +193,29 @@ return null;
         Algorisme aux = new Algorisme();
         _valid = aux.validarProblema(torn,tauler);
         if(_valid){
-            movimentsPerGuanyar = aux.getDepth();}
+            movimentsPerGuanyar = aux.getDepth();
+            setDificultat();
+        }
         return _valid;
+    }
+
+    public void setDificultat(){
+        ParInt peces = getNPeces(); //First: Blanques Second: Negres
+        if (movimentsPerGuanyar < 2) _dif = Dificultat.moltfacil;
+        else if (torn == Color.blanc && peces.GetFirst()/2 >= peces.GetSecond()) _dif = Dificultat.moltfacil;
+        else if (torn == Color.negre && peces.GetSecond()/2 >= peces.GetFirst()) _dif = Dificultat.moltfacil;
+
+        else if (movimentsPerGuanyar < 3) _dif = Dificultat.facil;
+        else if (movimentsPerGuanyar < 3 && torn == Color.blanc && peces.GetFirst() >= 4) _dif = Dificultat.facil;
+        else if (movimentsPerGuanyar < 3 && torn == Color.negre && peces.GetSecond() >= 4) _dif = Dificultat.facil;
+
+        else if (movimentsPerGuanyar < 4 && torn == Color.blanc && peces.GetFirst() < 4) _dif = Dificultat.mitja;
+        else if (movimentsPerGuanyar < 4 && torn == Color.negre && peces.GetSecond() < 4) _dif = Dificultat.mitja;
+
+        else if (movimentsPerGuanyar < 4 && torn == Color.blanc && peces.GetFirst() < peces.GetSecond()) _dif = Dificultat.dificil;
+        else if (movimentsPerGuanyar < 4 && torn == Color.negre && peces.GetFirst() > peces.GetSecond()) _dif = Dificultat.dificil;
+
+        else _dif = Dificultat.moltdificil;
     }
 
 
@@ -225,24 +238,64 @@ return null;
      */
     public String GetFEN(){
         _FEN = TaulerToFEN();
-        return _FEN;}
+        return _FEN;
+    }
+
+    private ParInt getNPeces(){
+        FitxaProblema [][] t = tauler.getTaulell();
+        int contB = 0;
+        int contN = 0;
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                if (t[i][j] != null && t[i][j].GetColor().equals(Color.blanc)) contB++;
+                else if (t[i][j] != null && t[i][j].GetColor().equals(Color.negre)) contN++;
+
+        return new ParInt(contB,contN);
+    }
 
     //RANKING FUNCTIONS
 
     /**
+     *
+     * @param nmoviments numero de moviments realitzats a la partida
+     * @param guanyador guanyador de la partida
+     * @return Puntacio del jugador en el problema segons els parametres passats
+     */
+    public int calculPuntuacio( int nmoviments, Color guanyador, int accumTime){
+        int maxPuntuacio = nPeces * movimentsPerGuanyar * 10;
+        int tempsMig = accumTime/nmoviments;
+        int boost;
+        if (tempsMig > 60) boost = 1;
+        else boost = 60 - tempsMig;
+        //GUANYA EL QUE COMENÇA AMB MENYS O EL NUMERO QUE TOCA DE JUGADES
+        return maxPuntuacio*boost;
+    }
+
+    /**
      * Si el jugador ja existeix en el ranking actualiza la seva puntacio,
-     * sino crea una nova instancia amb el nickname i la puntuacio
+     * sino rep la informacio necessaria per calcular la puntuacio
      * @param nomJugador Nom del jugador a inscriure al ranking
-     * @param puntuacio Puntuacio del jugador en el problema
+     * @param puntuacio Puntuacio del jugador
      */
     public void inscriureRanking (String nomJugador, int puntuacio){
-        if (ranking.replace(nomJugador,puntuacio) == null) ranking.put(nomJugador,puntuacio);
+        if (ranking.containsKey(nomJugador)) {
+            if (ranking.get(nomJugador) < puntuacio) ranking.replace(nomJugador, puntuacio);
+        }
+        else {
+            ranking.put(nomJugador,puntuacio);
+        }
     }
+
+    public Map<String,Integer> getRanking(){return ranking;}
+
+    public void setRanking(Map<String,Integer> r){ranking = r;}
 
     public Integer consultarPuntuacioJugador(String nickname) {
         return ranking.get(nickname);
     }
 
+
+    //FEN-TAULER FUNCTIONS
 
     /**
      * \pre: problema te un FEN valid
@@ -410,14 +463,4 @@ return null;
         return FEN.toString();
 
     }
-
-
-
-
-
-
-
-
 }
-
-

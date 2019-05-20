@@ -15,7 +15,7 @@ public class Partida{
     public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    String atacant, defensor;
+    private String atacant, defensor;
     Color torn, tornInicial;
     Modalitat mode;
     boolean isBlackHuman;
@@ -26,6 +26,7 @@ public class Partida{
     Tauler tauler;
     boolean hasEnded = false;
     int moviments = 0;
+    int accumTime = 0;
     Maquina m = new Maquina();
     AlgorismeMinMax alg = new AlgorismeMinMax();
 
@@ -55,7 +56,6 @@ public class Partida{
      * @return
      */
     public void ComençarPartida(){
-
         if(mode==Modalitat.MH){
             if(torn == Color.blanc){
                 isWhiteHuman = false;
@@ -87,9 +87,6 @@ public class Partida{
             isBlackHuman = true;
 
         }
-
-
-
     }
 
     /**
@@ -114,6 +111,7 @@ public class Partida{
         if (!Convert.InTheLimits(desti)) return null;
         if (tauler.FitxaAt(desti) != null && tauler.FitxaAt(desti).GetColor() == torn) return null;
 
+        long startTime = System.currentTimeMillis();
         boolean possible = false;
         Vector<ParInt> movimentsPossibles = tauler.FitxaAt(origen).GetMoviments(tauler);
         for (ParInt move : movimentsPossibles) {
@@ -140,7 +138,9 @@ public class Partida{
             System.out.println("Moviment no possible");
             return null;
         }
-
+        long endTime = System.currentTimeMillis();
+        accumTime = accumTime + (int) (endTime-startTime)/1000;
+        System.out.println("He trigat " + accumTime);
         FiTorn();
         return tauler.getTaulell();
 
@@ -249,20 +249,46 @@ public class Partida{
                     guanyador = Color.negre;
                 else guanyador = Color.blanc;
             }
-            //guanyador
+            inscriureRanking();
             hasEnded = true;
             return;
         }
         if(torn == Color.blanc){
             torn = Color.negre;
-
         }
         else{
             torn = Color.blanc;
+        }
     }
-}
+    private void inscriureRanking(){
+        int puntuacio = probl.calculPuntuacio(moviments,guanyador,accumTime);
+        if (mode == Modalitat.HM ){
+            if ( guanyador == tornInicial)
+                probl.inscriureRanking(atacant, puntuacio);
+            else {
+                probl.inscriureRanking("Maquina",puntuacio);
+                probl.inscriureRanking(atacant,accumTime/moviments);
+            }
+        }
+        if (mode == Modalitat.MH){
+            if (guanyador != tornInicial)
+            probl.inscriureRanking(defensor,puntuacio);
+            else {
+                probl.inscriureRanking("Maquina",puntuacio);
+                probl.inscriureRanking(defensor,accumTime/moviments);
+            }
+        }
+        if (mode == Modalitat.HH){
+            if (guanyador == tornInicial){
+                probl.inscriureRanking(atacant,puntuacio);
+                probl.inscriureRanking(defensor,accumTime/moviments);
+            }
+            else {
+                probl.inscriureRanking(atacant,accumTime/moviments);
+                probl.inscriureRanking(defensor,puntuacio);
+            }
+        }
 
-
-
+    }
 
 }
