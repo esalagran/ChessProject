@@ -3,6 +3,7 @@ import Domain.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @class CtrlPersistence
@@ -56,6 +57,12 @@ public class CtrlPersistence {
                 else{
                     writer.append("negre"+'\n');    //Guardo color negre
                 }
+                Map<String,Integer> ranking = p.getRanking();
+                ranking = sortByValue(ranking);
+                for (Map.Entry<String, Integer> entry : ranking.entrySet()) {
+                    writer.append(entry.getKey() + "/" + entry.getValue() + '\n');
+                }
+                writer.append("Fi\n");
                 writer.close();
             } else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
 
@@ -74,9 +81,10 @@ public class CtrlPersistence {
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null){
                     if (currentLine.contains(FEN)){
-                        for(int i = 0; i < 4;i++){
+                        while(!currentLine.contains("Fi")){
                             currentLine = reader.readLine();
                         }
+                        currentLine = reader.readLine();
                     }
                     if (currentLine != null) writer.write(currentLine + '\n');
                 }
@@ -109,6 +117,16 @@ public class CtrlPersistence {
                 if (s.equals("blanc")) color = Color.blanc;
                 else color = Color.negre;
                 aux = new Problema(fen, new Tema(pasos,color),valid);
+
+                s = reader.readLine();
+                Map<String,Integer> r = new HashMap<String,Integer>();
+                while (!s.contains("Fi")){
+                    String [] parts = s.split("/");
+                    r.put(parts[0],Integer.parseInt(parts[1]));
+                    s = reader.readLine();
+                }
+                aux.setRanking(r);
+
                 problemes.add(aux);
                 s = reader.readLine();
             }
@@ -116,6 +134,20 @@ public class CtrlPersistence {
             e.printStackTrace();
         }
         return problemes;
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue
+    (Map<K, V> map) {
+
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.<K, V> comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
     }
 }
 

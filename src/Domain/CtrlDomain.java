@@ -3,6 +3,7 @@ package Domain;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CtrlDomain {
     private Problema pObert;
@@ -190,7 +191,7 @@ public class CtrlDomain {
 
     /**
      * \pre pObert no pot ser null
-     * \post S'ha validat el problema i es mostra si és valid o no
+     * \post S'hda validat el problema i es mostra si és valid o no
      */
     public boolean ValidarProblema() {
         boolean valid = false;
@@ -218,4 +219,16 @@ public class CtrlDomain {
         return partidaEnJoc.GetTauler();
     }
 
+    public Map<String,Integer> getRanking(Problema p){
+        return p.getRanking();
+    }
+
+    public Dificultat getDificultat(Problema p){
+        Dificultat d = p.getDificultat();
+        if (d == null){
+            System.out.println("El problema s'ha de validar primer.");
+            return null;
+        }
+        else return d;
+    }
 }
