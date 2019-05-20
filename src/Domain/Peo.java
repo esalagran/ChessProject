@@ -50,15 +50,18 @@ public class Peo extends Fitxa {
         int incr;
         if (color.equals(Color.blanc)) incr = -1;
         else incr = 1;
+
         move = new ParInt(coord.GetFirst() + incr, coord.GetSecond());
         if (Convert.InTheLimits(move) && actual.FitxaAt(move) == null)
             super.addMove(move, color, actual, mov);
 
         move = new ParInt(coord.GetFirst() + incr, coord.GetSecond() + 1);
-        if (actual.PeçaRival(move, color))super.addMove(move, color, actual, mov);
+        if (Convert.InTheLimits(move) && actual.PeçaRival(move, color))
+            super.addMove(move, color, actual, mov);
 
         move = new ParInt(coord.GetFirst() + incr, coord.GetSecond() - 1);
-        if (actual.PeçaRival(move, color))super.addMove(move, color, actual, mov);
+        if (Convert.InTheLimits(move) && actual.PeçaRival(move, color))
+            super.addMove(move, color, actual, mov);
 
         return mov;
     }

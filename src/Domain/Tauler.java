@@ -186,7 +186,7 @@ public class Tauler {
         fp.SetCoordenades(move);
         if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
         if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;*/
-        Move aux = new Move(move.getOriginalPiece(), move.getEndPos(), move.getStartPos());
+        Move aux = new Move(null, move.getEndPos(), move.getStartPos());
         moureFitxa(aux);
         taulell[move.getEndPos().GetFirst()][move.getEndPos().GetSecond()] = move.getOriginalPiece();
     }
