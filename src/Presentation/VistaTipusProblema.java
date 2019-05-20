@@ -32,6 +32,9 @@ public class VistaTipusProblema {
 
 //////////////////////// Constructor y metodos publicos
 
+    public void activar() {
+        frameVista.setEnabled(true);
+    }
 
     public VistaTipusProblema(CtrlPresentation pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
