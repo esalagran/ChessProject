@@ -95,68 +95,66 @@ public class Convert {
         return  res;
     }
 
-
     /**
      * \pre: t conté el tauler que es vol dibuixar i no és null
      * \post: es dibuixa per consola el tauler t
      */
-    public static void DibuixaTauler(Tauler t){
-        String formatB = ANSI_BLACK +  "| " + ANSI_BLUE + "%c " + ANSI_RESET ;
-        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET ;
+    public static void DibuixaTauler(Tauler t) {
+        String formatB = ANSI_BLACK + "| " + ANSI_BLUE + "%c " + ANSI_RESET;
+        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET;
         System.out.println();
         System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-        for(int i = 0; i < 8; i++){
+        for (int i = 0; i < 8; i++) {
             System.out.print(ANSI_BLACK);
-            System.out.print(8-i);
+            System.out.print(8 - i);
             System.out.print(" " + ANSI_RESET);
 
-            for (int j = 0; j<8; j++){
+            for (int j = 0; j < 8; j++) {
                 ParInt coord = new ParInt(i, j);
-                if(t.FitxaAt(coord) != null){
+                if (t.FitxaAt(coord) != null) {
                     TipusPeça tP = Convert.ClassToTipusPeça(t.FitxaAt(coord).getIFitxa().getClass().toString());
                     Color c = t.FitxaAt(coord).GetColor();
 
-                    if(tP == TipusPeça.Cavall){
+                    if (tP == TipusPeça.Cavall) {
 
-                        if(c == Color.negre)
-                            System.out.printf(formatB,  'C' );
+                        if (c == Color.negre)
+                            System.out.printf(formatB, 'C');
                         else System.out.printf(formatW, 'C');
                     }
-                    if(tP == TipusPeça.Peo){
-                        if(c == Color.negre)
+                    if (tP == TipusPeça.Peo) {
+                        if (c == Color.negre)
                             System.out.printf(formatB, 'P');
                         else System.out.printf(formatW, 'P');
                     }
-                    if(tP == TipusPeça.Alfil){
-                        if(c == Color.negre)
+                    if (tP == TipusPeça.Alfil) {
+                        if (c == Color.negre)
                             System.out.printf(formatB, 'A');
                         else System.out.printf(formatW, 'A');
 
                     }
 
-                    if(tP == TipusPeça.Torre){
-                        if(c == Color.negre)
+                    if (tP == TipusPeça.Torre) {
+                        if (c == Color.negre)
                             System.out.printf(formatB, 'T');
-                        else System.out.printf(formatW,'T');
+                        else System.out.printf(formatW, 'T');
                     }
 
-                    if(tP == TipusPeça.Rei){
+                    if (tP == TipusPeça.Rei) {
 
-                        if(c == Color.negre)
+                        if (c == Color.negre)
                             System.out.printf(formatB, 'R');
                         else System.out.printf(formatW, 'R');
 
                     }
 
-                    if(tP == TipusPeça.Dama){
+                    if (tP == TipusPeça.Dama) {
 
-                        if(c == Color.negre)
+                        if (c == Color.negre)
                             System.out.printf(formatB, 'D');
                         else System.out.printf(formatW, 'D');
                     }
 
-                }
-                else {
+                } else {
                     System.out.print("|   ");
                 }
             }
@@ -164,7 +162,17 @@ public class Convert {
             System.out.println();
             System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
         }
-        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET );
+        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET);
+    }
+
+    public static int Max (int a, int b){
+        if (a > b) return a;
+        return b;
+    }
+
+    public static int Min(int a, int b){
+        if (a < b) return a;
+        return b;
     }
 
     /**

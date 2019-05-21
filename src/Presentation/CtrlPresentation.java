@@ -43,6 +43,8 @@ public class CtrlPresentation {
     }
 
 
+
+
     //////////////////////// Metodos de sincronizacion entre vistas
 
 
@@ -54,12 +56,14 @@ public class CtrlPresentation {
         if (vistaTipus == null)
             vistaTipus = new VistaTipusProblema(this);
         vistaTipus.hacerVisible();
+        vistaTipus.activar();
     }
 
     public void sincronizacionVistaTipus_a_Menu() {
         // Se hace invisible la vista secundaria (podria anularse)
         vistaTipus.desactivar();
         vistaTipus.visible(false);
+        menu.visible(true);
         menu.activar();
     }
 
@@ -90,6 +94,15 @@ public class CtrlPresentation {
            taulerProblema = new TaulerGUICrearProblema(this);
         }
         taulerProblema.run();
+    }
+
+    public void sincronizacionJugarPartida_a_Menu(){
+        taulerPartida.visible(false);
+        taulerPartida.desactivar();
+
+        menu.activar();
+        menu.visible(true);
+
     }
 
     public FitxaProblema[][] ImportarProblema(String FEN){
@@ -124,6 +137,8 @@ public class CtrlPresentation {
             Tauler t  = CD.getTaulerPartidaEnJouc();
             taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);}
         taulerPartida.run();
+        taulerPartida.visible(true);
+        taulerPartida.activar();
     }
 
 

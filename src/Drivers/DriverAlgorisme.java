@@ -3,6 +3,8 @@ package Drivers;
 import Domain.*;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.time.Instant;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -77,12 +79,39 @@ public class DriverAlgorisme {
         String FEN2 = "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 1 0";
         String FEN3 = "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1";
         String FEN4 = "2B5/7p/5K2/7k/7p/8/6P1/5R2 w - - 0 1 v: true";
-        Problema p = new Problema(FEN4);
-        AlgorismeMinMax alg = new AlgorismeMinMax();
-        Color torn = Color.negre;
-        for (int i = 6; i> 0; --i){
+        String FEN5 = "3K4/8/8/p2k4/pp1B4/N5N1/P2Q4/8 w - - 0 0"; // Mate en 3
+        String FEN6 = "1q2r2k/1b3p1p/p2p1Pp1/1p1Pp1P1/n3P2Q/2R2B2/PP5P/3R3K w - - 0 0"; //Mate en 6
+        String FEN7 = "2bqkbn1/2pppp2/np2N3/r3P1p1/p2N2B1/5Q2/PPPPKPP1/RNB2r2 w KQkq - 0 1";//mate en 2
+        String FEN8 = "8/p7/BpkPp3/4Pp2/3P2p1/Q5P1/2p1bPK1/3q3R w - -"; // mate en 3
+        //AlgorismeMinMax alg = new AlgorismeMinMax();
+        AlgorismeAlfaBeta alg = new AlgorismeAlfaBeta();
+        String[] conjProb = new String[]{
+            "6k1/4Rppp/8/8/8/3K4/8/8 w - - 1 0",
+            "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 1 0",
+            "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1",
+            "2B5/7p/5K2/7k/7p/8/6P1/5R2 w - - 0 1 v: true",
+            "3K4/8/8/p2k4/pp1B4/N5N1/P2Q4/8 w - - 0 0", // Mate en 3
+            "2bqkbn1/2pppp2/np2N3/r3P1p1/p2N2B1/5Q2/PPPPKPP1/RNB2r2 w KQkq - 0 1",//mate en 2
+            "8/p7/BpkPp3/4Pp2/3P2p1/Q5P1/2p1bPK1/3q3R w - -" ,// mate en 3
+            "k1r2r2/nb6/3Qp3/R3N1B1/1p1P3P/8/PP4BK/4q3 w - -", //mate en 4
+            "7k/3rpp2/2r4p/q1p1pPP1/p1P1P1pQ/PpNP4/1P5R/6K1 w - -",
+            "3r4/3n1k2/2p5/p1Pp4/P4P2/6QP/q7/6RK w - -",
+            "rnb1k1nr/ppp2ppp/8/8/2N1p2q/2N3b1/PPPPK2P/R1BQ1B1R b kq -"
+        };
+        int num = 0;
+        for (String Fen: conjProb) {
+            Problema p = new Problema(Fen);
+            Color torn = p.GetTorn();
+            System.out.println(Instant.now());
+            System.out.println(num++);
+            alg.GetMove(torn, torn, p.getTauler(), 7);
+            System.out.println(Instant.now());
+        }
+
+        /*for (int i = 3; i>= 0; --i){
             torn = Convert.InvertColor(torn);
-            Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
+            //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
+            Move m = alg.GetMove(Color.blanc, torn, p.getTauler(), i);
             if (m == null){
                 Convert.DibuixaTauler(p.getTauler());
                 System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
@@ -95,7 +124,7 @@ public class DriverAlgorisme {
                         m.getStartPos().GetSecond() + ") a (" + m.getEndPos().GetFirst() + ","+
                         m.getEndPos().GetSecond() + ")");
             }
-        }
+        }*/
         //System.out.println(alg.MinMax(p.getTauler(), Color.blanc, 6, false));
 
     }

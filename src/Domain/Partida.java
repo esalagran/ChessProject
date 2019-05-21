@@ -196,7 +196,7 @@ public class Partida{
        /*Object[] mov =  m.GetMoviment(4, torn, tauler);
        ParInt a = (ParInt) mov[0];
        ParInt b = (ParInt) mov[1];*/
-       Move m = alg.FindBestMoveUsingMinMaxAtDepth(tauler, torn, 6);
+       Move m = alg.FindBestMoveUsingMinMaxAtDepth(tauler, torn, 4);
        tauler.moureFitxa(m);
 
        FiTorn();

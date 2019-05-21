@@ -39,4 +39,8 @@ public class Move {
     public void setOriginalPiece(FitxaProblema originalPiece) {
         OriginalPiece = originalPiece;
     }
+
+    public void setStartPos(ParInt p){ StartPos = p; }
+
+    public void setEndPos(ParInt endPos) { EndPos = endPos; }
 }

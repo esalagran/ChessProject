@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 public class TaulerGUI {
 
 
+    JFrame f = new JFrame("ChessChamp");
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] chessBoardSquares = new JButton[8][8];
     private Image[][] chessPieceImages = new Image[2][6];
@@ -36,6 +37,16 @@ public class TaulerGUI {
     private Domain.Color torn;
     private JToolBar tools = new JToolBar();
     private boolean hasEnded;
+
+    public void visible(boolean vis){
+        f.setVisible(vis);
+    }
+    public void desactivar() {
+        f.setEnabled(false);
+    }
+    public void activar() {
+        f.setEnabled(true);
+    }
 
 
     TaulerGUI( FitxaProblema[][] t, Domain.Color pt,  CtrlPresentation pr) {
@@ -136,10 +147,16 @@ public class TaulerGUI {
             }
         };
         tools.add(newGameAction);
-        tools.add(new JButton("Save")); // TODO - add functionality!
-        tools.add(new JButton("Restore")); // TODO - add functionality!
-        tools.addSeparator();
-        tools.add(new JButton("Resign")); // TODO - add functionality!
+        JButton resignar = new JButton("Resignar");
+        tools.add(resignar);
+            resignar.addActionListener
+                    (new ActionListener() {
+                        public void actionPerformed (ActionEvent event) {
+                            CP.sincronizacionJugarPartida_a_Menu();
+                        }
+                    });
+
+
         tools.addSeparator();
         tools.add(message);
 
@@ -309,9 +326,7 @@ public class TaulerGUI {
             if(t!= null){
                 dibuixarTauler(t);
                 tornContrari();
-                tools.remove(message);
-                message = new JLabel(torn.toString());
-                tools.add(message);
+                message.setText(torn.toString());
 
             }
             firstCoord = null;
@@ -351,7 +366,6 @@ public class TaulerGUI {
             public void run() {
                 TaulerGUI cg = new TaulerGUI(tauler, torn, CP);
 
-                JFrame f = new JFrame("ChessChamp");
                 f.add(cg.getGui());
                 // Ensures JVM closes after frame(s) closed and
                 // all non-daemon threads are finished

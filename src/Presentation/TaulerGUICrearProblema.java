@@ -50,6 +50,9 @@ public class TaulerGUICrearProblema {
     public void desactivar() {
         f.setEnabled(false);
     }
+    public void activar() {
+        f.setEnabled(true);
+    }
 
 
 
@@ -233,6 +236,18 @@ public class TaulerGUICrearProblema {
                     }
                 });
         tools.add(saveButton);
+
+
+        JButton sortirButton = new JButton("Sortir");
+        sortirButton.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+
+
+                    }
+                });
+
+        tools.add(sortirButton);
         tools.addSeparator();
         tools.add(message);
 
