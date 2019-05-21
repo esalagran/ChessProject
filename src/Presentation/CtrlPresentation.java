@@ -157,6 +157,17 @@ public class CtrlPresentation {
         return CD.EndedReason();
     }
 
+    public ParInt[] GetLastMoveMaq(){
+        return CD.GetLastMoveMaq();
+    }
+    public ParInt[] GetLastMoveHum(){
+        return CD.GetLastMoveHum();
+    }
+
+    public Color GetColor(ParInt coord){
+        return CD.GetColor(coord);
+    }
+
 
     public ArrayList<String> llamadaDominio1 (String selectedItem) {
         return null;

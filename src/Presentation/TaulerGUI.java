@@ -37,6 +37,9 @@ public class TaulerGUI {
     private Domain.Color torn;
     private JToolBar tools = new JToolBar();
     private boolean hasEnded;
+    private ParInt[] casellesMarcades = new ParInt[2];
+    private Color[] colorsOriginals = new Color[2];
+    private ParInt[] ultimMovHuma = new ParInt[2];
 
     public void visible(boolean vis){
         f.setVisible(vis);
@@ -127,6 +130,31 @@ public class TaulerGUI {
                 }
 
             }
+        }
+
+    }
+
+    private void resetMarcades(){
+        if(casellesMarcades[0]!= null && casellesMarcades[1]!= null) {
+            chessBoardSquares[casellesMarcades[0].GetFirst()][casellesMarcades[0].GetSecond()].setBackground(colorsOriginals[0]);
+            chessBoardSquares[casellesMarcades[1].GetFirst()][casellesMarcades[1].GetSecond()].setBackground(colorsOriginals[1]);
+            casellesMarcades[0]= null ;
+            casellesMarcades[1]= null;
+        }
+    }
+
+    private void marcarCaselles(ParInt[] moviments){
+
+        if(moviments[0].GetFirst() != 10 ){
+        colorsOriginals[0] = chessBoardSquares[moviments[0].GetSecond()][moviments[0].GetFirst()].getBackground();
+        colorsOriginals[1] = chessBoardSquares[moviments[1].GetSecond()][moviments[1].GetFirst()].getBackground();
+
+        casellesMarcades[0] = new ParInt(moviments[0].GetSecond(), moviments[0].GetFirst());
+        casellesMarcades[1] = new ParInt(moviments[1].GetSecond(), moviments[1].GetFirst());
+
+
+        chessBoardSquares[moviments[0].GetSecond()][moviments[0].GetFirst()].setBackground(Color.green);
+        chessBoardSquares[moviments[1].GetSecond()][moviments[1].GetFirst()].setBackground(Color.green);
         }
 
     }
@@ -315,10 +343,20 @@ public class TaulerGUI {
 
 
 
+        } else if(chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].getIcon() == null || (chessBoardSquares[coord.GetSecond()][coord.GetFirst()].getIcon() != null && CP.GetColor(coord) == torn) ){
+            chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
+            firstColor = chessBoardSquares[coord.GetSecond()][coord.GetFirst()].getBackground();
+            firstCoord = coord;
+            chessBoardSquares[coord.GetSecond()][coord.GetFirst()].setBackground(Color.orange);
+
         }
 
         else{
+            resetMarcades();
             secondCoord = coord;
+            ultimMovHuma[0] = new ParInt(firstCoord.GetFirst(), firstCoord.GetSecond());
+            ultimMovHuma[1] = new ParInt(secondCoord.GetFirst(), secondCoord.GetSecond());
+
             System.out.println("MOVE FROM " + firstCoord.GetFirst() +"," + firstCoord.GetSecond()  + " TO " + secondCoord.GetFirst() +"," + secondCoord.GetSecond() );
             chessBoardSquares[firstCoord.GetSecond()][firstCoord.GetFirst()].setBackground(firstColor);
             firstColor = null;
@@ -334,7 +372,11 @@ public class TaulerGUI {
 
             if (!CP.isColorHuman(torn)) {
                t = CP.TornMaquina();
-               dibuixarTauler(t);
+               ParInt[] moviments = CP.GetLastMoveMaq();
+
+               marcarCaselles(moviments);
+
+                dibuixarTauler(t);
                 tornContrari();
 
 
@@ -342,6 +384,14 @@ public class TaulerGUI {
             tools.remove(message);
             message = new JLabel(torn.toString());
             tools.add(message);
+            }
+
+            else{
+
+                ParInt[] moviments = CP.GetLastMoveHum();
+
+                if(moviments!= null)
+                    marcarCaselles(moviments);
             }
 
             hasEnded = CP.hasEnded();
