@@ -13,20 +13,19 @@ import java.util.stream.Collectors;
  *              - Validesa (true/false)
  *              - Numero de passos fins el mat
  *              - Color del jugador que realitza el mat
+ *              - Ranking
  */
 
 public class CtrlPersistence {
 
-    public Domain.Huma[] GetUsuaris() {
-        return null;
-    }
+    List<Problema> problemes = new ArrayList<>();
 
+    public CtrlPersistence() {}
 
     public List<Problema> GetProblemes() {
-        return carregarProblemes();
+        carregarProblemes();
+        return problemes;
     }
-
-    List<Problema> problemes = new ArrayList<>();
 
     private boolean hiHaProblema(String FEN) {
         try {
@@ -98,7 +97,40 @@ public class CtrlPersistence {
         }
     }
 
-    private List<Problema> carregarProblemes() {
+    public void eliminarJugadorProblema(String FEN, String nickname){
+        try{
+            if (hiHaProblema(FEN)){
+                File temp = new File("localData/problemestemp.txt");
+                File input = new File ("localData/problemes2.txt");
+                BufferedReader reader = new BufferedReader(new FileReader(input));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(temp,true));
+                String currentLine;
+                boolean trobat = false;
+                while ((currentLine = reader.readLine()) != null){
+                    if (currentLine.contains(FEN)){
+                        writer.write(currentLine + '\n');
+                        //currentLine = reader.readLine();
+                        while(!currentLine.contains("Fi")){
+                            currentLine = reader.readLine();
+                            if (!currentLine.contains(nickname)) writer.write(currentLine + '\n');
+                            if (currentLine.contains(nickname)) trobat = true;
+                        }
+                        currentLine = reader.readLine();
+                    }
+                    if (currentLine != null) writer.write(currentLine + '\n');
+                }
+                if (!trobat) System.out.println("No existeix el jugador " + nickname + " per aquest problema");
+                writer.close();
+                reader.close();
+                temp.renameTo(input);
+            }
+            else System.out.println("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void carregarProblemes() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
             Problema aux;
@@ -133,7 +165,51 @@ public class CtrlPersistence {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return problemes;
+    }
+
+    public Problema carregaProblema(String FEN){
+        try{
+            if (hiHaProblema(FEN)) {
+                BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
+                String fen = reader.readLine();
+                Problema aux;
+                boolean valid;
+                int pasos;
+                Color color;
+                boolean trobat = false;
+                String s = reader.readLine();
+
+                while (s != null) {
+                    if (fen.contains(FEN)){
+                        fen = s;
+                        s = reader.readLine();
+                        if (s.equals("true")) valid = true;
+                        else valid = false;
+                        pasos = Integer.parseInt(reader.readLine());
+                        s = reader.readLine();
+                        if (s.equals("blanc")) color = Color.blanc;
+                        else color = Color.negre;
+                        aux = new Problema(fen, new Tema(pasos,color),valid);
+
+                        s = reader.readLine();
+                        Map<String,Integer> r = new HashMap<String,Integer>();
+                        while (!s.contains("Fi")){
+                            String [] parts = s.split("/");
+                            r.put(parts[0],Integer.parseInt(parts[1]));
+                            s = reader.readLine();
+                        }
+                        aux.setRanking(r);
+                        return aux;
+                    }
+                    s = reader.readLine();
+                }
+                reader.close();
+            }
+            else System.out.println ("No s'ha pogut carregar el problema ja que no existeix a la base de dades");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue
