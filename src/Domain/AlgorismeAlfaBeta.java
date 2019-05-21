@@ -4,49 +4,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AlgorismeAlfaBeta{
+public class AlgorismeAlfaBeta extends Algorithm{
     private final int Infinit = 10000;
-    private Move BestMove;
-    //private int prof = 3;
-    private int estimacio = 0;
-    private Random rnd = new Random();
-
-    /*private int alfaBeta(Tauler tauler, Color jugador, int alpha, int beta, int profunditat) {
-        if(profunditat ==0)
-            return tauler.EstimaPuntuacio(jugador);
-        int best = -Infinit;
-        ArrayList<Move> MoveList = tauler.GetMoviments(jugador);
-        for (Move m:MoveList) {
-            if (!IsValidMove(m, tauler)){
-                MoveList.remove(m);
-            }
-        }
-        int size = MoveList.size();
-            //MoveList = randomize(tauler.getTaulell(), MoveList);
-            while(MoveList.size()>0 && best<beta) {
-                Move m = (Move)MoveList.remove(0);
-                m.perform(board);
-                if(best>alpha)
-                    alpha = best;
-                int est = -alfaBeta(!white, -beta, -alpha, depth-1);
-                if(est>best) {
-                    best = est;
-                    if(profunditat==prof) {
-                        BestMove = m; // Current choice of move
-                        val = estimate();
-                    }
-                }
-                m.undo(board);
-                if(depth == dd) {
-                    super.board.think.setText((mm==null?"":mm+" - ")+v.toString());
-                    super.board.progress.setValue(siz-v.size());
-                    System.out.println(super.board.think.getText());
-                }
-            }
-        }
-        return best;
-    }*/
-
 
     private int AlphaBeta(Tauler t, Color jugadorActual, Color teoricGuanyador, int alfa, int beta, int profunditat, boolean checked){
         if (beta != Infinit) return alfa;
@@ -116,7 +75,7 @@ public class AlgorismeAlfaBeta{
 
     public Move GetMove(Color guanyador, Color jugador, Tauler tauler, int prof){
         System.out.println(AlphaBeta(tauler, jugador, guanyador, -Infinit, Infinit, prof, IsChecked(tauler, jugador)));
-        return BestMove;
+        return null;
     }
 
     public boolean IsValidMove (Move m, Tauler tauler){
@@ -130,27 +89,6 @@ public class AlgorismeAlfaBeta{
         }
         tauler.desferJugada(m);
         return isAttacked;
-    }
-
-
-    protected ArrayList<Move>randomize(FitxaProblema[][] taulell, ArrayList<Move> v) {
-        int s=v.size();
-        int b=0;
-        for(int i=0;i<s;i++) {
-            Move m = (Move)v.get(i);
-            if(m.getOriginalPiece() !=null) {
-                v.remove(i);
-                v.add(0, m);
-                b++;
-            }
-        }
-        for(int i=b;i<s-1;i++) {
-            Move o = v.get(i);
-            int j = rnd.nextInt(s-i-1)+i+1;
-            v.set(i, v.get(j));
-            v.set(j, o);
-        }
-        return v;
     }
 
     private boolean IsChecked(Tauler t, Color jugador){
@@ -170,6 +108,92 @@ public class AlgorismeAlfaBeta{
             if (!mate) return false;
         }
         return true;
+    }
+
+    @Override
+    public Move FindBestMoveConcr(Tauler chessBoard, Color ePlayer, int iMaxDepth) {
+        if (iMaxDepth %2 == 0)
+            return FindBestMoveAtDepthAlfa(chessBoard, ePlayer, iMaxDepth);
+        return FindBestMoveAtDepthBeta(chessBoard, ePlayer, iMaxDepth);
+    }
+
+    /**
+    * @return el millor moviment possible si es pot moure, Altrament,
+     * move.getEndPos() = (-1,-1) si és profunditat 0 i no es pot fer mate, null si és mat i
+     * move.getStartPos() = (-1,-1) si està ofegat
+    * */
+    private Move FindBestMoveAtDepthAlfa(Tauler t, Color jugadorActual, int profunditat){
+        if (profunditat == 0){
+            if (IsChecked(t, jugadorActual)) return null;
+            else return new Move(null, null, new ParInt(-1, -1));
+        }
+        Move bestMove = null;
+        int best = Infinit;
+        boolean hasMoved = false;
+        ArrayList<Move> moveList = t.GetMoviments(jugadorActual);
+        for (Move m: moveList) {
+            t.moureFitxa(m);
+            boolean isAttacked = IsChecked(t, jugadorActual);
+            if (!isAttacked){
+                hasMoved = true;
+                int alpha =  AlphaBeta(t, Convert.InvertColor(jugadorActual), Convert.InvertColor(jugadorActual), -Infinit,
+                        Infinit, profunditat -1, IsChecked(t, Convert.InvertColor(jugadorActual)));
+
+                if (bestMove == null || alpha < best){
+                    bestMove = m;
+                    best = alpha;
+                }
+                if (Infinit <= best){
+                    t.desferJugada(m);
+                    break;
+                }
+            }
+            t.desferJugada(m);
+        }
+        if (hasMoved)
+            return bestMove;
+        else
+            if (IsChecked(t, jugadorActual))
+                return null;
+            else
+                return new Move(null, new ParInt(-1, -1), null);
+    }
+
+    /*
+    * En cas que no es pugui moure hi ha dues opcions: si el rei està amenaçat, és mat i es retorna null,
+    * si no ho està, bestMove.GetFirst = (-1,-1)
+    * */
+    private Move FindBestMoveAtDepthBeta(Tauler t, Color jugadorActual, int profunditat){
+        ArrayList<Move> moveList = t.GetMoviments(jugadorActual);
+        Move bestMove = null;
+        boolean hasMoved = false;
+        int best = -Infinit;
+        for (Move m: moveList) {
+            t.moureFitxa(m);
+            boolean isAttacked = IsChecked(t, jugadorActual);
+            if (!isAttacked){
+                hasMoved = true;
+                int auxBest = AlphaBeta(t, Convert.InvertColor(jugadorActual), jugadorActual, -Infinit,
+                        Infinit, profunditat - 1, IsChecked(t, Convert.InvertColor(jugadorActual)));
+                //best = Convert.Max(best, auxBest);
+                if (bestMove == null || auxBest > best){
+                    bestMove = m;
+                    best = auxBest;
+                }
+                if (Infinit <= best){
+                    t.desferJugada(m);
+                    break;
+                }
+            }
+            t.desferJugada(m);
+        }
+        if (hasMoved)
+            return bestMove;
+        else
+            if (IsChecked(t, jugadorActual))
+                return  null;
+            else
+                return new Move(null, new ParInt(-1, -1), null);
     }
 
 

@@ -60,7 +60,7 @@ public class AlgorismeMinMax extends Algorithm{
     }
 
     @Override
-    protected Move FindBestMoveConcr(Tauler board, Color ePlayer, ArrayList<Move> moveList, int[] arrIndex, Move moveBest, int iMaxDepth) {
+    public Move FindBestMoveConcr(Tauler board, Color ePlayer, int iMaxDepth) {
         Move bRetVal;
         int iDepth;
         bRetVal = FindBestMoveUsingMinMaxAtDepth(board, ePlayer, iMaxDepth);

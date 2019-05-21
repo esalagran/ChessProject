@@ -44,7 +44,6 @@ public abstract class Algorithm {
         // = FindBestMoveConcr(board, ePlayer, moveList, arrIndex, BestMove, profunditat);
     }
 
-    protected abstract Move FindBestMoveConcr(Tauler chessBoard,Color ePlayer, ArrayList<Move> moveList,
-                                            int[] arrIndex, Move moveBest,int iMaxDepth);
+    public abstract Move FindBestMoveConcr(Tauler chessBoard,Color ePlayer,int iMaxDepth);
 }
 

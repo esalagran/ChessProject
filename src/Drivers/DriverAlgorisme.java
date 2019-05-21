@@ -102,8 +102,9 @@ public class DriverAlgorisme {
         for (String Fen: conjProb) {
             Problema p = new Problema(Fen);
             Color torn = p.GetTorn();
+            System.out.println("\nPartida num:" + num++);
             System.out.println(Instant.now());
-            System.out.println(num++);
+            JugaPartida(p, alg);
             alg.GetMove(torn, torn, p.getTauler(), 7);
             System.out.println(Instant.now());
         }
@@ -127,6 +128,31 @@ public class DriverAlgorisme {
         }*/
         //System.out.println(alg.MinMax(p.getTauler(), Color.blanc, 6, false));
 
+    }
+
+    public void JugaPartida(Problema p, Algorithm alg){
+        Color torn = p.GetTorn();
+        for (int i = 7; i>= 0; --i){
+            //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
+            Move m = alg.FindBestMoveConcr(p.getTauler(), torn, i);
+            if (m == null){
+                Convert.DibuixaTauler(p.getTauler());
+                System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
+                break;
+            }
+            else {
+                if (m.getStartPos() != null && m.getStartPos().GetFirst() == -1)System.out.println("taules");
+                else if (m.getEndPos() != null && m.getEndPos().GetFirst() == -1) System.out.println("No has fet mate");
+                else {
+                    Convert.DibuixaTauler(p.getTauler());
+                    p.getTauler().moureFitxa(m);
+                    System.out.println("S'ha mogut de (" + m.getStartPos().GetFirst() + "," +
+                            m.getStartPos().GetSecond() + ") a (" + m.getEndPos().GetFirst() + "," +
+                            m.getEndPos().GetSecond() + ")");
+                }
+            }
+            torn = Convert.InvertColor(torn);
+        }
     }
 
     public void JugarPartidaFake(){
