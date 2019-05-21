@@ -1,96 +1,63 @@
 package Domain;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import static Domain.Convert.InvertColor;
 
 public class AlgorismeMinMax extends Algorithm{
-    public final int Infinit = 100000;
-
 
     //Se li ha d'enviar una copia a l'hora de validar
-    public int MinMax(Tauler t, Color jugador, int profunditat, boolean IsChecked){
-        int iRetVal;
-        int iPts;
-
+    private int MinMax(Tauler t, Color jugador, int profunditat){
+        int best;
         if (profunditat == 0){
+            if (IsMate(jugador, t)) return -Infinit;
             return t.EstimaPuntuacio(jugador);
         }
         else{
-            if (t.SuficientPecesPelMate()){
-                boolean AnyMove = false;
-                ArrayList<Move> moveList = t.GetMoviments(jugador);
-                iRetVal  = -Infinit;
-                for (Move move: moveList) {
-                    t.moureFitxa(move);
-                    boolean isAttacked;
-                    if (jugador.equals(Color.negre)){
-                        isAttacked = t.getBlackKing().isAttacked(t.getTaulell());
+            boolean AnyMove = false;
+            ArrayList<Move> moveList = t.GetMoviments(jugador);
+            best  = -Infinit;
+            for (Move move: moveList) {
+                t.moureFitxa(move);
+                if (!IsChecked(t, jugador)){
+                    AnyMove = true;
+                    int iPts = -MinMax(t, InvertColor(jugador), profunditat - 1);
+                    if (iPts > best) {
+                        best = iPts;
                     }
-                    else{
-                        isAttacked = t.getWhiteKing().isAttacked(t.getTaulell());
-                    }
-                    if (!isAttacked){
-                        AnyMove = true;
-                        if (jugador.equals(Color.blanc))
-                            iPts = -MinMax(t, Color.negre, profunditat - 1,
-                                    t.getBlackKing().isAttacked(t.getTaulell()));
-                        else
-                            iPts = -MinMax(t, Color.blanc, profunditat - 1,
-                                    t.getWhiteKing().isAttacked(t.getTaulell()));
-                        if (iPts > iRetVal) {
-                            iRetVal = iPts;
-                        }
-                    }
-                    t.desferJugada(move);
                 }
-                if (!AnyMove) {
-                    if (IsChecked) {
-                        iRetVal = -Infinit - profunditat;
-                    }
-                    else
-                        iRetVal = 0;
-                }
+                t.desferJugada(move);
+                if (best >= Infinit)
+                    return best;
             }
-            else {
-                iRetVal = 0; //no es pot fer mate amb les peces que hi ha
+            if (!AnyMove) {
+                if (!IsChecked(t, jugador)) {
+                    return 0;
+                }
             }
         }
-
-        return iRetVal;
+        return best;
     }
 
     @Override
-    public Move FindBestMoveConcr(Tauler board, Color ePlayer, int iMaxDepth) {
-        Move bRetVal;
-        int iDepth;
-        bRetVal = FindBestMoveUsingMinMaxAtDepth(board, ePlayer, iMaxDepth);
-        return(bRetVal);
-    }
-
-    public Move FindBestMoveUsingMinMaxAtDepth(Tauler t, Color jugador, int profunditat) {
+    public Move FindBestMoveConcr(Tauler t, Color jugador, int profunditat) {
+        if (profunditat == 0){
+            if (IsMate(jugador, t)) return null;
+            return new Move(null, null, new ParInt(-1, -1));
+        }
+        boolean hasMoved = false;
         Move bestMove = null;
-        int  iPts;
-        int  iBestPts = Integer.MIN_VALUE;
+        int  bestPts = -Infinit;
         ArrayList<Move> moveList = t.GetMoviments(jugador);
         for (Move move: moveList) {
             t.moureFitxa(move);
-            boolean isAttacked;
-            if (jugador.equals(Color.negre)) {
-                isAttacked = t.getBlackKing().isAttacked(t.getTaulell());
-            } else {
-                isAttacked = t.getWhiteKing().isAttacked(t.getTaulell());
-            }
-            if (!isAttacked) {
-                if (jugador.equals(Color.blanc))
-                    iPts = -MinMax(t, Color.negre, profunditat - 1,
-                            t.getBlackKing().isAttacked(t.getTaulell()));
-                else
-                    iPts = -MinMax(t, Color.blanc, profunditat- 1,
-                            t.getWhiteKing().isAttacked(t.getTaulell()));
-                if (iPts > iBestPts) {
-                    iBestPts = iPts;
+            if (!IsChecked(t, jugador)) {
+                hasMoved = true;
+                int Pts = -MinMax(t, InvertColor(jugador), profunditat - 1);
+                if (Pts > bestPts) {
+                    bestPts = Pts;
                     bestMove = move;
-                    if (iBestPts > 10000){
+                    if (bestPts >= Infinit){
                         t.desferJugada(move);
                         break;
                     }
@@ -98,33 +65,10 @@ public class AlgorismeMinMax extends Algorithm{
             }
             t.desferJugada(move);
         }
+        if (!hasMoved) {
+            if (IsChecked(t, jugador)) return null;
+            return new Move(null, new ParInt(-1, -1), null);
+        }
         return bestMove;
     }
-
-    /*private boolean FindBestMoveUsingMinMaxAtDepth(Tauler board, Color ePlayer, ArrayList<Move> moveList, int[] arrIndex, int iDepth, Move moveBest) {
-        boolean bRetVal = false;
-        Move move;
-        int  iPts;
-        int  iWhiteMoveCount;
-        int  iBlackMoveCount;
-        int  iBestPts = Integer.MIN_VALUE;
-
-        for (int iIndex: arrIndex) {
-            move = moveList.get(iIndex);
-            board.moureFitxa(move);
-            if (ePlayer.equals(Color.blanc))
-                iPts = -MinMax(board,Color.negre,iDepth - 1,
-                        move.getEndPos() == board.getBlackKing().GetCoordenades());
-            else
-                iPts = -MinMax(board,Color.blanc,iDepth - 1,
-                        move.getEndPos() == board.getWhiteKing().GetCoordenades());
-            board.desferJugada(move);
-            if (iPts > iBestPts) {
-                iBestPts = iPts;
-                moveBest = move;
-                bRetVal  = true;
-            }
-        }
-        return bRetVal;
-    }*/
 }

@@ -83,8 +83,8 @@ public class DriverAlgorisme {
         String FEN6 = "1q2r2k/1b3p1p/p2p1Pp1/1p1Pp1P1/n3P2Q/2R2B2/PP5P/3R3K w - - 0 0"; //Mate en 6
         String FEN7 = "2bqkbn1/2pppp2/np2N3/r3P1p1/p2N2B1/5Q2/PPPPKPP1/RNB2r2 w KQkq - 0 1";//mate en 2
         String FEN8 = "8/p7/BpkPp3/4Pp2/3P2p1/Q5P1/2p1bPK1/3q3R w - -"; // mate en 3
-        //AlgorismeMinMax alg = new AlgorismeMinMax();
-        AlgorismeAlfaBeta alg = new AlgorismeAlfaBeta();
+        AlgorismeMinMax alg = new AlgorismeMinMax();
+        //AlgorismeAlfaBeta alg = new AlgorismeAlfaBeta();
         String[] conjProb = new String[]{
             "6k1/4Rppp/8/8/8/3K4/8/8 w - - 1 0",
             "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 1 0",
@@ -132,7 +132,7 @@ public class DriverAlgorisme {
 
     public void JugaPartida(Problema p, Algorithm alg){
         Color torn = p.GetTorn();
-        for (int i = 7; i>= 0; --i){
+        for (int i = 5; i>= 0; --i){
             //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
             Move m = alg.FindBestMoveConcr(p.getTauler(), torn, i);
             if (m == null){
