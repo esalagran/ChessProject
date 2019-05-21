@@ -132,7 +132,7 @@ public class DriverAlgorisme {
 
     public void JugaPartida(Problema p, Algorithm alg){
         Color torn = p.GetTorn();
-        for (int i = 5; i>= 0; --i){
+        for (int i = 7; i>= 0; --i){
             //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
             Move m = alg.FindBestMoveConcr(p.getTauler(), torn, i);
             if (m == null){

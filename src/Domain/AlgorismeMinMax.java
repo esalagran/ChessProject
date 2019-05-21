@@ -66,8 +66,8 @@ public class AlgorismeMinMax extends Algorithm{
             t.desferJugada(move);
         }
         if (!hasMoved) {
-            if (IsChecked(t, jugador)) return null;
-            return new Move(null, new ParInt(-1, -1), null);
+            if (!IsChecked(t, jugador))
+                return new Move(null, new ParInt(-1, -1), null);
         }
         return bestMove;
     }
