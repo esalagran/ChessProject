@@ -105,7 +105,7 @@ public class DriverAlgorisme {
             System.out.println("\nPartida num:" + num++);
             System.out.println(Instant.now());
             JugaPartida(p, alg);
-            alg.GetMove(torn, torn, p.getTauler(), 7);
+            //alg.GetMove(torn, torn, p.getTauler(), 7);
             System.out.println(Instant.now());
         }
 

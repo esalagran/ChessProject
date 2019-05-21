@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 public abstract class Algorithm {
 
+    final int Infinit = 10000;
+
+    //Possible millora
     protected static ArrayList<Move> SortMoveList(ArrayList<Move> moveList, int[] arrPoints) {
         ArrayList<Move> moveListRetVal;
         IndexPoint[] arrIndexPoint;
@@ -24,26 +27,25 @@ public abstract class Algorithm {
         return(moveListRetVal);
     }
 
-    private void FindBestMove(Tauler board, Color ePlayer, int profunditat) {
-        boolean bRetVal = false;
-        ArrayList<Move> moveList = new ArrayList<>();
-        Move moveExt;
-        int[] arrIndex;
-        int iSwapIndex;
-        int iTmp;
-        int iPermCount;
-        Move BestMove = null;
-        //ChessBoard.PosInfoS posInfo;
-        moveList = board.GetMoviments(ePlayer);
-        arrIndex = new int[moveList.size()];
-        for (int iIndex = 0; iIndex < moveList.size(); iIndex++) {
-            arrIndex[iIndex] = iIndex;
-        }
-        Move move = new Move(null, new ParInt(),new ParInt());
+    public abstract Move FindBestMoveConcr(Tauler chessBoard,Color ePlayer,int iMaxDepth);
 
-        // = FindBestMoveConcr(board, ePlayer, moveList, arrIndex, BestMove, profunditat);
+    boolean IsChecked(Tauler t, Color jugador){
+        if (jugador.equals(Color.negre))
+            return t.getBlackKing().isAttacked(t.getTaulell());
+        return t.getWhiteKing().isAttacked(t.getTaulell());
     }
 
-    public abstract Move FindBestMoveConcr(Tauler chessBoard,Color ePlayer,int iMaxDepth);
+    boolean IsMate(Color jugador, Tauler t){
+        if (!IsChecked(t, jugador)) return false;
+        ArrayList<Move> moveList = t.GetMoviments(jugador);
+        boolean mate = true;
+        for (Move m : moveList) {
+            t.moureFitxa(m);
+            mate = IsChecked(t, jugador);
+            t.desferJugada(m);
+            if (!mate) return false;
+        }
+        return mate;
+    }
 }
 
