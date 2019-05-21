@@ -31,6 +31,18 @@ public class CtrlDomain {
         }
     }
 
+    public ParInt[] GetLastMoveMaq(){
+        return partidaEnJoc.getUltimMovimentMaq();
+    }
+
+    public ParInt[] GetLastMoveHum(){
+        return partidaEnJoc.getUltimMovimentHum();
+    }
+
+
+    public Color GetColor(ParInt coord){
+        return partidaEnJoc.GetColorAt(coord);
+    }
     public void GuardarProblema(){
         if(problemes.contains(pObert))
             problemes.remove(pObert);

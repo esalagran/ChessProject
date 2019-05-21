@@ -5,16 +5,6 @@ import java.util.Vector;
 
 public class Partida{
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_CYAN = "\u001B[37m";
-    public static final String ANSI_PURPLE = "\u001B[30m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-
-
     private String atacant, defensor;
     Color torn, tornInicial;
     Modalitat mode;
@@ -29,6 +19,8 @@ public class Partida{
     int accumTime = 0;
     Maquina m = new Maquina();
     AlgorismeMinMax alg = new AlgorismeMinMax();
+    ParInt[] ultimMovimentMaq = new ParInt[2];
+    ParInt[] ultimMovimentHum = {new ParInt(10,10), new ParInt(10,10) };
 
 
     public Partida(Problema p, Modalitat mod, int torns){
@@ -98,6 +90,22 @@ public class Partida{
         return mode;
     }
 
+
+    public ParInt[] getUltimMovimentMaq() {
+        return ultimMovimentMaq;
+
+    }
+
+    public ParInt[] getUltimMovimentHum() {
+        return ultimMovimentHum;
+
+    }
+
+    public Color GetColorAt(ParInt coord){
+        return tauler.FitxaAt(coord).GetColor();
+    }
+
+
     /**
      * \pre: posició origen i posició desti valides (entre 0 i 7)
      * \post: mou la peça que hi ha a la posició origen a la posició destí (si el moviment és possible en el context de la partida)
@@ -141,6 +149,8 @@ public class Partida{
         long endTime = System.currentTimeMillis();
         accumTime = accumTime + (int) (endTime-startTime)/1000;
         System.out.println("He trigat " + accumTime);
+        ultimMovimentHum[0] = new ParInt(origen.GetFirst(), origen.GetSecond());
+        ultimMovimentHum[1] = new ParInt(desti.GetFirst(), desti.GetSecond());
         FiTorn();
         return tauler.getTaulell();
 
@@ -198,7 +208,8 @@ public class Partida{
        ParInt b = (ParInt) mov[1];*/
        Move m = alg.FindBestMoveUsingMinMaxAtDepth(tauler, torn, 4);
        tauler.moureFitxa(m);
-
+       ultimMovimentMaq[0] =  m.getStartPos();
+       ultimMovimentMaq[1] =  m.getEndPos();
        FiTorn();
        return tauler.getTaulell();
 
