@@ -26,16 +26,16 @@ public class CtrlDomain {
      * */
     public void JugarPartidesMaquines(Problema[] probJugats) {
         for (Problema p : probJugats) {
-            partidaEnJoc = new Partida(p, Modalitat.MM,p.GetMovimentsPerGuanyar());
+            partidaEnJoc = new Partida(p, Modalitat.MM, p.GetMovimentsPerGuanyar());
             //Falta obtenir el guanyador i jugar la partida
         }
     }
 
-    public ParInt[] GetLastMoveMaq(){
+    public Move GetLastMoveMaq(){
         return partidaEnJoc.getUltimMovimentMaq();
     }
 
-    public ParInt[] GetLastMoveHum(){
+    public Move GetLastMoveHum(){
         return partidaEnJoc.getUltimMovimentHum();
     }
 

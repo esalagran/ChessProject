@@ -157,10 +157,10 @@ public class CtrlPresentation {
         return CD.EndedReason();
     }
 
-    public ParInt[] GetLastMoveMaq(){
+    public Move GetLastMoveMaq(){
         return CD.GetLastMoveMaq();
     }
-    public ParInt[] GetLastMoveHum(){
+    public Move GetLastMoveHum(){
         return CD.GetLastMoveHum();
     }
 
