@@ -41,6 +41,10 @@ public class DriverCtrlPersistance {
                 case 4:
                     a.eliminarJugadorProblema("2B5/2p1B1nn/2PR2p1/1K2k3/1p2p3/2b1P3/5R2/8", "fff");
                     break;
+                case 5:
+                    a.afegirJugadorProblema("3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5","wuuuut", 25000);
+                    a.afegirJugadorProblema("3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5","wuuuut2", 25);
+                    break;
                 case 10:
                     System.out.println("Bye Bye");
                     break;
@@ -56,6 +60,7 @@ public class DriverCtrlPersistance {
                     "2. Eliminar problema" + '\n' +
                     "3. Carregar problemes" + '\n' +
                     "4. Eliminar jugador problema" + '\n' +
+                    "5. Afegeix jugador problema" + '\n' +
                     "Input a new number"
                     );
             num = sc.nextInt();

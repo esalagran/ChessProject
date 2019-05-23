@@ -27,23 +27,6 @@ public class CtrlPersistence {
         return problemes;
     }
 
-    private boolean hiHaProblema(String FEN) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
-            String fen = reader.readLine();
-            boolean trobat = false;
-            while (fen != null && !trobat) {
-                if (fen.contains(FEN)) trobat = true;
-                fen = reader.readLine();
-            }
-            reader.close();
-            return trobat;
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        return false;
-    }
-
     public void guardarProblema(Problema p) {
         try {
             if (!hiHaProblema(p.GetFEN())) {
@@ -97,7 +80,52 @@ public class CtrlPersistence {
         }
     }
 
-    public void eliminarJugadorProblema(String FEN, String nickname){
+    public boolean afegirJugadorProblema(String FEN, String nickname, int puntuacio){
+        try{
+            if (hiHaProblema(FEN)){
+                File temp = new File("localData/problemestemp.txt");
+                File input = new File ("localData/problemes2.txt");
+                BufferedReader reader = new BufferedReader(new FileReader(input));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(temp,true));
+                String currentLine;
+                boolean trobat = false;
+                while ((currentLine = reader.readLine()) != null){
+                    if (currentLine.contains(FEN)){
+                        writer.write(currentLine + '\n');
+                        for (int i = 0; i < 3; i++){
+                            currentLine = reader.readLine();
+                            writer.write(currentLine + '\n');
+                        }
+                        while(!currentLine.contains("Fi")){
+                            currentLine = reader.readLine();
+                            String [] parts = currentLine.split("/");
+                            if (!trobat && (currentLine.contains("Fi") || puntuacio > Integer.parseInt(parts[1]))) {
+                                writer.write(nickname + '/' + puntuacio + '\n');
+                                trobat = true;
+                            }
+                            writer.write(currentLine + '\n');
+                            //currentLine = reader.readLine();
+                        }
+                        currentLine = reader.readLine();
+                    }
+                    if (currentLine != null) writer.write(currentLine + '\n');
+                }
+                writer.close();
+                reader.close();
+                temp.renameTo(input);
+                return trobat;
+            }
+            else {
+                System.out.println("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
+                return false;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean eliminarJugadorProblema(String FEN, String nickname){
         try{
             if (hiHaProblema(FEN)){
                 File temp = new File("localData/problemestemp.txt");
@@ -119,15 +147,23 @@ public class CtrlPersistence {
                     }
                     if (currentLine != null) writer.write(currentLine + '\n');
                 }
-                if (!trobat) System.out.println("No existeix el jugador " + nickname + " per aquest problema");
                 writer.close();
                 reader.close();
                 temp.renameTo(input);
+                if (!trobat){
+                    System.out.println("No existeix el jugador " + nickname + " per aquest problema");
+                    return false;
+                }
+                return true;
             }
-            else System.out.println("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
+            else{
+                System.out.println("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
+                return false;
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
+        return false;
     }
 
     private void carregarProblemes() {
@@ -210,6 +246,23 @@ public class CtrlPersistence {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private boolean hiHaProblema(String FEN) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
+            String fen = reader.readLine();
+            boolean trobat = false;
+            while (fen != null && !trobat) {
+                if (fen.contains(FEN)) trobat = true;
+                fen = reader.readLine();
+            }
+            reader.close();
+            return trobat;
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return false;
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue
