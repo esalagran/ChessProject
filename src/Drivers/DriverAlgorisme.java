@@ -83,7 +83,7 @@ public class DriverAlgorisme {
         String FEN6 = "1q2r2k/1b3p1p/p2p1Pp1/1p1Pp1P1/n3P2Q/2R2B2/PP5P/3R3K w - - 0 0"; //Mate en 6
         String FEN7 = "2bqkbn1/2pppp2/np2N3/r3P1p1/p2N2B1/5Q2/PPPPKPP1/RNB2r2 w KQkq - 0 1";//mate en 2
         String FEN8 = "8/p7/BpkPp3/4Pp2/3P2p1/Q5P1/2p1bPK1/3q3R w - -"; // mate en 3
-        AlgorismeMinMax alg = new AlgorismeMinMax();
+        Algorithm alg = new AlgorismeAlfaBeta();
         //AlgorismeAlfaBeta alg = new AlgorismeAlfaBeta();
         String[] conjProb = new String[]{
             "6k1/4Rppp/8/8/8/3K4/8/8 w - - 1 0",

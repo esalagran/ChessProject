@@ -19,8 +19,8 @@ public class Partida{
     int accumTime = 0;
     Algorithm algorismeAlfaBeta = new AlgorismeAlfaBeta();
     AlgorismeMinMax algorismeMinMax = new AlgorismeMinMax();
-    Move ultimMovimentMaq = new Move(null, new ParInt(-1,-1), new ParInt(-1,-1));
-    Move ultimMovimentHum = new Move(null, new ParInt(-1,-1), new ParInt(-1,-1));
+    ParInt[] ultimMovimentMaq = new ParInt[]{ new ParInt(-1, -1), new ParInt(-1, -1)};
+    ParInt[] ultimMovimentHum = new ParInt[]{ new ParInt(-1, -1), new ParInt(-1, -1)};
 
 
     public Partida(Problema p, Modalitat mod, int tornsPelMate){
@@ -75,12 +75,12 @@ public class Partida{
     }
 
 
-    public Move getUltimMovimentMaq() {
+    public ParInt[] getUltimMovimentMaq() {
         return ultimMovimentMaq;
 
     }
 
-    public Move getUltimMovimentHum() {
+    public ParInt[] getUltimMovimentHum() {
         return ultimMovimentHum;
 
     }
@@ -133,7 +133,7 @@ public class Partida{
         long endTime = System.currentTimeMillis();
         accumTime = accumTime + (int) (endTime-startTime)/1000;
         System.out.println("He trigat " + accumTime);
-        ultimMovimentHum = new Move(null, origen, desti);
+        ultimMovimentHum = new ParInt[]{origen, desti};
         FiTorn();
         return tauler.getTaulell();
     }
@@ -186,7 +186,7 @@ public class Partida{
        if (!hasEnded) {
            Move m = algorismeAlfaBeta.FindBestMoveConcr(tauler, torn, 3);
            tauler.moureFitxa(m);
-           ultimMovimentMaq = m;
+           ultimMovimentMaq = new ParInt[]{m.getStartPos(), m.getEndPos()};
        }
        FiTorn();
        return tauler.getTaulell();

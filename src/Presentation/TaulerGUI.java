@@ -143,18 +143,18 @@ public class TaulerGUI {
         }
     }
 
-    private void marcarCaselles(Move moviments){
+    private void marcarCaselles(ParInt[] moviments){
 
-        if(moviments.getStartPos().GetFirst() != -1){
-        colorsOriginals[0] = chessBoardSquares[moviments.getStartPos().GetSecond()][moviments.getStartPos().GetFirst()].getBackground();
-        colorsOriginals[1] = chessBoardSquares[moviments.getEndPos().GetSecond()][moviments.getEndPos().GetFirst()].getBackground();
+        if(moviments[0].GetFirst() != -1){
+            colorsOriginals[0] = chessBoardSquares[moviments[0].GetSecond()][moviments[0].GetFirst()].getBackground();
+            colorsOriginals[1] = chessBoardSquares[moviments[1].GetSecond()][moviments[1].GetFirst()].getBackground();
 
-        casellesMarcades[0] = new ParInt(moviments.getStartPos().GetSecond(), moviments.getStartPos().GetFirst());
-        casellesMarcades[1] = new ParInt(moviments.getEndPos().GetSecond(), moviments.getEndPos().GetFirst());
+            casellesMarcades[0] = new ParInt(moviments[0].GetSecond(), moviments[0].GetFirst());
+            casellesMarcades[1] = new ParInt(moviments[1].GetSecond(), moviments[1].GetFirst());
 
 
-        chessBoardSquares[moviments.getStartPos().GetSecond()][moviments.getStartPos().GetFirst()].setBackground(Color.green);
-        chessBoardSquares[moviments.getStartPos().GetSecond()][moviments.getStartPos().GetFirst()].setBackground(Color.green);
+            chessBoardSquares[moviments[0].GetSecond()][moviments[0].GetFirst()].setBackground(Color.green);
+            chessBoardSquares[moviments[1].GetSecond()][moviments[1].GetFirst()].setBackground(Color.green);
         }
 
     }
@@ -372,7 +372,7 @@ public class TaulerGUI {
 
             if (!CP.isColorHuman(torn)) {
                t = CP.TornMaquina();
-               Move moviments = CP.GetLastMoveMaq();
+               ParInt[] moviments = CP.GetLastMoveMaq();
 
                marcarCaselles(moviments);
 
@@ -388,7 +388,7 @@ public class TaulerGUI {
 
             else{
 
-                Move moviments = CP.GetLastMoveHum();
+                ParInt[] moviments = CP.GetLastMoveHum();
 
                 if(moviments!= null)
                     marcarCaselles(moviments);

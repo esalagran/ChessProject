@@ -31,11 +31,11 @@ public class CtrlDomain {
         }
     }
 
-    public Move GetLastMoveMaq(){
+    public ParInt[] GetLastMoveMaq(){
         return partidaEnJoc.getUltimMovimentMaq();
     }
 
-    public Move GetLastMoveHum(){
+    public ParInt[] GetLastMoveHum(){
         return partidaEnJoc.getUltimMovimentHum();
     }
 
