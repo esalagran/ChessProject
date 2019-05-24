@@ -4,8 +4,6 @@ import Domain.*;
 
 
 import java.io.*;
-import java.lang.reflect.Type;
-import java.time.Instant;
 import java.util.*;
 
 /**Mètode no rellevant per aquesta entrega*/
@@ -157,10 +155,10 @@ public class CtrlPresentation {
         return CD.EndedReason();
     }
 
-    public Move GetLastMoveMaq(){
+    public ParInt[] GetLastMoveMaq(){
         return CD.GetLastMoveMaq();
     }
-    public Move GetLastMoveHum(){
+    public ParInt[] GetLastMoveHum(){
         return CD.GetLastMoveHum();
     }
 
