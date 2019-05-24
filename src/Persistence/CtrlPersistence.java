@@ -27,11 +27,17 @@ public class CtrlPersistence {
         return problemes;
     }
 
+    /**
+     * Guarda el problema si no existeix a la base de dades o si existeix pero no es valid en la base de dades i si en
+     * el parametre passat, altrament no fa res
+     * @param p Problema a guardar
+     */
+
     public void guardarProblema(Problema p) {
         try {
             if (!hiHaProblema(p.GetFEN())) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes2.txt"), true));
-                writer.append(p.GetFEN() + '\n' + p.GetValid() + '\n');                            //Guardo codi FEN i validesa
+                writer.append(p.GetFEN() + '\n' + p.GetValid() + '\n');                     //Guardo codi FEN i validesa
                 writer.append(String.valueOf(p.getTema().getMovimentsFinsMat()) + '\n');    //Guardo numero moviments
                 if (p.getTema().getCol() == Color.blanc) {
                     writer.append("blanc"+'\n');    //Guardo color blanc
@@ -39,19 +45,35 @@ public class CtrlPersistence {
                 else{
                     writer.append("negre"+'\n');    //Guardo color negre
                 }
-                Map<String,Integer> ranking = p.getRanking();
-                ranking = sortByValue(ranking);
-                for (Map.Entry<String, Integer> entry : ranking.entrySet()) {
-                    writer.append(entry.getKey() + "/" + entry.getValue() + '\n');
-                }
                 writer.append("Fi\n");
                 writer.close();
-            } else System.out.println("No s'ha pogut guardar el problema ja que el problema està repetit");
-
+                return;
+            }
+            else if (hiHaProblema(p.GetFEN()) && p.GetValid()) {
+                File input = new File("localData/problemes2.txt");
+                BufferedReader reader = new BufferedReader(new FileReader(input));
+                String currentLine;
+                while ((currentLine = reader.readLine()) != null) {
+                    if (currentLine.contains(p.GetFEN())) {
+                        currentLine = reader.readLine();
+                        if (currentLine.contains("false")) {
+                            eliminarProblema(p.GetFEN());
+                            guardarProblema(p);
+                        }
+                    }
+                }
+                reader.close();
+                return;
+            }
         } catch (Exception e) {
             System.out.println("ERROR: " + e);
         }
     }
+
+    /**
+     * Elimina un problema de la base de dades si existeix, altrement llença un missatge d'error
+     * @param FEN Codi FEN del problema a eliminar
+     */
 
     public void eliminarProblema(String FEN){
         try{
@@ -80,6 +102,7 @@ public class CtrlPersistence {
         }
     }
 
+
     public boolean afegirJugadorProblema(String FEN, String nickname, int puntuacio){
         try{
             if (hiHaProblema(FEN)){
@@ -104,7 +127,6 @@ public class CtrlPersistence {
                                 trobat = true;
                             }
                             writer.write(currentLine + '\n');
-                            //currentLine = reader.readLine();
                         }
                         currentLine = reader.readLine();
                     }
@@ -248,6 +270,28 @@ public class CtrlPersistence {
         return null;
     }
 
+    public void hihaUsuari(String nickname){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("localData/usuaris.txt"));
+            String s = reader.readLine();
+            boolean trobat = false;
+
+            while (s != null && !trobat){
+                if (s.contains(nickname)) trobat = true;
+            }
+
+            reader.close();
+
+            if (!trobat){
+                BufferedWriter writer = new BufferedWriter(new FileWriter("localData/usuaris.txt"));
+                writer.write(nickname);
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean hiHaProblema(String FEN) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("localData/problemes2.txt"));
@@ -263,20 +307,6 @@ public class CtrlPersistence {
             e1.printStackTrace();
         }
         return false;
-    }
-
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue
-    (Map<K, V> map) {
-
-        return map.entrySet()
-                .stream()
-                .sorted(Map.Entry.<K, V> comparingByValue().reversed())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new
-                ));
     }
 }
 
