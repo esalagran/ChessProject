@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class AlgorismeAlfaBeta extends Algorithm{
 
     private int AlphaBeta(Tauler t, Color jugadorActual, Color teoricGuanyador, int alfa, int beta, int profunditat){
-        if (beta != Infinit) return alfa;
         if (profunditat == 0){
             if (IsMate(jugadorActual, t)) return Infinit;
             return t.EstimaPuntuacio(jugadorActual);
@@ -81,22 +80,26 @@ public class AlgorismeAlfaBeta extends Algorithm{
             else return new Move(null, null, new ParInt(-1, -1));
         }
         Move bestMove = null;
+        int beta = Infinit;
+        int alpha = -Infinit;
         int best = Infinit;
         boolean hasMoved = false;
         ArrayList<Move> moveList = t.GetMoviments(jugadorActual);
         for (Move m: moveList) {
             t.moureFitxa(m);
-            boolean isAttacked = IsChecked(t, jugadorActual);
-            if (!isAttacked){
-                hasMoved = true;
-                int alpha =  AlphaBeta(t, Convert.InvertColor(jugadorActual), Convert.InvertColor(jugadorActual), -Infinit,
-                        Infinit, profunditat -1);
-
-                if (bestMove == null || alpha < best){
+            if (!IsChecked(t, jugadorActual)){
+                if (!hasMoved){
+                    hasMoved = true;
                     bestMove = m;
-                    best = alpha;
                 }
-                if (Infinit <= best){
+                best = Convert.Min(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), Convert.InvertColor(jugadorActual), alpha,
+                        beta, profunditat -1));
+                
+                if (bestMove == null || best < beta){
+                    bestMove = m;
+                    beta = best;
+                }
+                if (beta <= alpha){
                     t.desferJugada(m);
                     break;
                 }
@@ -106,10 +109,10 @@ public class AlgorismeAlfaBeta extends Algorithm{
         if (hasMoved)
             return bestMove;
         else
-            if (IsChecked(t, jugadorActual))
-                return null;
-            else
-                return new Move(null, new ParInt(-1, -1), null);
+        if (IsChecked(t, jugadorActual))
+            return null;
+        else
+            return new Move(null, new ParInt(-1, -1), null);
     }
 
     /*
