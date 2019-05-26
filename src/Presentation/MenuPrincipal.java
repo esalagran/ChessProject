@@ -82,9 +82,7 @@ public class MenuPrincipal {
     }
 
     public void actionPerformed_buttonCarregarProblema (ActionEvent event) {
-        System.out.println("Antes de crear la vista secundaria");
-        iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
-        System.out.println("Despues de crear la vista secundaria");
+       iCtrlPresentacion.sincronizacionVistaMenu_a_Carregar();
     }
 
     public void actionPerformed_buttonCrearProblema (ActionEvent event) {

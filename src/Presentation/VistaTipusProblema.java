@@ -22,9 +22,15 @@ public class VistaTipusProblema {
     private JPanel panelBotones = new JPanel();
     private JPanel panelTorns = new JPanel();
     private JPanel panelDificultat = new JPanel();
+    private JPanel panelColor = new JPanel();
+    private JPanel panelAlgorisme1 = new JPanel();
+    private JPanel panelAlgorisme2 = new JPanel();
 
     private JSpinner tornsPerMat;
     private JComboBox modalitat = new  JComboBox();
+    private JComboBox color = new  JComboBox();
+    private JComboBox algorisme = new  JComboBox();
+    private JComboBox algorisme2 = new  JComboBox();
     private JButton buttonVolver = new JButton("Volver");
     private JButton buttonJugar = new JButton("Jugar");
     private JTextArea textareaInformacion = new JTextArea("HOLA",5,25);
@@ -58,16 +64,6 @@ public class VistaTipusProblema {
 
 //////////////////////// Metodos de las interfaces Listener
 
-
-    public void actionPerformed_buttonLlamadaDominio (ActionEvent event) {
-        ArrayList<String> resulDominio = iCtrlPresentacion.llamadaDominio2();
-        for (int i = 0; i < resulDominio.size(); i++)
-            System.out.println("Obtenido de dominio: " + resulDominio.get(i));
-        // Informa el contenido de algunos componentes (es un ejemplo)
-        for (int i = 0; i < resulDominio.size(); i++)
-            textareaInformacion.append("\n" + resulDominio.get(i));
-
-    }
     public void actionPerformed_buttonVolver (ActionEvent event) {
         iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
     }
@@ -112,6 +108,44 @@ public class VistaTipusProblema {
                         actionPerformed_buttonJugar(event);
                     }
                 });
+
+        modalitat.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+
+                String mod = (String) modalitat.getSelectedItem();
+                panelContenidos.removeAll();
+                panelContenidos.add(panelOpciones);
+
+                if (mod.equals("Humà vs màquina")){
+
+                    panelContenidos.add(panelAlgorisme1);
+                    panelContenidos.remove(panelAlgorisme2);
+                }
+
+                else if (mod.equals("Màquina vs màquina")){
+                    panelContenidos.add(panelAlgorisme1);
+                    panelContenidos.add(panelAlgorisme2);
+                }
+
+                else if (mod.equals("Màquina vs humà")){
+                    panelContenidos.add(panelAlgorisme1);
+                    panelContenidos.remove(panelAlgorisme2);
+                }
+
+                    else{
+                    panelContenidos.remove(panelAlgorisme1);
+                    panelContenidos.remove(panelAlgorisme2);
+
+                }
+                panelContenidos.add(panelDificultat, BorderLayout.CENTER);
+                panelContenidos.add(panelTorns, BorderLayout.SOUTH);
+                panelContenidos.add(panelColor);
+                panelContenidos.add(panelBotones, BorderLayout.AFTER_LAST_LINE);
+                frameVista.pack();
+                frameVista.repaint();
+
+            }
+        });
     }
 
 
@@ -122,9 +156,12 @@ public class VistaTipusProblema {
         inicializar_frameVista();
         inicializar_panelContenidos();
         inicializar_panelModalitat();
+        inicializar_panelColor();
         inicializar_panelBotones();
         inicializar_panelTorns();
         inicializar_panelDificultat();
+        inicialitzar_panelAlgorisme1();
+        inicialitzar_panelAlgorisme2();
         asignar_listenersComponentes();
 
 
@@ -132,7 +169,7 @@ public class VistaTipusProblema {
 
     private void inicializar_frameVista() {
         // Tamanyo
-        frameVista.setMinimumSize(new Dimension(400,200));
+        frameVista.setMinimumSize(new Dimension(600,400));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(true);
         // Posicion y operaciones por defecto
@@ -151,6 +188,7 @@ public class VistaTipusProblema {
         panelContenidos.add(panelOpciones, BorderLayout.NORTH);
         panelContenidos.add(panelDificultat, BorderLayout.CENTER);
         panelContenidos.add(panelTorns, BorderLayout.SOUTH);
+        panelContenidos.add(panelColor);
         panelContenidos.add(panelBotones, BorderLayout.AFTER_LAST_LINE);
 
     }
@@ -165,6 +203,36 @@ public class VistaTipusProblema {
         panelOpciones.add(new JScrollPane(modalitat));
 
     }
+
+
+    private void inicializar_panelColor() {
+        color.addItem("Blanc");
+        color.addItem("Negre");
+        JLabel label = new JLabel("Color");
+        panelColor.add(label);
+        panelColor.add(new JScrollPane(color));
+
+    }
+
+    private void inicialitzar_panelAlgorisme1() {
+        algorisme.addItem("MinMax");
+        algorisme.addItem("AlphaBeta");
+        JLabel label = new JLabel("Màquina 1");
+        panelAlgorisme1.add(label);
+        panelAlgorisme1.add(new JScrollPane(algorisme));
+
+    }
+
+    private void inicialitzar_panelAlgorisme2() {
+        algorisme2.addItem("MinMax");
+        algorisme2.addItem("AlphaBeta");
+        JLabel label = new JLabel("Màquina 2");
+        panelAlgorisme2.add(label);
+        panelAlgorisme2.add(new JScrollPane(algorisme2));
+
+    }
+
+
 
     private void inicializar_panelTorns(){
 

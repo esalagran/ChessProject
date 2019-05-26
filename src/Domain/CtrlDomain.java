@@ -4,6 +4,7 @@ import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class CtrlDomain {
     private Problema pObert;
@@ -15,7 +16,7 @@ public class CtrlDomain {
     private TipusPeça[] peçesEscacs = {TipusPeça.Rei, TipusPeça.Dama, TipusPeça.Torre, TipusPeça.Cavall, TipusPeça.Alfil, TipusPeça.Peo};
     private Color[] colorPeça = {Color.negre, Color.blanc};
 
-    public void inicializarCtrlDominio() {
+    public CtrlDomain() {
         CP = new Persistence.CtrlPersistence();
     }
 
@@ -43,11 +44,20 @@ public class CtrlDomain {
     public Color GetColor(ParInt coord){
         return partidaEnJoc.GetColorAt(coord);
     }
+
     public void GuardarProblema(){
-        if(problemes.contains(pObert))
-            problemes.remove(pObert);
-        problemes.add(pObert);
+        CP.guardarProblema(pObert);
     }
+
+    public void CarregarProblemes(){
+        problemes = CP.GetProblemes();
+    }
+
+    public void Rranking(String FEN, String nickname, int puntucacio)
+    {
+        CP.afegirJugadorProblema(FEN, nickname, puntucacio);
+    }
+
 
     /**
      * \pre: p conté el problema que es jugara i mode la modalitat de la partida.
@@ -56,7 +66,8 @@ public class CtrlDomain {
      * */
     public Color JugarPartidaHuma(Modalitat mode, Dificultat dif, int torns) {
         // en realitat es busca un problema aletatori de la base de dades amb la dificultat
-        Problema p = new Problema("7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1");
+        Random rand = new Random();
+        Problema p = problemes.get(rand.nextInt(problemes.size()));
         partidaEnJoc = new Partida(p, mode, torns);
         partidaEnJoc.ComençarPartida();
         return p.GetTorn();

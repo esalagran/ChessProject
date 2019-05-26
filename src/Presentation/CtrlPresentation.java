@@ -21,6 +21,7 @@ public class CtrlPresentation {
     private VistaLogin login = null;
     private MenuPrincipal menu = null;
     private VistaTipusProblema vistaTipus = null;
+    private VistaCarregarPartida vistaCarregar = null;
     private TaulerGUI taulerPartida = null;
     private TaulerGUICrearProblema taulerProblema = null;
     private VistaGetFEN vistaGetFEN = null;
@@ -31,12 +32,12 @@ public class CtrlPresentation {
 
     public CtrlPresentation() {
         CD = new CtrlDomain();
+        CD.CarregarProblemes();
         if (login == null)  // innecesario
             login= new VistaLogin(this);
     }
 
     public void initializePresentation() {
-        CD.inicializarCtrlDominio();
         login.hacerVisible();
     }
 
@@ -57,6 +58,20 @@ public class CtrlPresentation {
         vistaTipus.activar();
     }
 
+    public void sincronizacionVistaMenu_a_Carregar() {
+        menu.desactivar();
+        menu.visible(false);
+
+        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
+        if (vistaCarregar == null)
+            vistaCarregar = new VistaCarregarPartida(this);
+        vistaCarregar.hacerVisible();
+        vistaCarregar.activar();
+    }
+
+
+
+
     public void sincronizacionVistaTipus_a_Menu() {
         // Se hace invisible la vista secundaria (podria anularse)
         vistaTipus.desactivar();
@@ -64,6 +79,8 @@ public class CtrlPresentation {
         menu.visible(true);
         menu.activar();
     }
+
+
 
     public void sincronizacionLogin_a_Menu() {
         // Se hace invisible la vista secundaria (podria anularse)
