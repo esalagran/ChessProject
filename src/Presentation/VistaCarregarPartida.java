@@ -1,5 +1,7 @@
 package Presentation;
 
+import Domain.FitxaProblema;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,6 +28,7 @@ public class VistaCarregarPartida {
     private JTextField contraseñaField = new JPasswordField(10);
     private JButton buttonJugar= new JButton("Jugar");
     private JButton buttonEditar= new JButton("Editar");
+    private JButton buttonVolver= new JButton("Volver");
     private JList<String> llista = new JList<String>();
 
 
@@ -89,7 +92,24 @@ public class VistaCarregarPartida {
         // Listeners para los botones
 
 
+        buttonJugar.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        String texto = ((JButton) event.getSource()).getText();
+                        System.out.println("Has clickado el boton con texto: " + texto);
+                        JugarButtonClick();
+                    }
+                });
 
+        buttonEditar.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        String texto = ((JButton) event.getSource()).getText();
+                        System.out.println("Has clickado el boton con texto: " + texto);
+                        EditarButtonClick();
+
+                    }
+                });
 
 
 
@@ -109,6 +129,19 @@ public class VistaCarregarPartida {
 //////////////////////// Resto de metodos privados
 
 
+    private void JugarButtonClick(){
+      int i = llista.getSelectedIndex();
+      iCtrlPresentacion.sincronizacionVistaLlista_a_Modalitat();
+      iCtrlPresentacion.setIndexoModalitat(i);
+    }
+
+    private void EditarButtonClick(){
+        String FEN = llista.getSelectedValue();
+        FitxaProblema[][] t = iCtrlPresentacion.ImportarProblema(FEN);
+        iCtrlPresentacion.sincronizacionVistaCarregar_a_ProblemaImport(t);
+    }
+
+
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
@@ -120,9 +153,12 @@ public class VistaCarregarPartida {
     }
     private void inicializar_panelLLista(){
         //CP.GetProblemes();
-        String[] str = {"primer","segon","tercer"};
+        String[] str = iCtrlPresentacion.getProblemes();
+        //String[] str = {"primer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer","segon","tercer"};
+
         llista.setListData(str);
-        panelLlista.add(llista);
+        JScrollPane scrollableList = new JScrollPane(llista);
+        panelLlista.add(scrollableList);
     }
 
     private void inicializar_panelBotones() {
@@ -132,6 +168,7 @@ public class VistaCarregarPartida {
         // Componentes
 
         // Buttons
+        panelBotones.add(buttonVolver);
         panelBotones.add(buttonEditar);
         panelBotones.add(buttonJugar);
         // Tooltips
@@ -166,7 +203,6 @@ public class VistaCarregarPartida {
         // Layout
         panelContenidos.setLayout(new BoxLayout(panelContenidos, BoxLayout.Y_AXIS));
         // Paneles
-        panelContenidos.add(Box.createVerticalStrut(100));
 
         panelContenidos.add(panelLlista);
         panelContenidos.add(panelBotones);

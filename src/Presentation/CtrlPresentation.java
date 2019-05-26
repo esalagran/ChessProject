@@ -25,6 +25,7 @@ public class CtrlPresentation {
     private TaulerGUI taulerPartida = null;
     private TaulerGUICrearProblema taulerProblema = null;
     private VistaGetFEN vistaGetFEN = null;
+    private VistaModalitatProblema vistaModalitatProblema = null;
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
@@ -58,6 +59,21 @@ public class CtrlPresentation {
         vistaTipus.activar();
     }
 
+    public void sincronizacionVistaLlista_a_Modalitat() {
+        vistaCarregar.desactivar();
+        vistaCarregar.visible(false);
+
+        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
+        if (vistaModalitatProblema == null)
+            vistaModalitatProblema = new VistaModalitatProblema(this);
+        vistaModalitatProblema.hacerVisible();
+        vistaModalitatProblema.activar();
+    }
+
+    public void setIndexoModalitat(int i){
+        vistaModalitatProblema.SetIndex(i);
+    }
+
     public void sincronizacionVistaMenu_a_Carregar() {
         menu.desactivar();
         menu.visible(false);
@@ -70,6 +86,10 @@ public class CtrlPresentation {
     }
 
 
+    public String[] getProblemes(){
+
+        return  CD.GetProblemes();
+    }
 
 
     public void sincronizacionVistaTipus_a_Menu() {
@@ -114,7 +134,6 @@ public class CtrlPresentation {
     public void sincronizacionJugarPartida_a_Menu(){
         taulerPartida.visible(false);
         taulerPartida.desactivar();
-
         menu.activar();
         menu.visible(true);
 
@@ -143,12 +162,35 @@ public class CtrlPresentation {
 
     }
 
+    public void sincronizacionVistaCarregar_a_ProblemaImport( FitxaProblema[][] tauler){
+        vistaCarregar.visible(false);
+        if(taulerProblema != null){
+        taulerProblema.visible(false);
+        taulerProblema.desactivar();
+        }
+        taulerProblema = new TaulerGUICrearProblema(this, tauler);
+        taulerProblema.run();
+
+    }
+
 
     public void sincronizacionVistaTipus_a_Tauler(Modalitat mod){
         vistaTipus.desactivar();
         vistaTipus.visible(false);
-        if(taulerPartida==null){
+
             Color torn = CD.JugarPartidaHuma(mod, Dificultat.facil, 10);
+            Tauler t  = CD.getTaulerPartidaEnJouc();
+            taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);
+        taulerPartida.run();
+        taulerPartida.visible(true);
+        taulerPartida.activar();
+    }
+
+    public void sincronizacionVistaModalitat_a_Tauler(Modalitat mod, int  i){
+        vistaModalitatProblema.desactivar();
+        vistaModalitatProblema.visible(false);
+        if(taulerPartida==null){
+            Color torn = CD.JugarPartidaHuma(mod, i);
             Tauler t  = CD.getTaulerPartidaEnJouc();
             taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);}
         taulerPartida.run();

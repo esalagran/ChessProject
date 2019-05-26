@@ -53,6 +53,15 @@ public class CtrlDomain {
         problemes = CP.GetProblemes();
     }
 
+    public String[] GetProblemes(){
+        String[] FENS = new String[problemes.size()];
+        for(int i = 0; i< problemes.size(); i++){
+            FENS[i] = problemes.get(i).GetFEN();
+        }
+        return FENS;
+    }
+
+
     public void Rranking(String FEN, String nickname, int puntucacio)
     {
         CP.afegirJugadorProblema(FEN, nickname, puntucacio);
@@ -69,6 +78,15 @@ public class CtrlDomain {
         Random rand = new Random();
         Problema p = problemes.get(rand.nextInt(problemes.size()));
         partidaEnJoc = new Partida(p, mode, torns);
+        partidaEnJoc.ComençarPartida();
+        return p.GetTorn();
+    }
+
+    public Color JugarPartidaHuma(Modalitat mode, int index) {
+        // en realitat es busca un problema aletatori de la base de dades amb la dificultat
+        Random rand = new Random();
+        Problema p = problemes.get(index);
+        partidaEnJoc = new Partida(p, mode, 10);
         partidaEnJoc.ComençarPartida();
         return p.GetTorn();
     }
@@ -97,7 +115,7 @@ public class CtrlDomain {
      * el problema del codi FEN, altrament, es mostra un missatge*/
     public void CarregarProblema(String FEN) {
         if (pObert == null)
-            pObert = new Problema(FEN);
+            pObert = CP.carregaProblema(FEN);
         else
             System.out.println("Primer has de tancar el problema");
     }
