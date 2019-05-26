@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import static Domain.Convert.InTheLimits;
+
 public class Tauler {
     private FitxaProblema[][] taulell;
     private FitxaProblema whiteKing;
@@ -136,10 +138,10 @@ public class Tauler {
      * @return Retorna true si el color de la peça de la coordenada x es igual al Color color
      */
     public boolean PeçaMeva(ParInt x, Color color) {
-        if (Convert.InTheLimits(x) && taulell[x.GetFirst()][x.GetSecond()] != null) {
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.negre)) return true;
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.blanc)) return true;
-        }
+        if (InTheLimits(x))
+            if (taulell[x.GetFirst()][x.GetSecond()] != null)
+                return taulell[x.GetFirst()][x.GetSecond()].GetColor().equals(color);
+
         return false;
     }
 
@@ -149,7 +151,7 @@ public class Tauler {
      * @return Retorna true si el color de la peça de la coordenada x es diferent al Color color
      */
     public boolean PeçaRival(ParInt x, Color color){
-        if (Convert.InTheLimits(x) && taulell[x.GetFirst()][x.GetSecond()] != null) {
+        if (InTheLimits(x) && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.blanc)) return true;
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.negre)) return true;
         }
