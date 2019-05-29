@@ -174,16 +174,38 @@ public class CtrlPresentation {
     }
 
 
-    public void sincronizacionVistaTipus_a_Tauler(Modalitat mod){
+    public void sincronizacionVistaTipus_a_Tauler(String[] paramsPartida){
         vistaTipus.desactivar();
         vistaTipus.visible(false);
+        Color torn = null;
+        switch (paramsPartida[3]){
+            case "Màquina vs màquina":
+                CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
+                        paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
+                        Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]));
+                break;
+            case "Humà vs màquina":
+                torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
+                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), false);
+                break;
+            case "Màquina vs humà":
+                torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
+                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), true);
+                break;
+            case "Humà vs humà":
+                torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
+                        paramsPartida[4], paramsPartida[5]);
 
-            Color torn = CD.JugarPartidaHuma(mod, Dificultat.facil, 10);
-            Tauler t  = CD.getTaulerPartidaEnJouc();
+
+        }
+
+        if (torn != null){
+            Tauler t  = CD.getTaulerPartidaEnJoc();
             taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);
-        taulerPartida.run();
-        taulerPartida.visible(true);
-        taulerPartida.activar();
+            taulerPartida.run();
+            taulerPartida.visible(true);
+            taulerPartida.activar();
+        }
     }
 
     public void sincronizacionVistaModalitat_a_Tauler(Modalitat mod, int  i){
@@ -191,7 +213,7 @@ public class CtrlPresentation {
         vistaModalitatProblema.visible(false);
         if(taulerPartida==null){
             Color torn = CD.JugarPartidaHuma(mod, i);
-            Tauler t  = CD.getTaulerPartidaEnJouc();
+            Tauler t  = CD.getTaulerPartidaEnJoc();
             taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);}
         taulerPartida.run();
         taulerPartida.visible(true);

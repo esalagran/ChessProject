@@ -27,17 +27,21 @@ public class VistaTipusProblema {
     private JPanel panelAlgorisme2 = new JPanel();
     private JPanel panelProfunditatA1 = new JPanel();
     private JPanel panelProfunditatA2 = new JPanel();
+    private JPanel panelNumProblemes = new JPanel();
 
     private JSpinner tornsPerMat;
+    private JSpinner profunditatA2;
+    private JSpinner profunditatA1;
+    private JSpinner numProblemes;
     private JComboBox modalitat = new  JComboBox();
     private JComboBox color = new  JComboBox();
     private JComboBox algorisme = new  JComboBox();
     private JComboBox algorisme2 = new  JComboBox();
+    private JComboBox dificultat = new  JComboBox();
     private JButton buttonVolver = new JButton("Volver");
     private JButton buttonJugar = new JButton("Jugar");
     private JTextArea textareaInformacion = new JTextArea("HOLA",5,25);
-    private JSpinner profunditatA2;
-    private JSpinner profunditatA1;
+
 
 
 //////////////////////// Constructor y metodos publicos
@@ -73,18 +77,31 @@ public class VistaTipusProblema {
     }
 
     public void actionPerformed_buttonJugar (ActionEvent event) {
-       String mod = (String) modalitat.getSelectedItem();
-            Modalitat mode = Modalitat.HH;
-       if (mod.equals("Humà vs humà"))
-           mode = Modalitat.HH;
-       else if (mod.equals("Humà vs màquina"))
-           mode = Modalitat.HM;
-       else if (mod.equals("Màquina vs màquina"))
-           mode = Modalitat.MM;
-       else if (mod.equals("Màquina vs humà"))
-           mode = Modalitat.MH;
+        String mod = (String) modalitat.getSelectedItem();
+        String[] paramPartdia = new String[9];
+        paramPartdia[0] = dificultat.getSelectedItem().toString();
+        paramPartdia[1] = color.getSelectedItem().toString();
+        paramPartdia[2] = tornsPerMat.getValue().toString();
+        paramPartdia[3] = modalitat.getSelectedItem().toString();
 
-        iCtrlPresentacion.sincronizacionVistaTipus_a_Tauler(mode);
+        if (mod.equals("Humà vs humà")){
+            paramPartdia[4] = "root";
+            paramPartdia[5] = "no ha d'anar aixi";
+        }
+        else if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
+           paramPartdia[4] = "root";
+           paramPartdia[5] = algorisme.getSelectedItem().toString();
+           paramPartdia[6] = profunditatA1.getValue().toString();
+        }
+        else{
+            paramPartdia[4] = algorisme.getSelectedItem().toString();
+            paramPartdia[5] = algorisme2.getSelectedItem().toString();
+            paramPartdia[6] = profunditatA1.getValue().toString();
+            paramPartdia[7] = profunditatA2.getValue().toString();
+            paramPartdia[8] = numProblemes.getValue().toString();
+        }
+
+        iCtrlPresentacion.sincronizacionVistaTipus_a_Tauler(paramPartdia);
     }
 
 
@@ -125,6 +142,7 @@ public class VistaTipusProblema {
                     panelContenidos.add(panelProfunditatA1);
                     panelContenidos.remove(panelProfunditatA2);
                     panelContenidos.remove(panelAlgorisme2);
+                    panelContenidos.remove(panelNumProblemes);
                 }
 
                 else if (mod.equals("Màquina vs màquina")){
@@ -132,6 +150,7 @@ public class VistaTipusProblema {
                     panelContenidos.add(panelProfunditatA1);
                     panelContenidos.add(panelAlgorisme2);
                     panelContenidos.add(panelProfunditatA2);
+                    panelContenidos.add(panelNumProblemes);
                 }
 
                 else{
@@ -139,6 +158,7 @@ public class VistaTipusProblema {
                     panelContenidos.remove(panelAlgorisme2);
                     panelContenidos.remove(panelProfunditatA1);
                     panelContenidos.remove(panelProfunditatA2);
+                    panelContenidos.remove(panelNumProblemes);
                 }
 
                 panelContenidos.add(panelDificultat, BorderLayout.CENTER);
@@ -168,9 +188,8 @@ public class VistaTipusProblema {
         inicialitzar_panelAlgorisme2();
         inicializar_panelProfunditatA1();
         inicializar_panelProfunditatA2();
+        inicializar_panelNumeroProblemes();
         asignar_listenersComponentes();
-
-
     }
 
     private void inicializar_frameVista() {
@@ -251,13 +270,12 @@ public class VistaTipusProblema {
     }
 
     private void inicializar_panelDificultat(){
-
-        String[] stringTorns = {"Fàcil", "Mitjà", "Difícil"};
-        SpinnerListModel torns = new SpinnerListModel(stringTorns);
-        tornsPerMat = new JSpinner(torns);
+        dificultat.addItem("Fàcil");
+        dificultat.addItem("Mitjà");
+        dificultat.addItem("Difícil");
         JLabel label = new JLabel("Dificultat");
         panelDificultat.add(label);
-        panelDificultat.add(tornsPerMat);
+        panelDificultat.add(dificultat);
     }
 
     private void inicializar_panelBotones() {
@@ -284,6 +302,15 @@ public class VistaTipusProblema {
         JLabel label = new JLabel("Profunditat A2");
         panelProfunditatA2.add(label);
         panelProfunditatA2.add(profunditatA2);
+    }
+
+    private void inicializar_panelNumeroProblemes(){
+        String[] stringTorns = {"1","2","3","4","5","6","7","8", "9", "10"};
+        SpinnerListModel torns = new SpinnerListModel(stringTorns);
+        numProblemes = new JSpinner(torns);
+        JLabel label = new JLabel("Problemes a jugar");
+        panelNumProblemes.add(label);
+        panelNumProblemes.add(numProblemes);
     }
 
 

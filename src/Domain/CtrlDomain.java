@@ -25,16 +25,32 @@ public class CtrlDomain {
      * \post: S'han jugat tots els problemes de probJugats i es van imprimint
      * els guanyador del problema en cada cas.
      * */
-    public void JugarPartidesMaquines(Problema[] probJugats, Algorithm a1, Algorithm a2) {
+    public void JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes) {
+        Algorithm a1 = getTipusAlgorithm(t1, p1);
+        Algorithm a2 = getTipusAlgorithm(t2, p2);
         Color guanyador;
+        Random rnd = new Random();
         //PartidaRefactor pr;
-        for (Problema p : probJugats) {
-            PartidaRefactor pr = new PartidaMM(p, a1, a2);
+        for (int i = 0; i < numProblemes; ++i) {
+            Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
+            PartidaRefactor pr;
+            int isA1 = rnd.nextInt(1);
+            if (isA1 == 0){
+                pr = new PartidaMM(p, a1, a2);
+            }
+            else{
+                pr = new PartidaMM(p, a2, a1);
+            }
+
             //obj[0] indica el gunayador, obj[1] temps/moviments de a1, obj[2] = 0bj[1], pero de a2
             Object[] obj = pr.MovimentMaquina();
             System.out.println("Problema: " + p.GetFEN());
-            System.out.println("El guanyador ha estat " + obj[0]);
-            System.out.println("La Maquina a1 ha tardat " + obj[1] + "segons de mitjana");
+            if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
+                System.out.println("El guanyador ha estat a1 per " + pr.getEstatPartida());
+            else
+                System.out.println("El guanyador ha estat a2 per " + pr.getEstatPartida());
+            System.out.println("La Maquina a1 ha tardat " + obj[1] + " milisegons de mitjana");
+            System.out.println("La Maquina a2 ha tardat " + obj[2] + " milisegons de mitjana");
         }
     }
 
@@ -79,13 +95,23 @@ public class CtrlDomain {
      * \post: Es juga la partida amb la modalitat mode i
      * s'imprimeix el guanyador quan es finalitzi
      * */
-    public Color JugarPartidaHuma(Modalitat mode, Dificultat dif, int torns) {
-        // en realitat es busca un problema aletatori de la base de dades amb la dificultat
-        Random rand = new Random();
-        Problema p = problemes.get(rand.nextInt(problemes.size()));
-        partidaEnJoc = CreaPartida(mode, p, "admin", "complex", 5, 5);
-        //partidaEnJoc = new Partida(p, mode, torns);
-        //partidaEnJoc.ComençarPartida();
+    public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h1, String h2) {
+        Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        partidaEnJoc = new PartidaHH(p, new Huma(h1), new Huma(h2));
+        return p.GetTorn();
+    }
+
+    public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate, String nickname,
+                                String algName, int profunditat, boolean isMachine1){
+        Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        if (isMachine1){
+            //new Huma s'ha de canviar per una cerca a la base de dades d'usuari. En aquest cas hi ha de ser sempre
+            //ja que és l'usuari que s'ha registrat
+            partidaEnJoc = new PartidaHM(p, getTipusAlgorithm(algName, profunditat), new Huma(nickname));
+        }
+        else{
+            partidaEnJoc = new PartidaHM(p, new Huma(nickname), getTipusAlgorithm(algName, profunditat));
+        }
         return p.GetTorn();
     }
 
@@ -278,7 +304,7 @@ public class CtrlDomain {
         return partidaEnJoc;
     }
 
-    public Tauler getTaulerPartidaEnJouc() {
+    public Tauler getTaulerPartidaEnJoc() {
         return partidaEnJoc.getProblemaEnJoc().getTauler();
     }
 
@@ -311,11 +337,17 @@ public class CtrlDomain {
 
     private Algorithm getTipusAlgorithm(String tipus, int profunditat){
         Algorithm a;
-        if (tipus.equals("simple"))
-            a = new AlgorismeMinMax(profunditat);
-        else
+        if (tipus.equals("AlphaBeta"))
             a = new AlgorismeAlfaBeta(profunditat);
+        else
+            a = new AlgorismeMinMax(profunditat);
 
         return a;
+    }
+
+    private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate){
+        Random rand = new Random();
+        Problema p = problemes.get(rand.nextInt(problemes.size()));
+        return p;
     }
 }

@@ -42,6 +42,8 @@ public class PartidaMM  extends PartidaRefactor{
             hasEnded = FiTorn();
             isA1Torn = !isA1Torn;
         }
+        if (moveA2 == 0) moveA2 = 1;
+        if (moveA1 == 0) moveA1 = 1;
         return new Object[]{
                 getGuanyador(), timeA1/moveA1, timeA2/moveA2
         };

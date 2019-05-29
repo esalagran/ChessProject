@@ -304,4 +304,22 @@ public class Convert {
             }
         }
     }
+
+    public static Color StringToColor(String torns) {
+        torns = torns.toLowerCase();
+        if (torns.charAt(0) == 'b') return blanc;
+        return negre;
+    }
+
+    public static Dificultat StringToDificultat(String dif){
+        dif = dif.toLowerCase();
+        char d = dif.charAt(0);
+        if (d == 'f') return Dificultat.facil;
+        if (d == 'm') {
+            if (dif.contains("f")) return Dificultat.moltfacil;
+            if (dif.contains("d")) return Dificultat.moltdificil;
+            return Dificultat.mitja;
+        }
+        return Dificultat.dificil;
+    }
 }
