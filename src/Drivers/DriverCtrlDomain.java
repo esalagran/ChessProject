@@ -133,7 +133,7 @@ public class DriverCtrlDomain{
         try {
             switch (cas) {
                 case 1:
-                    ctrlDomain.JugarPartidesMaquines(null);
+                    ctrlDomain.JugarPartidesMaquines(null, null, null);
                     break;
                 case 2:
                     ctrlDomain.JugarPartidaHuma(Modalitat.HH, Dificultat.facil, 10);

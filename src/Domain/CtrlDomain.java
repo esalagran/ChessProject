@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class CtrlDomain {
     private Problema pObert;
-    private Partida partidaEnJoc;
+    private PartidaRefactor partidaEnJoc;
     private List<Problema> problemes  = new ArrayList<Problema>();
 
     private Persistence.CtrlPersistence CP;
@@ -25,19 +25,25 @@ public class CtrlDomain {
      * \post: S'han jugat tots els problemes de probJugats i es van imprimint
      * els guanyador del problema en cada cas.
      * */
-    public void JugarPartidesMaquines(Problema[] probJugats) {
+    public void JugarPartidesMaquines(Problema[] probJugats, Algorithm a1, Algorithm a2) {
+        Color guanyador;
+        //PartidaRefactor pr;
         for (Problema p : probJugats) {
-            partidaEnJoc = new Partida(p, Modalitat.MM, p.GetMovimentsPerGuanyar());
-            //Falta obtenir el guanyador i jugar la partida
+            PartidaRefactor pr = new PartidaMM(p, a1, a2);
+            //obj[0] indica el gunayador, obj[1] temps/moviments de a1, obj[2] = 0bj[1], pero de a2
+            Object[] obj = pr.MovimentMaquina();
+            System.out.println("Problema: " + p.GetFEN());
+            System.out.println("El guanyador ha estat " + obj[0]);
+            System.out.println("La Maquina a1 ha tardat " + obj[1] + "segons de mitjana");
         }
     }
 
     public ParInt[] GetLastMoveMaq(){
-        return partidaEnJoc.getUltimMovimentMaq();
+        return partidaEnJoc.GetLastMove();
     }
 
     public ParInt[] GetLastMoveHum(){
-        return partidaEnJoc.getUltimMovimentHum();
+        return partidaEnJoc.GetLastMove();
     }
 
 
@@ -62,7 +68,7 @@ public class CtrlDomain {
     }
 
 
-    public void Rranking(String FEN, String nickname, int puntucacio)
+    public void Ranking(String FEN, String nickname, int puntucacio)
     {
         CP.afegirJugadorProblema(FEN, nickname, puntucacio);
     }
@@ -77,8 +83,9 @@ public class CtrlDomain {
         // en realitat es busca un problema aletatori de la base de dades amb la dificultat
         Random rand = new Random();
         Problema p = problemes.get(rand.nextInt(problemes.size()));
-        partidaEnJoc = new Partida(p, mode, torns);
-        partidaEnJoc.ComençarPartida();
+        partidaEnJoc = CreaPartida(mode, p, "admin", "complex", 5, 5);
+        //partidaEnJoc = new Partida(p, mode, torns);
+        //partidaEnJoc.ComençarPartida();
         return p.GetTorn();
     }
 
@@ -86,8 +93,9 @@ public class CtrlDomain {
         // en realitat es busca un problema aletatori de la base de dades amb la dificultat
         Random rand = new Random();
         Problema p = problemes.get(index);
-        partidaEnJoc = new Partida(p, mode, 10);
-        partidaEnJoc.ComençarPartida();
+        partidaEnJoc = CreaPartida(mode, p, "root", "complex", 7, 7);
+        //partidaEnJoc = new Partida(p, mode, 10);
+        //partidaEnJoc.ComençarPartida();
         return p.GetTorn();
     }
 
@@ -132,11 +140,19 @@ public class CtrlDomain {
     }
 
     public boolean isColorHuman(Color color){
-       return partidaEnJoc.isColorHuman(color);
+       if (partidaEnJoc instanceof PartidaMM)
+           return false;
+       if (partidaEnJoc instanceof PartidaHH)
+           return true;
+       PartidaHM p = (PartidaHM)partidaEnJoc;
+       if (p.isWinnerHuman())
+           return partidaEnJoc.getProblemaEnJoc().GetTorn().equals(color);
+       return !partidaEnJoc.getProblemaEnJoc().GetTorn().equals(color);
+
     }
 
     public FitxaProblema[][] TornMaquina(){
-        return partidaEnJoc.TornMaquina();
+        return (FitxaProblema[][]) partidaEnJoc.MovimentMaquina();
     }
 
     public boolean hasEnded(){
@@ -144,7 +160,14 @@ public class CtrlDomain {
     }
 
     public String EndedReason(){
-        return partidaEnJoc.EndedReason();
+        /*Color guanyador = partidaEnJoc.getGuanyador();
+        if (guanyador != null && )
+        return partidaEnJoc.EndedReason();*/
+        if (partidaEnJoc.getGuanyador() != null)
+            return "Ha guanyat el " + partidaEnJoc.getGuanyador() + " per " +
+                    partidaEnJoc.getEstatPartida().toString() + "\n";
+        else
+            return "La partida encara està en joc\n";
     }
 
     public FitxaProblema[][] ImportarProblema(String FEN){
@@ -218,7 +241,6 @@ public class CtrlDomain {
             else
                 return pObert.EliminarPeça(coord);
         } catch (NullPointerException ex) {
-
             System.out.println("Has de crear o carregar un problema ");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -227,7 +249,7 @@ public class CtrlDomain {
     }
 
     public FitxaProblema[][] MourePeçaPartida(ParInt first, ParInt second){
-       return partidaEnJoc.MourePeça(first, second);
+       return partidaEnJoc.MovimentHuma(first, second);
     }
 
     /**
@@ -252,12 +274,12 @@ public class CtrlDomain {
         return pObert;
     }
 
-    public Partida getPartidaEnJoc() {
+    public PartidaRefactor getPartidaEnJoc() {
         return partidaEnJoc;
     }
 
     public Tauler getTaulerPartidaEnJouc() {
-        return partidaEnJoc.GetTauler();
+        return partidaEnJoc.getProblemaEnJoc().getTauler();
     }
 
     public Map<String,Integer> getRanking(Problema p){
@@ -271,5 +293,29 @@ public class CtrlDomain {
             return null;
         }
         else return d;
+    }
+
+    private PartidaRefactor CreaPartida (Modalitat m, Problema p, String nickname, String nickname2, int p1, int p2){
+        switch (m){
+            case MM:
+                return new PartidaMM(p, getTipusAlgorithm(nickname, p1), getTipusAlgorithm(nickname2, p2));
+            case HH:
+                return new PartidaHH(p, new Huma(nickname), new Huma(nickname2));
+            case HM:
+                return  new PartidaHM(p, new Huma(nickname), getTipusAlgorithm(nickname2, p2));
+            case MH:
+                return new PartidaHM(p, getTipusAlgorithm(nickname, p1), new Huma(nickname2));
+        }
+        return null;
+    }
+
+    private Algorithm getTipusAlgorithm(String tipus, int profunditat){
+        Algorithm a;
+        if (tipus.equals("simple"))
+            a = new AlgorismeMinMax(profunditat);
+        else
+            a = new AlgorismeAlfaBeta(profunditat);
+
+        return a;
     }
 }

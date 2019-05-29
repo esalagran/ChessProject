@@ -83,7 +83,7 @@ public class DriverAlgorisme {
         String FEN6 = "1q2r2k/1b3p1p/p2p1Pp1/1p1Pp1P1/n3P2Q/2R2B2/PP5P/3R3K w - - 0 0"; //Mate en 6
         String FEN7 = "2bqkbn1/2pppp2/np2N3/r3P1p1/p2N2B1/5Q2/PPPPKPP1/RNB2r2 w KQkq - 0 1";//mate en 2
         String FEN8 = "8/p7/BpkPp3/4Pp2/3P2p1/Q5P1/2p1bPK1/3q3R w - -"; // mate en 3
-        Algorithm alg = new AlgorismeAlfaBeta();
+        Algorithm alg = new AlgorismeAlfaBeta(7);
         //AlgorismeAlfaBeta alg = new AlgorismeAlfaBeta();
         String[] conjProb = new String[]{
             "6k1/4Rppp/8/8/8/3K4/8/8 w - - 1 0",
@@ -109,32 +109,13 @@ public class DriverAlgorisme {
             System.out.println(Instant.now());
         }
 
-        /*for (int i = 3; i>= 0; --i){
-            torn = Convert.InvertColor(torn);
-            //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
-            Move m = alg.GetMove(Color.blanc, torn, p.getTauler(), i);
-            if (m == null){
-                Convert.DibuixaTauler(p.getTauler());
-                System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
-                break;
-            }
-            else {
-                Convert.DibuixaTauler(p.getTauler());
-                p.getTauler().moureFitxa(m);
-                System.out.println("S'ha mogut de (" + m.getStartPos().GetFirst() + "," +
-                        m.getStartPos().GetSecond() + ") a (" + m.getEndPos().GetFirst() + ","+
-                        m.getEndPos().GetSecond() + ")");
-            }
-        }*/
-        //System.out.println(alg.MinMax(p.getTauler(), Color.blanc, 6, false));
-
     }
 
     public void JugaPartida(Problema p, Algorithm alg){
         Color torn = p.GetTorn();
         for (int i = 7; i>= 0; --i){
             //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
-            Move m = alg.FindBestMoveConcr(p.getTauler(), torn, i);
+            Move m = alg.FindBestMoveConcr(p.getTauler(), torn, 0);
             if (m == null){
                 Convert.DibuixaTauler(p.getTauler());
                 System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
@@ -159,7 +140,7 @@ public class DriverAlgorisme {
         String FEN3 = "7k/1r4R1/4b2K/7B/8/8/6R1/8 w - - 0 1";
         Problema p = new Problema(FEN3);
         Tauler t = p.getTauler();
-        AlgorismeMinMax amm = new AlgorismeMinMax();
+        AlgorismeMinMax amm = new AlgorismeMinMax(5);
         Move[] conjMov = new Move[5];
         for (int i = 6; i > 0; --i){
 

@@ -20,7 +20,9 @@ public class Maquina extends Usuari{
     /**
      * Creadora buida
      */
-    public Maquina(){}
+    public Maquina(){
+        super("");
+    }
 
     /**
      * Setter de la profunditat de cerca

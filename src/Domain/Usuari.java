@@ -3,7 +3,7 @@ package Domain;
 
 /**Classe no rellevant per aquesta entrega*/
 
-public class Usuari{
+public abstract class Usuari{
     String _nickname;
 
     FitxaProblema MourePeça(TipusPeça a, int b){
@@ -12,13 +12,16 @@ public class Usuari{
 
     }
 
-
     public String GetNickName(){
         return _nickname;
     }
 
     public ParInt GetRankingProblema(int idProblema){
         return new ParInt(0,0);
+    }
+
+    public Usuari (String nickname){
+        _nickname = nickname;
     }
 
 

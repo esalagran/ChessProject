@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import static Domain.Convert.*;
 import static Domain.Convert.InTheLimits;
 
 public class Tauler {
@@ -39,8 +40,8 @@ public class Tauler {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if (t[i][j] != null){
-                    if (Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString())== TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
-                    if (Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
+                    if (ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString())== TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
+                    if (ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
                 }
             }
         }
@@ -88,8 +89,8 @@ public class Tauler {
     public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
         if(f!= null){
         try {
-            TipusPeça tp = Convert.ClassToTipusPeça(f.getIFitxa().getClass().toString());
-            char key = Convert.ParTipusPeçaBoolToChar(tp, f.GetColor());
+            TipusPeça tp = ClassToTipusPeça(f.getIFitxa().getClass().toString());
+            char key = ParTipusPeçaBoolToChar(tp, f.GetColor());
 
             int value = _numTipusPeça.get(key);
             if (true){
@@ -122,8 +123,8 @@ public class Tauler {
     public void EliminarPeçaAt(ParInt origin){
         try{
             FitxaProblema fp = taulell[origin.GetFirst()][origin.GetSecond()];
-            char key = Domain.Convert.ParTipusPeçaBoolToChar(
-                    Domain.Convert.ClassToTipusPeça(fp.getIFitxa().getClass().toString()), fp.GetColor());
+            char key = ParTipusPeçaBoolToChar(
+                    ClassToTipusPeça(fp.getIFitxa().getClass().toString()), fp.GetColor());
             _numTipusPeça.put(key, _numTipusPeça.get(key) - 1);
             taulell[origin.GetFirst()][origin.GetSecond()] = null;
         }
@@ -153,7 +154,7 @@ public class Tauler {
     public boolean PeçaRival(ParInt x, Color color){
         if (InTheLimits(x) && taulell[x.GetFirst()][x.GetSecond()] != null) {
             if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.negre && color.equals(Color.blanc)) return true;
-            if (taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.negre)) return true;
+            return taulell[x.GetFirst()][x.GetSecond()].GetColor() == Color.blanc && color.equals(Color.negre);
         }
         return false;
     }
@@ -181,13 +182,6 @@ public class Tauler {
      * \post: Coordenada move conte la FitxaProblema de la coordenada ini, que ara conte peça
      */
     public void desferJugada(Move move){
-        /*taulell[move.GetFirst()][move.GetSecond()] = taulell[ini.GetFirst()][ini.GetSecond()];
-        taulell[ini.GetFirst()][ini.GetSecond()] = peça;
-
-        FitxaProblema fp = taulell[move.GetFirst()][move.GetSecond()];
-        fp.SetCoordenades(move);
-        if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
-        if (Convert.ClassToTipusPeça(taulell[move.GetFirst()][move.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei && taulell[move.GetFirst()][move.GetSecond()].GetColor() == Color.negre) blackKing = fp;*/
         Move aux = new Move(null, move.getEndPos(), move.getStartPos());
         moureFitxa(aux);
         taulell[move.getEndPos().GetFirst()][move.getEndPos().GetSecond()] = move.getOriginalPiece();
@@ -207,9 +201,9 @@ public class Tauler {
 
         FitxaProblema fp = taulell[fi.GetFirst()][fi.GetSecond()];
         fp.SetCoordenades(fi);
-        if (Convert.ClassToTipusPeça(taulell[fi.GetFirst()][fi.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei
+        if (ClassToTipusPeça(taulell[fi.GetFirst()][fi.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei
                 && taulell[fi.GetFirst()][fi.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
-        else if (Convert.ClassToTipusPeça(taulell[fi.GetFirst()][fi.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei
+        else if (ClassToTipusPeça(taulell[fi.GetFirst()][fi.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei
                 && taulell[fi.GetFirst()][fi.GetSecond()].GetColor() == Color.negre) blackKing = fp;
     }
 
@@ -219,19 +213,17 @@ public class Tauler {
         int iBlackBishop;
         int iWhiteKnight;
         int iBlackKnight;
-        iBigPieceCount = _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.blanc)) +
-                _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.negre)) +
-                _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Dama, Color.blanc)) +
-                _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.negre));
+        iBigPieceCount = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.blanc)) +
+                _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.negre)) +
+                _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Dama, Color.blanc)) +
+                _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.negre));
         if (iBigPieceCount != 0)
             return true;
-        iWhiteBishop = _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Alfil, Color.blanc));
-        iBlackBishop = _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Alfil, Color.negre));
-        iWhiteKnight = _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Cavall, Color.blanc));
-        iBlackKnight = _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(TipusPeça.Cavall, Color.negre));
-        if ((iWhiteBishop + iWhiteKnight) >= 2 || (iBlackBishop + iBlackKnight) >= 2)
-            return true;
-        return false;
+        iWhiteBishop = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Alfil, Color.blanc));
+        iBlackBishop = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Alfil, Color.negre));
+        iWhiteKnight = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Cavall, Color.blanc));
+        iBlackKnight = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Cavall, Color.negre));
+        return (iWhiteBishop + iWhiteKnight) >= 2 || (iBlackBishop + iBlackKnight) >= 2;
     }
 
     public int GetNumPeçaMax(TipusPeça tipusPeça){
@@ -239,11 +231,11 @@ public class Tauler {
         }
 
     public int GetNumPeces(TipusPeça tp, Color c){
-        return _numTipusPeça.get(Convert.ParTipusPeçaBoolToChar(tp, c));
+        return _numTipusPeça.get(ParTipusPeçaBoolToChar(tp, c));
     }
 
     public void SetNumPeces(TipusPeça tp, Color c,  int value){
-        char key = Convert.ParTipusPeçaBoolToChar(tp, c);
+        char key = ParTipusPeçaBoolToChar(tp, c);
         _numTipusPeça.put(key, value);
     }
 
@@ -298,8 +290,31 @@ public class Tauler {
         return moves;
     }
 
-    private boolean IsChecked (Color c, ParInt parInt){
-        if (c.equals(Color.blanc)) return blackKing.GetCoordenades().equals(parInt);
-        else return whiteKing.GetCoordenades().equals(parInt);
+
+    boolean IsChecked(Color jugador){
+        if (jugador.equals(Color.negre))
+            return getBlackKing().isAttacked(taulell);
+        return getWhiteKing().isAttacked(taulell);
+    }
+
+    boolean IsMate(Color jugador){
+        if (!IsChecked(jugador)) return false;
+        return someMove(jugador);
+    }
+
+    boolean IsTaules(Color jugador) {
+        if (IsChecked(jugador)) return false;
+        return someMove(jugador);
+    }
+
+    private boolean someMove(Color jugador){
+        ArrayList<Move> moveList = GetMoviments(jugador);
+        for (Move m : moveList) {
+            moureFitxa(m);
+            boolean NotMove = IsChecked(jugador);
+            desferJugada(m);
+            if (!NotMove) return false;
+        }
+        return true;
     }
 }

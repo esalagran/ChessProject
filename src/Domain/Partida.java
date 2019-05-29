@@ -6,6 +6,7 @@ import java.util.Vector;
 public class Partida{
 
     private String atacant, defensor;
+    //EstatPartida estatPartida;
     Color torn, tornInicial;
     Modalitat mode;
     boolean isBlackHuman;
@@ -17,8 +18,8 @@ public class Partida{
     boolean hasEnded = false;
     int moviments = 0;
     int accumTime = 0;
-    Algorithm algorismeAlfaBeta = new AlgorismeAlfaBeta();
-    AlgorismeMinMax algorismeMinMax = new AlgorismeMinMax();
+    Algorithm algorismeAlfaBeta = new AlgorismeAlfaBeta(7);
+    AlgorismeMinMax algorismeMinMax = new AlgorismeMinMax(5);
     ParInt[] ultimMovimentMaq = new ParInt[]{ new ParInt(-1, -1), new ParInt(-1, -1)};
     ParInt[] ultimMovimentHum = new ParInt[]{ new ParInt(-1, -1), new ParInt(-1, -1)};
 
@@ -29,6 +30,7 @@ public class Partida{
         tornInicial = torn;
         mode = mod;
         tauler = p.getTauler();
+
     }
 
     /**
@@ -51,16 +53,20 @@ public class Partida{
             case MH:
                 isWhiteHuman = torn != Color.blanc;
                 isBlackHuman = !isWhiteHuman;
+                //estatPartida = EstatPartida.tornMaquina;
                 break;
             case HH:
                 isWhiteHuman = isBlackHuman = true;
+                //estatPartida = EstatPartida.tornHuma;
                 break;
             case HM:
                 isWhiteHuman = torn == Color.blanc;
                 isBlackHuman = !isWhiteHuman;
+                //estatPartida = EstatPartida.tornHuma;
                 break;
             case MM:
                 isWhiteHuman = isBlackHuman = false;
+                //estatPartida = EstatPartida.tornMaquina;
                 break;
         }
     }
@@ -162,9 +168,9 @@ public class Partida{
 
 
 
-    public boolean ComprovarMat(){
+    /* boolean ComprovarMat(){
         return algorismeAlfaBeta.IsMate( Color.blanc, tauler) || algorismeAlfaBeta.IsMate(Color.blanc, tauler);
-    }
+    }*/
 
     /**
      * \pre: la partida a acabat
@@ -176,6 +182,12 @@ public class Partida{
     }
 
 
+    public Color TornsEntreMaquines(){
+        while (!hasEnded){
+            TornMaquina();
+        }
+        return guanyador;
+    }
 
     /**
      * \pre: torn i tauler diferent de null
@@ -184,7 +196,7 @@ public class Partida{
      */
    public FitxaProblema[][] TornMaquina(){
        if (!hasEnded) {
-           Move m = algorismeAlfaBeta.FindBestMoveConcr(tauler, torn, 3);
+           Move m = algorismeAlfaBeta.FindBestMoveConcr(tauler, torn, probl.GetMovimentsPerGuanyar() - moviments);
            tauler.moureFitxa(m);
            ultimMovimentMaq = new ParInt[]{m.getStartPos(), m.getEndPos()};
        }
@@ -226,15 +238,16 @@ public class Partida{
      */
     public void FiTorn(){
         torn = Convert.InvertColor(torn);
-        mat |= algorismeAlfaBeta.IsMate(torn, tauler);
+        mat |= probl.getTauler().IsMate(torn);
         if (mat || moviments++ >= probl.GetMovimentsPerGuanyar()){
             guanyador = mat ? tornInicial : Convert.InvertColor(tornInicial);
-            inscriureRanking();
+            if (mode != Modalitat.MM)
+                inscriureRanking();
             hasEnded = true;
         }
     }
     private void inscriureRanking(){
-        int puntuacio = probl.calculPuntuacio(moviments,guanyador,accumTime);
+        int puntuacio = probl.calculPuntuacio(moviments,accumTime);
         if (mode == Modalitat.HM ){
             if ( guanyador == tornInicial)
                 probl.inscriureRanking(atacant, puntuacio);

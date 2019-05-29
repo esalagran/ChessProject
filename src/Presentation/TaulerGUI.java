@@ -144,7 +144,6 @@ public class TaulerGUI {
     }
 
     private void marcarCaselles(ParInt[] moviments){
-
         if(moviments[0].GetFirst() != -1){
             colorsOriginals[0] = chessBoardSquares[moviments[0].GetSecond()][moviments[0].GetFirst()].getBackground();
             colorsOriginals[1] = chessBoardSquares[moviments[1].GetSecond()][moviments[1].GetFirst()].getBackground();
@@ -370,20 +369,18 @@ public class TaulerGUI {
             firstCoord = null;
             firstClick = true;
 
-            if (!CP.isColorHuman(torn)) {
-               t = CP.TornMaquina();
-               ParInt[] moviments = CP.GetLastMoveMaq();
+            if (!CP.hasEnded() && !CP.isColorHuman(torn)) {
+                t = CP.TornMaquina();
+                ParInt[] moviments = CP.GetLastMoveMaq();
 
-               marcarCaselles(moviments);
+                marcarCaselles(moviments);
 
                 dibuixarTauler(t);
                 tornContrari();
 
-
-
-            tools.remove(message);
-            message = new JLabel(torn.toString());
-            tools.add(message);
+                tools.remove(message);
+                message = new JLabel(torn.toString());
+                tools.add(message);
             }
 
             else{

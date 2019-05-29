@@ -1,16 +1,19 @@
 package Domain;
 
 import java.util.ArrayList;
-
 import static Domain.Convert.InvertColor;
 
 public class AlgorismeMinMax extends Algorithm{
+
+    public AlgorismeMinMax(int profunditat) {
+        super(profunditat, "simple");
+    }
 
     //Se li ha d'enviar una copia a l'hora de validar
     private int MinMax(Tauler t, Color jugador, int profunditat){
         int best;
         if (profunditat == 0){
-            if (IsMate(jugador, t)) return -Infinit;
+            if (t.IsMate(jugador)) return -Infinit;
             return t.EstimaPuntuacio(jugador);
         }
         else{
@@ -19,7 +22,7 @@ public class AlgorismeMinMax extends Algorithm{
             best  = -Infinit;
             for (Move move: moveList) {
                 t.moureFitxa(move);
-                if (!IsChecked(t, jugador)){
+                if (!t.IsChecked(jugador)){
                     AnyMove = true;
                     int iPts = -MinMax(t, InvertColor(jugador), profunditat - 1);
                     if (iPts > best) {
@@ -31,7 +34,7 @@ public class AlgorismeMinMax extends Algorithm{
                     return best;
             }
             if (!AnyMove) {
-                if (!IsChecked(t, jugador)) {
+                if (!t.IsChecked(jugador)) {
                     return 0;
                 }
             }
@@ -40,9 +43,10 @@ public class AlgorismeMinMax extends Algorithm{
     }
 
     @Override
-    public Move FindBestMoveConcr(Tauler t, Color jugador, int profunditat) {
+    public Move FindBestMoveConcr(Tauler t, Color jugador, int movimentsRestants) {
+        int profunditat = Convert.Min(getDepth(), movimentsRestants);
         if (profunditat == 0){
-            if (IsMate(jugador, t)) return null;
+            if (t.IsMate(jugador)) return null;
             return new Move(null, null, new ParInt(-1, -1));
         }
         boolean hasMoved = false;
@@ -51,7 +55,7 @@ public class AlgorismeMinMax extends Algorithm{
         ArrayList<Move> moveList = t.GetMoviments(jugador);
         for (Move move: moveList) {
             t.moureFitxa(move);
-            if (!IsChecked(t, jugador)) {
+            if (!t.IsChecked(jugador)) {
                 hasMoved = true;
                 int Pts = -MinMax(t, InvertColor(jugador), profunditat - 1);
                 if (Pts > bestPts) {
@@ -66,9 +70,14 @@ public class AlgorismeMinMax extends Algorithm{
             t.desferJugada(move);
         }
         if (!hasMoved) {
-            if (!IsChecked(t, jugador))
+            if (!t.IsChecked(jugador))
                 return new Move(null, new ParInt(-1, -1), null);
         }
         return bestMove;
+    }
+
+    @Override
+    public boolean validateProblem(Tauler tauler, Color jugador, int profunditat) {
+        return MinMax(tauler, jugador, profunditat) >= Infinit;
     }
 }

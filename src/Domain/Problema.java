@@ -258,10 +258,9 @@ return null;
     /**
      *
      * @param nmoviments numero de moviments realitzats a la partida
-     * @param guanyador guanyador de la partida
      * @return Puntacio del jugador en el problema segons els parametres passats
      */
-    public int calculPuntuacio( int nmoviments, Color guanyador, int accumTime){
+    public int calculPuntuacio( int nmoviments, int accumTime){
         int maxPuntuacio = nPeces * movimentsPerGuanyar * 10;
         int tempsMig = accumTime/nmoviments;
         int boost;
