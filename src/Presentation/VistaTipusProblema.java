@@ -25,6 +25,8 @@ public class VistaTipusProblema {
     private JPanel panelColor = new JPanel();
     private JPanel panelAlgorisme1 = new JPanel();
     private JPanel panelAlgorisme2 = new JPanel();
+    private JPanel panelProfunditatA1 = new JPanel();
+    private JPanel panelProfunditatA2 = new JPanel();
 
     private JSpinner tornsPerMat;
     private JComboBox modalitat = new  JComboBox();
@@ -34,6 +36,8 @@ public class VistaTipusProblema {
     private JButton buttonVolver = new JButton("Volver");
     private JButton buttonJugar = new JButton("Jugar");
     private JTextArea textareaInformacion = new JTextArea("HOLA",5,25);
+    private JSpinner profunditatA2;
+    private JSpinner profunditatA1;
 
 
 //////////////////////// Constructor y metodos publicos
@@ -116,27 +120,27 @@ public class VistaTipusProblema {
                 panelContenidos.removeAll();
                 panelContenidos.add(panelOpciones);
 
-                if (mod.equals("Humà vs màquina")){
-
+                if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
                     panelContenidos.add(panelAlgorisme1);
+                    panelContenidos.add(panelProfunditatA1);
+                    panelContenidos.remove(panelProfunditatA2);
                     panelContenidos.remove(panelAlgorisme2);
                 }
 
                 else if (mod.equals("Màquina vs màquina")){
                     panelContenidos.add(panelAlgorisme1);
+                    panelContenidos.add(panelProfunditatA1);
                     panelContenidos.add(panelAlgorisme2);
+                    panelContenidos.add(panelProfunditatA2);
                 }
 
-                else if (mod.equals("Màquina vs humà")){
-                    panelContenidos.add(panelAlgorisme1);
-                    panelContenidos.remove(panelAlgorisme2);
-                }
-
-                    else{
+                else{
                     panelContenidos.remove(panelAlgorisme1);
                     panelContenidos.remove(panelAlgorisme2);
-
+                    panelContenidos.remove(panelProfunditatA1);
+                    panelContenidos.remove(panelProfunditatA2);
                 }
+
                 panelContenidos.add(panelDificultat, BorderLayout.CENTER);
                 panelContenidos.add(panelTorns, BorderLayout.SOUTH);
                 panelContenidos.add(panelColor);
@@ -162,6 +166,8 @@ public class VistaTipusProblema {
         inicializar_panelDificultat();
         inicialitzar_panelAlgorisme1();
         inicialitzar_panelAlgorisme2();
+        inicializar_panelProfunditatA1();
+        inicializar_panelProfunditatA2();
         asignar_listenersComponentes();
 
 
@@ -261,6 +267,25 @@ public class VistaTipusProblema {
         panelBotones.add(buttonVolver);
         panelBotones.add(buttonJugar);
     }
+
+    private void inicializar_panelProfunditatA1(){
+        String[] stringTorns = {"1","2","3","4","5","6","7"};
+        SpinnerListModel torns = new SpinnerListModel(stringTorns);
+        profunditatA1 = new JSpinner(torns);
+        JLabel label = new JLabel("Profunditat A1");
+        panelProfunditatA1.add(label);
+        panelProfunditatA1.add(profunditatA1);
+    }
+
+    private void inicializar_panelProfunditatA2(){
+        String[] stringTorns = {"1","2","3","4","5","6","7"};
+        SpinnerListModel torns = new SpinnerListModel(stringTorns);
+        profunditatA2 = new JSpinner(torns);
+        JLabel label = new JLabel("Profunditat A2");
+        panelProfunditatA2.add(label);
+        panelProfunditatA2.add(profunditatA2);
+    }
+
 
 
 
