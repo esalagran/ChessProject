@@ -90,7 +90,8 @@ public class CtrlDomain {
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
         String dif = pObert.getDificultat() == null ? "" : pObert.getDificultat().toString();
-        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif,usuariLoggedIn);
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(),
+                dif,usuariLoggedIn.GetNickName());
         CarregarProblemes();
     }
 
