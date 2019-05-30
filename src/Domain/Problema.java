@@ -50,9 +50,11 @@ public class Problema{
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
         ranking = new HashMap<String,Integer>();
+        _creador = "";
+        _dif = Dificultat.mitja;
     }
 
-    public Problema(String FEN, Tema tema, boolean valid, String creador){
+    public Problema(String FEN, Tema tema, boolean valid, String creador, Dificultat dificultat, Map<String, Integer> ranking){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
@@ -63,8 +65,9 @@ public class Problema{
         _guardat = true;
         _valid = valid;
         this.tema = tema;
-        ranking = new HashMap<String,Integer>();
+        this.ranking = ranking;
         _creador = creador;
+        _dif = dificultat;
     }
 
     public String GetCreador(){return _creador;}

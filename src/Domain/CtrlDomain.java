@@ -28,7 +28,7 @@ public class CtrlDomain {
      * */
     public Object[][] JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes) {
         List<Problema> candidates = getCandidates(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
-        if (!candidates.isEmpty()) return null;
+        if (candidates.isEmpty()) return null;
         Algorithm a1 = getTipusAlgorithm(t1, p1);
         Algorithm a2 = getTipusAlgorithm(t2, p2);
         Color guanyador;
@@ -84,7 +84,8 @@ public class CtrlDomain {
         String color;
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
-        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador());
+        String dif = pObert.getDificultat() == null ? "" : pObert.getDificultat().toString();
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif);
         CarregarProblemes();
     }
 
@@ -101,8 +102,8 @@ public class CtrlDomain {
             if (CP.hihaUsuari(info[5].toString()))
                 nickName = info[5].toString();
 
-            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName);
-            aux.setRanking((Map<String, Integer>) info[4]);
+            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
+                    Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
             problemes.add(aux);
         }
     }
@@ -194,8 +195,8 @@ public class CtrlDomain {
                 String nickName = "";
                 if (!CP.hihaUsuari(info[5].toString()))
                     nickName = info[5].toString();
-                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName);
-                pObert.setRanking((Map<String, Integer>) info[4]);
+                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
+                        Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
                 return true;
             }
             else return false;

@@ -31,7 +31,7 @@ public class CtrlPersistence {
      * @param creador Creador del problema
      */
 
-    public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador) {
+    public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador, String dificultat) {
         try {
             if (!hiHaProblema(FEN)) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes2.txt"), true));
@@ -39,6 +39,7 @@ public class CtrlPersistence {
                 writer.append(String.valueOf(njugades) + '\n');    //Guardo numero moviments
                 writer.append(color + '\n');
                 writer.append(creador + '\n');
+                writer.append(dificultat + '\n');
                 writer.append("Fi\n");
                 writer.close();
                 return;
@@ -52,7 +53,7 @@ public class CtrlPersistence {
                         currentLine = reader.readLine();
                         if (currentLine.contains("false") && shaJugat(FEN)) {
                             eliminarProblema(FEN);
-                            guardarProblema(FEN, validesa, njugades,color,creador);
+                            guardarProblema(FEN, validesa, njugades,color,creador, dificultat);
                         }
                     }
                 }
@@ -190,6 +191,7 @@ public class CtrlPersistence {
             String color;
             String creador;
             String s = reader.readLine();
+            String dificultat;
             List<Object[]> problemes = new ArrayList<>();
             while (s != null){
                 fen = s;
@@ -201,6 +203,8 @@ public class CtrlPersistence {
                 color = s;
                 s = reader.readLine();
                 creador = s;
+                s = reader.readLine();
+                dificultat = s;
                 s = reader.readLine();
 
                 Map<String,Integer> r = new HashMap();
@@ -216,7 +220,8 @@ public class CtrlPersistence {
                         pasos,
                         color,
                         r,
-                        creador
+                        creador,
+                        dificultat
                 };
 
                 problemes.add(aux);
@@ -238,6 +243,7 @@ public class CtrlPersistence {
                 int pasos;
                 String color;
                 String creador;
+                String dificultat;
                 String s = reader.readLine();
 
                 while (s != null) {
@@ -251,6 +257,8 @@ public class CtrlPersistence {
                         color = s;
                         s = reader.readLine();
                         creador = s;
+                        s = reader.readLine();
+                        dificultat = s;
 
                         s = reader.readLine();
                         Map<String,Integer> r = new HashMap<String,Integer>();
@@ -266,7 +274,8 @@ public class CtrlPersistence {
                                 pasos,
                                 color,
                                 r,
-                                creador
+                                creador,
+                                dificultat
                         };
 
                         return aux;
