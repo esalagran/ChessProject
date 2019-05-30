@@ -397,9 +397,12 @@ public class TaulerGUI {
 
             if(hasEnded){
                 VistaDialogo vistaDialogo = new VistaDialogo();
-                String[] strBotones = {"Rematch", "Sortir"};
+                String[] strBotones = { "Sortir"};
                 int isel = vistaDialogo.setDialogo("Fi de la partida", CP.EndedReason(),strBotones,3);
-                System.out.println("Resultado del dialogo: " + isel + " " + strBotones[isel]);
+                if(isel == 0){
+                    CP.sincronizacionJugarPartida_a_Menu();
+
+                }
             }
 
 
