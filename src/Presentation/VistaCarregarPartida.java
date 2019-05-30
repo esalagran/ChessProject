@@ -111,6 +111,16 @@ public class VistaCarregarPartida {
                     }
                 });
 
+        buttonEliminar.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.eliminarProblema(llista.getSelectedValue());
+                        String[] str = iCtrlPresentacion.getProblemes();
+                        llista.setListData(str);
+
+                    }
+                });
+
         buttonEditar.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
@@ -209,7 +219,7 @@ public class VistaCarregarPartida {
 
 
     private void inicializar_menubarVista() {
-        
+
     }
 
     private void inicializar_panelContenidos() {

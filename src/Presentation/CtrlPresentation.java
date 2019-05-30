@@ -113,6 +113,9 @@ public class CtrlPresentation {
     }
 
 
+    public void eliminarProblema(String FEN){
+        CD.EliminarProblema(FEN);
+    }
 
     public void setIndexoModalitat(int i){
         vistaModalitatProblema.SetIndex(i);
