@@ -22,7 +22,7 @@ public class Problema{
     private boolean _guardat;
     private Tauler tauler;
     private boolean _valid;
-    //private int movimentsPerGuanyar;
+    private int movimentsPerGuanyar;
     private int nPeces;
     private List<Object[]> ranking;
     private Tema tema;
@@ -290,9 +290,9 @@ return null;
             boolean insert = false;
             for (int i = 0; i < ranking.size(); i++) {
                 Object[] player = ranking.get(i);
-                if ((int) player[1] < puntuacio && !insert){
+                if ((int) player[1] < puntuacio && !insert) {
                     ranking.add(i, newPlayer);
-                    insert  = true;
+                    insert = true;
                 }
             }
             if (!insert) ranking.add(newPlayer);
