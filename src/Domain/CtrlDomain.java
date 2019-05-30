@@ -51,17 +51,21 @@ public class CtrlDomain {
                 //obj[0] indica el gunayador, obj[1] temps/moviments de a1, obj[2] = 0bj[1], pero de a2
                 Object[] obj = pr.MovimentMaquina();
                 result[i][0] = p.GetFEN();
+                result[i][1] = "a1";
+                result[i][2] = obj[1];
+                result[i][3] = "a2";
+                result[i][4] = obj[2];
+
                 result[i][1] = pr.getEstatPartida();
                 result[i][2] = obj[1];
                 result[i][3] = obj[2];
 
                 System.out.println("Problema: " + p.GetFEN());
                 if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
-                    System.out.println("El guanyador ha estat a1 per " + pr.getEstatPartida());
+                    result[i][5] = "a1";
                 else
-                    System.out.println("El guanyador ha estat a2 per " + pr.getEstatPartida());
-                System.out.println("La Maquina a1 ha tardat " + obj[1] + " milisegons de mitjana");
-                System.out.println("La Maquina a2 ha tardat " + obj[2] + " milisegons de mitjana");
+                    result[i][5] = "a2";
+                result[i][6] = pr.getEstatPartida().toString();
             }
         }
         return result;
@@ -415,7 +419,8 @@ public class CtrlDomain {
 
     private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate){
         Random rand = new Random();
-        List<Problema> candidates = getCandidates(dif, torn, jugadesPelMate);
+        int jugades = jugadesPelMate * 2 - 1;
+        List<Problema> candidates = getCandidates(dif, torn, jugades);
         if (candidates.isEmpty()) return null;
         return candidates.get(rand.nextInt(candidates.size()));
     }
@@ -423,8 +428,8 @@ public class CtrlDomain {
     private List<Problema> getCandidates(Dificultat dif, Color torn, int jugadesPelMate){
         List<Problema> candidates = new ArrayList<>();
         for (Problema p : problemes) {
-            if (p.getDificultat().equals(dif) && p.GetTorn().equals(torn) && p.GetMovimentsPerGuanyar() == jugadesPelMate
-            && p.GetValid())
+            if (p.getDificultat().equals(dif) && p.GetTorn().equals(torn) &&
+                    p.GetMovimentsPerGuanyar() == jugadesPelMate && p.GetValid())
                 candidates.add(p);
         }
         return candidates;
