@@ -299,8 +299,8 @@ public class CtrlPersistence {
     public boolean InsertaUsuari(String nickName){
         try{
             if (!hihaUsuari(nickName)){
-                BufferedWriter writer = new BufferedWriter(new FileWriter("localData/usuaris.txt"));
-                writer.write(nickName);
+                BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/usuaris.txt"), true));
+                writer.append(nickName);
                 writer.close();
                 return true;
             }
