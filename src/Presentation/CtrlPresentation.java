@@ -276,8 +276,8 @@ public class CtrlPresentation {
         CD.GuardarProblema();
     }
 
-    public boolean ValidarProblema(){
-        return CD.ValidarProblema();
+    public boolean ValidarProblema(int profunditat, boolean torn){
+        return CD.ValidarProblema(profunditat, torn);
     }
 
     public String GetFENProblema(){
@@ -291,16 +291,6 @@ public class CtrlPresentation {
     public FitxaProblema[][] TornMaquina(){
         return CD.TornMaquina();
     }
-
-
-
-
-
-
-
-
-
-
 
 
     public void dibuixaTauler(FitxaProblema[][] tauler){

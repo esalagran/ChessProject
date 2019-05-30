@@ -92,27 +92,27 @@ public class Tauler {
      */
     public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
         if(f!= null){
-        try {
-            char key = ParTipusPeçaBoolToChar(f.getIFitxa(), f.GetColor());
+            try {
+                char key = ParTipusPeçaBoolToChar(f.getIFitxa(), f.GetColor());
 
-            int value = _numTipusFitxa.get(key);
-            if (value < _pecesMax.get(Character.toLowerCase(key))){
-                if (taulell[coord.GetFirst()][coord.GetSecond()] == null) {
-                    taulell[coord.GetFirst()][coord.GetSecond()] = f;
-                    f.SetCoordenades(coord);
-                    _numTipusFitxa.put(key, value + 1);
-                    if (f.getIFitxa() instanceof Rei) {
-                        if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
-                        else setBlackKing(f);
+                int value = _numTipusFitxa.get(key);
+                if (value < _pecesMax.get(Character.toLowerCase(key))){
+                    if (taulell[coord.GetFirst()][coord.GetSecond()] == null) {
+                        taulell[coord.GetFirst()][coord.GetSecond()] = f;
+                        f.SetCoordenades(coord);
+                        _numTipusFitxa.put(key, value + 1);
+                        if (f.getIFitxa() instanceof Rei) {
+                            if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
+                            else setBlackKing(f);
+                        }
+                    } else {
+                        System.out.println("Ja hi ha una peça a l'origen");
                     }
-                } else {
-                    System.out.println("Ja hi ha una peça a l'origen");
+                }
+                else {
+                    System.out.println("S'ha superat el nombre màxim de peces");
                 }
             }
-            else {
-                System.out.println("S'ha superat el nombre màxim de peces");
-            }
-        }
         catch (Exception ex){
                 ex.printStackTrace();
         }

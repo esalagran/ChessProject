@@ -7,12 +7,6 @@
 
 package Domain;
 
-import javax.net.ssl.KeyManager;
-import java.io.BufferedReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.charset.IllegalCharsetNameException;
-import java.security.KeyPair;
 import java.util.*;
 
 /**
@@ -32,7 +26,8 @@ public class Problema{
     private int nPeces;
     private Map<String,Integer> ranking;
     private Tema tema;
-    private Huma _creador;
+    //private Huma _creador;
+    private String _creador;
 
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -57,7 +52,7 @@ public class Problema{
         ranking = new HashMap<String,Integer>();
     }
 
-    public Problema(String FEN, Tema tema,boolean valid){
+    public Problema(String FEN, Tema tema, boolean valid, String creador){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
@@ -65,14 +60,16 @@ public class Problema{
         }
         tauler = FENtoTauler();
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
+        _guardat = true;
         _valid = valid;
         this.tema = tema;
         ranking = new HashMap<String,Integer>();
+        _creador = creador;
     }
 
-    public Huma GetCreador(){return _creador;}
+    public String GetCreador(){return _creador;}
 
-    public void SetCreador(Huma creador) {_creador = creador;}
+    public void SetCreador(String creador) {_creador = creador;}
 
     public Tema getTema() {return tema;}
 
@@ -114,6 +111,7 @@ public class Problema{
         try {
             tauler.AfegirPeçaAt(desti, new FitxaProblema(tp, desti, c));
             nPeces +=1;
+            _valid = false;
             return tauler.getTaulell();
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,6 +127,7 @@ public class Problema{
     public FitxaProblema[][] EliminarPeça(ParInt origen){
         try{
             tauler.EliminarPeçaAt(origen);
+            _valid = false;
             nPeces-=1;
             return tauler.getTaulell();
         }
@@ -162,7 +161,7 @@ return null;
             if (tauler.FitxaAt(desti) == null) {
                 tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
                 tauler.AfegirPeçaAt(origen, null);
-
+                _valid = false;
                 return tauler.getTaulell();
 
 
@@ -193,17 +192,19 @@ return null;
      * \post: si el problema es valid es posa _valid a true i es guarda la profuncitat del problema
      * @return
      */
-    public boolean validarProblema (){
-        Algorisme aux = new Algorisme();
-        _valid = aux.validarProblema(torn,tauler);
+    public boolean validarProblema (int numJugades, Color jugador){
+        int profunditat = numJugades * 2 - 1;
+        Algorithm aux = new AlgorismeAlfaBeta(profunditat);
+        _valid = aux.validateProblem(tauler, jugador, profunditat);
         if(_valid){
             movimentsPerGuanyar = aux.getDepth();
-            setDificultat();
+            setDificultat(numJugades);
+            torn = jugador;
         }
         return _valid;
     }
 
-    public void setDificultat(){
+    public void setDificultat(int moviments){
         ParInt peces = getNPeces(); //First: Blanques Second: Negres
         if (movimentsPerGuanyar < 2) _dif = Dificultat.moltfacil;
         else if (torn == Color.blanc && peces.GetFirst()/2 >= peces.GetSecond()) _dif = Dificultat.moltfacil;

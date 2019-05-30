@@ -16,26 +16,26 @@ public class DriverCtrlPersistance {
     public static void start(int cas) {
             switch (cas) {
                 case 1:
-                    Problema aux = new Problema("2B5/2p1B1nn/2PR2p1/1K2k3/1p2p3/2b1P3/5R2/8",new Tema(4, Color.blanc), true);
+                    Problema aux = new Problema("2B5/2p1B1nn/2PR2p1/1K2k3/1p2p3/2b1P3/5R2/8",new Tema(4, Color.blanc), true, "");
                     aux.inscriureRanking("Joan",200);
                     aux.inscriureRanking("fff",203);
                     aux.inscriureRanking("fluf",202);
-                    a.guardarProblema(aux);
-                    aux = new Problema("3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5",new Tema(3, Color.blanc), true);
+                    a.guardarProblema(aux.GetFEN(), aux.GetValid(), aux.GetMovimentsPerGuanyar(), aux.GetTorn().toString(), aux.GetCreador());
+                    aux = new Problema("3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5",new Tema(3, Color.blanc), true, "");
                     aux.inscriureRanking("Joan",5764);
                     aux.inscriureRanking("fff",457);
                     aux.inscriureRanking("fluf",24574);
-                    a.guardarProblema(aux);
-                    aux = new Problema("8/5K2/5p2/5Qbk/8/8/5P2/8",new Tema(7, Color.negre), false);
-                    a.guardarProblema(aux);
+                    a.guardarProblema(aux.GetFEN(), aux.GetValid(), aux.GetMovimentsPerGuanyar(), aux.GetTorn().toString(), aux.GetCreador());
+                    aux = new Problema("8/5K2/5p2/5Qbk/8/8/5P2/8",new Tema(7, Color.negre), false, "");
+                    a.guardarProblema(aux.GetFEN(), aux.GetValid(), aux.GetMovimentsPerGuanyar(), aux.GetTorn().toString(), aux.GetCreador());
                     break;
                 case 2:
                     a.eliminarProblema("3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5");
                     break;
                 case 3:
-                    List<Problema> fuck = a.GetProblemes();
-                    for (Problema p : fuck){
-                        System.out.println(p.GetFEN() + '\n');
+                    List<Object[]> fuck = a.GetProblemes();
+                    for (Object[] p : fuck){
+                        System.out.println(p[0].toString() + '\n');
                     }
                     break;
                 case 4:

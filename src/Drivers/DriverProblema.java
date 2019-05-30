@@ -82,7 +82,7 @@ public class DriverProblema {
     }
 
     static void GetValidesa(){
-        p.validarProblema();
+        p.validarProblema(0, Color.blanc);
         if(p.GetValid())
             System.out.println("El problema introduit es valid");
         else
@@ -131,7 +131,7 @@ public class DriverProblema {
 
     static  void ValidarProblema(){
 
-        p.validarProblema();
+        p.validarProblema(0, Color.negre);
         if(p.GetValid())
             System.out.println("El problema introduit es valid");
         else

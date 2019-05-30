@@ -1,9 +1,7 @@
 package Persistence;
-import Domain.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @class CtrlPersistence
@@ -192,7 +190,7 @@ public class CtrlPersistence {
             String color;
             String creador;
             String s = reader.readLine();
-            List<Object[]> problemes = null;
+            List<Object[]> problemes = new ArrayList<>();
             while (s != null){
                 fen = s;
                 s = reader.readLine();
@@ -205,8 +203,8 @@ public class CtrlPersistence {
                 creador = s;
                 s = reader.readLine();
 
-                Map<String,Integer> r = new HashMap<String,Integer>();
-                while (!s.contains("Fi")){
+                Map<String,Integer> r = new HashMap();
+                while (s != null && !s.contains("Fi")){
                     String [] parts = s.split("/");
                     r.put(parts[0],Integer.parseInt(parts[1]));
                     s = reader.readLine();
@@ -284,25 +282,35 @@ public class CtrlPersistence {
         return null;
     }
 
-    public void hihaUsuari(String nickname){
+    public boolean InsertaUsuari(String nickName){
+        try{
+            if (!hihaUsuari(nickName)){
+                BufferedWriter writer = new BufferedWriter(new FileWriter("localData/usuaris.txt"));
+                writer.write(nickName);
+                writer.close();
+                return true;
+            }
+            return false;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public boolean hihaUsuari(String nickname){
         try {
             BufferedReader reader = new BufferedReader(new FileReader("localData/usuaris.txt"));
             String s = reader.readLine();
-            boolean trobat = false;
-
-            while (s != null && !trobat){
-                if (s.contains(nickname)) trobat = true;
+            while (s != null){
+                if (s.contains(nickname)) return true;
             }
 
             reader.close();
-
-            if (!trobat){
-                BufferedWriter writer = new BufferedWriter(new FileWriter("localData/usuaris.txt"));
-                writer.write(nickname);
-                writer.close();
-            }
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

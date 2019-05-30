@@ -1,5 +1,7 @@
 package Domain;
 
+import Presentation.CtrlPresentation;
+
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class CtrlDomain {
 
     public CtrlDomain() {
         CP = new Persistence.CtrlPersistence();
-        problemes = CP.GetProblemes();
+        CarregarProblemes();
     }
 
     /**
@@ -74,19 +76,24 @@ public class CtrlDomain {
         String color;
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
-        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador().GetNickName());
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador());
     }
 
     public void CarregarProblemes(){
         List<Object[]> p = CP.GetProblemes();
-        problemes = null;
+        problemes = new ArrayList<>();
         for (Object[] info : p){
             Color color;
             if (((String) info[3]).contains("blanc")) color = Color.blanc;
             else color = Color.negre;
-            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1]);
+
+            //mira si hi ha un usuari amb nickname info[5], si no hi és significa que el problema existia per defecte
+            String nickName = "";
+            if (CP.hihaUsuari(info[5].toString()))
+                nickName = info[5].toString();
+
+            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName);
             aux.setRanking((Map<String, Integer>) info[4]);
-            aux.SetCreador(new Huma ((String) info[5]));
             problemes.add(aux);
         }
     }
@@ -173,9 +180,11 @@ public class CtrlDomain {
                 Color color;
                 if (((String) info[3]).contains("blanc")) color = Color.blanc;
                 else color = Color.negre;
-                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1]);
+                String nickName = "";
+                if (!CP.hihaUsuari(info[5].toString()))
+                    nickName = info[5].toString();
+                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName);
                 pObert.setRanking((Map<String, Integer>) info[4]);
-                pObert.SetCreador(new Huma ((String) info[5]));
                 return true;
             }
             else return false;
@@ -235,8 +244,10 @@ public class CtrlDomain {
     }
 
     public FitxaProblema[][] ImportarProblema(String FEN){
-        GuardarProblema();
-        TancarProblema();
+        if (pObert != null){
+            GuardarProblema();
+            TancarProblema();
+        }
         CreaProblema(FEN);
         FitxaProblema[ ][ ] t = pObert.getTauler().getTaulell();
         for (int i = 0; i< t.length; i++){
@@ -320,10 +331,11 @@ public class CtrlDomain {
      * \pre pObert no pot ser null
      * \post S'hda validat el problema i es mostra si és valid o no
      */
-    public boolean ValidarProblema() {
+    public boolean ValidarProblema(int profunditat, boolean torn) {
         boolean valid = false;
+        Color jugador = (torn)? Color.blanc : Color.negre;
         try {
-            valid = pObert.validarProblema();
+            valid = pObert.validarProblema(profunditat, jugador);
             if (pObert.GetValid()) System.out.println("El problema és valid");
             else System.out.println("El problema no és valid");
         } catch (NullPointerException ex) {

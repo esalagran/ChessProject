@@ -270,9 +270,11 @@ public class VistaTipusProblema {
     }
 
     private void inicializar_panelDificultat(){
+        dificultat.addItem("Moltfàcil");
         dificultat.addItem("Fàcil");
         dificultat.addItem("Mitjà");
         dificultat.addItem("Difícil");
+        dificultat.addItem("MoltDifícil");
         JLabel label = new JLabel("Dificultat");
         panelDificultat.add(label);
         panelDificultat.add(dificultat);

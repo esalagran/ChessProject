@@ -150,7 +150,7 @@ public class DriverCtrlDomain{
                     ctrlDomain.TancarProblema();
                     break;
                 case 6:
-                    ctrlDomain.ValidarProblema();
+                    ctrlDomain.ValidarProblema(0,true);
                     break;
                 case 7:
                     AfegirPeça();

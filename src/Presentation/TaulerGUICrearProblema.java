@@ -210,7 +210,7 @@ public class TaulerGUICrearProblema {
         validarButton.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        if(CP.ValidarProblema()){
+                        if(CP.ValidarProblema(4, true)){
                             VistaDialogo vistaDialogo = new VistaDialogo();
                             String[] strBotones = {"Acceptar", "Tornar"};
                             int isel = vistaDialogo.setDialogo("Validar problema", "El problema és vàlid",strBotones,3);
