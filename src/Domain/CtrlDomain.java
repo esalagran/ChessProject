@@ -71,11 +71,24 @@ public class CtrlDomain {
     }
 
     public void GuardarProblema(){
-        CP.guardarProblema(pObert);
+        String color;
+        if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
+        else color = "negre";
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador().GetNickName());
     }
 
     public void CarregarProblemes(){
-        problemes = CP.GetProblemes();
+        List<Object[]> p = CP.GetProblemes();
+        problemes = null;
+        for (Object[] info : p){
+            Color color;
+            if (((String) info[3]).contains("blanc")) color = Color.blanc;
+            else color = Color.negre;
+            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1]);
+            aux.setRanking((Map<String, Integer>) info[4]);
+            aux.SetCreador(new Huma ((String) info[5]));
+            problemes.add(aux);
+        }
     }
 
     public String[] GetProblemes(){
@@ -149,12 +162,28 @@ public class CtrlDomain {
     /**
      * \pre: FEN conté el codi FEN del problema que es vol carregar
      * \post: En cas que no hi hagi cap problema obert, es carregar
-     * el problema del codi FEN, altrament, es mostra un missatge*/
-    public void CarregarProblema(String FEN) {
-        if (pObert == null)
-            pObert = CP.carregaProblema(FEN);
-        else
+     * el problema del codi FEN, altrament, es mostra un missatge
+     * @return Retorna cert si carrega exitosament, retorna fals altrament
+     */
+    public boolean CarregarProblema(String FEN) {
+        if (pObert == null) {
+            Object[] info = CP.carregaProblema(FEN);
+            //info conte: FEN, validesa, jugades pel mat, color que realitza el mat, ranking
+            if (info != null) {
+                Color color;
+                if (((String) info[3]).contains("blanc")) color = Color.blanc;
+                else color = Color.negre;
+                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1]);
+                pObert.setRanking((Map<String, Integer>) info[4]);
+                pObert.SetCreador(new Huma ((String) info[5]));
+                return true;
+            }
+            else return false;
+        }
+        else {
             System.out.println("Primer has de tancar el problema");
+            return false;
+        }
     }
 
     /**
