@@ -28,7 +28,9 @@ public class VistaCarregarPartida {
     private JTextField contraseñaField = new JPasswordField(10);
     private JButton buttonJugar= new JButton("Jugar");
     private JButton buttonEditar= new JButton("Editar");
-    private JButton buttonVolver= new JButton("Volver");
+    private JButton buttonVolver= new JButton("Tornar");
+    private JButton buttonEliminar= new JButton("Eliminar");
+
     private JList<String> llista = new JList<String>();
 
 
@@ -177,6 +179,7 @@ public class VistaCarregarPartida {
 
         // Buttons
         panelBotones.add(buttonVolver);
+        panelBotones.add(buttonEliminar);
         panelBotones.add(buttonEditar);
         panelBotones.add(buttonJugar);
         // Tooltips

@@ -69,7 +69,7 @@ public class VistaModalitatProblema {
 //////////////////////// Metodos de las interfaces Listener
 
     public void actionPerformed_buttonVolver (ActionEvent event) {
-        iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
+        iCtrlPresentacion.sincronizacionVistaMod_a_Llista();
     }
 
     public void actionPerformed_buttonJugar (ActionEvent event) {
@@ -206,7 +206,13 @@ public class VistaModalitatProblema {
         frameVista.setResizable(true);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                iCtrlPresentacion.sincronizacionVistaMod_a_Llista();
+            }
+        });
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();

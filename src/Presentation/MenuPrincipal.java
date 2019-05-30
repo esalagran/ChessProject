@@ -216,7 +216,7 @@ public class MenuPrincipal {
         buttonVeureRanking.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Buttons
-        int n  = 40; //SPACING
+        int n = 40; //SPACING
         panelBotones.add(Box.createVerticalStrut(20));
         panelBotones.add(buttonJugarPartida);
         panelBotones.add(Box.createVerticalStrut(n));
@@ -226,10 +226,6 @@ public class MenuPrincipal {
         panelBotones.add(Box.createVerticalStrut(n));
         panelBotones.add(buttonVeureRanking);
         // Tooltips
-        buttonJugarPartida.setToolTipText("Llama al controlador de dominio con la informacion del ComboBox");
-        buttonCarregarProblema.setToolTipText("Abre una nueva ventana sincronizada");
-        buttonCrearProblema.setToolTipText("Cambia el panel de informacion");
-        buttonVeureRanking.setToolTipText("Abre un Dialogo modal simple");
     }
 
 }
