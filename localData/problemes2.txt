@@ -16,13 +16,76 @@ Fi
 false
 6
 blanc
-
+root
 mitja
 Fi
-2k5/7Q/8/2K5/8/8/8/8 w - - 0 1
+3K4/8/8/p2k4/pp1B4/N5N1/P2Q4/8 w - - 0 1
+true
+7
+blanc
+root
+mitja
+Fi
+1q2r2k/1b3p1p/p4Pp1/1p1Pp1P1/n3P2Q/2R2B2/PP5P/3R3K w - - 0 1
+false
+6
+blanc
+root
+mitja
+Fi
+2bqkbn1/2pppp2/np2N3/r3P1p1/p2N2B1/5Q2/PPPPKPP1/R1B2r2 w - - 0 1
+true
+7
+blanc
+root
+moltdificil
+Fi
+k1r2r2/nb6/3Qp3/R3N1B1/1p1P3P/8/PP4BK/4q3 w - - 0 1
+true
+7
+blanc
+root
+dificil
+Fi
+7k/3rpp2/2r4p/q1p1pPP1/p1P1P1pQ/PpNP4/1P5R/6K1 w - - 0 1
+true
+7
+blanc
+root
+dificil
+Fi
+3r4/3n1k2/2p5/p1Pp4/P4P2/6QP/q7/6RK w - - 0 1
+true
+7
+blanc
+root
+moltdificil
+Fi
+rnb1k1nr/ppp2ppp/8/8/2N1p2q/2N3b1/PPPPK2P/R1BQ1B1R w - - 0 1
+false
+6
+negre
+root
+mitja
+Fi
+2B5/2p1B1nn/2PR2p1/1K2k3/1p2p3/2b1P3/5R2/8 w - - 0 1
+true
+7
+blanc
+root
+dificil
+Fi
+3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5 w - - 0 1
 true
 3
 blanc
-dfsf
+root
 moltfacil
+Fi
+8/5K2/5p2/5Qbk/8/8/5P2/8 w - - 0 1
+true
+7
+blanc
+root
+dificil
 Fi

@@ -24,9 +24,8 @@ public class Problema{
     private boolean _valid;
     //private int movimentsPerGuanyar;
     private int nPeces;
-    private Map<String,Integer> ranking;
+    private List<Object[]> ranking = new ArrayList<Object[]>();
     private Tema tema;
-    //private Huma _creador;
     private String _creador;
 
 
@@ -39,12 +38,11 @@ public class Problema{
         tauler = FENtoTauler();
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
-        ranking = new HashMap<String,Integer>();
         _creador = creador;
         _dif = Dificultat.mitja;
     }
 
-    public Problema(String FEN, Tema tema, boolean valid, String creador, Dificultat dificultat, Map<String, Integer> ranking){
+    public Problema(String FEN, Tema tema, boolean valid, String creador, Dificultat dificultat, List<Object[]> ranking){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
@@ -192,22 +190,33 @@ return null;
     }
 
     public void setDificultat(int moviments){
-        ParInt peces = getNPeces(); //First: Blanques Second: Negres
-        if (tema.getMovimentsFinsMat() < 2) _dif = Dificultat.moltfacil;
-        else if (torn == Color.blanc && peces.GetFirst()/2 >= peces.GetSecond()) _dif = Dificultat.moltfacil;
-        else if (torn == Color.negre && peces.GetSecond()/2 >= peces.GetFirst()) _dif = Dificultat.moltfacil;
+        int puntuacioTauler = tauler.EstimaPuntuacio(torn);
 
-        else if (tema.getMovimentsFinsMat() < 3) _dif = Dificultat.facil;
-        else if (tema.getMovimentsFinsMat() < 3 && torn == Color.blanc && peces.GetFirst() >= 4) _dif = Dificultat.facil;
-        else if (tema.getMovimentsFinsMat() < 3 && torn == Color.negre && peces.GetSecond() >= 4) _dif = Dificultat.facil;
-
-        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.blanc && peces.GetFirst() < 4) _dif = Dificultat.mitja;
-        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.negre && peces.GetSecond() < 4) _dif = Dificultat.mitja;
-
-        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.blanc && peces.GetFirst() < peces.GetSecond()) _dif = Dificultat.dificil;
-        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.negre && peces.GetFirst() > peces.GetSecond()) _dif = Dificultat.dificil;
-
-        else _dif = Dificultat.moltdificil;
+        switch (moviments){
+            case 1:
+                if (puntuacioTauler < -4) _dif = Dificultat.facil;
+                else _dif = Dificultat.moltfacil;
+                break;
+            case 3:
+                if (puntuacioTauler > 4) _dif = Dificultat.moltfacil;
+                else if (puntuacioTauler < -4) _dif = Dificultat.mitja;
+                else _dif = Dificultat.facil;
+                break;
+            case 5:
+                if (puntuacioTauler > 4) _dif = Dificultat.facil;
+                else if (puntuacioTauler < -4) _dif = Dificultat.dificil;
+                else _dif = Dificultat.mitja;
+                break;
+            case 7:
+                if (puntuacioTauler > 4) _dif = Dificultat.mitja;
+                else if (puntuacioTauler < -4) _dif = Dificultat.moltdificil;
+                else _dif = Dificultat.dificil;
+                break;
+            case 9:
+                if (puntuacioTauler < -4) _dif = Dificultat.dificil;
+                else _dif = Dificultat.moltdificil;
+                break;
+        }
     }
 
 
@@ -268,22 +277,27 @@ return null;
      * @param puntuacio Puntuacio del jugador
      */
     public void inscriureRanking (String nomJugador, int puntuacio){
-        if (ranking.containsKey(nomJugador)) {
-            if (ranking.get(nomJugador) < puntuacio) ranking.replace(nomJugador, puntuacio);
-        }
+        Object[] newPlayer = new Object[] {
+            nomJugador,
+            puntuacio
+        };
+        if (ranking.size() == 0) ranking.add(newPlayer);
         else {
-            ranking.put(nomJugador,puntuacio);
+            boolean insert = false;
+            for (int i = 0; i < ranking.size(); i++) {
+                Object[] player = ranking.get(i);
+                if ((int) player[1] < puntuacio){
+                    ranking.add(i, newPlayer);
+                    insert  = true;
+                }
+            }
+            if (!insert) ranking.add(newPlayer);
         }
     }
 
-    public Map<String,Integer> getRanking(){return ranking;}
+    public List<Object[]> getRanking(){return ranking;}
 
-    public void setRanking(Map<String,Integer> r){ranking = r;}
-
-    public Integer consultarPuntuacioJugador(String nickname) {
-        return ranking.get(nickname);
-    }
-
+    public void setRanking(List<Object[]> r){ranking = r;}
 
     //FEN-TAULER FUNCTIONS
 

@@ -2,7 +2,6 @@ package Domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class CtrlDomain {
@@ -68,9 +67,9 @@ public class CtrlDomain {
                 Object[] obj = pr.MovimentMaquina();
                 result[i][0] = p.GetFEN();
                 result[i][1] = t1;
-                result[i][2] = obj[1];
+                result[i][2] = obj[1] + "ms";
                 result[i][3] = t2;
-                result[i][4] = obj[2];
+                result[i][4] = obj[2] + "ms";
 
                 System.out.println("Problema: " + p.GetFEN());
                 if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
@@ -78,6 +77,7 @@ public class CtrlDomain {
                 else
                     result[i][5] = "a2";
                 result[i][6] = pr.getEstatPartida().toString();
+                System.out.println(result[i][6]);
             }
         }
         return result;
@@ -121,7 +121,7 @@ public class CtrlDomain {
                 nickName = info[5].toString();
 
             Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
-                    Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
+                    Convert.StringToDificultat(info[6].toString()), (List<Object[]>) info[4]);
             problemes.add(aux);
         }
     }
@@ -135,9 +135,18 @@ public class CtrlDomain {
     }
 
 
-    public void Ranking(String FEN, String nickname, int puntucacio)
+    public void afegirRanking(String FEN, String nickname, int puntucacio)
     {
         CP.afegirJugadorProblema(FEN, nickname, puntucacio);
+    }
+
+    public List<Object[]> getRanking(String FEN){
+        for(Problema p : problemes){
+            if (p.GetFEN().contains(FEN) || FEN.contains(p.GetFEN())){
+                return p.getRanking();
+            }
+        }
+        return null;
     }
 
     public void Login (String str){
@@ -160,7 +169,7 @@ public class CtrlDomain {
         /*if(random){
             List<Problema> valids = getValids();
             Random rand = new Random();
-            p = valids.get(rand.nextInt(problemes.size() - 1));
+            p = valids.get(rand.nextInt(problemes.size()));
         }
         else{
             p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
@@ -184,7 +193,7 @@ public class CtrlDomain {
 
            List<Problema> valids = getValids();
            Random rand = new Random();
-           p = valids.get(rand.nextInt(problemes.size() - 1));
+           p = valids.get(rand.nextInt(problemes.size()));
         }
         else{
             p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
@@ -247,15 +256,13 @@ public class CtrlDomain {
                 if (!CP.hihaUsuari(info[5].toString()))
                     nickName = info[5].toString();
                 pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
-                        Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
+                        Convert.StringToDificultat(info[6].toString()), (List<Object[]>) info[4]);
                 return true;
             }
             else return false;
         }
-        else {
-            System.out.println("Primer has de tancar el problema");
+        else
             return false;
-        }
     }
 
     /**
@@ -419,10 +426,6 @@ public class CtrlDomain {
 
     public Tauler getTaulerPartidaEnJoc() {
         return partidaEnJoc.getProblemaEnJoc().getTauler();
-    }
-
-    public Map<String,Integer> getRanking(Problema p){
-        return p.getRanking();
     }
 
     public Dificultat getDificultat(Problema p){

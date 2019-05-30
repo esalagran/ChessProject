@@ -86,6 +86,7 @@ public class MenuPrincipal {
     }
 
     public void actionPerformed_buttonVeureRanking (ActionEvent event) {
+        iCtrlPresentacion.sincronizacionVistaMenu_a_TriarRanking();
 
     }
 

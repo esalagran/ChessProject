@@ -1,7 +1,5 @@
 package Presentation;
 
-import Domain.FitxaProblema;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +7,7 @@ import java.awt.event.ActionListener;
 
 ////////////////////////
 
-public class VistaMaquinaVSmaquina {
+public class VistaRanking {
 
     // Controlador de presentacion
     private CtrlPresentation iCtrlPresentacion;
@@ -28,14 +26,7 @@ public class VistaMaquinaVSmaquina {
     private JButton buttonJugar= new JButton("Jugar");
     private JButton buttonEditar= new JButton("Editar");
     private JButton buttonVolver= new JButton("Volver");
-    private String[] columnNames = {"Problema",
-            "Algorisme1",
-            "Temps1",
-            "Algorsime2",
-            "Temps2",
-            "Guanyador","Motiu"
-
-    };
+    private String[] columnNames = {"Nom usuari", "Puntuació"};
     private JTable taula;
 
     // Menus
@@ -51,7 +42,7 @@ public class VistaMaquinaVSmaquina {
 //////////////////////// Constructor y metodos publicos
 
 
-    public VistaMaquinaVSmaquina(CtrlPresentation pCtrlPresentacion, Object[][] data) {
+    public VistaRanking(CtrlPresentation pCtrlPresentacion, Object[][] data) {
 
         iCtrlPresentacion = pCtrlPresentacion;
         taula = new JTable(data, columnNames);
@@ -86,7 +77,6 @@ public class VistaMaquinaVSmaquina {
 
 
 
-
 //////////////////////// Asignacion de listeners
 
 
@@ -97,7 +87,7 @@ public class VistaMaquinaVSmaquina {
         buttonVolver.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.sincronizacionVistaMaquinaVSmaquina_a_Menu();
+                        iCtrlPresentacion.sincronizacionVistaRanking_a_Triar();
                     }
                 });
 
@@ -142,6 +132,8 @@ public class VistaMaquinaVSmaquina {
 
         // Buttons
         panelBotones.add(buttonVolver);
+        panelBotones.add(buttonEditar);
+        panelBotones.add(buttonJugar);
         // Tooltips
     }
 
@@ -156,8 +148,7 @@ public class VistaMaquinaVSmaquina {
         frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                iCtrlPresentacion.sincronizacionVistaMaquinaVSmaquina_a_Menu();
-
+                iCtrlPresentacion.sincronizacionVistaCarregar_a_Menu();
             }
         });
 

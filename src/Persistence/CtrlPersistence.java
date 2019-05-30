@@ -66,7 +66,7 @@ public class CtrlPersistence {
                 return;
             }
         } catch (Exception e) {
-            System.out.println("ERROR: " + e);
+            e.printStackTrace();
         }
     }
 
@@ -75,7 +75,7 @@ public class CtrlPersistence {
      * @param FEN Codi FEN del problema a eliminar
      */
 
-    public void eliminarProblema(String FEN){
+    public boolean eliminarProblema(String FEN){
         try{
             if (hiHaProblema(FEN)){
                 File temp = new File("localData/problemestemp.txt");
@@ -95,11 +95,13 @@ public class CtrlPersistence {
                 writer.close();
                 reader.close();
                 temp.renameTo(input);
+                return true;
             }
-            else System.out.println ("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
+            else return false;
         } catch (Exception e){
             e.printStackTrace();
         }
+        return false;
     }
 
 
@@ -137,10 +139,7 @@ public class CtrlPersistence {
                 temp.renameTo(input);
                 return trobat;
             }
-            else {
-                System.out.println("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
-                return false;
-            }
+            else return false;
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -171,16 +170,10 @@ public class CtrlPersistence {
                 writer.close();
                 reader.close();
                 temp.renameTo(input);
-                if (!trobat){
-                    System.out.println("No existeix el jugador " + nickname + " per aquest problema");
-                    return false;
-                }
+                if (!trobat) return false;
                 return true;
             }
-            else{
-                System.out.println("No s'ha pogut eliminar el problema ja que no existeix a la base de dades");
-                return false;
-            }
+            else return false;
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -212,10 +205,14 @@ public class CtrlPersistence {
                 dificultat = s;
                 s = reader.readLine();
 
-                Map<String,Integer> r = new HashMap();
+                List<Object[]> r = null;
                 while (s != null && !s.contains("Fi")){
                     String [] parts = s.split("/");
-                    r.put(parts[0],Integer.parseInt(parts[1]));
+                    Object [] player = new Object[] {
+                            parts[0],
+                            Integer.parseInt(parts[1])
+                    };
+                    r.add(player);
                     s = reader.readLine();
                 }
 
@@ -266,13 +263,16 @@ public class CtrlPersistence {
                         dificultat = s;
 
                         s = reader.readLine();
-                        Map<String,Integer> r = new HashMap<String,Integer>();
+                        List<Object[]> r = null;
                         while (!s.contains("Fi")){
                             String [] parts = s.split("/");
-                            r.put(parts[0],Integer.parseInt(parts[1]));
+                            Object [] player = new Object[] {
+                                    parts[0],
+                                    Integer.parseInt(parts[1])
+                            };
+                            r.add(player);
                             s = reader.readLine();
                         }
-
                         Object[] aux = new Object[] {
                                 fen,
                                 valid,
@@ -282,7 +282,6 @@ public class CtrlPersistence {
                                 creador,
                                 dificultat
                         };
-
                         return aux;
                     }
                     s = reader.readLine();
@@ -373,4 +372,3 @@ public class CtrlPersistence {
         return false;
     }
 }
-
