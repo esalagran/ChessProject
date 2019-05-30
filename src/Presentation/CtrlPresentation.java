@@ -244,6 +244,16 @@ public class CtrlPresentation {
 
     }
 
+    public void sincronizacionVistaModalitatAmaquinaVSmaquina(Object[][] res){
+
+        vistaModalitatProblema.desactivar();
+        vistaModalitatProblema.visible(false);
+        vistaMM = new VistaMaquinaVSmaquina(this, res);
+        vistaMM.activar();
+        vistaMM.visible(true);
+
+    }
+
 
     public boolean crearPartida(String[] paramsPartida, boolean rand, int index){
         Color torn;
@@ -253,14 +263,18 @@ public class CtrlPresentation {
                         paramsPartida[4],paramsPartida[5], TryParseInt(paramsPartida[6]),
                         TryParseInt(paramsPartida[7]), TryParseInt(paramsPartida[8]),rand, index);
                         if(resultat!= null && resultat[0].length != 0){
-                            sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
+                            if (index == -1)
+                                sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
+                            else
+                                sincronizacionVistaModalitatAmaquinaVSmaquina(resultat);
+
                             return true;
                         }
                         else return false;
             case "Humà vs màquina":
 
                 torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], TryParseInt(paramsPartida[6]), false, rand, index);
+                        paramsPartida[4], TryParseInt(paramsPartida[5]), false, rand, index);
                 if(torn!=null){
                     if (index == -1)
                         sincronizacionVistaTipus_a_Tauler(torn);
@@ -272,7 +286,7 @@ public class CtrlPresentation {
                 break;
             case "Màquina vs humà":
                 torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], TryParseInt(paramsPartida[6]), true, rand, index);
+                        paramsPartida[4], TryParseInt(paramsPartida[5]), true, rand, index);
                 if(torn!=null){
                     if (index == -1)
                         sincronizacionVistaTipus_a_Tauler(torn);

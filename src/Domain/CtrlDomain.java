@@ -182,7 +182,7 @@ public class CtrlDomain {
         return p.GetTorn();
     }
 
-    public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate, String nickname,
+    public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate,
                                 String algName, int profunditat, boolean isMachine1, boolean random, int index){
 
         Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate, index, random);
@@ -202,10 +202,10 @@ public class CtrlDomain {
         if (isMachine1){
             //new Huma s'ha de canviar per una cerca a la base de dades d'usuari. En aquest cas hi ha de ser sempre
             //ja que és l'usuari que s'ha registrat
-            partidaEnJoc = new PartidaHM(p, getTipusAlgorithm(algName, profunditat), new Huma(nickname));
+            partidaEnJoc = new PartidaHM(p, getTipusAlgorithm(algName, profunditat), usuariLoggedIn);
         }
         else{
-            partidaEnJoc = new PartidaHM(p, new Huma(nickname), getTipusAlgorithm(algName, profunditat));
+            partidaEnJoc = new PartidaHM(p, usuariLoggedIn, getTipusAlgorithm(algName, profunditat));
         }
         return p.GetTorn();
     }
@@ -437,19 +437,6 @@ public class CtrlDomain {
         else return d;
     }
 
-    private PartidaRefactor CreaPartida (Modalitat m, Problema p, String nickname, String nickname2, int p1, int p2){
-        switch (m){
-            case MM:
-                return new PartidaMM(p, getTipusAlgorithm(nickname, p1), getTipusAlgorithm(nickname2, p2));
-            case HH:
-                return new PartidaHH(p, new Huma(nickname), new Huma(nickname2));
-            case HM:
-                return  new PartidaHM(p, new Huma(nickname), getTipusAlgorithm(nickname2, p2));
-            case MH:
-                return new PartidaHM(p, getTipusAlgorithm(nickname, p1), new Huma(nickname2));
-        }
-        return null;
-    }
 
     private Algorithm getTipusAlgorithm(String tipus, int profunditat){
         Algorithm a;
@@ -471,7 +458,7 @@ public class CtrlDomain {
         Random rand = new Random();
         if (random){
             List<Problema> candidates = getValids();
-            return candidates.get(rand.nextInt(problemes.size()));
+            return candidates.get(rand.nextInt(candidates.size()));
         }
 
         int jugades = jugadesPelMate * 2 - 1;
