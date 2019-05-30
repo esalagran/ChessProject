@@ -62,9 +62,9 @@ public class CtrlDomain {
                 Object[] obj = pr.MovimentMaquina();
                 result[i][0] = p.GetFEN();
                 result[i][1] = t1;
-                result[i][2] = obj[1];
+                result[i][2] = obj[1] + "ms";
                 result[i][3] = t2;
-                result[i][4] = obj[2];
+                result[i][4] = obj[2] + "ms";
 
                 System.out.println("Problema: " + p.GetFEN());
                 if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
@@ -72,6 +72,7 @@ public class CtrlDomain {
                 else
                     result[i][5] = "a2";
                 result[i][6] = pr.getEstatPartida().toString();
+                System.out.println(result[i][6]);
             }
         }
         return result;
@@ -164,7 +165,7 @@ public class CtrlDomain {
         if(random){
             List<Problema> valids = getValids();
             Random rand = new Random();
-            p = valids.get(rand.nextInt(problemes.size() - 1));
+            p = valids.get(rand.nextInt(problemes.size()));
         }
         else{
             p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
@@ -185,7 +186,7 @@ public class CtrlDomain {
 
            List<Problema> valids = getValids();
            Random rand = new Random();
-           p = valids.get(rand.nextInt(problemes.size() - 1));
+           p = valids.get(rand.nextInt(problemes.size()));
         }
         else{
          p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);

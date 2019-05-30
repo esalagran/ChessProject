@@ -20,6 +20,9 @@ public class CtrlPresentation {
     private VistaModalitatProblema vistaModalitatProblema = null;
     private VistaMaquinaVSmaquina vistaMM = null;
     private VistaGetProf prof = null;
+    private VistaTriarProblemaPerRanking tirarRanking = null;
+    private VistaRanking ranking = null;
+
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
@@ -50,6 +53,48 @@ public class CtrlPresentation {
         vistaTipus.activar();
     }
 
+    public void sincronizacionVistaMenu_a_TriarRanking() {
+        menu.desactivar();
+        menu.visible(false);
+        tirarRanking = new VistaTriarProblemaPerRanking(this);
+        tirarRanking.hacerVisible();
+        tirarRanking.activar();
+    }
+
+    public void sincronizacionVistaTriar_a_Menu() {
+        tirarRanking.desactivar();
+        tirarRanking.visible(false);
+        menu = new MenuPrincipal(this);
+        menu.hacerVisible();
+        menu.activar();
+    }
+
+    public void sincronizacionVistaTriar_a_Ranking(Object[][] data) {
+        tirarRanking.desactivar();
+        tirarRanking.visible(false);
+        ranking = new VistaRanking(this, data);
+        ranking.hacerVisible();
+        ranking.activar();
+    }
+
+    public void sincronizacionVistaRanking_a_Triar() {
+        ranking.desactivar();
+        ranking.visible(false);
+        tirarRanking = new VistaTriarProblemaPerRanking(this);
+        tirarRanking.hacerVisible();
+        tirarRanking.activar();
+    }
+
+    public void sincronizacionVistaMaquinaVSmaquina_a_Menu(){
+        vistaMM.desactivar();
+        vistaMM.visible(false);
+        menu = new MenuPrincipal(this);
+        menu.hacerVisible();
+        menu.activar();
+
+    }
+
+
     public void sincronizacionVistaLlista_a_Modalitat() {
         vistaCarregar.desactivar();
         vistaCarregar.visible(false);
@@ -72,6 +117,8 @@ public class CtrlPresentation {
         vistaCarregar.hacerVisible();
         vistaCarregar.activar();
     }
+
+
 
     public void sincronizacionVistaCarregar_a_Menu(){
         vistaCarregar.desactivar();
@@ -155,6 +202,10 @@ public class CtrlPresentation {
     }
 
 
+    public List<Object[]> getRanking(String FEN){
+        return CD.getRanking(FEN);
+    }
+
     public void sincronizacionVistaProblema_a_FEN(){
         if(vistaGetFEN == null){
             vistaGetFEN = new VistaGetFEN(this);
@@ -188,6 +239,8 @@ public class CtrlPresentation {
 
     public void sincronizacionVistaTipusAmaquinaVSmaquina(Object[][] res){
 
+        vistaTipus.desactivar();
+        vistaTipus.visible(false);
         vistaMM = new VistaMaquinaVSmaquina(this, res);
         vistaMM.activar();
         vistaMM.visible(true);
@@ -203,8 +256,11 @@ public class CtrlPresentation {
                         Object[][] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
                         paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
                         Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]),rand);
-                        sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
-                return true;
+
+                        if(resultat!= null && resultat[0].length != 0){
+                            sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
+                            return true;}
+                        else return false;
 
 
             case "Humà vs màquina":
