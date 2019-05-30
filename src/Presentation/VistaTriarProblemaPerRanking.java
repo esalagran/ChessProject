@@ -102,8 +102,8 @@ public class VistaTriarProblemaPerRanking {
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         Object[][] data;
-                        String texto = ((JButton) event.getSource()).getText();
-                       List<Object[]> ranking = iCtrlPresentacion.getRanking(texto);
+                       List<Object[]> ranking = iCtrlPresentacion.getRanking(llista.getSelectedValue());
+                       System.out.println(llista.getSelectedValue());
                        if(ranking != null && ranking.size()!= 0) {
                            data = new Object[ranking.size()][2];
 
@@ -207,10 +207,6 @@ public class VistaTriarProblemaPerRanking {
 
     private void inicializar_menubarVista() {
 
-        menuFile.add(menuitemQuit);
-        menubarVista.add(menuFile);
-        menubarVista.add(menuOpciones);
-        frameVista.setJMenuBar(menubarVista);
     }
 
     private void inicializar_panelContenidos() {

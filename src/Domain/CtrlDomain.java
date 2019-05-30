@@ -107,6 +107,10 @@ public class CtrlDomain {
         CarregarProblemes();
     }
 
+    public void EliminarProblema(String FEN){
+        CP.eliminarProblema(FEN);
+    }
+
     public void CarregarProblemes(){
         List<Object[]> p = CP.GetProblemes();
         problemes = new ArrayList<>();

@@ -132,9 +132,7 @@ public class VistaRanking {
 
         // Buttons
         panelBotones.add(buttonVolver);
-        panelBotones.add(buttonEditar);
-        panelBotones.add(buttonJugar);
-        // Tooltips
+
     }
 
 
@@ -148,7 +146,7 @@ public class VistaRanking {
         frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                iCtrlPresentacion.sincronizacionVistaCarregar_a_Menu();
+                iCtrlPresentacion.sincronizacionVistaRanking_a_Triar();
             }
         });
 
@@ -162,10 +160,7 @@ public class VistaRanking {
 
     private void inicializar_menubarVista() {
 
-        menuFile.add(menuitemQuit);
-        menubarVista.add(menuFile);
-        menubarVista.add(menuOpciones);
-        frameVista.setJMenuBar(menubarVista);
+
     }
 
     private void inicializar_panelContenidos() {
