@@ -109,6 +109,7 @@ public class CtrlDomain {
 
     public void EliminarProblema(String FEN){
         CP.eliminarProblema(FEN);
+        CarregarProblemes();
     }
 
     public void CarregarProblemes(){
