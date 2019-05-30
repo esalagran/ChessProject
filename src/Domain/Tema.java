@@ -2,8 +2,8 @@ package Domain;
 
 /** classe no rellevant en aquesta entrega*/
 public class Tema {
-    Color col;
-    int movimentsFinsMat;
+    private Color col;
+    private int movimentsFinsMat;
 
     public Tema(int n, Color c){
         col = c;
@@ -16,5 +16,9 @@ public class Tema {
 
     public int getMovimentsFinsMat() {
         return movimentsFinsMat;
+    }
+
+    public void setMovimentsFinsMat(int movimentsFinsMat) {
+        this.movimentsFinsMat = movimentsFinsMat;
     }
 }

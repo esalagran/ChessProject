@@ -22,7 +22,7 @@ public class Problema{
     private boolean _guardat;
     private Tauler tauler;
     private boolean _valid;
-    private int movimentsPerGuanyar = 6;
+    //private int movimentsPerGuanyar;
     private int nPeces;
     private Map<String,Integer> ranking;
     private Tema tema;
@@ -90,7 +90,7 @@ public class Problema{
      * @return movimentsPerGuanyar
      */
     public int GetMovimentsPerGuanyar(){
-        return movimentsPerGuanyar;
+        return tema.getMovimentsFinsMat();
     }
 
     public Dificultat getDificultat(){return _dif;}
@@ -184,7 +184,7 @@ return null;
         Algorithm aux = new AlgorismeAlfaBeta(profunditat);
         _valid = aux.validateProblem(tauler, jugador, profunditat);
         if(_valid){
-            movimentsPerGuanyar = aux.getDepth();
+            tema.setMovimentsFinsMat(aux.getDepth());
             setDificultat(numJugades);
             torn = jugador;
         }
@@ -193,19 +193,19 @@ return null;
 
     public void setDificultat(int moviments){
         ParInt peces = getNPeces(); //First: Blanques Second: Negres
-        if (movimentsPerGuanyar < 2) _dif = Dificultat.moltfacil;
+        if (tema.getMovimentsFinsMat() < 2) _dif = Dificultat.moltfacil;
         else if (torn == Color.blanc && peces.GetFirst()/2 >= peces.GetSecond()) _dif = Dificultat.moltfacil;
         else if (torn == Color.negre && peces.GetSecond()/2 >= peces.GetFirst()) _dif = Dificultat.moltfacil;
 
-        else if (movimentsPerGuanyar < 3) _dif = Dificultat.facil;
-        else if (movimentsPerGuanyar < 3 && torn == Color.blanc && peces.GetFirst() >= 4) _dif = Dificultat.facil;
-        else if (movimentsPerGuanyar < 3 && torn == Color.negre && peces.GetSecond() >= 4) _dif = Dificultat.facil;
+        else if (tema.getMovimentsFinsMat() < 3) _dif = Dificultat.facil;
+        else if (tema.getMovimentsFinsMat() < 3 && torn == Color.blanc && peces.GetFirst() >= 4) _dif = Dificultat.facil;
+        else if (tema.getMovimentsFinsMat() < 3 && torn == Color.negre && peces.GetSecond() >= 4) _dif = Dificultat.facil;
 
-        else if (movimentsPerGuanyar < 4 && torn == Color.blanc && peces.GetFirst() < 4) _dif = Dificultat.mitja;
-        else if (movimentsPerGuanyar < 4 && torn == Color.negre && peces.GetSecond() < 4) _dif = Dificultat.mitja;
+        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.blanc && peces.GetFirst() < 4) _dif = Dificultat.mitja;
+        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.negre && peces.GetSecond() < 4) _dif = Dificultat.mitja;
 
-        else if (movimentsPerGuanyar < 4 && torn == Color.blanc && peces.GetFirst() < peces.GetSecond()) _dif = Dificultat.dificil;
-        else if (movimentsPerGuanyar < 4 && torn == Color.negre && peces.GetFirst() > peces.GetSecond()) _dif = Dificultat.dificil;
+        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.blanc && peces.GetFirst() < peces.GetSecond()) _dif = Dificultat.dificil;
+        else if (tema.getMovimentsFinsMat() < 4 && torn == Color.negre && peces.GetFirst() > peces.GetSecond()) _dif = Dificultat.dificil;
 
         else _dif = Dificultat.moltdificil;
     }
@@ -253,7 +253,7 @@ return null;
      * @return Puntacio del jugador en el problema segons els parametres passats
      */
     public int calculPuntuacio( int nmoviments, int accumTime){
-        int maxPuntuacio = nPeces * movimentsPerGuanyar * 10;
+        int maxPuntuacio = nPeces * tema.getMovimentsFinsMat()* 10;
         int tempsMig = accumTime/nmoviments;
         int boost;
         if (tempsMig > 60) boost = 1;
