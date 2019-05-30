@@ -159,8 +159,9 @@ return null;
 
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti) == null) {
-                tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
-                tauler.AfegirPeçaAt(origen, null);
+                FitxaProblema fp = tauler.FitxaAt(origen);
+                tauler.EliminarPeçaAt(origen);
+                tauler.AfegirPeçaAt(desti,fp);
                 _valid = false;
                 return tauler.getTaulell();
 
@@ -169,8 +170,6 @@ return null;
                 System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
 
             }
-
-
         } else{
             System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
