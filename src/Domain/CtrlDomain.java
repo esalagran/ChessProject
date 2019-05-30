@@ -1,8 +1,5 @@
 package Domain;
 
-import Presentation.CtrlPresentation;
-
-import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +14,6 @@ public class CtrlDomain {
 
 
     private Persistence.CtrlPersistence CP;
-    private Presentation.CtrlPresentation cPres;
     private TipusPeça[] peçesEscacs = {TipusPeça.Rei, TipusPeça.Dama, TipusPeça.Torre, TipusPeça.Cavall, TipusPeça.Alfil, TipusPeça.Peo};
     private Color[] colorPeça = {Color.negre, Color.blanc};
 
@@ -31,33 +27,45 @@ public class CtrlDomain {
      * \post: S'han jugat tots els problemes de probJugats i es van imprimint
      * els guanyador del problema en cada cas.
      * */
-    public void JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes) {
+    public Object[][] JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes) {
+        List<Problema> candidates = getCandidates(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
+        if (candidates.isEmpty()) return null;
         Algorithm a1 = getTipusAlgorithm(t1, p1);
         Algorithm a2 = getTipusAlgorithm(t2, p2);
         Color guanyador;
         Random rnd = new Random();
-        //PartidaRefactor pr;
-        for (int i = 0; i < numProblemes; ++i) {
-            Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
-            PartidaRefactor pr;
-            int isA1 = rnd.nextInt(1);
-            if (isA1 == 0){
-                pr = new PartidaMM(p, a1, a2);
-            }
-            else{
-                pr = new PartidaMM(p, a2, a1);
-            }
 
-            //obj[0] indica el gunayador, obj[1] temps/moviments de a1, obj[2] = 0bj[1], pero de a2
-            Object[] obj = pr.MovimentMaquina();
-            System.out.println("Problema: " + p.GetFEN());
-            if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
-                System.out.println("El guanyador ha estat a1 per " + pr.getEstatPartida());
-            else
-                System.out.println("El guanyador ha estat a2 per " + pr.getEstatPartida());
-            System.out.println("La Maquina a1 ha tardat " + obj[1] + " milisegons de mitjana");
-            System.out.println("La Maquina a2 ha tardat " + obj[2] + " milisegons de mitjana");
+        //PartidaRefactor pr;
+        Object[][] result = new Object[numProblemes][4];
+        for (int i = 0; i < numProblemes; ++i) {
+            Problema p = candidates.get(rnd.nextInt(candidates.size()));
+            if (p != null) {
+                PartidaRefactor pr;
+                int isA1 = rnd.nextInt(1);
+                if (isA1 == 0) {
+                    pr = new PartidaMM(p, a1, a2);
+                } else {
+                    pr = new PartidaMM(p, a2, a1);
+                }
+
+                //obj[0] indica el gunayador, obj[1] temps/moviments de a1, obj[2] = 0bj[1], pero de a2
+                Object[] obj = pr.MovimentMaquina();
+                result[i][0] = p.GetFEN();
+                result[i][1] = pr.getEstatPartida();
+                result[i][2] = obj[1];
+                result[i][3] = obj[2];
+
+                System.out.println("Problema: " + p.GetFEN());
+                if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
+                    System.out.println("El guanyador ha estat a1 per " + pr.getEstatPartida());
+                else
+                    System.out.println("El guanyador ha estat a2 per " + pr.getEstatPartida());
+                System.out.println("La Maquina a1 ha tardat " + obj[1] + " milisegons de mitjana");
+                System.out.println("La Maquina a2 ha tardat " + obj[2] + " milisegons de mitjana");
+            }
         }
+        return result;
+
     }
 
     public ParInt[] GetLastMoveMaq(){
@@ -77,7 +85,8 @@ public class CtrlDomain {
         String color;
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
-        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador());
+        String dif = pObert.getDificultat() == null ? "" : pObert.getDificultat().toString();
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif);
         CarregarProblemes();
     }
 
@@ -94,8 +103,8 @@ public class CtrlDomain {
             if (CP.hihaUsuari(info[5].toString()))
                 nickName = info[5].toString();
 
-            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName);
-            aux.setRanking((Map<String, Integer>) info[4]);
+            Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
+                    Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
             problemes.add(aux);
         }
     }
@@ -127,6 +136,7 @@ public class CtrlDomain {
      * */
     public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h1, String h2) {
         Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        if (p == null) return null;
         partidaEnJoc = new PartidaHH(p, new Huma(h1), new Huma(h2));
         return p.GetTorn();
     }
@@ -134,6 +144,7 @@ public class CtrlDomain {
     public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate, String nickname,
                                 String algName, int profunditat, boolean isMachine1){
         Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        if (p == null) return null;
         if (isMachine1){
             //new Huma s'ha de canviar per una cerca a la base de dades d'usuari. En aquest cas hi ha de ser sempre
             //ja que és l'usuari que s'ha registrat
@@ -190,8 +201,8 @@ public class CtrlDomain {
                 String nickName = "";
                 if (!CP.hihaUsuari(info[5].toString()))
                     nickName = info[5].toString();
-                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName);
-                pObert.setRanking((Map<String, Integer>) info[4]);
+                pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
+                        Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
                 return true;
             }
             else return false;
@@ -404,7 +415,19 @@ public class CtrlDomain {
 
     private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate){
         Random rand = new Random();
-        Problema p = problemes.get(rand.nextInt(problemes.size()));
-        return p;
+        //Problema p = problemes.get(rand.nextInt(problemes.size()));
+        List<Problema> candidates = getCandidates(dif, torn, jugadesPelMate);
+        if (candidates.isEmpty()) return null;
+        return candidates.get(rand.nextInt(candidates.size()));
+    }
+
+    private List<Problema> getCandidates(Dificultat dif, Color torn, int jugadesPelMate){
+        List<Problema> candidates = new ArrayList<>();
+        for (Problema p : problemes) {
+            if (p.getDificultat().equals(dif) && p.GetTorn().equals(torn) && p.GetMovimentsPerGuanyar() == jugadesPelMate
+            && p.GetValid())
+                candidates.add(p);
+        }
+        return candidates;
     }
 }
