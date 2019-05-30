@@ -109,7 +109,7 @@ public class CtrlDomain {
                 nickName = info[5].toString();
 
             Problema aux = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
-                    Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
+                    Convert.StringToDificultat(info[6].toString()), (List<Object[]>) info[4]);
             problemes.add(aux);
         }
     }
@@ -123,9 +123,18 @@ public class CtrlDomain {
     }
 
 
-    public void Ranking(String FEN, String nickname, int puntucacio)
+    public void afegirRanking(String FEN, String nickname, int puntucacio)
     {
         CP.afegirJugadorProblema(FEN, nickname, puntucacio);
+    }
+
+    public List<Object[]> getRanking(String FEN){
+        for(Problema p : problemes){
+            if (p.GetFEN().contains(FEN) || FEN.contains(p.GetFEN())){
+                return p.getRanking();
+            }
+        }
+        return null;
     }
 
     public void Login (String str){
@@ -207,15 +216,13 @@ public class CtrlDomain {
                 if (!CP.hihaUsuari(info[5].toString()))
                     nickName = info[5].toString();
                 pObert = new Problema((String) info[0], new Tema((int) info[2], color), (boolean) info[1], nickName,
-                        Convert.StringToDificultat(info[6].toString()), (Map<String, Integer>) info[4]);
+                        Convert.StringToDificultat(info[6].toString()), (List<Object[]>) info[4]);
                 return true;
             }
             else return false;
         }
-        else {
-            System.out.println("Primer has de tancar el problema");
+        else
             return false;
-        }
     }
 
     /**
@@ -379,10 +386,6 @@ public class CtrlDomain {
 
     public Tauler getTaulerPartidaEnJoc() {
         return partidaEnJoc.getProblemaEnJoc().getTauler();
-    }
-
-    public Map<String,Integer> getRanking(Problema p){
-        return p.getRanking();
     }
 
     public Dificultat getDificultat(Problema p){

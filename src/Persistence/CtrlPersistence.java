@@ -212,10 +212,14 @@ public class CtrlPersistence {
                 dificultat = s;
                 s = reader.readLine();
 
-                Map<String,Integer> r = new HashMap();
+                List<Object[]> r = null;
                 while (s != null && !s.contains("Fi")){
                     String [] parts = s.split("/");
-                    r.put(parts[0],Integer.parseInt(parts[1]));
+                    Object [] player = new Object[] {
+                            parts[0],
+                            Integer.parseInt(parts[1])
+                    };
+                    r.add(player);
                     s = reader.readLine();
                 }
 
@@ -266,13 +270,16 @@ public class CtrlPersistence {
                         dificultat = s;
 
                         s = reader.readLine();
-                        Map<String,Integer> r = new HashMap<String,Integer>();
+                        List<Object[]> r = null;
                         while (!s.contains("Fi")){
                             String [] parts = s.split("/");
-                            r.put(parts[0],Integer.parseInt(parts[1]));
+                            Object [] player = new Object[] {
+                                    parts[0],
+                                    Integer.parseInt(parts[1])
+                            };
+                            r.add(player);
                             s = reader.readLine();
                         }
-
                         Object[] aux = new Object[] {
                                 fen,
                                 valid,
@@ -282,7 +289,6 @@ public class CtrlPersistence {
                                 creador,
                                 dificultat
                         };
-
                         return aux;
                     }
                     s = reader.readLine();
@@ -373,4 +379,3 @@ public class CtrlPersistence {
         return false;
     }
 }
-
