@@ -32,10 +32,10 @@ public class DriverNumMaxPeces{
                 break;
 
             case 1: // 1 -> GET INSTANCE
-                HashMap<TipusPeça, Integer> peces = NumMaxPeces.getInstance();
-                for (TipusPeça tp:peces.keySet()) {
+                HashMap<Character, Integer> peces = NumMaxPeces.getInstance();
+                /*for (TipusPeça tp:peces.keySet()) {
                     System.out.println(tp.toString() + ": " + peces.get(tp));
-                }
+                }*/
                 break;
         }
     }

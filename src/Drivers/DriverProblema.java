@@ -323,7 +323,7 @@ public class DriverProblema {
             for (int j = 0; j<8; j++){
                 ParInt coord = new ParInt(i,j);
                 if(tauler.FitxaAt(coord) != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
+                    /*TipusPeça tP = Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString());
                     Color c = tauler.FitxaAt(coord).GetColor();
 
                     if(tP == TipusPeça.Cavall){
@@ -364,7 +364,7 @@ public class DriverProblema {
                             System.out.printf(formatB, 'D');
                         else System.out.printf(formatW, 'D');
                     }
-
+*/
                 }
                 else {
                     System.out.print("|   ");

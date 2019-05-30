@@ -380,7 +380,7 @@ return null;
     /**
      * \pre: el tauler del problema es valid
      * \post: retorna el FEN correponent al tauler del problema
-     * @return
+     * @return el FEN corresponent al tauler del problema
      */
     public String TaulerToFEN( ){
 
@@ -395,7 +395,8 @@ return null;
                         FEN.append(spaces);
                         spaces = 0;
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Alfil){
+                    Fitxa f = tauler.FitxaAt(coord).getIFitxa();
+                    if(f instanceof Alfil){
                         if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("b");
                         }
@@ -403,14 +404,14 @@ return null;
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Torre){
+                    else if(f instanceof Torre){
                         if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("r");
                         }
                         else FEN.append("R");
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Peo){
+                    else if(f instanceof Peo){
                         if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("p");
                         }
@@ -418,7 +419,7 @@ return null;
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Dama){
+                    else if(f instanceof Dama){
                         if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("q");
                         }
@@ -426,7 +427,7 @@ return null;
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Rei){
+                    else if(f instanceof Rei){
                         if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("k");
                         }
@@ -434,13 +435,11 @@ return null;
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler.FitxaAt(coord).getIFitxa().getClass().toString()) == TipusPeça.Cavall){
+                    else if(f instanceof Cavall){
                         if(tauler.FitxaAt(coord).GetColor() == Color.negre){
                             FEN.append("n");
                         }
                         else FEN.append("N");
-
-
                     }
 
                 }

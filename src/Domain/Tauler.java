@@ -14,8 +14,8 @@ public class Tauler {
     private FitxaProblema whiteKing;
     private FitxaProblema blackKing;
     private  Convert Convert = new Convert();
-    private HashMap<TipusPeça, Integer> _pecesMax;
-    private HashMap<Character,Integer> _numTipusPeça;
+    private HashMap<Character, Integer> _pecesMax;
+    private HashMap<Character,Integer> _numTipusFitxa;
 
     /**
      * \pre:
@@ -23,7 +23,7 @@ public class Tauler {
      */
     public Tauler (){
         _pecesMax = NumMaxPeces.getInstance();
-        _numTipusPeça = new HashMap<>();
+        _numTipusFitxa = new HashMap<>();
         FillDictionary();
         taulell = new FitxaProblema[8][8];
     }
@@ -34,14 +34,18 @@ public class Tauler {
      */
     public Tauler (FitxaProblema[][] t){
         _pecesMax = NumMaxPeces.getInstance();
-        _numTipusPeça = new HashMap<>();
+        _numTipusFitxa = new HashMap<>();
         FillDictionary();
         taulell = t;
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if (t[i][j] != null){
-                    if (ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString())== TipusPeça.Rei && t[i][j].GetColor() == Color.blanc) whiteKing = t[i][j];
-                    if (ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei && t[i][j].GetColor() == Color.negre) blackKing = t[i][j];
+                    FitxaProblema fp = t[i][j];
+                    if (fp.getIFitxa() instanceof Rei)
+                        if (fp.GetColor().equals(Color.blanc))
+                            whiteKing = t[i][j];
+                        else
+                            blackKing = t[i][j];
                 }
             }
         }
@@ -89,26 +93,24 @@ public class Tauler {
     public void AfegirPeçaAt(ParInt coord, FitxaProblema f){
         if(f!= null){
         try {
-            TipusPeça tp = ClassToTipusPeça(f.getIFitxa().getClass().toString());
-            char key = ParTipusPeçaBoolToChar(tp, f.GetColor());
+            char key = ParTipusPeçaBoolToChar(f.getIFitxa(), f.GetColor());
 
-            int value = _numTipusPeça.get(key);
-            if (true){
-                if (taulell[coord.GetFirst()][coord.GetSecond()] == null){
+            int value = _numTipusFitxa.get(key);
+            if (value < _pecesMax.get(Character.toLowerCase(key))){
+                if (taulell[coord.GetFirst()][coord.GetSecond()] == null) {
                     taulell[coord.GetFirst()][coord.GetSecond()] = f;
                     f.SetCoordenades(coord);
-                    _numTipusPeça.put(key, value + 1);
-                    if ( tp.equals(TipusPeça.Rei)){
+                    _numTipusFitxa.put(key, value + 1);
+                    if (f.getIFitxa() instanceof Rei) {
                         if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
                         else setBlackKing(f);
                     }
-                }
-                else {
+                } else {
                     System.out.println("Ja hi ha una peça a l'origen");
                 }
             }
             else {
-                System.out.println("S'ha supertat el nombre màxim de peces aqui");
+                System.out.println("S'ha superat el nombre màxim de peces");
             }
         }
         catch (Exception ex){
@@ -123,9 +125,8 @@ public class Tauler {
     public void EliminarPeçaAt(ParInt origin){
         try{
             FitxaProblema fp = taulell[origin.GetFirst()][origin.GetSecond()];
-            char key = ParTipusPeçaBoolToChar(
-                    ClassToTipusPeça(fp.getIFitxa().getClass().toString()), fp.GetColor());
-            _numTipusPeça.put(key, _numTipusPeça.get(key) - 1);
+            char key = ParTipusPeçaBoolToChar(fp.getIFitxa(), fp.GetColor());
+            _numTipusFitxa.put(key, _numTipusFitxa.get(key) - 1);
             taulell[origin.GetFirst()][origin.GetSecond()] = null;
         }
         catch (Exception ex){
@@ -201,42 +202,24 @@ public class Tauler {
 
         FitxaProblema fp = taulell[fi.GetFirst()][fi.GetSecond()];
         fp.SetCoordenades(fi);
-        if (ClassToTipusPeça(taulell[fi.GetFirst()][fi.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei
-                && taulell[fi.GetFirst()][fi.GetSecond()].GetColor() == Color.blanc) whiteKing = fp;
-        else if (ClassToTipusPeça(taulell[fi.GetFirst()][fi.GetSecond()].getIFitxa().getClass().toString()) == TipusPeça.Rei
-                && taulell[fi.GetFirst()][fi.GetSecond()].GetColor() == Color.negre) blackKing = fp;
-    }
-
-    public boolean SuficientPecesPelMate(){
-        int iBigPieceCount;
-        int iWhiteBishop;
-        int iBlackBishop;
-        int iWhiteKnight;
-        int iBlackKnight;
-        iBigPieceCount = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.blanc)) +
-                _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.negre)) +
-                _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Dama, Color.blanc)) +
-                _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Torre, Color.negre));
-        if (iBigPieceCount != 0)
-            return true;
-        iWhiteBishop = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Alfil, Color.blanc));
-        iBlackBishop = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Alfil, Color.negre));
-        iWhiteKnight = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Cavall, Color.blanc));
-        iBlackKnight = _numTipusPeça.get(ParTipusPeçaBoolToChar(TipusPeça.Cavall, Color.negre));
-        return (iWhiteBishop + iWhiteKnight) >= 2 || (iBlackBishop + iBlackKnight) >= 2;
+        Fitxa f = fp.getIFitxa();
+        if (f instanceof Rei && fp.GetColor().equals(Color.blanc))
+            whiteKing = fp;
+        else if (f instanceof Rei && fp.GetColor().equals(Color.negre))
+            blackKing = fp;
     }
 
     public int GetNumPeçaMax(TipusPeça tipusPeça){
             return _pecesMax.get(tipusPeça);
         }
 
-    public int GetNumPeces(TipusPeça tp, Color c){
-        return _numTipusPeça.get(ParTipusPeçaBoolToChar(tp, c));
+    public int GetNumPeces(Fitxa fitxa, Color c){
+        return _numTipusFitxa.get(ParTipusPeçaBoolToChar(fitxa, c));
     }
 
-    public void SetNumPeces(TipusPeça tp, Color c,  int value){
-        char key = ParTipusPeçaBoolToChar(tp, c);
-        _numTipusPeça.put(key, value);
+    public void SetNumPeces(Fitxa fitxa, Color c,  int value){
+        char key = ParTipusPeçaBoolToChar(fitxa, c);
+        _numTipusFitxa.put(key, value);
     }
 
     public int EstimaPuntuacio(Color jugador){
@@ -258,19 +241,19 @@ public class Tauler {
 
 
     private void FillDictionary(){
-        _numTipusPeça.put('P', 0);
-        _numTipusPeça.put('T', 0);
-        _numTipusPeça.put('C', 0);
-        _numTipusPeça.put('A', 0);
-        _numTipusPeça.put('D', 0);
-        _numTipusPeça.put('R', 0);
+        _numTipusFitxa.put('P', 0);
+        _numTipusFitxa.put('T', 0);
+        _numTipusFitxa.put('C', 0);
+        _numTipusFitxa.put('A', 0);
+        _numTipusFitxa.put('D', 0);
+        _numTipusFitxa.put('R', 0);
 
-        _numTipusPeça.put('p', 0);
-        _numTipusPeça.put('t', 0);
-        _numTipusPeça.put('c', 0);
-        _numTipusPeça.put('a', 0);
-        _numTipusPeça.put('d', 0);
-        _numTipusPeça.put('r', 0);
+        _numTipusFitxa.put('p', 0);
+        _numTipusFitxa.put('t', 0);
+        _numTipusFitxa.put('c', 0);
+        _numTipusFitxa.put('a', 0);
+        _numTipusFitxa.put('d', 0);
+        _numTipusFitxa.put('r', 0);
     }
 
     public ArrayList<Move> GetMoviments(Color jugador) {

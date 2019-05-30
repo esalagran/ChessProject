@@ -21,9 +21,9 @@ public class AlgorismeAlfaBeta extends Algorithm{
                 t.moureFitxa(m);
                 if (!t.IsChecked(jugadorActual)){
                     hasMoved = true;
-                    best = Convert.Max(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), teoricGuanyador, alfa,
+                    best = Integer.max(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), teoricGuanyador, alfa,
                             beta, profunditat -1));
-                    alfa = Convert.Max(best, alfa);
+                    alfa = Integer.max(best, alfa);
                     if (beta <= alfa){
                         t.desferJugada(m);
                         break;
@@ -45,9 +45,9 @@ public class AlgorismeAlfaBeta extends Algorithm{
                 t.moureFitxa(m);
                 if (!t.IsChecked(jugadorActual)){
                     hasMoved = true;
-                    best = Convert.Min(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), teoricGuanyador, alfa,
+                    best = Integer.min(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), teoricGuanyador, alfa,
                             beta, profunditat -1));
-                    beta = Convert.Min(best, beta);
+                    beta = Integer.min(best, beta);
                     if (beta <= alfa){
                         t.desferJugada(m);
                         break;
@@ -68,7 +68,7 @@ public class AlgorismeAlfaBeta extends Algorithm{
 
     @Override
     public Move FindBestMoveConcr(Tauler tauler, Color jugador, int jugadesRestants) {
-        int profunditat = Convert.Min(getDepth(), jugadesRestants);
+        int profunditat = Integer.min(getDepth(), jugadesRestants);
         if (profunditat %2 == 0)
             return FindBestMoveAtDepthAlfa(tauler, jugador, profunditat);
         return FindBestMoveAtDepthBeta(tauler, jugador, profunditat);
@@ -102,7 +102,7 @@ public class AlgorismeAlfaBeta extends Algorithm{
                     hasMoved = true;
                     bestMove = m;
                 }
-                best = Convert.Min(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), Convert.InvertColor(jugadorActual), alpha,
+                best = Integer.min(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), Convert.InvertColor(jugadorActual), alpha,
                         beta, profunditat -1));
 
                 if (bestMove == null || best < beta){

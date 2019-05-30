@@ -23,7 +23,7 @@ public class DriverCtrlDomain{
         ParInt origen;
         ParInt desti;
 
-        Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+        //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
         System.out.println(ANSI_PURPLE + "Especifica la coordenada de la peça que vols moure (sense espais, lletra+num)"+ ANSI_RESET);
         origen = Convert.StringToCoordenada(sc.next());
 
@@ -31,19 +31,19 @@ public class DriverCtrlDomain{
         desti = Convert.StringToCoordenada(sc.next());
 
         ctrlDomain.MoureFitxa(origen,desti);
-        Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+        //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
     }
 
     static void EliminarPeça(){
         ParInt origen;
         String response = "0";
 
-        Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+        //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
         System.out.print(ANSI_PURPLE + "Especifica la posició de la peça que vols esborrar:" + ANSI_RESET);
         response = sc.next();
         origen = Convert.StringToCoordenada(response);
         ctrlDomain.EliminarFitxa(origen);
-        Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+        //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
 
     }
 
@@ -119,12 +119,12 @@ public class DriverCtrlDomain{
         correcte = false;
 
         while (!correcte) {
-            Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+            //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
             System.out.println(ANSI_PURPLE + "Especifica la coordenada on vols afegir la peça (sense espais, lletra+num)"+ ANSI_RESET);
             desti = Convert.StringToCoordenada(sc.next());
 
             ctrlDomain.AfegirFitxa(0,0,desti);
-            Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+            //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
             correcte = true;
         }
     }
@@ -140,11 +140,11 @@ public class DriverCtrlDomain{
                     break;
                 case 3:
                     ctrlDomain.CreaProblema();
-                    Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+                    //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
                     break;
                 case 4:
                     ctrlDomain.CarregarProblema(FEN);
-                    Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
+                    //Convert.DibuixaTauler(ctrlDomain.getpObert().getTauler());
                     break;
                 case 5:
                     ctrlDomain.TancarProblema();

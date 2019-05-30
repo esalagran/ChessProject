@@ -316,34 +316,34 @@ public class CtrlPresentation {
 
             for (int j = 0; j<8; j++){
                 if(tauler[i][j] != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString());
+                    Fitxa f = tauler[i][j].getIFitxa();
                     Color c = tauler[i][j].GetColor();
 
-                    if(tP == TipusPeça.Cavall){
+                    if(f instanceof Cavall){
 
                         if(c == Color.negre)
                             System.out.printf(formatB,  'C' );
                         else System.out.printf(formatW, 'C');
                     }
-                    if(tP == TipusPeça.Peo){
+                    if(f instanceof Peo){
                         if(c == Color.negre)
                             System.out.printf(formatB, 'P');
                         else System.out.printf(formatW, 'P');
                     }
-                    if(tP == TipusPeça.Alfil){
+                    if(f instanceof Alfil){
                         if(c == Color.negre)
                             System.out.printf(formatB, 'A');
                         else System.out.printf(formatW, 'A');
 
                     }
 
-                    if(tP == TipusPeça.Torre){
+                    if(f instanceof Torre){
                         if(c == Color.negre)
                             System.out.printf(formatB, 'T');
                         else System.out.printf(formatW,'T');
                     }
 
-                    if(tP == TipusPeça.Rei){
+                    if(f instanceof Rei){
 
                         if(c == Color.negre)
                             System.out.printf(formatB, 'R');
@@ -351,7 +351,7 @@ public class CtrlPresentation {
 
                     }
 
-                    if(tP == TipusPeça.Dama){
+                    if(f instanceof Dama){
 
                         if(c == Color.negre)
                             System.out.printf(formatB, 'D');
@@ -964,60 +964,61 @@ public class CtrlPresentation {
     }
 
     public String TaulerToFEN(FitxaProblema[][] tauler ){
-        String FEN ="";
+        StringBuilder FEN = new StringBuilder();
         int spaces = 0;
         for(int i = 0; i< 8; i++){
             for (int j = 0; j<8; j++){
                 if(tauler[i][j] != null){
 
                     if(spaces != 0){
-                        FEN+=spaces;
+                        FEN.append(spaces);
                         spaces = 0;
                     }
-                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Alfil){
+                    Fitxa f = tauler[i][j].getIFitxa();
+                    if(f instanceof Alfil){
                         if(tauler[i][j].GetColor() == Color.negre){
-                            FEN+="b";
+                            FEN.append("b");
                         }
-                        else FEN+="B";
+                        else FEN.append("B");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Torre){
+                    if(f instanceof Torre){
                         if(tauler[i][j].GetColor() == Color.negre){
-                            FEN+="r";
+                            FEN.append("r");
                         }
-                        else FEN+="R";
+                        else FEN.append("R");
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Peo){
+                    if(f instanceof Peo){
                         if(tauler[i][j].GetColor() == Color.negre){
-                            FEN+="p";
+                            FEN.append("p");
                         }
-                        else FEN+="P";
-
-
-                    }
-                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Dama){
-                        if(tauler[i][j].GetColor() == Color.negre){
-                            FEN+="q";
-                        }
-                        else FEN+="Q";
+                        else FEN.append("P");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Rei){
+                    if(f instanceof Dama){
                         if(tauler[i][j].GetColor() == Color.negre){
-                            FEN+="k";
+                            FEN.append("q");
                         }
-                        else FEN+="K";
+                        else FEN.append("Q");
 
 
                     }
-                    if(Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString()) == TipusPeça.Cavall){
+                    if(f instanceof Rei){
                         if(tauler[i][j].GetColor() == Color.negre){
-                            FEN+="n";
+                            FEN.append("k");
                         }
-                        else FEN+="N";
+                        else FEN.append("K");
+
+
+                    }
+                    if(f instanceof Cavall){
+                        if(tauler[i][j].GetColor() == Color.negre){
+                            FEN.append("n");
+                        }
+                        else FEN.append("N");
 
 
                     }
@@ -1029,16 +1030,16 @@ public class CtrlPresentation {
 
             }
             if(spaces != 0){
-                FEN+=spaces;
+                FEN.append(spaces);
                 spaces = 0;
             }
             if(i!=7)
-                FEN+="/";
+                FEN.append("/");
         }
 
-        FEN+=" w - - 0 1";
+        FEN.append(" w - - 0 1");
         //System.out.println(FEN);
-        return  FEN;
+        return FEN.toString();
 
     }
 

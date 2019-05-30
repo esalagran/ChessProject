@@ -47,23 +47,23 @@ public class DriverAlgorisme {
         System.out.println(out);
         FitxaProblema sol = a.getFitxa_move();
         ParInt coord = a.getPos_move();
-        System.out.println(Convert.ClassToTipusPeça(sol.getIFitxa().getClass().toString()) + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
+        //System.out.println(Convert.ClassToTipusPeça(sol.getIFitxa().getClass().toString()) + " " + sol.GetColor() + " a " + coord.GetFirst() + "," + coord.GetSecond());
     }
 
     public void getPecesNegres(){
         a = new Algorisme();
         Vector<FitxaProblema> peces =  a.getFitxes(tauler,Color.negre);
-        for (FitxaProblema e : peces)
-            if (e != null)
-                System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
+        //for (FitxaProblema e : peces)
+            //if (e != null)
+                //System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
     }
 
     public void getPecesBlanques(){
         a = new Algorisme();
         Vector<FitxaProblema> peces = a.getFitxes(tauler,Color.blanc);
-        for (FitxaProblema e : peces)
-            if (e != null)
-                System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
+        //for (FitxaProblema e : peces)
+            //if (e != null)
+                //System.out.println("Nom: " + Convert.ClassToTipusPeça(e.getIFitxa().getClass().toString())+ " a (" + e.GetCoordenades().GetFirst() + "," + e.GetCoordenades().GetSecond() + ")");
     }
 
     public void tryValidarProblema(){
@@ -117,7 +117,7 @@ public class DriverAlgorisme {
             //Move m = alg.FindBestMoveUsingMinMaxAtDepth(p.getTauler(), torn, i);
             Move m = alg.FindBestMoveConcr(p.getTauler(), torn, 0);
             if (m == null){
-                Convert.DibuixaTauler(p.getTauler());
+                //Convert.DibuixaTauler(p.getTauler());
                 System.out.println("Ha guanyat el jugador " + Convert.InvertColor(torn));
                 break;
             }
@@ -125,7 +125,7 @@ public class DriverAlgorisme {
                 if (m.getStartPos() != null && m.getStartPos().GetFirst() == -1)System.out.println("taules");
                 else if (m.getEndPos() != null && m.getEndPos().GetFirst() == -1) System.out.println("No has fet mate");
                 else {
-                    Convert.DibuixaTauler(p.getTauler());
+                    //Convert.DibuixaTauler(p.getTauler());
                     p.getTauler().moureFitxa(m);
                     System.out.println("S'ha mogut de (" + m.getStartPos().GetFirst() + "," +
                             m.getStartPos().GetSecond() + ") a (" + m.getEndPos().GetFirst() + "," +

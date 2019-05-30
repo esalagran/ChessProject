@@ -20,7 +20,7 @@ public class Convert {
      * \post: Es retorna quin el TipusPeça de la classe enviada
      * @return Tipus de peça de la classe enviada
      */
-    public static TipusPeça ClassToTipusPeça(String classe){
+    /*public static TipusPeça ClassToTipusPeça(String classe){
         if (classe.contains("Rei")) return TipusPeça.Rei;
         if (classe.contains("Dama")) return TipusPeça.Dama;
         if (classe.contains("Torre")) return TipusPeça.Torre;
@@ -29,7 +29,7 @@ public class Convert {
         if (classe.contains("Peo")) return TipusPeça.Peo;
         System.out.println("Conversio peça erronia");
         return null;
-    }
+    }*/
 
     /**
      * \pre:
@@ -96,118 +96,31 @@ public class Convert {
     }
 
     /**
-     * \pre: t conté el tauler que es vol dibuixar i no és null
-     * \post: es dibuixa per consola el tauler t
-     */
-    public static void DibuixaTauler(Tauler t) {
-        String formatB = ANSI_BLACK + "| " + ANSI_BLUE + "%c " + ANSI_RESET;
-        String formatW = ANSI_BLACK + "| " + ANSI_RED + "%c " + ANSI_RESET;
-        System.out.println();
-        System.out.println(ANSI_BLACK + "  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-        for (int i = 0; i < 8; i++) {
-            System.out.print(ANSI_BLACK);
-            System.out.print(8 - i);
-            System.out.print(" " + ANSI_RESET);
-
-            for (int j = 0; j < 8; j++) {
-                ParInt coord = new ParInt(i, j);
-                if (t.FitxaAt(coord) != null) {
-                    TipusPeça tP = Convert.ClassToTipusPeça(t.FitxaAt(coord).getIFitxa().getClass().toString());
-                    Color c = t.FitxaAt(coord).GetColor();
-
-                    if (tP == TipusPeça.Cavall) {
-
-                        if (c == Color.negre)
-                            System.out.printf(formatB, 'C');
-                        else System.out.printf(formatW, 'C');
-                    }
-                    if (tP == TipusPeça.Peo) {
-                        if (c == Color.negre)
-                            System.out.printf(formatB, 'P');
-                        else System.out.printf(formatW, 'P');
-                    }
-                    if (tP == TipusPeça.Alfil) {
-                        if (c == Color.negre)
-                            System.out.printf(formatB, 'A');
-                        else System.out.printf(formatW, 'A');
-
-                    }
-
-                    if (tP == TipusPeça.Torre) {
-                        if (c == Color.negre)
-                            System.out.printf(formatB, 'T');
-                        else System.out.printf(formatW, 'T');
-                    }
-
-                    if (tP == TipusPeça.Rei) {
-
-                        if (c == Color.negre)
-                            System.out.printf(formatB, 'R');
-                        else System.out.printf(formatW, 'R');
-
-                    }
-
-                    if (tP == TipusPeça.Dama) {
-
-                        if (c == Color.negre)
-                            System.out.printf(formatB, 'D');
-                        else System.out.printf(formatW, 'D');
-                    }
-
-                } else {
-                    System.out.print("|   ");
-                }
-            }
-            System.out.print(ANSI_BLACK + '|');
-            System.out.println();
-            System.out.println("  +---+---+---+---+---+---+---+---+" + ANSI_RESET);
-        }
-        System.out.println(ANSI_BLACK + "    A   B   C   D   E   F   G   H" + ANSI_RESET);
-    }
-
-    public static int Max (int a, int b){
-        if (a > b) return a;
-        return b;
-    }
-
-    public static int Min(int a, int b){
-        if (a < b) return a;
-        return b;
-    }
-
-    /**
      * \pre: tipusPeça i color valids
      * \post: retorna el char equivalent a la peça en codi FEN
      * @return el char equivalent a la peça en codi FEN
      */
-    public static char ParTipusPeçaBoolToChar(TipusPeça tipusPeça, Color color){
+    public static char ParTipusPeçaBoolToChar(Fitxa f, Color color){
         char result = '0';
-        switch (tipusPeça){
-            case Peo:
+            if (f instanceof Peo)
                 if (color.equals(Color.blanc)) result = 'P';
                 else result = 'p';
-                break;
-            case Cavall:
+            else if (f instanceof Cavall)
                 if (color.equals(Color.blanc)) result =  'C';
                 else result =  'c';
-                break;
-            case Rei:
+            else if (f instanceof Rei)
                 if (color.equals(Color.blanc)) result =  'R';
                 else result =  'r';
-                break;
-            case Dama:
+            else if (f instanceof Dama)
                 if (color.equals(Color.blanc)) result = 'D';
                 else result = 'd';
-                break;
-            case Alfil:
+            else if (f instanceof Alfil)
                 if (color.equals(Color.blanc)) result =  'A';
                 else result = 'a';
-                break;
-            case Torre:
+            else if (f instanceof Torre)
                 if (color.equals(Color.blanc)) result = 'T';
                 else result = 't';
-                break;
-        }
+
         return result;
     }
 

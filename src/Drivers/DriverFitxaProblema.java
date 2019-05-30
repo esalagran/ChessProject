@@ -53,7 +53,7 @@ public class DriverFitxaProblema{
                 System.out.println("Columna: " + par.GetSecond());
                 break;
             case 3:
-                System.out.println("La peça és del tipus " + Convert.ClassToTipusPeça(fp.getIFitxa().getClass().toString()));
+                //System.out.println("La peça és del tipus " + Convert.ClassToTipusPeça(fp.getIFitxa().getClass().toString()));
                 break;
             case 4:
                 System.out.println("La fitxa és de color " + fp.GetColor().toString());

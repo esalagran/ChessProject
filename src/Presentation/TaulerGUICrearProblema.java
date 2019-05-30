@@ -84,10 +84,10 @@ public class TaulerGUICrearProblema {
             for(int j = 0; j< 8; j++){
 
                 if(tauler[i][j] != null){
-                    TipusPeça tP = Convert.ClassToTipusPeça(tauler[i][j].getIFitxa().getClass().toString());
+                    Fitxa f = tauler[i][j].getIFitxa();
                     Domain.Color c = tauler[i][j].GetColor();
 
-                    if(tP == TipusPeça.Cavall){
+                    if(f instanceof Cavall){
 
                         if(c == Domain.Color.negre)
                             chessBoardSquares[j][i].setIcon(new ImageIcon(
@@ -95,14 +95,14 @@ public class TaulerGUICrearProblema {
                         else chessBoardSquares[j][i].setIcon(new ImageIcon(
                                 chessPieceImages[WHITE][KNIGHT]));
                     }
-                    if(tP == TipusPeça.Peo){
+                    if(f instanceof Peo){
                         if(c == Domain.Color.negre)
                             chessBoardSquares[j][i].setIcon(new ImageIcon(
                                     chessPieceImages[BLACK][PAWN]));
                         else chessBoardSquares[j][i].setIcon(new ImageIcon(
                                 chessPieceImages[WHITE][PAWN]));
                     }
-                    if(tP == TipusPeça.Alfil){
+                    if(f instanceof Alfil){
                         if(c == Domain.Color.negre)
                             chessBoardSquares[j][i].setIcon(new ImageIcon(
                                     chessPieceImages[BLACK][BISHOP]));
@@ -111,7 +111,7 @@ public class TaulerGUICrearProblema {
 
                     }
 
-                    if(tP == TipusPeça.Torre){
+                    if(f instanceof Torre){
                         if(c == Domain.Color.negre)
                             chessBoardSquares[j][i].setIcon(new ImageIcon(
                                     chessPieceImages[BLACK][ROOK]));
@@ -119,7 +119,7 @@ public class TaulerGUICrearProblema {
                                 chessPieceImages[WHITE][ROOK]));
                     }
 
-                    if(tP == TipusPeça.Rei){
+                    if(f instanceof Rei){
 
                         if(c == Domain.Color.negre)
                             chessBoardSquares[j][i].setIcon(new ImageIcon(
@@ -129,7 +129,7 @@ public class TaulerGUICrearProblema {
 
                     }
 
-                    if(tP == TipusPeça.Dama){
+                    if(f instanceof Dama){
 
                         if(c == Domain.Color.negre)
                             chessBoardSquares[j][i].setIcon(new ImageIcon(

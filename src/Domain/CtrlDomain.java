@@ -9,7 +9,9 @@ import java.util.Random;
 public class CtrlDomain {
     private Problema pObert;
     private PartidaRefactor partidaEnJoc;
-    private List<Problema> problemes  = new ArrayList<Problema>();
+    private List<Problema> problemes;
+    private List<Huma> usuaris;
+
 
     private Persistence.CtrlPersistence CP;
     private Presentation.CtrlPresentation cPres;
@@ -18,6 +20,7 @@ public class CtrlDomain {
 
     public CtrlDomain() {
         CP = new Persistence.CtrlPersistence();
+        problemes = CP.GetProblemes();
     }
 
     /**
@@ -189,9 +192,15 @@ public class CtrlDomain {
         /*Color guanyador = partidaEnJoc.getGuanyador();
         if (guanyador != null && )
         return partidaEnJoc.EndedReason();*/
-        if (partidaEnJoc.getGuanyador() != null)
-            return "Ha guanyat el " + partidaEnJoc.getGuanyador() + " per " +
-                    partidaEnJoc.getEstatPartida().toString() + "\n";
+        if (partidaEnJoc.getGuanyador() != null){
+            String resposta = "Ha guanyat el " + partidaEnJoc.getGuanyador() + " per ";
+            if (partidaEnJoc.getEstatPartida().equals(EstatPartida.jugadesSuperades))
+                resposta += "haver sobreviscut a " +  (partidaEnJoc.getProblemaEnJoc().GetMovimentsPerGuanyar() - 1)
+                        + " moviemnts\n";
+            else
+                resposta += partidaEnJoc.getEstatPartida().toString() + "\n";
+            return resposta;
+        }
         else
             return "La partida encara està en joc\n";
     }

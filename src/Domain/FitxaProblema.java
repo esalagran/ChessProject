@@ -78,7 +78,7 @@ public class FitxaProblema{
      * @param tauler Tauler amb una situacio determinada
      * @return Retorna true si la fitxa es amenaçada per una fitxa rival
      */
-    public boolean isAttacked(FitxaProblema[][] tauler) {
+    boolean isAttacked(FitxaProblema[][] tauler) {
         int fil = coord.GetFirst();
         int col = coord.GetSecond();
         //Fila
@@ -87,10 +87,10 @@ public class FitxaProblema{
                 if (tauler[i][col].GetColor().equals(c))
                     break;
                 else{
-                     TipusPeça tp = Convert.ClassToTipusPeça(tauler[i][col].getIFitxa().getClass().toString());
-                     if (tp.equals(TipusPeça.Torre) || tp.equals(TipusPeça.Dama))
+                     Fitxa f = tauler[i][col].getIFitxa();
+                     if (f instanceof Torre || f instanceof Dama)
                          return true;
-                     if (i == fil - 1 && tp.equals(TipusPeça.Rei))
+                     if (i == fil - 1 && f instanceof Rei)
                          return true;
                      break;
                 }
@@ -102,10 +102,10 @@ public class FitxaProblema{
                 if (tauler[i][col].GetColor().equals(c))
                     break;
                 else{
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[i][col].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Torre) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[i][col].getIFitxa();
+                    if (f instanceof Torre || f instanceof Dama)
                         return true;
-                    if (i == fil + 1 && tp.equals(TipusPeça.Rei))
+                    if (i == fil + 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -118,10 +118,10 @@ public class FitxaProblema{
                 if (tauler[fil][j].GetColor().equals(c))
                     break;
                 else {
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[fil][j].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Torre) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[fil][j].getIFitxa();
+                    if (f instanceof Torre|| f instanceof Dama)
                         return true;
-                    if (j == col - 1 && tp.equals(TipusPeça.Rei))
+                    if (j == col - 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -132,10 +132,10 @@ public class FitxaProblema{
                 if (tauler[fil][j].GetColor().equals(c))
                     break;
                 else {
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[fil][j].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Torre) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[fil][j].getIFitxa();
+                    if (f instanceof  Torre || f instanceof Dama)
                         return true;
-                    if (j == col + 1 && tp.equals(TipusPeça.Rei))
+                    if (j == col + 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -149,10 +149,10 @@ public class FitxaProblema{
                 if (tauler[di][dj].GetColor().equals(c))
                     break;
                 else {
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[di][dj].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Alfil) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[di][dj].getIFitxa();
+                    if (f instanceof Alfil || f instanceof Dama)
                         return true;
-                    if (di == fil + 1 && dj == col + 1 && tp.equals(TipusPeça.Rei))
+                    if (di == fil + 1 && dj == col + 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -165,10 +165,10 @@ public class FitxaProblema{
                 if (tauler[di][dj].GetColor().equals(c))
                     break;
                 else {
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[di][dj].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Alfil) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[di][dj].getIFitxa();
+                    if (f instanceof Alfil || f instanceof Dama)
                         return true;
-                    if (di == fil - 1 && dj == col - 1 && tp.equals(TipusPeça.Rei))
+                    if (di == fil - 1 && dj == col - 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -183,10 +183,10 @@ public class FitxaProblema{
                 if (tauler[di][dj].GetColor().equals(c))
                     break;
                 else {
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[di][dj].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Alfil) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[di][dj].getIFitxa();
+                    if (f instanceof Alfil || f instanceof Dama)
                         return true;
-                    if (di == fil + 1 && dj == col - 1 && tp.equals(TipusPeça.Rei))
+                    if (di == fil + 1 && dj == col - 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -199,10 +199,10 @@ public class FitxaProblema{
                 if (tauler[di][dj].GetColor().equals(c))
                     break;
                 else {
-                    TipusPeça tp = Convert.ClassToTipusPeça(tauler[di][dj].getIFitxa().getClass().toString());
-                    if (tp.equals(TipusPeça.Alfil) || tp.equals(TipusPeça.Dama))
+                    Fitxa f = tauler[di][dj].getIFitxa();
+                    if (f instanceof Alfil || f instanceof Dama)
                         return true;
-                    if (di == fil - 1 && dj == col + 1 && tp.equals(TipusPeça.Rei))
+                    if (di == fil - 1 && dj == col + 1 && f instanceof Rei)
                         return true;
                     break;
                 }
@@ -218,8 +218,7 @@ public class FitxaProblema{
             if (Convert.InTheLimits(mov)) {
                 if (tauler[mov.GetFirst()][mov.GetSecond()] != null) {
                     if (tauler[mov.GetFirst()][mov.GetSecond()].GetColor().equals(Convert.InvertColor(c)) &&
-                            Convert.ClassToTipusPeça(tauler[mov.GetFirst()][mov.GetSecond()].
-                                    getIFitxa().getClass().toString()).equals(TipusPeça.Cavall))
+                            tauler[mov.GetFirst()][mov.GetSecond()].getIFitxa() instanceof Cavall)
                         return true;
                 }
             }
@@ -230,27 +229,24 @@ public class FitxaProblema{
         if (c.equals(Color.blanc)){
             int row = fil - 1;
             int co = col + 1;
-            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.negre) &&
-                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
+            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null &&
+                    tauler[row][co].GetColor().equals(Color.negre) && tauler[row][co].getIFitxa() instanceof Peo)
                 return true;
             co = col - 1;
-            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.negre) &&
-                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
-                return true;
+            return Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null &&
+                    tauler[row][co].GetColor().equals(Color.negre) && tauler[row][co].getIFitxa() instanceof Peo;
         }
         else{
             int row = fil + 1;
             int co = col + 1;
-            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.blanc) &&
-                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
+            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null &&
+                    tauler[row][co].GetColor().equals(Color.blanc) && tauler[row][co].getIFitxa() instanceof Peo)
                 return true;
             co = col - 1;
-            if (Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null && tauler[row][co].GetColor().equals(Color.blanc) &&
-                    Convert.ClassToTipusPeça(tauler[row][co].getIFitxa().getClass().toString()).equals(TipusPeça.Peo))
-                return true;
+            return Convert.InTheLimits(new ParInt(row, co)) && tauler[row][co] != null &&
+                    tauler[row][co].GetColor().equals(Color.blanc) && tauler[row][co].getIFitxa() instanceof Peo;
         }
 
-        return false;
     }
 
 }

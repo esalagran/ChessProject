@@ -9,20 +9,20 @@ import java.util.HashMap;
 
 public class NumMaxPeces {
 
-    private static HashMap<TipusPeça, Integer> ourInstance = new HashMap<TipusPeça, Integer>() {
+    private static HashMap<Character, Integer> ourInstance = new HashMap<Character, Integer>() {
         {
-            put(TipusPeça.Peo, 8);
-            put(TipusPeça.Cavall, 2);
-            put(TipusPeça.Alfil, 2);
-            put(TipusPeça.Torre, 2);
-            put(TipusPeça.Dama, 1);
-            put(TipusPeça.Rei, 1);
+            put('p', 8);
+            put('c', 2);
+            put('a', 2);
+            put('t', 2);
+            put('d', 1);
+            put('r', 1);
         }
     };
 
-    public static HashMap<TipusPeça, Integer> getInstance() {
+    public static HashMap<Character, Integer> getInstance() {
         return ourInstance;
     }
 
-    public static Integer getNumMaxPeces(TipusPeça peça){ return ourInstance.get(peça);}
+    public static Integer getNumMaxPeces(char c){ return ourInstance.get(c);}
 }

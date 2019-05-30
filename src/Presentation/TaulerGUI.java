@@ -71,10 +71,10 @@ public class TaulerGUI {
             for(int j = 0; j< 8; j++){
 
                 if(t[i][j] != null){
-                TipusPeça tP = Convert.ClassToTipusPeça(t[i][j].getIFitxa().getClass().toString());
+                Fitxa f = t[i][j].getIFitxa();
                 Domain.Color c = t[i][j].GetColor();
 
-                if(tP == TipusPeça.Cavall){
+                if(f instanceof Cavall){
 
                     if(c == Domain.Color.negre)
                         chessBoardSquares[j][i].setIcon(new ImageIcon(
@@ -82,14 +82,14 @@ public class TaulerGUI {
                     else chessBoardSquares[j][i].setIcon(new ImageIcon(
                             chessPieceImages[WHITE][KNIGHT]));
                 }
-                if(tP == TipusPeça.Peo){
+                if(f instanceof Peo){
                     if(c == Domain.Color.negre)
                         chessBoardSquares[j][i].setIcon(new ImageIcon(
                                 chessPieceImages[BLACK][PAWN]));
                     else chessBoardSquares[j][i].setIcon(new ImageIcon(
                             chessPieceImages[WHITE][PAWN]));
                 }
-                if(tP == TipusPeça.Alfil){
+                if(f instanceof Alfil){
                     if(c == Domain.Color.negre)
                         chessBoardSquares[j][i].setIcon(new ImageIcon(
                                 chessPieceImages[BLACK][BISHOP]));
@@ -98,7 +98,7 @@ public class TaulerGUI {
 
                 }
 
-                if(tP == TipusPeça.Torre){
+                if(f instanceof Torre){
                     if(c == Domain.Color.negre)
                         chessBoardSquares[j][i].setIcon(new ImageIcon(
                                 chessPieceImages[BLACK][ROOK]));
@@ -106,7 +106,7 @@ public class TaulerGUI {
                             chessPieceImages[WHITE][ROOK]));
                 }
 
-                if(tP == TipusPeça.Rei){
+                if(f instanceof Rei){
 
                     if(c == Domain.Color.negre)
                         chessBoardSquares[j][i].setIcon(new ImageIcon(
@@ -116,7 +116,7 @@ public class TaulerGUI {
 
                 }
 
-                if(tP == TipusPeça.Dama){
+                if(f instanceof Dama){
 
                     if(c == Domain.Color.negre)
                         chessBoardSquares[j][i].setIcon(new ImageIcon(

@@ -44,7 +44,7 @@ public class AlgorismeMinMax extends Algorithm{
 
     @Override
     public Move FindBestMoveConcr(Tauler t, Color jugador, int movimentsRestants) {
-        int profunditat = Convert.Min(getDepth(), movimentsRestants);
+        int profunditat = Integer.min(getDepth(), movimentsRestants);
         if (profunditat == 0){
             if (t.IsMate(jugador)) return null;
             return new Move(null, null, new ParInt(-1, -1));
