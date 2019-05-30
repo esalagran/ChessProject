@@ -420,7 +420,6 @@ public class CtrlDomain {
 
     private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate){
         Random rand = new Random();
-        //Problema p = problemes.get(rand.nextInt(problemes.size()));
         int jugades = jugadesPelMate * 2 - 1;
         List<Problema> candidates = getCandidates(dif, torn, jugades);
         if (candidates.isEmpty()) return null;

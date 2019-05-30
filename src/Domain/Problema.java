@@ -30,9 +30,6 @@ public class Problema{
     private String _creador;
 
 
-
-
-
     public Problema(String FEN, String creador){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
@@ -146,13 +143,7 @@ return null;
                 System.out.println("La posició d'origen està buida");
 
             }
-
-
-        } else{
-            System.out.println("Coordenada no valida" );
-
         }
-
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti) == null) {
                 FitxaProblema fp = tauler.FitxaAt(origen);
@@ -160,15 +151,7 @@ return null;
                 tauler.AfegirPeçaAt(desti,fp);
                 _valid = false;
                 return tauler.getTaulell();
-
-
-            } else{
-                System.out.println("La posició destí està ocupada");
-
             }
-        } else{
-            System.out.println("Coordenada no valida");
-
         }
         return null;
     }
@@ -266,7 +249,6 @@ return null;
         int boost;
         if (tempsMig > 60) boost = 1;
         else boost = 60 - tempsMig;
-        //GUANYA EL QUE COMENÇA AMB MENYS O EL NUMERO QUE TOCA DE JUGADES
         return maxPuntuacio*boost;
     }
 
