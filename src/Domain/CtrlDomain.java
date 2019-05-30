@@ -27,8 +27,19 @@ public class CtrlDomain {
      * \post: S'han jugat tots els problemes de probJugats i es van imprimint
      * els guanyador del problema en cada cas.
      * */
-    public Object[][] JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes) {
-        List<Problema> candidates = getCandidates(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
+    public Object[][] JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes, boolean random) {
+        List<Problema> candidates;
+
+        if(random){
+            candidates = getValids();
+            Random rand = new Random();
+        }
+        else{
+
+        candidates = getCandidates(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
+        }
+
+
         if (candidates.isEmpty()) return null;
         Algorithm a1 = getTipusAlgorithm(t1, p1);
         Algorithm a2 = getTipusAlgorithm(t2, p2);
@@ -36,7 +47,7 @@ public class CtrlDomain {
         Random rnd = new Random();
 
         //PartidaRefactor pr;
-        Object[][] result = new Object[numProblemes][4];
+        Object[][] result = new Object[numProblemes][7];
         for (int i = 0; i < numProblemes; ++i) {
             Problema p = candidates.get(rnd.nextInt(candidates.size()));
             if (p != null) {

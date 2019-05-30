@@ -89,6 +89,12 @@ public class VistaTipusProblema {
         paramPartdia[3] = modalitat.getSelectedItem().toString();
 
         if (mod.equals("Humà vs humà")){
+            if(segonHumà.getText().equals("")){
+                VistaDialogo vistaDialogo = new VistaDialogo();
+                String[] strBotones = {"Acceptar"};
+                int isel = vistaDialogo.setDialogo("Error", "El nom d'usuari del contrincant no pot estar vuit",strBotones,3);
+                return;
+            }
             paramPartdia[4] = "root";
             paramPartdia[5] = "no ha d'anar aixi";
         }
@@ -123,6 +129,13 @@ public class VistaTipusProblema {
 
         if (mod.equals("Humà vs humà")){
             paramPartdia[4] = segonHumà.getText();
+            if(paramPartdia[4].equals("")){
+                VistaDialogo vistaDialogo = new VistaDialogo();
+                String[] strBotones = {"Acceptar"};
+                int isel = vistaDialogo.setDialogo("Error", "El nom d'usuari del contrincant no pot estar vuit",strBotones,3);
+                return;
+            }   
+        
             if (segonHumaDefensa.isSelected())
                 paramPartdia[5] = "false";
             else
