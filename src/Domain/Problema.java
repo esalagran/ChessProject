@@ -70,6 +70,10 @@ public class Problema{
         ranking = new HashMap<String,Integer>();
     }
 
+    public Huma GetCreador(){return _creador;}
+
+    public void SetCreador(Huma creador) {_creador = creador;}
+
     public Tema getTema() {return tema;}
 
     /**
