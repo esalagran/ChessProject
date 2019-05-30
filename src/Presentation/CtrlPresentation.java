@@ -51,10 +51,7 @@ public class CtrlPresentation {
     public void sincronizacionVistaMenu_a_Tipus() {
         menu.desactivar();
         menu.visible(false);
-
-        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
-        if (vistaTipus == null)
-            vistaTipus = new VistaTipusProblema(this);
+        vistaTipus = new VistaTipusProblema(this);
         vistaTipus.hacerVisible();
         vistaTipus.activar();
     }
@@ -63,7 +60,6 @@ public class CtrlPresentation {
         vistaCarregar.desactivar();
         vistaCarregar.visible(false);
 
-        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
         if (vistaModalitatProblema == null)
             vistaModalitatProblema = new VistaModalitatProblema(this);
         vistaModalitatProblema.hacerVisible();
@@ -77,12 +73,18 @@ public class CtrlPresentation {
     public void sincronizacionVistaMenu_a_Carregar() {
         menu.desactivar();
         menu.visible(false);
-
-        // Solo se crea una vista secundaria (podria crearse una nueva cada vez)
         if (vistaCarregar == null)
             vistaCarregar = new VistaCarregarPartida(this);
         vistaCarregar.hacerVisible();
         vistaCarregar.activar();
+    }
+
+    public void sincronizacionVistaCarregar_a_Menu(){
+        vistaCarregar.desactivar();
+        vistaCarregar.visible(false);
+        menu = new MenuPrincipal(this);
+        menu.visible(true);
+        menu.activar();
     }
 
 
@@ -96,6 +98,7 @@ public class CtrlPresentation {
         // Se hace invisible la vista secundaria (podria anularse)
         vistaTipus.desactivar();
         vistaTipus.visible(false);
+        menu = new MenuPrincipal(this);
         menu.visible(true);
         menu.activar();
     }
@@ -124,18 +127,32 @@ public class CtrlPresentation {
         menu.desactivar();
         menu.visible(false);
 
-        if(taulerProblema==null) {
+ //       if(taulerProblema==null) {
            CD.CreaProblema();
            taulerProblema = new TaulerGUICrearProblema(this);
-        }
+   //     }
         taulerProblema.run();
     }
 
     public void sincronizacionJugarPartida_a_Menu(){
         taulerPartida.visible(false);
         taulerPartida.desactivar();
+        menu = new MenuPrincipal(this);
         menu.activar();
         menu.visible(true);
+
+    }
+
+    public void sincronizacionEditarProblema_a_Menu(){
+
+            taulerProblema.visible(false);
+            taulerProblema.desactivar();
+            CD.GuardarProblema();
+            CD.TancarProblema();
+            menu = new MenuPrincipal(this);
+            menu.activar();
+            menu.visible(true);
+
 
     }
 
@@ -149,6 +166,8 @@ public class CtrlPresentation {
             vistaGetFEN = new VistaGetFEN(this);
             vistaGetFEN.visible(true);
         }
+        else vistaGetFEN.visible(true);
+
 
     }
 
@@ -195,8 +214,6 @@ public class CtrlPresentation {
             case "Humà vs humà":
                 torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
                         paramsPartida[4], paramsPartida[5]);
-
-
         }
 
         if (torn != null){

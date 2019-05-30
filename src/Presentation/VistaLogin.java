@@ -89,6 +89,7 @@ public class VistaLogin {
 
 
 
+
         buttonLogin.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
@@ -143,8 +144,6 @@ public class VistaLogin {
     private void inicializar_menubarVista() {
 
         menuFile.add(menuitemQuit);
-        menubarVista.add(menuFile);
-        menubarVista.add(menuOpciones);
         frameVista.setJMenuBar(menubarVista);
     }
 

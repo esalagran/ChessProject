@@ -91,6 +91,14 @@ public class VistaCarregarPartida {
 
         // Listeners para los botones
 
+        buttonVolver.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.sincronizacionVistaCarregar_a_Menu();
+                    }
+                });
+
+
 
         buttonJugar.addActionListener
                 (new ActionListener() {
@@ -182,7 +190,13 @@ public class VistaCarregarPartida {
         frameVista.setResizable(false);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                iCtrlPresentacion.sincronizacionVistaCarregar_a_Menu();
+            }
+        });
+
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();
