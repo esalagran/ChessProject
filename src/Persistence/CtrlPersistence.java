@@ -304,6 +304,7 @@ public class CtrlPersistence {
             String s = reader.readLine();
             while (s != null){
                 if (s.contains(nickname)) return true;
+                s = reader.readLine();
             }
 
             reader.close();

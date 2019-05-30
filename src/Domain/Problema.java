@@ -40,7 +40,7 @@ public class Problema{
     public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    public Problema(String FEN){
+    public Problema(String FEN, String creador){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
@@ -50,6 +50,7 @@ public class Problema{
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
         ranking = new HashMap<String,Integer>();
+        _creador = creador;
     }
 
     public Problema(String FEN, Tema tema, boolean valid, String creador){
