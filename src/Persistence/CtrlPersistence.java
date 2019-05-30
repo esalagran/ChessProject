@@ -205,7 +205,7 @@ public class CtrlPersistence {
                 dificultat = s;
                 s = reader.readLine();
 
-                List<Object[]> r = null;
+                List<Object[]> r = new ArrayList<>();
                 while (s != null && !s.contains("Fi")){
                     String [] parts = s.split("/");
                     Object [] player = new Object[] {

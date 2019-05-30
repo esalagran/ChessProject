@@ -1,7 +1,6 @@
 package Presentation;
 
 import Domain.*;
-import org.junit.platform.commons.function.Try;
 
 import java.util.*;
 
@@ -101,6 +100,19 @@ public class CtrlPresentation {
         vistaModalitatProblema.hacerVisible();
         vistaModalitatProblema.activar();
     }
+
+
+    public void sincronizacionVistaMod_a_Llista() {
+        vistaModalitatProblema.desactivar();
+        vistaModalitatProblema.visible(false);
+
+        if (vistaCarregar == null)
+            vistaCarregar = new VistaCarregarPartida(this);
+        vistaCarregar.hacerVisible();
+        vistaCarregar.activar();
+    }
+
+
 
     public void setIndexoModalitat(int i){
         vistaModalitatProblema.SetIndex(i);
