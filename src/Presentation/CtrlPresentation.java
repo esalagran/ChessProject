@@ -2,8 +2,6 @@ package Presentation;
 
 import Domain.*;
 
-
-import java.io.*;
 import java.util.*;
 
 /**Mètode no rellevant per aquesta entrega*/
@@ -24,15 +22,13 @@ public class CtrlPresentation {
     private VistaRanking ranking = null;
 
 
-    private Domain.CtrlDomain CD = new Domain.CtrlDomain();
-    private  Scanner scanner = new Scanner(System.in);
+    private Domain.CtrlDomain CD;
 
 
     public CtrlPresentation() {
         CD = new CtrlDomain();
         CD.CarregarProblemes();
-        if (login == null)  // innecesario
-            login= new VistaLogin(this);
+        login= new VistaLogin(this);
     }
 
     public void initializePresentation() {
@@ -104,6 +100,19 @@ public class CtrlPresentation {
         vistaModalitatProblema.hacerVisible();
         vistaModalitatProblema.activar();
     }
+
+
+    public void sincronizacionVistaMod_a_Llista() {
+        vistaModalitatProblema.desactivar();
+        vistaModalitatProblema.visible(false);
+
+        if (vistaCarregar == null)
+            vistaCarregar = new VistaCarregarPartida(this);
+        vistaCarregar.hacerVisible();
+        vistaCarregar.activar();
+    }
+
+
 
     public void setIndexoModalitat(int i){
         vistaModalitatProblema.SetIndex(i);
@@ -247,47 +256,67 @@ public class CtrlPresentation {
 
     }
 
+    public void sincronizacionVistaModalitatAmaquinaVSmaquina(Object[][] res){
 
-    public boolean crearPartida(String[] paramsPartida, boolean rand){
+        vistaModalitatProblema.desactivar();
+        vistaModalitatProblema.visible(false);
+        vistaMM = new VistaMaquinaVSmaquina(this, res);
+        vistaMM.activar();
+        vistaMM.visible(true);
+
+    }
+
+
+    public boolean crearPartida(String[] paramsPartida, boolean rand, int index){
         Color torn;
         switch (paramsPartida[3]){
             case "Màquina vs màquina":
-
-                        Object[][] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
-                        Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]),rand);
-
+                        Object[][] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
+                        paramsPartida[4],paramsPartida[5], TryParseInt(paramsPartida[6]),
+                        TryParseInt(paramsPartida[7]), TryParseInt(paramsPartida[8]),rand, index);
                         if(resultat!= null && resultat[0].length != 0){
-                            sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
-                            return true;}
+                            if (index == -1)
+                                sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
+                            else
+                                sincronizacionVistaModalitatAmaquinaVSmaquina(resultat);
+
+                            return true;
+                        }
                         else return false;
-
-
             case "Humà vs màquina":
 
-                torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), false, rand);
+                torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
+                        paramsPartida[4], TryParseInt(paramsPartida[5]), false, rand, index);
                 if(torn!=null){
-                    sincronizacionVistaTipus_a_Tauler(torn);
+                    if (index == -1)
+                        sincronizacionVistaTipus_a_Tauler(torn);
+                    else
+                        sincronizacionVistaModalitat_a_Tauler(torn);
                     return true;
                 }
 
                 break;
             case "Màquina vs humà":
-                torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), true, rand);
+                torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
+                        paramsPartida[4], TryParseInt(paramsPartida[5]), true, rand, index);
                 if(torn!=null){
-                    sincronizacionVistaTipus_a_Tauler(torn);
+                    if (index == -1)
+                        sincronizacionVistaTipus_a_Tauler(torn);
+                    else
+                        sincronizacionVistaModalitat_a_Tauler(torn);
                     return true;
                 }
 
                 break;
             case "Humà vs humà":
                 boolean isAttackingH2 = paramsPartida[5].contains("blanc");
-                torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], isAttackingH2, rand);
+                torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
+                        paramsPartida[4], isAttackingH2, rand, index);
                 if(torn!=null){
-                    sincronizacionVistaTipus_a_Tauler(torn);
+                    if (index == -1)
+                        sincronizacionVistaTipus_a_Tauler(torn);
+                    else
+                        sincronizacionVistaModalitat_a_Tauler(torn);
                     return true;
                 }
 
@@ -315,13 +344,11 @@ public class CtrlPresentation {
 
 
 
-    public void sincronizacionVistaModalitat_a_Tauler(Modalitat mod, int  i){
+    public void sincronizacionVistaModalitat_a_Tauler(Color torn){
         vistaModalitatProblema.desactivar();
         vistaModalitatProblema.visible(false);
-        if(taulerPartida==null){
-            Color torn = CD.JugarPartidaHuma(mod, i);
-            Tauler t  = CD.getTaulerPartidaEnJoc();
-            taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);}
+        Tauler t  = CD.getTaulerPartidaEnJoc();
+        taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);
         taulerPartida.run();
         taulerPartida.visible(true);
         taulerPartida.activar();
@@ -409,6 +436,15 @@ public class CtrlPresentation {
 
     public void Login(String str){
         CD.Login(str);
+    }
+
+    private int TryParseInt(String n){
+        try{
+            return Integer.parseInt(n);
+        }
+        catch (Exception ex){
+            return -1;
+        }
     }
 
 

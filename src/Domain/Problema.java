@@ -22,7 +22,7 @@ public class Problema{
     private boolean _guardat;
     private Tauler tauler;
     private boolean _valid;
-    private int movimentsPerGuanyar = 6;
+    //private int movimentsPerGuanyar;
     private int nPeces;
     private List<Object[]> ranking;
     private Tema tema;
@@ -89,7 +89,7 @@ public class Problema{
      * @return movimentsPerGuanyar
      */
     public int GetMovimentsPerGuanyar(){
-        return movimentsPerGuanyar;
+        return tema.getMovimentsFinsMat();
     }
 
     public Dificultat getDificultat(){return _dif;}
@@ -183,8 +183,8 @@ return null;
         Algorithm aux = new AlgorismeAlfaBeta(profunditat);
         _valid = aux.validateProblem(tauler, jugador, profunditat);
         if(_valid){
-            movimentsPerGuanyar = aux.getDepth();
-            setDificultat(profunditat);
+            tema.setMovimentsFinsMat(aux.getDepth());
+            setDificultat(numJugades);
             torn = jugador;
         }
         return _valid;
@@ -263,7 +263,7 @@ return null;
      * @return Puntacio del jugador en el problema segons els parametres passats
      */
     public int calculPuntuacio( int nmoviments, int accumTime){
-        int maxPuntuacio = nPeces * movimentsPerGuanyar * 10;
+        int maxPuntuacio = nPeces * tema.getMovimentsFinsMat()* 10;
         int tempsMig = accumTime/nmoviments;
         int boost;
         if (tempsMig > 60) boost = 1;

@@ -19,20 +19,20 @@ public class VistaModalitatProblema {
     private JPanel panelContenidos = new JPanel();
     private JPanel panelOpciones = new JPanel();
     private JPanel panelBotones = new JPanel();
-    private JPanel panelTorns = new JPanel();
-    private JPanel panelDificultat = new JPanel();
-    private JPanel panelColor = new JPanel();
+    private JPanel panelSegonHuma = new JPanel();
     private JPanel panelAlgorisme1 = new JPanel();
     private JPanel panelAlgorisme2 = new JPanel();
+    private JPanel panelModalitat = new JPanel();
 
-    private JSpinner tornsPerMat;
-    private JComboBox modalitat = new  JComboBox();
-    private JComboBox color = new  JComboBox();
+    private JCheckBox segonHumaDefensa = new JCheckBox();
+    private JSpinner profunditatA1;
+    private JTextField segonHuma = new JTextField();
+    private JSpinner profunditatA2;
     private JComboBox algorisme = new  JComboBox();
+    private JComboBox modalitat = new  JComboBox();
     private JComboBox algorisme2 = new  JComboBox();
-    private JButton buttonVolver = new JButton("Volver");
+    private JButton buttonVolver = new JButton("Tornar");
     private JButton buttonJugar = new JButton("Jugar");
-    private JTextArea textareaInformacion = new JTextArea("HOLA",5,25);
 
     private int index;
 
@@ -69,23 +69,51 @@ public class VistaModalitatProblema {
 //////////////////////// Metodos de las interfaces Listener
 
     public void actionPerformed_buttonVolver (ActionEvent event) {
-        iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
+        iCtrlPresentacion.sincronizacionVistaMod_a_Llista();
     }
 
     public void actionPerformed_buttonJugar (ActionEvent event) {
 
-       String mod = (String) modalitat.getSelectedItem();
-            Modalitat mode = Modalitat.HH;
-       if (mod.equals("Humà vs humà"))
-           mode = Modalitat.HH;
-       else if (mod.equals("Humà vs màquina"))
-           mode = Modalitat.HM;
-       else if (mod.equals("Màquina vs màquina"))
-           mode = Modalitat.MM;
-       else if (mod.equals("Màquina vs humà"))
-           mode = Modalitat.MH;
+        String mod = (String) modalitat.getSelectedItem();
+        String[] paramPartdia = new String[9];
+        paramPartdia[0] = null;
+        paramPartdia[1] = null;
+        paramPartdia[2] = null;
+        paramPartdia[3] = modalitat.getSelectedItem().toString();
 
-        iCtrlPresentacion.sincronizacionVistaModalitat_a_Tauler(mode, index);
+        if (mod.equals("Humà vs humà")){
+            if(segonHuma.getText().equals("")){
+                VistaDialogo vistaDialogo = new VistaDialogo();
+                String[] strBotones = {"Acceptar"};
+                int isel = vistaDialogo.setDialogo("Error", "El nom d'usuari del contrincant no pot estar buit",strBotones,3);
+                return;
+            }
+            paramPartdia[4] = segonHuma.getText();
+            if (segonHumaDefensa.isSelected())
+                paramPartdia[5] = "true";
+            else
+                paramPartdia[5] = "false";
+        }
+        else if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
+            paramPartdia[4] = "root";
+            paramPartdia[5] = algorisme.getSelectedItem().toString();
+            paramPartdia[6] = profunditatA1.getValue().toString();
+        }
+        else{
+            paramPartdia[4] = algorisme.getSelectedItem().toString();
+            paramPartdia[5] = algorisme2.getSelectedItem().toString();
+            paramPartdia[6] = profunditatA1.getValue().toString();
+            paramPartdia[7] = profunditatA2.getValue().toString();
+            paramPartdia[8] = null;
+        }
+
+        if(!iCtrlPresentacion.crearPartida(paramPartdia, false, index)){
+            VistaDialogo vistaDialogo = new VistaDialogo();
+            String[] strBotones = {"Acceptar"};
+            int isel = vistaDialogo.setDialogo("Error", "El problema seleccionat no és vàlid",strBotones,3);
+        }
+
+        //iCtrlPresentacion.sincronizacionVistaModalitat_a_Tauler(paramPartdia, index);
     }
 
 
@@ -130,14 +158,17 @@ public class VistaModalitatProblema {
                 else if (mod.equals("Màquina vs màquina")){
                     panelContenidos.add(panelAlgorisme1);
                     panelContenidos.add(panelAlgorisme2);
+                    panelContenidos.remove(panelSegonHuma);
                 }
 
                 else if (mod.equals("Màquina vs humà")){
                     panelContenidos.add(panelAlgorisme1);
                     panelContenidos.remove(panelAlgorisme2);
+                    panelContenidos.remove(panelSegonHuma);
                 }
 
-                    else{
+                else{
+                    panelContenidos.add(panelSegonHuma);
                     panelContenidos.remove(panelAlgorisme1);
                     panelContenidos.remove(panelAlgorisme2);
 
@@ -158,14 +189,13 @@ public class VistaModalitatProblema {
         inicializar_frameVista();
         inicializar_panelContenidos();
         inicializar_panelModalitat();
-        inicializar_panelColor();
         inicializar_panelBotones();
-        inicializar_panelTorns();
-        inicializar_panelDificultat();
+        inicializar_panelSegonHuma();
         inicialitzar_panelAlgorisme1();
         inicialitzar_panelAlgorisme2();
+        inicializar_panelProfunditatA1();
+        inicializar_panelProfunditatA2();
         asignar_listenersComponentes();
-
 
     }
 
@@ -176,7 +206,13 @@ public class VistaModalitatProblema {
         frameVista.setResizable(true);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                iCtrlPresentacion.sincronizacionVistaMod_a_Llista();
+            }
+        });
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -188,6 +224,7 @@ public class VistaModalitatProblema {
         panelContenidos.setLayout(new BoxLayout(panelContenidos, BoxLayout.Y_AXIS));
         // Paneles
         panelContenidos.add(panelOpciones,BorderLayout.CENTER);
+        panelContenidos.add(panelSegonHuma);
         panelContenidos.add(panelBotones, BorderLayout.AFTER_LAST_LINE);
 
     }
@@ -200,16 +237,6 @@ public class VistaModalitatProblema {
         JLabel label = new JLabel("Modalitat");
         panelOpciones.add(label);
         panelOpciones.add(new JScrollPane(modalitat));
-
-    }
-
-
-    private void inicializar_panelColor() {
-        color.addItem("Blanc");
-        color.addItem("Negre");
-        JLabel label = new JLabel("Color");
-        panelColor.add(label);
-        panelColor.add(new JScrollPane(color));
 
     }
 
@@ -231,26 +258,14 @@ public class VistaModalitatProblema {
 
     }
 
-
-
-    private void inicializar_panelTorns(){
-
-        String[] stringTorns = {"1","2","3","4","5","6","7","8"};
+    private void inicializar_panelSegonHuma(){
+        String[] stringTorns = {"1","2","3","4","5","6","7","8", "9", "10"};
         SpinnerListModel torns = new SpinnerListModel(stringTorns);
-        tornsPerMat = new JSpinner(torns);
-        JLabel label = new JLabel("Torns per mat");
-        panelTorns.add(label);
-        panelTorns.add(tornsPerMat);
-    }
-
-    private void inicializar_panelDificultat(){
-
-        String[] stringTorns = {"Fàcil", "Mitjà", "Difícil"};
-        SpinnerListModel torns = new SpinnerListModel(stringTorns);
-        tornsPerMat = new JSpinner(torns);
-        JLabel label = new JLabel("Dificultat");
-        panelDificultat.add(label);
-        panelDificultat.add(tornsPerMat);
+        panelSegonHuma.add(new JLabel("Nom del segon humà"));
+        segonHuma.setColumns(10);
+        panelSegonHuma.add(segonHuma);
+        panelSegonHuma.add(segonHumaDefensa);
+        panelSegonHuma.add(new JLabel("Defensor"));
     }
 
     private void inicializar_panelBotones() {
@@ -259,6 +274,24 @@ public class VistaModalitatProblema {
         // Botones
         panelBotones.add(buttonVolver);
         panelBotones.add(buttonJugar);
+    }
+
+    private void inicializar_panelProfunditatA1(){
+        String[] stringTorns = {"1","2","3","4","5","6","7"};
+        SpinnerListModel torns = new SpinnerListModel(stringTorns);
+        profunditatA1 = new JSpinner(torns);
+        JLabel label = new JLabel("Profunditat");
+        panelAlgorisme1.add(label);
+        panelAlgorisme1.add(profunditatA1);
+    }
+
+    private void inicializar_panelProfunditatA2(){
+        String[] stringTorns = {"1","2","3","4","5","6","7"};
+        SpinnerListModel torns = new SpinnerListModel(stringTorns);
+        profunditatA2 = new JSpinner(torns);
+        JLabel label = new JLabel("Profunditat");
+        panelAlgorisme2.add(label);
+        panelAlgorisme2.add(profunditatA2);
     }
 
 

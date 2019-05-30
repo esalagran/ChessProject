@@ -53,7 +53,7 @@ public class PartidaHM extends PartidaRefactor{
         Problema p = getProblemaEnJoc();
         Tauler t = p.getTauler();
         Move m = a2.FindBestMoveConcr(t, getTorn(), p.GetMovimentsPerGuanyar() - getMoviments());
-        if (m != null) {
+        if (m != null && m.getEndPos() != null && m.getStartPos()!= null) {
             lastMove = new ParInt[]{m.getStartPos(), m.getEndPos()};
             t.moureFitxa(m);
         }

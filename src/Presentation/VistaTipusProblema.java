@@ -25,8 +25,6 @@ public class VistaTipusProblema {
     private JPanel panelColor = new JPanel();
     private JPanel panelAlgorisme1 = new JPanel();
     private JPanel panelAlgorisme2 = new JPanel();
-    private JPanel panelProfunditatA1 = new JPanel();
-    private JPanel panelProfunditatA2 = new JPanel();
     private JPanel panelNumProblemes = new JPanel();
     private JPanel panelSegonHumà = new JPanel();
 
@@ -91,11 +89,14 @@ public class VistaTipusProblema {
             if(segonHumà.getText().equals("")){
                 VistaDialogo vistaDialogo = new VistaDialogo();
                 String[] strBotones = {"Acceptar"};
-                int isel = vistaDialogo.setDialogo("Error", "El nom d'usuari del contrincant no pot estar vuit",strBotones,3);
+                int isel = vistaDialogo.setDialogo("Error", "El nom d'usuari del contrincant no pot estar buit",strBotones,3);
                 return;
             }
-            paramPartdia[4] = "root";
-            paramPartdia[5] = "no ha d'anar aixi";
+            paramPartdia[4] = segonHumà.getText();
+            if (segonHumaDefensa.isSelected())
+                paramPartdia[5] = "true";
+            else
+                paramPartdia[5] = "false";
         }
         else if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
            paramPartdia[4] = "root";
@@ -110,7 +111,7 @@ public class VistaTipusProblema {
             paramPartdia[8] = numProblemes.getValue().toString();
         }
 
-        if(!iCtrlPresentacion.crearPartida(paramPartdia, false)){
+        if(!iCtrlPresentacion.crearPartida(paramPartdia, false, -1)){
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Acceptar"};
             int isel = vistaDialogo.setDialogo("Error", "No s'ha trobat cap problema amb aquests filtres.",strBotones,3);
@@ -152,7 +153,7 @@ public class VistaTipusProblema {
             paramPartdia[8] = numProblemes.getValue().toString();
         }
 
-        if(!iCtrlPresentacion.crearPartida(paramPartdia, true)){
+        if(!iCtrlPresentacion.crearPartida(paramPartdia, true, -1)){
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Acceptar"};
             int isel = vistaDialogo.setDialogo("Error", "No s'ha trobat cap problema amb aquests filtres.",strBotones,3);
@@ -200,7 +201,6 @@ public class VistaTipusProblema {
 
                 if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
                     panelContenidos.add(panelAlgorisme1);
-
                     panelContenidos.remove(panelAlgorisme2);
                     panelContenidos.remove(panelNumProblemes);
                 }
@@ -208,7 +208,6 @@ public class VistaTipusProblema {
                 else if (mod.equals("Màquina vs màquina")){
                     panelContenidos.add(panelAlgorisme1);
                     panelContenidos.add(panelAlgorisme2);
-
                     panelContenidos.add(panelNumProblemes);
                 }
                 else if(mod.equals("Humà vs humà")){
@@ -218,7 +217,6 @@ public class VistaTipusProblema {
                 else{
                     panelContenidos.remove(panelAlgorisme1);
                     panelContenidos.remove(panelAlgorisme2);
-
                     panelContenidos.remove(panelNumProblemes);
                 }
 
@@ -322,7 +320,6 @@ public class VistaTipusProblema {
         JLabel label = new JLabel("Màquina 2");
         panelAlgorisme2.add(label);
         panelAlgorisme2.add(new JScrollPane(algorisme2));
-
     }
 
 
@@ -382,7 +379,7 @@ public class VistaTipusProblema {
         JLabel label = new JLabel("Problemes a jugar");
         panelNumProblemes.add(label);
         panelNumProblemes.add(numProblemes);
-        panelSegonHumà.add(new JLabel("Nom d'usuari del segón humà"));
+        panelSegonHumà.add(new JLabel("Nom del segon humà"));
         segonHumà.setColumns(10);
         panelSegonHumà.add(segonHumà);
         panelSegonHumà.add(segonHumaDefensa);

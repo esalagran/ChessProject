@@ -219,12 +219,14 @@ public class Convert {
     }
 
     public static Color StringToColor(String torns) {
+        if (torns == null) return null;
         torns = torns.toLowerCase();
         if (torns.charAt(0) == 'b') return blanc;
         return negre;
     }
 
     public static Dificultat StringToDificultat(String dif){
+        if (dif == null) return null;
         dif = dif.toLowerCase();
         char d = dif.charAt(0);
         if (d == 'f') return Dificultat.facil;

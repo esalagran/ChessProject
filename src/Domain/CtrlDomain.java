@@ -26,16 +26,21 @@ public class CtrlDomain {
      * \post: S'han jugat tots els problemes de probJugats i es van imprimint
      * els guanyador del problema en cada cas.
      * */
-    public Object[][] JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1, int p2, int numProblemes, boolean random) {
+    public Object[][] JugarPartidesMaquines(String dif, String color, int jugadesPelMate, String t1, String t2, int p1,
+                                            int p2, int numProblemes, boolean random, int index) {
         List<Problema> candidates;
 
-        if(random){
+        if (index >= 0 && index <= problemes.size()){
+            numProblemes = 1;
+            candidates = new ArrayList<>();
+            candidates.add(problemes.get(index));
+        }
+        else if(random){
             candidates = getValids();
             Random rand = new Random();
         }
         else{
-
-        candidates = getCandidates(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
+            candidates = getCandidates(Convert.StringToDificultat(dif), Convert.StringToColor(color), jugadesPelMate);
         }
 
 
@@ -160,20 +165,19 @@ public class CtrlDomain {
      * s'imprimeix el guanyador quan es finalitzi
      * */
     public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h2, boolean isAttackingH2,
-                                boolean random) {
-        Problema p;
+                                boolean random, int index) {
         //Es mira si existeix l'usuari, en cas que no existeixi s'introdueix a la base d'usuaris
         CP.InsertaUsuari(h2);
         Huma rival = new Huma(h2);
-
-        if(random){
+        Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate, index, random);
+        /*if(random){
             List<Problema> valids = getValids();
             Random rand = new Random();
             p = valids.get(rand.nextInt(problemes.size()));
         }
         else{
             p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
-        }
+        }*/
         if (p == null) return null;
         if (isAttackingH2)
             partidaEnJoc = new PartidaHH(p, rival, usuariLoggedIn);
@@ -182,32 +186,35 @@ public class CtrlDomain {
         return p.GetTorn();
     }
 
-    public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate, String nickname,
-                                String algName, int profunditat, boolean isMachine1, boolean random){
+    public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate,
+                                String algName, int profunditat, boolean isMachine1, boolean random, int index){
 
-        Problema p;
-        if(random){
+        Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate, index, random);
+        /*if (index >= 0 && index < problemes.size()){
+            p = problemes.get(index);
+        }
+        else if(random){
 
            List<Problema> valids = getValids();
            Random rand = new Random();
            p = valids.get(rand.nextInt(problemes.size()));
         }
         else{
-         p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
-        }
+            p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        }*/
         if (p == null) return null;
         if (isMachine1){
             //new Huma s'ha de canviar per una cerca a la base de dades d'usuari. En aquest cas hi ha de ser sempre
             //ja que és l'usuari que s'ha registrat
-            partidaEnJoc = new PartidaHM(p, getTipusAlgorithm(algName, profunditat), new Huma(nickname));
+            partidaEnJoc = new PartidaHM(p, getTipusAlgorithm(algName, profunditat), usuariLoggedIn);
         }
         else{
-            partidaEnJoc = new PartidaHM(p, new Huma(nickname), getTipusAlgorithm(algName, profunditat));
+            partidaEnJoc = new PartidaHM(p, usuariLoggedIn, getTipusAlgorithm(algName, profunditat));
         }
         return p.GetTorn();
     }
 
-    public Color JugarPartidaHuma(Modalitat mode, int index) {
+    /*public Color JugarPartidaHuma(Modalitat mode, int index) {
         // en realitat es busca un problema aletatori de la base de dades amb la dificultat
         Random rand = new Random();
         Problema p = problemes.get(index);
@@ -215,7 +222,7 @@ public class CtrlDomain {
         //partidaEnJoc = new Partida(p, mode, 10);
         //partidaEnJoc.ComençarPartida();
         return p.GetTorn();
-    }
+    }*/
 
     /**
      * \pre:
@@ -434,19 +441,6 @@ public class CtrlDomain {
         else return d;
     }
 
-    private PartidaRefactor CreaPartida (Modalitat m, Problema p, String nickname, String nickname2, int p1, int p2){
-        switch (m){
-            case MM:
-                return new PartidaMM(p, getTipusAlgorithm(nickname, p1), getTipusAlgorithm(nickname2, p2));
-            case HH:
-                return new PartidaHH(p, new Huma(nickname), new Huma(nickname2));
-            case HM:
-                return  new PartidaHM(p, new Huma(nickname), getTipusAlgorithm(nickname2, p2));
-            case MH:
-                return new PartidaHM(p, getTipusAlgorithm(nickname, p1), new Huma(nickname2));
-        }
-        return null;
-    }
 
     private Algorithm getTipusAlgorithm(String tipus, int profunditat){
         Algorithm a;
@@ -458,8 +452,19 @@ public class CtrlDomain {
         return a;
     }
 
-    private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate){
+    private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate, int index, boolean random){
+        if (index >= 0){
+            if (index < problemes.size() && problemes.get(index).GetValid())
+                return problemes.get(index);
+            return null;
+        }
+
         Random rand = new Random();
+        if (random){
+            List<Problema> candidates = getValids();
+            return candidates.get(rand.nextInt(candidates.size()));
+        }
+
         int jugades = jugadesPelMate * 2 - 1;
         List<Problema> candidates = getCandidates(dif, torn, jugades);
         if (candidates.isEmpty()) return null;
