@@ -33,7 +33,7 @@ public class VistaMaquinaVSmaquina {
             "Temps1",
             "Algorsime2",
             "Temps2",
-            "Guanyador"
+            "Guanyador","Motiu"
 
     };
     private JTable taula;
