@@ -299,7 +299,7 @@ public class CtrlPersistence {
         try{
             if (!hihaUsuari(nickName)){
                 BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/usuaris.txt"), true));
-                writer.append(nickName);
+                writer.append(nickName+'\n');
                 writer.close();
                 return true;
             }

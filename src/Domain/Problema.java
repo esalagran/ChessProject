@@ -24,7 +24,7 @@ public class Problema{
     private boolean _valid;
     private int movimentsPerGuanyar = 6;
     private int nPeces;
-    private List<Object[]> ranking = new ArrayList<Object[]>();
+    private List<Object[]> ranking;
     private Tema tema;
     private String _creador;
 
@@ -39,6 +39,7 @@ public class Problema{
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
         _creador = creador;
+        ranking =  new ArrayList<>();
         _dif = Dificultat.mitja;
     }
 
@@ -281,12 +282,15 @@ return null;
             nomJugador,
             puntuacio
         };
-        if (ranking.size() == 0) ranking.add(newPlayer);
+        if (ranking == null){
+            ranking = new ArrayList<>();
+            ranking.add(newPlayer);
+        }
         else {
             boolean insert = false;
             for (int i = 0; i < ranking.size(); i++) {
                 Object[] player = ranking.get(i);
-                if ((int) player[1] < puntuacio){
+                if ((int) player[1] < puntuacio && !insert){
                     ranking.add(i, newPlayer);
                     insert  = true;
                 }
