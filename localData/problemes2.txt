@@ -1,21 +1,14 @@
-2B5/2p1B1nn/2PR2p1/1K2k3/1p2p3/2b1P3/5R2/8 w - - 0 1
+1k6/8/1K2Q3/8/8/8/8/8 w - - 0 1
 true
-4
-blanc
-fff/203
-fluf/202
-Joan/200
-Fi
-3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5 w - - 0 1
-true
-3
-blanc
-fluf/24574
-Joan/5764
-fff/457
-Fi
-8/5K2/5p2/5Qbk/8/8/5P2/8 w - - 0 1
-false
 7
-negre
+blanc
+"root"
+moltfacil
+Fi
+1k6/8/1K4Q1/8/8/8/8/8 w - - 0 1
+true
+7
+blanc
+"root"
+moltfacil
 Fi

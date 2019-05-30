@@ -31,7 +31,8 @@ public class CtrlPersistence {
      * @param creador Creador del problema
      */
 
-    public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador, String login) {
+
+    public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador, String dificultat, String login) {
         try {
             if (!hiHaProblema(FEN)) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes2.txt"), true));
@@ -39,6 +40,7 @@ public class CtrlPersistence {
                 writer.append(String.valueOf(njugades) + '\n');    //Guardo numero moviments
                 writer.append(color + '\n');
                 writer.append(creador + '\n');
+                writer.append(dificultat + '\n');
                 writer.append("Fi\n");
                 writer.close();
                 return;
@@ -49,14 +51,14 @@ public class CtrlPersistence {
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null) {
                     if (currentLine.contains(FEN)) {
-                        currentLine = reader.readLine();
+                        currentLine = reader.readLine();    //Valid
                         String valid = currentLine;
-                        currentLine = reader.readLine();
-                        currentLine = reader.readLine();
-                        currentLine = reader.readLine();
-                        if ((valid.contains("false") || !shaJugat(FEN)) && (currentLine.contains("admin") || currentLine.contains(login))) {
+                        currentLine = reader.readLine();    //Passos
+                        currentLine = reader.readLine();    //Color
+                        currentLine = reader.readLine();    //Creador
+                        if ((valid.contains("false") || !shaJugat(FEN)) && (currentLine.contains("root") || currentLine.contains(login))) {
                             eliminarProblema(FEN);
-                            guardarProblema(FEN, validesa, njugades,color,creador,login);
+                            guardarProblema(FEN, validesa, njugades,color,creador, dificultat,login);
                         }
                     }
                 }
@@ -113,7 +115,7 @@ public class CtrlPersistence {
                 while ((currentLine = reader.readLine()) != null){
                     if (currentLine.contains(FEN)){
                         writer.write(currentLine + '\n');
-                        for (int i = 0; i < 4; i++){
+                        for (int i = 0; i < 6; i++){
                             currentLine = reader.readLine();
                             writer.write(currentLine + '\n');
                         }
@@ -194,6 +196,7 @@ public class CtrlPersistence {
             String color;
             String creador;
             String s = reader.readLine();
+            String dificultat;
             List<Object[]> problemes = new ArrayList<>();
             while (s != null){
                 fen = s;
@@ -205,6 +208,8 @@ public class CtrlPersistence {
                 color = s;
                 s = reader.readLine();
                 creador = s;
+                s = reader.readLine();
+                dificultat = s;
                 s = reader.readLine();
 
                 Map<String,Integer> r = new HashMap();
@@ -220,7 +225,8 @@ public class CtrlPersistence {
                         pasos,
                         color,
                         r,
-                        creador
+                        creador,
+                        dificultat
                 };
 
                 problemes.add(aux);
@@ -242,6 +248,7 @@ public class CtrlPersistence {
                 int pasos;
                 String color;
                 String creador;
+                String dificultat;
                 String s = reader.readLine();
 
                 while (s != null) {
@@ -255,6 +262,8 @@ public class CtrlPersistence {
                         color = s;
                         s = reader.readLine();
                         creador = s;
+                        s = reader.readLine();
+                        dificultat = s;
 
                         s = reader.readLine();
                         Map<String,Integer> r = new HashMap<String,Integer>();
@@ -270,7 +279,8 @@ public class CtrlPersistence {
                                 pasos,
                                 color,
                                 r,
-                                creador
+                                creador,
+                                dificultat
                         };
 
                         return aux;
@@ -308,6 +318,7 @@ public class CtrlPersistence {
             String s = reader.readLine();
             while (s != null){
                 if (s.contains(nickname)) return true;
+                s = reader.readLine();
             }
 
             reader.close();

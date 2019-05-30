@@ -32,11 +32,6 @@ public class MenuPrincipal {
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
     private JMenuItem menuitemQuit = new JMenuItem("Quit");
-    private JMenu menuOpciones = new JMenu("Opciones");
-    private JMenuItem menuitemLlamadaDominio = new JMenuItem("Llamada Dominio");
-    private JMenuItem menuitemAbrirJFrame = new JMenuItem("Abrir JFrame");
-    private JMenuItem menuitemCambiarPanel = new JMenuItem("Cambiar Panel");
-    private JMenuItem menuitemAbrirDialog = new JMenuItem("Abrir Dialog");
 
     // Resto de atributos
     private int iPanelActivo = 0;
@@ -140,41 +135,6 @@ public class MenuPrincipal {
 
         // Listeners para las opciones de menu
 
-        menuitemLlamadaDominio.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        String texto = ((JMenuItem) event.getSource()).getText();
-                        System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonJugarPartida(event);
-                    }
-                });
-
-        menuitemAbrirJFrame.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        String texto = ((JMenuItem) event.getSource()).getText();
-                        System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonCarregarProblema(event);
-                    }
-                });
-
-        menuitemCambiarPanel.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        String texto = ((JMenuItem) event.getSource()).getText();
-                        System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonCrearProblema(event);
-                    }
-                });
-
-        menuitemAbrirDialog.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        String texto = ((JMenuItem) event.getSource()).getText();
-                        System.out.println("Has seleccionado el menuitem con texto: " + texto);
-                        actionPerformed_buttonVeureRanking(event);
-                    }
-                });
 
         menuitemQuit.addActionListener
                 (new ActionListener() {
@@ -224,12 +184,7 @@ public class MenuPrincipal {
     private void inicializar_menubarVista() {
 
         menuFile.add(menuitemQuit);
-        menuOpciones.add(menuitemLlamadaDominio);
-        menuOpciones.add(menuitemAbrirJFrame);
-        menuOpciones.add(menuitemCambiarPanel);
-        menuOpciones.add(menuitemAbrirDialog);
-        menubarVista.add(menuFile);
-        menubarVista.add(menuOpciones);
+
         frameVista.setJMenuBar(menubarVista);
     }
 

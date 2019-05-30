@@ -242,7 +242,7 @@ public class TaulerGUICrearProblema {
         sortirButton.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-
+                        CP.sincronizacionEditarProblema_a_Menu();
 
                     }
                 });
@@ -548,6 +548,14 @@ public class TaulerGUICrearProblema {
         // Ensures JVM closes after frame(s) closed and
         // all non-daemon threads are finished
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        f.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                CP.sincronizacionEditarProblema_a_Menu();
+            }
+        });
+
         // See https://stackoverflow.com/a/7143398/418556 for demo.
         f.setLocationByPlatform(true);
         f.setResizable(false);

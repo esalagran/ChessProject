@@ -25,6 +25,10 @@ public class VistaGetFEN {
     private JTextField contraseñaField = new JPasswordField(10);
     private JButton buttonAccept= new JButton("Importar");
     private JButton buttonCancel= new JButton("Cancelar");
+    private JPanel error = new JPanel();
+
+
+
 
 
     // Resto de atributos
@@ -80,14 +84,28 @@ public class VistaGetFEN {
 
         // Listeners para los botones
 
+buttonCancel.addActionListener
+        (new ActionListener() {
+            public void actionPerformed (ActionEvent event) {
+                visible(false);
+
+            }
+        });
 
 
         buttonAccept.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
+                        if(!FENField.getText().equals("")){
 
                          FitxaProblema[][] t = iCtrlPresentacion.ImportarProblema(FENField.getText());
-                         iCtrlPresentacion.sincronizacionVistaFEN_a_ProblemaImport(t);
+                                iCtrlPresentacion.sincronizacionVistaFEN_a_ProblemaImport(t);
+                        }
+                         else{
+                            VistaDialogo vistaDialogo = new VistaDialogo();
+                            String[] strBotones = {"Acceptar"};
+                            int isel = vistaDialogo.setDialogo("Error", "El camp no pot ser vuit",strBotones,3);
+                         }
 
 
 
@@ -116,6 +134,7 @@ public class VistaGetFEN {
         inicializar_panelBotones();
         inicializar_panelUsuario();
 
+        error.add(new JLabel("El camp no pot ser vuit"));
         asignar_listenersComponentes();
     }
 
@@ -126,7 +145,7 @@ public class VistaGetFEN {
         frameVista.setResizable(false);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();

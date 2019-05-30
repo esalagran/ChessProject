@@ -30,17 +30,10 @@ public class Problema{
     private String _creador;
 
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_CYAN = "\u001B[37m";
-    public static final String ANSI_PURPLE = "\u001B[30m";
-    public static final String ANSI_BLACK = "\u001B[30m";
 
 
-    public Problema(String FEN){
+
+    public Problema(String FEN, String creador){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
@@ -50,9 +43,11 @@ public class Problema{
         nPeces = getNPeces().GetFirst()+getNPeces().GetSecond();
         _valid = false;
         ranking = new HashMap<String,Integer>();
+        _creador = creador;
+        _dif = Dificultat.mitja;
     }
 
-    public Problema(String FEN, Tema tema, boolean valid, String creador){
+    public Problema(String FEN, Tema tema, boolean valid, String creador, Dificultat dificultat, Map<String, Integer> ranking){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
             if (_FEN.contains(new StringBuilder(1).append('w'))) this.torn = Color.blanc;
@@ -63,8 +58,9 @@ public class Problema{
         _guardat = true;
         _valid = valid;
         this.tema = tema;
-        ranking = new HashMap<String,Integer>();
+        this.ranking = ranking;
         _creador = creador;
+        _dif = dificultat;
     }
 
     public String GetCreador(){return _creador;}
@@ -159,8 +155,9 @@ return null;
 
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti) == null) {
-                tauler.AfegirPeçaAt(desti,tauler.FitxaAt(origen));
-                tauler.AfegirPeçaAt(origen, null);
+                FitxaProblema fp = tauler.FitxaAt(origen);
+                tauler.EliminarPeçaAt(origen);
+                tauler.AfegirPeçaAt(desti,fp);
                 _valid = false;
                 return tauler.getTaulell();
 
@@ -169,8 +166,6 @@ return null;
                 System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
 
             }
-
-
         } else{
             System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 

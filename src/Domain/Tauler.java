@@ -1,9 +1,7 @@
 package Domain;
 
-import javax.sql.rowset.RowSetWarning;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 
 import static Domain.Convert.*;
@@ -13,7 +11,6 @@ public class Tauler {
     private FitxaProblema[][] taulell;
     private FitxaProblema whiteKing;
     private FitxaProblema blackKing;
-    private  Convert Convert = new Convert();
     private HashMap<Character, Integer> _pecesMax;
     private HashMap<Character,Integer> _numTipusFitxa;
 
