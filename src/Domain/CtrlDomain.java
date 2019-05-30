@@ -146,7 +146,7 @@ public class CtrlDomain {
 
             List<Problema> valids = getValids();
             Random rand = new Random();
-            p = valids.get(rand.nextInt(problemes.size()));
+            p = valids.get(rand.nextInt(problemes.size() - 1));
         }
         else{
 
@@ -165,7 +165,7 @@ public class CtrlDomain {
 
            List<Problema> valids = getValids();
            Random rand = new Random();
-           p = valids.get(rand.nextInt(problemes.size()));
+           p = valids.get(rand.nextInt(problemes.size() - 1));
         }
         else{
          p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
