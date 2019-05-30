@@ -201,11 +201,12 @@ public class CtrlPresentation {
 
                         Object[][] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
                         paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
-                        Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]));
+                        Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]),rand);
+                        System.out.println(resultat[0].length);
                         sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
+                return true;
 
 
-                break;
             case "Humà vs màquina":
 
                 torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),

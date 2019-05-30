@@ -33,8 +33,7 @@ public class VistaMaquinaVSmaquina {
             "Temps1",
             "Algorsime2",
             "Temps2",
-            "Guanyador",
-            "Motiu"
+            "Guanyador"
 
     };
     private JTable taula;
@@ -56,7 +55,7 @@ public class VistaMaquinaVSmaquina {
 
         iCtrlPresentacion = pCtrlPresentacion;
         taula = new JTable(data, columnNames);
-        panelTaule.add(taula);
+        panelTaule.add(new JScrollPane(taula));
         inicializarComponentes();
     }
 
