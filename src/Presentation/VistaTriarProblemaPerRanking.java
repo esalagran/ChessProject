@@ -104,7 +104,7 @@ public class VistaTriarProblemaPerRanking {
                         Object[][] data;
                         String texto = ((JButton) event.getSource()).getText();
                        List<Object[]> ranking = iCtrlPresentacion.getRanking(texto);
-                       if(ranking.size()!= 0) {
+                       if(ranking != null && ranking.size()!= 0) {
                            data = new Object[ranking.size()][2];
 
                        for(int i = 0; i< ranking.size(); i++ ){
