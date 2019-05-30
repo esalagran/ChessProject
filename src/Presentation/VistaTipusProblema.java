@@ -44,7 +44,6 @@ public class VistaTipusProblema {
     private JButton buttonVolver = new JButton("Volver");
     private JButton buttonJugar = new JButton("Jugar");
     private JButton buttonJugarAleatori = new JButton("Jugar aleatori");
-    private JTextArea textareaInformacion = new JTextArea("HOLA",5,25);
 
 
 //////////////////////// Constructor y metodos publicos
