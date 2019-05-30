@@ -19,6 +19,7 @@ public class CtrlPresentation {
     private VistaGetFEN vistaGetFEN = null;
     private VistaModalitatProblema vistaModalitatProblema = null;
     private VistaMaquinaVSmaquina vistaMM = null;
+    private VistaGetProf prof = null;
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
@@ -202,7 +203,6 @@ public class CtrlPresentation {
                         Object[][] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
                         paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
                         Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]),rand);
-                        System.out.println(resultat[0].length);
                         sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
                 return true;
 
@@ -311,6 +311,14 @@ public class CtrlPresentation {
 
     public FitxaProblema[][] MourePeçaPartida(ParInt first, ParInt second){
         return CD.MourePeçaPartida(first, second);
+    }
+
+    public void sincronitzacioProblemaAprofunditat(){
+
+        prof = new VistaGetProf(this);
+        prof.visible(true);
+
+
     }
 
     public FitxaProblema[][] MourePeçaProblema(ParInt first, ParInt second){
