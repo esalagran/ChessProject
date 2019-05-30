@@ -10,6 +10,7 @@ public class CtrlDomain {
     private PartidaRefactor partidaEnJoc;
     private List<Problema> problemes;
     private List<Huma> usuaris;
+    private Huma usuariLoggedIn;
 
 
     private Persistence.CtrlPersistence CP;
@@ -89,7 +90,7 @@ public class CtrlDomain {
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
         String dif = pObert.getDificultat() == null ? "" : pObert.getDificultat().toString();
-        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif);
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif,usuariLoggedIn);
         CarregarProblemes();
     }
 
@@ -126,6 +127,11 @@ public class CtrlDomain {
         CP.afegirJugadorProblema(FEN, nickname, puntucacio);
     }
 
+    public void Login (String str){
+        CP.InsertaUsuari(str);
+        usuariLoggedIn = new Huma(str);
+
+    }
 
     /**
      * \pre: p conté el problema que es jugara i mode la modalitat de la partida.
@@ -170,14 +176,14 @@ public class CtrlDomain {
      * altrament es mostra un missatge*/
     public void CreaProblema() {
         if (pObert == null)
-            pObert = new Problema("");
+            pObert = new Problema("", usuariLoggedIn.GetNickName());
         else
             System.out.println("Primer has de tancar el problema");
     }
 
     public void CreaProblema(String FEN) {
         if (pObert == null)
-            pObert = new Problema(FEN);
+            pObert = new Problema(FEN, usuariLoggedIn.GetNickName());
         else
             System.out.println("Primer has de tancar el problema");
     }

@@ -1,5 +1,7 @@
 package Presentation;
 
+import Domain.FitxaProblema;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +9,7 @@ import java.awt.event.ActionListener;
 
 ////////////////////////
 
-public class VistaLogin {
+public class VistaMaquinaVSmaquina {
 
     // Controlador de presentacion
     private CtrlPresentation iCtrlPresentacion;
@@ -17,12 +19,25 @@ public class VistaLogin {
             "principal");
     private JPanel panelContenidos = new JPanel();
     private JPanel panelBotones = new JPanel();
+    private JPanel panelLlista = new JPanel();
     private JPanel panelUsuario = new JPanel();
     private JPanel panelContraseña = new JPanel();
+    private JPanel panelTaule = new JPanel();
     private JTextField usuariField = new JTextField(10);
     private JTextField contraseñaField = new JPasswordField(10);
-    private JButton buttonLogin= new JButton("Login");
+    private JButton buttonJugar= new JButton("Jugar");
+    private JButton buttonEditar= new JButton("Editar");
+    private JButton buttonVolver= new JButton("Volver");
+    private String[] columnNames = {"Problema",
+            "Algorisme1",
+            "Temps1",
+            "Algorsime2",
+            "Temps2",
+            "Guanyador",
+            "Motiu"
 
+    };
+    private JTable taula;
 
     // Menus
     private JMenuBar menubarVista = new JMenuBar();
@@ -37,10 +52,11 @@ public class VistaLogin {
 //////////////////////// Constructor y metodos publicos
 
 
-    public VistaLogin(CtrlPresentation pCtrlPresentacion) {
-        System.out.println
-                ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
+    public VistaMaquinaVSmaquina(CtrlPresentation pCtrlPresentacion, Object[][] data) {
+
         iCtrlPresentacion = pCtrlPresentacion;
+        taula = new JTable(data, columnNames);
+        panelTaule.add(taula);
         inicializarComponentes();
     }
 
@@ -71,8 +87,7 @@ public class VistaLogin {
 
     public void actionPerformed_buttonLogin (ActionEvent event) {
 
-iCtrlPresentacion.Login(usuariField.getText());
-iCtrlPresentacion.sincronizacionLogin_a_Menu();
+        iCtrlPresentacion.sincronizacionLogin_a_Menu();
 
     }
 
@@ -84,21 +99,18 @@ iCtrlPresentacion.sincronizacionLogin_a_Menu();
 
         // Listeners para los botones
 
-
-
-
-
-
-
-
-        buttonLogin.addActionListener
+        buttonVolver.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        String texto = ((JButton) event.getSource()).getText();
-                        System.out.println("Has clickado el boton con texto: " + texto);
-                        actionPerformed_buttonLogin(event);
+                        iCtrlPresentacion.sincronizacionVistaCarregar_a_Menu();
                     }
                 });
+
+
+
+
+
+
 
         // Listeners para las opciones de menu
 
@@ -116,15 +128,30 @@ iCtrlPresentacion.sincronizacionLogin_a_Menu();
 //////////////////////// Resto de metodos privados
 
 
+
+
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
         inicializar_panelContenidos();
-        inicializar_panelBotones();
         inicializar_panelUsuario();
-
+        inicializar_panelBotones();
         asignar_listenersComponentes();
     }
+
+    private void inicializar_panelBotones() {
+        // Layout
+        panelBotones.setLayout(new FlowLayout());
+
+        // Componentes
+
+        // Buttons
+        panelBotones.add(buttonVolver);
+        panelBotones.add(buttonEditar);
+        panelBotones.add(buttonJugar);
+        // Tooltips
+    }
+
 
     private void inicializar_frameVista() {
         // Tamanyo
@@ -133,7 +160,13 @@ iCtrlPresentacion.sincronizacionLogin_a_Menu();
         frameVista.setResizable(false);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                iCtrlPresentacion.sincronizacionVistaCarregar_a_Menu();
+            }
+        });
+
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -145,6 +178,8 @@ iCtrlPresentacion.sincronizacionLogin_a_Menu();
     private void inicializar_menubarVista() {
 
         menuFile.add(menuitemQuit);
+        menubarVista.add(menuFile);
+        menubarVista.add(menuOpciones);
         frameVista.setJMenuBar(menubarVista);
     }
 
@@ -152,23 +187,11 @@ iCtrlPresentacion.sincronizacionLogin_a_Menu();
         // Layout
         panelContenidos.setLayout(new BoxLayout(panelContenidos, BoxLayout.Y_AXIS));
         // Paneles
-        panelContenidos.add(Box.createVerticalStrut(100));
 
-        panelContenidos.add(panelUsuario);
+        panelContenidos.add(panelTaule);
         panelContenidos.add(panelBotones);
     }
 
-    private void inicializar_panelBotones() {
-        // Layout
-        panelBotones.setLayout(new FlowLayout());
-
-        // Componentes
-
-        // Buttons
-
-        panelBotones.add(buttonLogin);
-        // Tooltips
-    }
 
 
     private void inicializar_panelUsuario(){
