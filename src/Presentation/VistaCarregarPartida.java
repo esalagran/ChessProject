@@ -209,11 +209,7 @@ public class VistaCarregarPartida {
 
 
     private void inicializar_menubarVista() {
-
-        menuFile.add(menuitemQuit);
-        menubarVista.add(menuFile);
-        menubarVista.add(menuOpciones);
-        frameVista.setJMenuBar(menubarVista);
+        
     }
 
     private void inicializar_panelContenidos() {
