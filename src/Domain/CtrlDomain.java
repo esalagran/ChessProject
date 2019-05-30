@@ -86,7 +86,7 @@ public class CtrlDomain {
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
         String dif = pObert.getDificultat() == null ? "" : pObert.getDificultat().toString();
-        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif,usuariLoggedIn);
+        CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador(), dif,usuariLoggedIn.GetNickName());
         CarregarProblemes();
     }
 
@@ -415,7 +415,6 @@ public class CtrlDomain {
 
     private Problema TriaProblema(Dificultat dif, Color torn, int jugadesPelMate){
         Random rand = new Random();
-        //Problema p = problemes.get(rand.nextInt(problemes.size()));
         List<Problema> candidates = getCandidates(dif, torn, jugadesPelMate);
         if (candidates.isEmpty()) return null;
         return candidates.get(rand.nextInt(candidates.size()));
