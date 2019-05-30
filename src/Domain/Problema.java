@@ -138,9 +138,12 @@ return null;
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen) == null) {
 
-                System.out.println("La posició d'origen està buida");
 
             }
+
+
+        } else{
+
         }
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti) == null) {
@@ -149,7 +152,13 @@ return null;
                 tauler.AfegirPeçaAt(desti,fp);
                 _valid = false;
                 return tauler.getTaulell();
+
+
+            } else{
+
             }
+        } else{
+
         }
         return null;
     }

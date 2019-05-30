@@ -53,9 +53,13 @@ public class PartidaHH extends PartidaRefactor{
         Problema p = super.getProblemaEnJoc();
         if (super.getGuanyador().equals(p.GetTorn())){
             p.inscriureRanking(h1.GetNickName(),p.calculPuntuacio(movH1, (int)tempsH1));
+            if(movH2 == 0)
+                movH2 = 1;
             p.inscriureRanking(h2.GetNickName(),(int)tempsH2/movH2);
         }
         else {
+            if(movH1 == 0)
+                movH1 = 1;
             p.inscriureRanking(h1.GetNickName(),(int)tempsH1/movH1);
             p.inscriureRanking(h2.GetNickName(),p.calculPuntuacio(movH2, (int)tempsH2));
         }
