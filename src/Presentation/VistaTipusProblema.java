@@ -42,8 +42,8 @@ public class VistaTipusProblema {
     private JComboBox dificultat = new  JComboBox();
     private JButton buttonVolver = new JButton("Volver");
     private JButton buttonJugar = new JButton("Jugar");
+    private JButton buttonJugarAleatori = new JButton("Jugar aleatori");
     private JTextArea textareaInformacion = new JTextArea("HOLA",5,25);
-
 
 
 //////////////////////// Constructor y metodos publicos
@@ -79,6 +79,7 @@ public class VistaTipusProblema {
     }
 
     public void actionPerformed_buttonJugar (ActionEvent event) {
+
         String mod = (String) modalitat.getSelectedItem();
         String[] paramPartdia = new String[9];
         paramPartdia[0] = dificultat.getSelectedItem().toString();
@@ -103,7 +104,44 @@ public class VistaTipusProblema {
             paramPartdia[8] = numProblemes.getValue().toString();
         }
 
-        iCtrlPresentacion.sincronizacionVistaTipus_a_Tauler(paramPartdia);
+        if(!iCtrlPresentacion.crearPartida(paramPartdia, false)){
+            VistaDialogo vistaDialogo = new VistaDialogo();
+            String[] strBotones = {"Acceptar"};
+            int isel = vistaDialogo.setDialogo("Error", "No s'ha trobat cap problema amb aquests filtres.",strBotones,3);
+        }
+    }
+
+    public void actionPerformed_buttonJugarAleatori (ActionEvent event) {
+
+        String mod = (String) modalitat.getSelectedItem();
+        String[] paramPartdia = new String[9];
+        paramPartdia[0] = dificultat.getSelectedItem().toString();
+        paramPartdia[1] = color.getSelectedItem().toString();
+        paramPartdia[2] = tornsPerMat.getValue().toString();
+        paramPartdia[3] = modalitat.getSelectedItem().toString();
+
+        if (mod.equals("Humà vs humà")){
+            paramPartdia[4] = "root";
+            paramPartdia[5] = "no ha d'anar aixi";
+        }
+        else if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
+            paramPartdia[4] = "root";
+            paramPartdia[5] = algorisme.getSelectedItem().toString();
+            paramPartdia[6] = profunditatA1.getValue().toString();
+        }
+        else{
+            paramPartdia[4] = algorisme.getSelectedItem().toString();
+            paramPartdia[5] = algorisme2.getSelectedItem().toString();
+            paramPartdia[6] = profunditatA1.getValue().toString();
+            paramPartdia[7] = profunditatA2.getValue().toString();
+            paramPartdia[8] = numProblemes.getValue().toString();
+        }
+
+        if(!iCtrlPresentacion.crearPartida(paramPartdia, true)){
+            VistaDialogo vistaDialogo = new VistaDialogo();
+            String[] strBotones = {"Acceptar"};
+            int isel = vistaDialogo.setDialogo("Error", "No s'ha trobat cap problema amb aquests filtres.",strBotones,3);
+        }
     }
 
 
@@ -117,17 +155,23 @@ public class VistaTipusProblema {
         buttonVolver.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        String texto = ((JButton) event.getSource()).getText();
-                        System.out.println("Has clickado el boton con texto: " + texto);
+
                         actionPerformed_buttonVolver(event);
+                    }
+                });
+
+        buttonJugarAleatori.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonJugarAleatori(event);
+
                     }
                 });
 
         buttonJugar.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        String texto = ((JButton) event.getSource()).getText();
-                        System.out.println("Has clickado el boton con texto: " + texto);
+
                         actionPerformed_buttonJugar(event);
                     }
                 });
@@ -295,6 +339,7 @@ public class VistaTipusProblema {
         // Botones
         panelBotones.add(buttonVolver);
         panelBotones.add(buttonJugar);
+        panelBotones.add(buttonJugarAleatori);
     }
 
     private void inicializar_panelProfunditatA1(){

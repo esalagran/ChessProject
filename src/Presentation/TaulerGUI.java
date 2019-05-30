@@ -132,6 +132,8 @@ public class TaulerGUI {
             }
         }
 
+        f.pack();
+
     }
 
     private void resetMarcades(){

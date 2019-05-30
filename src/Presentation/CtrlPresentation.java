@@ -9,14 +9,6 @@ import java.util.*;
 /**Mètode no rellevant per aquesta entrega*/
 
 public class CtrlPresentation {
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_CYAN = "\u001B[37m";
-    public static final String ANSI_PURPLE = "\u001B[30m";
-    public static final String ANSI_BLACK = "\u001B[30m";
 
     private VistaLogin login = null;
     private MenuPrincipal menu = null;
@@ -30,15 +22,6 @@ public class CtrlPresentation {
 
     private Domain.CtrlDomain CD = new Domain.CtrlDomain();
     private  Scanner scanner = new Scanner(System.in);
-    private Object[][] data = {
-            {"Kathy", "Smith",
-                    "Snowboarding", new Integer(5), new Boolean(false), 1, 2},
-            {"Kathy", "Smith",
-                    "Snowboarding", new Integer(5), new Boolean(false), 1, 2},
-            {"Kathy", "Smith",
-                    "Snowboarding", new Integer(5), new Boolean(false), 1, 2}
-
-    };
 
 
     public CtrlPresentation() {
@@ -210,48 +193,72 @@ public class CtrlPresentation {
 
     }
 
-    public void sincronizacionVistaTipus_a_Tauler(String[] paramsPartida){
-        vistaTipus.desactivar();
-        vistaTipus.visible(false);
-        Color torn = null;
+
+    public boolean crearPartida(String[] paramsPartida, boolean rand){
+        Color torn = Color.blanc;
         switch (paramsPartida[3]){
             case "Màquina vs màquina":
-                /*
-                Object[] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
+
+                        Object[][] resultat = CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
                         paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
                         Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]));
-                sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
-
-
-                */
-              CD.JugarPartidesMaquines(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4],paramsPartida[5], Integer.parseInt(paramsPartida[6]),
-                        Integer.parseInt(paramsPartida[7]), Integer.parseInt(paramsPartida[8]));
-                sincronizacionVistaTipusAmaquinaVSmaquina(data);
+                        sincronizacionVistaTipusAmaquinaVSmaquina(resultat);
 
 
                 break;
             case "Humà vs màquina":
+
                 torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), false);
+                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), false, rand);
+                if(torn!=null){
+                    sincronizacionVistaTipus_a_Tauler(torn);
+                    return true;
+                }
+
                 break;
             case "Màquina vs humà":
                 torn = CD.JugarPartidaHM(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), true);
+                        paramsPartida[4], paramsPartida[5], Integer.parseInt(paramsPartida[6]), true, rand);
+                if(torn!=null){
+                    sincronizacionVistaTipus_a_Tauler(torn);
+                    return true;
+                }
+
                 break;
             case "Humà vs humà":
                 torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5]);
+                        paramsPartida[4], paramsPartida[5], rand);
+                if(torn!=null){
+                    sincronizacionVistaTipus_a_Tauler(torn);
+                    return true;
+                }
+
+        }
+        return false;
+
+
+
+    }
+
+
+    public void jugarPartidaAleatoria(){
+
+        //CD.
+
+    }
+
+    public void sincronizacionVistaTipus_a_Tauler(Color torn){
+        vistaTipus.desactivar();
+        vistaTipus.visible(false);
+        Tauler t  = CD.getTaulerPartidaEnJoc();
+        taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);
+        taulerPartida.run();
+        taulerPartida.visible(true);
+        taulerPartida.activar();
         }
 
-        if (torn != null){
-            Tauler t  = CD.getTaulerPartidaEnJoc();
-            taulerPartida = new TaulerGUI(t.getTaulell(), torn,  this);
-            taulerPartida.run();
-            taulerPartida.visible(true);
-            taulerPartida.activar();
-        }
-    }
+
+
 
     public void sincronizacionVistaModalitat_a_Tauler(Modalitat mod, int  i){
         vistaModalitatProblema.desactivar();

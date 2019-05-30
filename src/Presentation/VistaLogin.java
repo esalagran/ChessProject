@@ -71,9 +71,15 @@ public class VistaLogin {
 
     public void actionPerformed_buttonLogin (ActionEvent event) {
 
-iCtrlPresentacion.Login(usuariField.getText());
-iCtrlPresentacion.sincronizacionLogin_a_Menu();
-
+        if(usuariField.getText().equals("")){
+            VistaDialogo vistaDialogo = new VistaDialogo();
+        String[] strBotones = {"Acceptar"};
+        int isel = vistaDialogo.setDialogo("Error", "El camp no pot ser vuit.",strBotones,3);
+        }
+        else {
+            iCtrlPresentacion.Login(usuariField.getText());
+            iCtrlPresentacion.sincronizacionLogin_a_Menu();
+        }
     }
 
 
