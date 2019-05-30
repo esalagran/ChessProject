@@ -77,6 +77,7 @@ public class CtrlDomain {
         if (pObert.GetTorn().equals(Color.blanc)) color = "blanc";
         else color = "negre";
         CP.guardarProblema(pObert.GetFEN(),pObert.GetValid(),pObert.GetMovimentsPerGuanyar(),color,pObert.GetCreador());
+        CarregarProblemes();
     }
 
     public void CarregarProblemes(){

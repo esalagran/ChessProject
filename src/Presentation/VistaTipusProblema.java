@@ -28,7 +28,9 @@ public class VistaTipusProblema {
     private JPanel panelProfunditatA1 = new JPanel();
     private JPanel panelProfunditatA2 = new JPanel();
     private JPanel panelNumProblemes = new JPanel();
+    private JPanel panelSegonHumà = new JPanel();
 
+    private JTextField segonHumà = new JTextField();
     private JSpinner tornsPerMat;
     private JSpinner profunditatA2;
     private JSpinner profunditatA1;
@@ -139,25 +141,25 @@ public class VistaTipusProblema {
 
                 if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
                     panelContenidos.add(panelAlgorisme1);
-                    panelContenidos.add(panelProfunditatA1);
-                    panelContenidos.remove(panelProfunditatA2);
+
                     panelContenidos.remove(panelAlgorisme2);
                     panelContenidos.remove(panelNumProblemes);
                 }
 
                 else if (mod.equals("Màquina vs màquina")){
                     panelContenidos.add(panelAlgorisme1);
-                    panelContenidos.add(panelProfunditatA1);
                     panelContenidos.add(panelAlgorisme2);
-                    panelContenidos.add(panelProfunditatA2);
+
                     panelContenidos.add(panelNumProblemes);
+                }
+                else if(mod.equals("Humà vs humà")){
+                    panelContenidos.add(panelSegonHumà);
                 }
 
                 else{
                     panelContenidos.remove(panelAlgorisme1);
                     panelContenidos.remove(panelAlgorisme2);
-                    panelContenidos.remove(panelProfunditatA1);
-                    panelContenidos.remove(panelProfunditatA2);
+
                     panelContenidos.remove(panelNumProblemes);
                 }
 
@@ -199,7 +201,12 @@ public class VistaTipusProblema {
         frameVista.setResizable(true);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                iCtrlPresentacion.sincronizacionVistaTipus_a_Menu();
+            }
+        });
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -211,10 +218,12 @@ public class VistaTipusProblema {
         panelContenidos.setLayout(new BoxLayout(panelContenidos, BoxLayout.Y_AXIS));
         // Paneles
         panelContenidos.add(panelOpciones, BorderLayout.NORTH);
+        panelContenidos.add(panelSegonHumà);
         panelContenidos.add(panelDificultat, BorderLayout.CENTER);
         panelContenidos.add(panelTorns, BorderLayout.SOUTH);
         panelContenidos.add(panelColor);
         panelContenidos.add(panelBotones, BorderLayout.AFTER_LAST_LINE);
+
 
     }
 
@@ -270,11 +279,11 @@ public class VistaTipusProblema {
     }
 
     private void inicializar_panelDificultat(){
-        dificultat.addItem("Moltfàcil");
+        dificultat.addItem("Molt fàcil");
         dificultat.addItem("Fàcil");
         dificultat.addItem("Mitjà");
         dificultat.addItem("Difícil");
-        dificultat.addItem("MoltDifícil");
+        dificultat.addItem("Molt Difícil");
         JLabel label = new JLabel("Dificultat");
         panelDificultat.add(label);
         panelDificultat.add(dificultat);
@@ -292,18 +301,18 @@ public class VistaTipusProblema {
         String[] stringTorns = {"1","2","3","4","5","6","7"};
         SpinnerListModel torns = new SpinnerListModel(stringTorns);
         profunditatA1 = new JSpinner(torns);
-        JLabel label = new JLabel("Profunditat A1");
-        panelProfunditatA1.add(label);
-        panelProfunditatA1.add(profunditatA1);
+        JLabel label = new JLabel("Profunditat");
+        panelAlgorisme1.add(label);
+        panelAlgorisme1.add(profunditatA1);
     }
 
     private void inicializar_panelProfunditatA2(){
         String[] stringTorns = {"1","2","3","4","5","6","7"};
         SpinnerListModel torns = new SpinnerListModel(stringTorns);
         profunditatA2 = new JSpinner(torns);
-        JLabel label = new JLabel("Profunditat A2");
-        panelProfunditatA2.add(label);
-        panelProfunditatA2.add(profunditatA2);
+        JLabel label = new JLabel("Profunditat");
+        panelAlgorisme2.add(label);
+        panelAlgorisme2.add(profunditatA2);
     }
 
     private void inicializar_panelNumeroProblemes(){
@@ -313,6 +322,11 @@ public class VistaTipusProblema {
         JLabel label = new JLabel("Problemes a jugar");
         panelNumProblemes.add(label);
         panelNumProblemes.add(numProblemes);
+        panelSegonHumà.add(new JLabel("Nom d'usuari del segón humà"));
+        segonHumà.setColumns(10);
+        panelSegonHumà.add(segonHumà);
+        panelSegonHumà.add(new JCheckBox());
+        panelSegonHumà.add(new JLabel("Defensor"));
     }
 
 

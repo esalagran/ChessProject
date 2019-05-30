@@ -421,6 +421,13 @@ public class TaulerGUI {
                 f.setLocationByPlatform(true);
                 f.setResizable(false);
 
+                f.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                            CP.sincronizacionJugarPartida_a_Menu();
+                    }
+                });
+
                 // ensures the frame is the minimum size it needs to be
                 // in order display the components within it
                 f.pack();
