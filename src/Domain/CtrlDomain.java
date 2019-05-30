@@ -134,16 +134,37 @@ public class CtrlDomain {
      * \post: Es juga la partida amb la modalitat mode i
      * s'imprimeix el guanyador quan es finalitzi
      * */
-    public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h1, String h2) {
-        Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+    public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h1, String h2, boolean random) {
+        Problema p;
+
+        if(random){
+
+            List<Problema> valids = getValids();
+            Random rand = new Random();
+            p = valids.get(rand.nextInt(problemes.size()));
+        }
+        else{
+
+         p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        }
         if (p == null) return null;
         partidaEnJoc = new PartidaHH(p, new Huma(h1), new Huma(h2));
         return p.GetTorn();
     }
 
     public Color JugarPartidaHM(String dif, String torns, int jugadesPelMate, String nickname,
-                                String algName, int profunditat, boolean isMachine1){
-        Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+                                String algName, int profunditat, boolean isMachine1, boolean random){
+
+        Problema p;
+        if(random){
+
+           List<Problema> valids = getValids();
+           Random rand = new Random();
+           p = valids.get(rand.nextInt(problemes.size()));
+        }
+        else{
+         p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+        }
         if (p == null) return null;
         if (isMachine1){
             //new Huma s'ha de canviar per una cerca a la base de dades d'usuari. En aquest cas hi ha de ser sempre
@@ -426,6 +447,16 @@ public class CtrlDomain {
         for (Problema p : problemes) {
             if (p.getDificultat().equals(dif) && p.GetTorn().equals(torn) && p.GetMovimentsPerGuanyar() == jugadesPelMate
             && p.GetValid())
+                candidates.add(p);
+        }
+        return candidates;
+    }
+
+
+    private List<Problema> getValids(){
+        List<Problema> candidates = new ArrayList<>();
+        for (Problema p : problemes) {
+            if (p.GetValid())
                 candidates.add(p);
         }
         return candidates;

@@ -143,13 +143,11 @@ return null;
         if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
             if (tauler.FitxaAt(origen) == null) {
 
-                System.out.println(ANSI_RED + "La posició d'origen està buida" + ANSI_RESET);
 
             }
 
 
         } else{
-            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
         }
 
@@ -163,11 +161,9 @@ return null;
 
 
             } else{
-                System.out.println(ANSI_RED + "La posició destí està ocupada" + ANSI_RESET);
 
             }
         } else{
-            System.out.println(ANSI_RED + "Coordenada no valida" + ANSI_RESET);
 
         }
         return null;
