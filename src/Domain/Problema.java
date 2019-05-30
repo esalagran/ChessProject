@@ -24,7 +24,7 @@ public class Problema{
     private boolean _valid;
     private int movimentsPerGuanyar = 6;
     private int nPeces;
-    private List<Object[]> ranking;
+    private List<Object[]> ranking = new ArrayList<>();
     private Tema tema;
     private String _creador;
 
