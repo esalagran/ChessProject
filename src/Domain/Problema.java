@@ -30,9 +30,6 @@ public class Problema{
     private String _creador;
 
 
-
-
-
     public Problema(String FEN, String creador){
         _FEN = FEN;
         if (!_FEN.isEmpty()) {
@@ -150,7 +147,6 @@ return null;
         } else{
 
         }
-
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti) == null) {
                 FitxaProblema fp = tauler.FitxaAt(origen);
@@ -262,7 +258,6 @@ return null;
         int boost;
         if (tempsMig > 60) boost = 1;
         else boost = 60 - tempsMig;
-        //GUANYA EL QUE COMENÇA AMB MENYS O EL NUMERO QUE TOCA DE JUGADES
         return maxPuntuacio*boost;
     }
 

@@ -31,7 +31,8 @@ public class CtrlPersistence {
      * @param creador Creador del problema
      */
 
-    public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador, String dificultat) {
+
+    public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador, String dificultat, String login) {
         try {
             if (!hiHaProblema(FEN)) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes2.txt"), true));
@@ -50,10 +51,14 @@ public class CtrlPersistence {
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null) {
                     if (currentLine.contains(FEN)) {
-                        currentLine = reader.readLine();
-                        if (currentLine.contains("false") && shaJugat(FEN)) {
+                        currentLine = reader.readLine();    //Valid
+                        String valid = currentLine;
+                        currentLine = reader.readLine();    //Passos
+                        currentLine = reader.readLine();    //Color
+                        currentLine = reader.readLine();    //Creador
+                        if ((valid.contains("false") || !shaJugat(FEN)) && (currentLine.contains("root") || currentLine.contains(login))) {
                             eliminarProblema(FEN);
-                            guardarProblema(FEN, validesa, njugades,color,creador, dificultat);
+                            guardarProblema(FEN, validesa, njugades,color,creador, dificultat,login);
                         }
                     }
                 }
@@ -110,7 +115,7 @@ public class CtrlPersistence {
                 while ((currentLine = reader.readLine()) != null){
                     if (currentLine.contains(FEN)){
                         writer.write(currentLine + '\n');
-                        for (int i = 0; i < 4; i++){
+                        for (int i = 0; i < 6; i++){
                             currentLine = reader.readLine();
                             writer.write(currentLine + '\n');
                         }
@@ -294,8 +299,8 @@ public class CtrlPersistence {
     public boolean InsertaUsuari(String nickName){
         try{
             if (!hihaUsuari(nickName)){
-                BufferedWriter writer = new BufferedWriter(new FileWriter("localData/usuaris.txt"));
-                writer.write(nickName);
+                BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/usuaris.txt"), true));
+                writer.append(nickName);
                 writer.close();
                 return true;
             }
@@ -356,8 +361,8 @@ public class CtrlPersistence {
                     s = reader.readLine();
                     s = reader.readLine();
                     s = reader.readLine();
-                    if (s.contains("Fi")) return true;
-                    else return false;
+                    if (s.contains("Fi")) return false;
+                    else return true;
                 }
                 s = reader.readLine();
             }

@@ -56,9 +56,9 @@ public class AlgorismeMinMax extends Algorithm{
         for (Move move: moveList) {
             t.moureFitxa(move);
             if (!t.IsChecked(jugador)) {
-                hasMoved = true;
                 int Pts = -MinMax(t, InvertColor(jugador), profunditat - 1);
-                if (Pts > bestPts) {
+                if (!hasMoved || Pts > bestPts) {
+                    hasMoved = true;
                     bestPts = Pts;
                     bestMove = move;
                     if (bestPts >= Infinit){

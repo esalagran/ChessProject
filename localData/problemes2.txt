@@ -2,13 +2,20 @@
 true
 7
 blanc
-"root"
+root
 moltfacil
 Fi
 1k6/8/1K4Q1/8/8/8/8/8 w - - 0 1
 true
 7
 blanc
-"root"
+root
 moltfacil
+Fi
+8/8/8/8/8/8/8/8 w - - 0 1
+false
+6
+blanc
+
+mitja
 Fi
