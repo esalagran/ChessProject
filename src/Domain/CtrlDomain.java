@@ -62,10 +62,10 @@ public class CtrlDomain {
                 //obj[0] indica el gunayador, obj[1] temps/moviments de a1, obj[2] = 0bj[1], pero de a2
                 Object[] obj = pr.MovimentMaquina();
                 result[i][0] = p.GetFEN();
-                result[i][1] = "a1";
-                result[i][2] = obj[1] + "ms";
-                result[i][3] = "a2";
-                result[i][4] = obj[2] + "ms";
+                result[i][1] = t1;
+                result[i][2] = obj[1];
+                result[i][3] = t2;
+                result[i][4] = obj[2];
 
                 System.out.println("Problema: " + p.GetFEN());
                 if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
