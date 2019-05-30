@@ -195,7 +195,7 @@ public class CtrlPresentation {
 
 
     public boolean crearPartida(String[] paramsPartida, boolean rand){
-        Color torn = Color.blanc;
+        Color torn;
         switch (paramsPartida[3]){
             case "Màquina vs màquina":
 
@@ -226,8 +226,9 @@ public class CtrlPresentation {
 
                 break;
             case "Humà vs humà":
+                boolean isAttackingH2 = paramsPartida[5].contains("blanc");
                 torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], Integer.parseInt(paramsPartida[2]),
-                        paramsPartida[4], paramsPartida[5], rand);
+                        paramsPartida[4], isAttackingH2, rand);
                 if(torn!=null){
                     sincronizacionVistaTipus_a_Tauler(torn);
                     return true;
@@ -235,9 +236,6 @@ public class CtrlPresentation {
 
         }
         return false;
-
-
-
     }
 
 

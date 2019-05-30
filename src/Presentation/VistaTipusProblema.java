@@ -30,6 +30,7 @@ public class VistaTipusProblema {
     private JPanel panelNumProblemes = new JPanel();
     private JPanel panelSegonHumà = new JPanel();
 
+    private JCheckBox segonHumaDefensa = new JCheckBox();
     private JTextField segonHumà = new JTextField();
     private JSpinner tornsPerMat;
     private JSpinner profunditatA2;
@@ -121,13 +122,15 @@ public class VistaTipusProblema {
         paramPartdia[3] = modalitat.getSelectedItem().toString();
 
         if (mod.equals("Humà vs humà")){
-            paramPartdia[4] = "root";
-            paramPartdia[5] = "no ha d'anar aixi";
+            paramPartdia[4] = segonHumà.getText();
+            if (segonHumaDefensa.isSelected())
+                paramPartdia[5] = "false";
+            else
+                paramPartdia[5] = "true";
         }
         else if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
-            paramPartdia[4] = "root";
-            paramPartdia[5] = algorisme.getSelectedItem().toString();
-            paramPartdia[6] = profunditatA1.getValue().toString();
+            paramPartdia[4] = algorisme.getSelectedItem().toString();
+            paramPartdia[5] = profunditatA1.getValue().toString();
         }
         else{
             paramPartdia[4] = algorisme.getSelectedItem().toString();
@@ -370,7 +373,7 @@ public class VistaTipusProblema {
         panelSegonHumà.add(new JLabel("Nom d'usuari del segón humà"));
         segonHumà.setColumns(10);
         panelSegonHumà.add(segonHumà);
-        panelSegonHumà.add(new JCheckBox());
+        panelSegonHumà.add(segonHumaDefensa);
         panelSegonHumà.add(new JLabel("Defensor"));
     }
 

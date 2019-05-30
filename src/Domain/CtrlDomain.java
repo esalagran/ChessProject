@@ -135,21 +135,26 @@ public class CtrlDomain {
      * \post: Es juga la partida amb la modalitat mode i
      * s'imprimeix el guanyador quan es finalitzi
      * */
-    public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h1, String h2, boolean random) {
+    public Color JugarPartidaHH(String dif, String torns, int jugadesPelMate, String h2, boolean isAttackingH2,
+                                boolean random) {
         Problema p;
+        //Es mira si existeix l'usuari, en cas que no existeixi s'introdueix a la base d'usuaris
+        CP.InsertaUsuari(h2);
+        Huma rival = new Huma(h2);
 
         if(random){
-
             List<Problema> valids = getValids();
             Random rand = new Random();
             p = valids.get(rand.nextInt(problemes.size() - 1));
         }
         else{
-
-         p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
+            p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
         }
         if (p == null) return null;
-        partidaEnJoc = new PartidaHH(p, new Huma(h1), new Huma(h2));
+        if (isAttackingH2)
+            partidaEnJoc = new PartidaHH(p, rival, usuariLoggedIn);
+        else
+            partidaEnJoc = new PartidaHH(p, usuariLoggedIn, rival);
         return p.GetTorn();
     }
 
