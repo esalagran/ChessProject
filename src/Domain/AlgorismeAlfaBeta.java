@@ -69,7 +69,7 @@ public class AlgorismeAlfaBeta extends Algorithm{
     @Override
     public Move FindBestMoveConcr(Tauler tauler, Color jugador, int jugadesRestants) {
         int profunditat = Integer.min(getDepth(), jugadesRestants);
-        if (profunditat %2 == 0)
+        if (jugadesRestants %2 == 0)
             return FindBestMoveAtDepthAlfa(tauler, jugador, profunditat);
         return FindBestMoveAtDepthBeta(tauler, jugador, profunditat);
     }
@@ -98,14 +98,11 @@ public class AlgorismeAlfaBeta extends Algorithm{
         for (Move m: moveList) {
             t.moureFitxa(m);
             if (!t.IsChecked(jugadorActual)){
-                if (!hasMoved){
-                    hasMoved = true;
-                    bestMove = m;
-                }
                 best = Integer.min(best, AlphaBeta(t, Convert.InvertColor(jugadorActual), Convert.InvertColor(jugadorActual), alpha,
                         beta, profunditat -1));
 
-                if (bestMove == null || best < beta){
+                if (!hasMoved || best < beta){
+                    hasMoved = true;
                     bestMove = m;
                     beta = best;
                 }
@@ -138,11 +135,11 @@ public class AlgorismeAlfaBeta extends Algorithm{
             t.moureFitxa(m);
             boolean isAttacked = t.IsChecked(jugadorActual);
             if (!isAttacked){
-                hasMoved = true;
                 int auxBest = AlphaBeta(t, Convert.InvertColor(jugadorActual), jugadorActual, -Infinit,
                         Infinit, profunditat - 1);
                 //best = Convert.Max(best, auxBest);
-                if (bestMove == null || auxBest > best){
+                if (!hasMoved || auxBest > best){
+                    hasMoved = true;
                     bestMove = m;
                     best = auxBest;
                 }

@@ -89,3 +89,24 @@ blanc
 root
 dificil
 Fi
+2k5/8/4K3/3NB3/4N3/8/8/8 w - - 0 1
+false
+-1
+negre
+aa
+mitja
+Fi
+1K6/8/bk6/2b5/8/8/8/8 w - - 0 1
+true
+5
+negre
+aa
+mitja
+Fi
+4b3/2p1B1p1/8/2Pp1pP1/1PpP1PpP/2p1K1p1/2P1B1P1/4k3 w - - 0 1
+false
+-1
+negre
+aa
+mitja
+Fi
