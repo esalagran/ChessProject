@@ -131,6 +131,19 @@ public class CtrlDomain {
         }
     }
 
+    public void GuardarSortir() {
+        for (Problema p : problemes)
+            CP.eliminarProblema(p.GetFEN());
+        for (Problema p : problemes) {
+            String color;
+            if (p.GetTorn() == Color.blanc) color = "blanc";
+            else color = "negre";
+            String dif = p.getDificultat() == null ? "" : p.getDificultat().toString();
+            CP.guardarProblema(p.GetFEN(), p.GetValid(), p.GetMovimentsPerGuanyar(), color, p.GetCreador(),
+                    dif,usuariLoggedIn.GetNickName());
+        }
+    }
+
     public String[] GetProblemes(){
         String[] FENS = new String[problemes.size()];
         for(int i = 0; i< problemes.size(); i++){

@@ -282,20 +282,30 @@ return null;
             nomJugador,
             puntuacio
         };
-        if (ranking == null){
-            ranking = new ArrayList<>();
-            ranking.add(newPlayer);
-        }
-        else {
-            boolean insert = false;
-            for (int i = 0; i < ranking.size(); i++) {
-                Object[] player = ranking.get(i);
-                if ((int) player[1] < puntuacio && !insert) {
-                    ranking.add(i, newPlayer);
-                    insert = true;
+        if (!hiHaJugador(nomJugador)) {
+            if (ranking == null) {
+                ranking = new ArrayList<>();
+                ranking.add(newPlayer);
+            } else {
+                boolean insert = false;
+                for (int i = 0; i < ranking.size(); i++) {
+                    Object[] player = ranking.get(i);
+                    if ((int) player[1] < puntuacio && !insert) {
+                        ranking.add(i, newPlayer);
+                        insert = true;
+                    }
                 }
+                if (!insert) ranking.add(newPlayer);
             }
-            if (!insert) ranking.add(newPlayer);
+        }
+    }
+
+    private boolean hiHaJugador(String nomJugador){
+        if (ranking == null) return false;
+        else{
+            for (Object[] obj : ranking)
+                if ((String)obj[0] == nomJugador) return true;
+            return false;
         }
     }
 

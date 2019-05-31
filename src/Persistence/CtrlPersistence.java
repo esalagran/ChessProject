@@ -34,7 +34,8 @@ public class CtrlPersistence {
 
     public void guardarProblema(String FEN, boolean validesa, int njugades, String color, String creador, String dificultat, String login) {
         try {
-            if (!hiHaProblema(FEN)) {
+            boolean hiHaProblema = hiHaProblema(FEN);
+            if (!hiHaProblema) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(new File("localData/problemes2.txt"), true));
                 writer.append(FEN + '\n' + validesa + '\n');       //Guardo codi FEN i validesa
                 writer.append(String.valueOf(njugades) + '\n');    //Guardo numero moviments
@@ -45,7 +46,7 @@ public class CtrlPersistence {
                 writer.close();
                 return;
             }
-            else if (hiHaProblema(FEN) && validesa) {
+            else if (hiHaProblema && validesa) {
                 File input = new File("localData/problemes2.txt");
                 BufferedReader reader = new BufferedReader(new FileReader(input));
                 String currentLine;
@@ -90,7 +91,7 @@ public class CtrlPersistence {
                         }
                         currentLine = reader.readLine();
                     }
-                    if (currentLine != null) writer.write(currentLine + '\n');
+                    if (currentLine != null) writer.append(currentLine + '\n');
                 }
                 writer.close();
                 reader.close();
