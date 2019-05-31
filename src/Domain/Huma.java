@@ -1,13 +1,10 @@
 package Domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
 public class Huma extends Usuari{
-    private boolean loggedIn;
-    private String password;
 
     private List<Problema> problemesCreats = new ArrayList<>();
     private int[] puntuació;
@@ -16,18 +13,6 @@ public class Huma extends Usuari{
         super(nickname);
     }
 
-
-    public boolean IsLoggedIn(){
-        return loggedIn;
-    }
-
-    public void LogIn(){
-        loggedIn = true;
-    }
-
-    public void LogOut(){
-        loggedIn = false;
-    }
 
     public void AfegirProblema(Problema p){
         problemesCreats.add(p);
@@ -67,12 +52,8 @@ public class Huma extends Usuari{
             System.out.println("Moviment no possible");
             return obj;
         }
-        long endTime = System.currentTimeMillis();
-        //accumTime = accumTime + (int) (endTime-startTime)/1000;
-        //System.out.println("He trigat " + accumTime);
         obj[0] = new ParInt[]{origen, desti};
         obj[1] = tauler.getTaulell();
-        //ultimMovimentHum = new ParInt[]{origen, desti};
         return obj;
     }
 

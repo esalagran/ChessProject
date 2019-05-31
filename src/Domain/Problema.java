@@ -22,7 +22,6 @@ public class Problema{
     private boolean _guardat;
     private Tauler tauler;
     private boolean _valid;
-    private int movimentsPerGuanyar;
     private int nPeces;
     private List<Object[]> ranking;
     private Tema tema;

@@ -67,15 +67,25 @@ public class CtrlDomain {
                 Object[] obj = pr.MovimentMaquina();
                 result[i][0] = p.GetFEN();
                 result[i][1] = t1;
-                result[i][2] = obj[1] + "ms";
                 result[i][3] = t2;
-                result[i][4] = obj[2] + "ms";
+                if(isA1){
+                    result[i][2] = obj[1] + "ms";
+                    result[i][4] = obj[2] + "ms";
+                    if (pr.getEstatPartida().equals(EstatPartida.mate))
+                        result[i][5] = "a1";
+                    else
+                        result[i][5] = "a2";
+                }
+                else{
+                    result[i][2] = obj[2] + "ms";
+                    result[i][4] = obj[1] + "ms";
+                    if (pr.getEstatPartida().equals(EstatPartida.mate))
+                        result[i][5] = "a2";
+                    else
+                        result[i][5] = "a1";
+                }
 
                 System.out.println("Problema: " + p.GetFEN());
-                if (isA1 && obj[0].equals(p.GetTorn()) || (!isA1 && !obj[0].toString().equals(color)))
-                    result[i][5] = "a1";
-                else
-                    result[i][5] = "a2";
                 result[i][6] = pr.getEstatPartida().toString();
                 System.out.println(result[i][6]);
             }

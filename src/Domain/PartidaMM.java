@@ -27,16 +27,20 @@ public class PartidaMM  extends PartidaRefactor{
             if (isA1Torn){
                 long iniTime = System.currentTimeMillis();
                 m = a1.FindBestMoveConcr(t, torn, p.GetMovimentsPerGuanyar() - getMoviments());
-                timeA1 += System.currentTimeMillis() - iniTime;
-                t.moureFitxa(m);
-                ++moveA1;
+                if (m != null && m.getStartPos() != null && m.getEndPos() != null) {
+                    timeA1 += System.currentTimeMillis() - iniTime;
+                    t.moureFitxa(m);
+                    ++moveA1;
+                }
             }
             else{
                 long iniTime = System.currentTimeMillis();
                 m = a2.FindBestMoveConcr(t, torn, p.GetMovimentsPerGuanyar() - getMoviments());
-                timeA2 += System.currentTimeMillis() - iniTime;
-                t.moureFitxa(m);
-                ++moveA2;
+                if (m != null && m.getStartPos() != null && m.getEndPos() != null){
+                    timeA2 += System.currentTimeMillis() - iniTime;
+                    t.moureFitxa(m);
+                    ++moveA2;
+                }
             }
             setEstatPartida(m);
             hasEnded = FiTorn();
