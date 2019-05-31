@@ -1,6 +1,5 @@
 package Domain;
 
-/** classe no rellevant en aquesta entrega*/
 public class Tema {
     private Color col;
     private int movimentsFinsMat;
