@@ -105,9 +105,7 @@ public class CtrlPresentation {
     public void sincronizacionVistaMod_a_Llista() {
         vistaModalitatProblema.desactivar();
         vistaModalitatProblema.visible(false);
-
-        if (vistaCarregar == null)
-            vistaCarregar = new VistaCarregarPartida(this);
+        vistaCarregar = new VistaCarregarPartida(this);
         vistaCarregar.hacerVisible();
         vistaCarregar.activar();
     }
@@ -228,6 +226,10 @@ public class CtrlPresentation {
 
     }
 
+
+    public void quit(){
+        CD.GuardarSortir();
+    }
 
     public void sincronizacionVistaFEN_a_ProblemaImport( FitxaProblema[][] tauler){
         vistaGetFEN.visible(false);

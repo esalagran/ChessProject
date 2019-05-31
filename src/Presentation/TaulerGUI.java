@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.io.File;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
@@ -27,7 +28,7 @@ public class TaulerGUI {
     public static final int[] STARTING_ROW = {
             ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK
     };
-    public static final int BLACK = 0, WHITE = 1;
+    public static final int WHITE = 0, BLACK = 1;
 
     private boolean firstClick = true;
     private ParInt firstCoord;
@@ -288,7 +289,7 @@ public class TaulerGUI {
 
     private final void createImages() {
         try {
-            URL url = new URL("http://i.stack.imgur.com/memI0.png");
+            File url = new File("localData/escacsBlancNegre.png");
             BufferedImage bi = ImageIO.read(url);
             for (int ii = 0; ii < 2; ii++) {
                 for (int jj = 0; jj < 6; jj++) {
