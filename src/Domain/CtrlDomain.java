@@ -151,6 +151,9 @@ public class CtrlDomain {
             String dif = p.getDificultat() == null ? "" : p.getDificultat().toString();
             CP.guardarProblema(p.GetFEN(), p.GetValid(), p.GetMovimentsPerGuanyar(), color, p.GetCreador(),
                     dif,usuariLoggedIn.GetNickName());
+            for (Object[] aux : p.getRanking()){
+                CP.afegirJugadorProblema(p.GetFEN(),(String) aux[0], (int) aux[1]);
+            }
         }
     }
 

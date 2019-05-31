@@ -118,7 +118,7 @@ public class CtrlPersistence {
                 while ((currentLine = reader.readLine()) != null){
                     if (currentLine.contains(FEN)){
                         writer.write(currentLine + '\n');
-                        for (int i = 0; i < 6; i++){
+                        for (int i = 0; i < 5; i++){
                             currentLine = reader.readLine();
                             writer.write(currentLine + '\n');
                         }

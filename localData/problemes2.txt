@@ -1,9 +1,60 @@
+3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5 w - - 0 1
+true
+3
+blanc
+root
+moltfacil
+Fi
+3K4/4B3/1Q2p3/8/4pk2/2p1Np2/2p2P2/2RR4 w - - 0 1
+true
+3
+blanc
+root
+moltfacil
+esalagrab/23400
+oriol/1
+Fi
+3K4/1Q2B3/4p3/3R4/4pk2/2p1Np2/2p2P2/2R5 w - - 0 1
+true
+3
+blanc
+root
+moltfacil
+Fi
+7k/3rpp2/2r4p/q1p1pPP1/p1P1P1pQ/PpNP4/1P5R/6K1 w - - 0 1
+true
+7
+blanc
+root
+dificil
+Fi
+3K4/4B3/4R3/8/4pk2/1Q2Np2/2p2P2/2p4R w - - 0 1
+true
+3
+blanc
+root
+moltfacil
+Fi
+8/5K2/5p2/5Qbk/8/8/5P2/8 w - - 0 1
+true
+7
+blanc
+root
+dificil
+Fi
 1k6/8/1K2Q3/8/8/8/8/8 w - - 0 1
 true
 7
 blanc
 root
 moltfacil
+Fi
+1K6/8/bk6/2b5/8/8/8/8 w - - 0 1
+true
+5
+blanc
+aa
+mitja
 Fi
 1k6/8/1K4Q1/8/8/8/8/8 w - - 0 1
 true
@@ -38,7 +89,7 @@ true
 7
 blanc
 root
-moltdificil
+moltfacil
 Fi
 k1r2r2/nb6/3Qp3/R3N1B1/1p1P3P/8/PP4BK/4q3 w - - 0 1
 true
@@ -47,7 +98,7 @@ blanc
 root
 dificil
 Fi
-7k/3rpp2/2r4p/q1p1pPP1/p1P1P1pQ/PpNP4/1P5R/6K1 w - - 0 1
+6k1/4pp2/8/2prpPP1/p1P1P1pR/Pp1P4/1P6/4q1K1 w - - 0 1
 true
 7
 blanc
@@ -59,12 +110,12 @@ true
 7
 blanc
 root
-moltdificil
+moltfacil
 Fi
 rnb1k1nr/ppp2ppp/8/8/2N1p2q/2N3b1/PPPPK2P/R1BQ1B1R w - - 0 1
 false
 6
-negre
+blanc
 root
 mitja
 Fi
@@ -75,14 +126,14 @@ blanc
 root
 dificil
 Fi
-3K4/4B3/3Rp3/8/4pk2/1Qp1Np2/2p2P2/2R5 w - - 0 1
+4KB2/8/3R4/4p2k/4p3/2Q1Np2/2p2P2/2R5 w - - 0 1
 true
 3
 blanc
 root
 moltfacil
 Fi
-8/5K2/5p2/5Qbk/8/8/5P2/8 w - - 0 1
+8/7K/8/6k1/5p1b/7Q/5P2/8 w - - 0 1
 true
 7
 blanc
@@ -92,21 +143,35 @@ Fi
 2k5/8/4K3/3NB3/4N3/8/8/8 w - - 0 1
 false
 -1
-negre
-aa
-mitja
-Fi
-1K6/8/bk6/2b5/8/8/8/8 w - - 0 1
-true
-5
-negre
+blanc
 aa
 mitja
 Fi
 4b3/2p1B1p1/8/2Pp1pP1/1PpP1PpP/2p1K1p1/2P1B1P1/4k3 w - - 0 1
 false
 -1
-negre
+blanc
 aa
 mitja
+Fi
+8/2k5/8/1K2n3/2P5/8/r2q4/8 w - - 0 1
+true
+7
+blanc
+root
+mitja
+Fi
+7R/B4K2/1P1b4/2Pp4/3k1nRN/N4B2/8/8 w - - 0 1
+false
+7
+blanc
+root
+facil
+Fi
+7R/B4K2/1P1b4/2Pp4/3k1nRN/NQ3B2/8/8 w - - 0 1
+true
+7
+blanc
+root
+facil
 Fi
