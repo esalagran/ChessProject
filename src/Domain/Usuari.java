@@ -1,33 +1,7 @@
 package Domain;
 
 
-/**Classe no rellevant per aquesta entrega*/
+/**Classe abstracta que permet aïllar el tipus de jugador a l'hora de jugar una partida*/
 
 public abstract class Usuari{
-    String _nickname;
-
-    FitxaProblema MourePeça(TipusPeça a, int b){
-        ParInt pos = new ParInt(b, b);
-        return new FitxaProblema(a,pos,Color.negre);
-
-    }
-
-    public String GetNickName(){
-        return _nickname;
-    }
-
-    public ParInt GetRankingProblema(int idProblema){
-        return new ParInt(0,0);
-    }
-
-    public Usuari (String nickname){
-        _nickname = nickname;
-    }
-
-
-
-
-
-
-
 }

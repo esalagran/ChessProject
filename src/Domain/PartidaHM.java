@@ -60,8 +60,6 @@ public class PartidaHM extends PartidaRefactor{
         else
             lastMove = null;
         setEstatPartida(m);
-        //if (getEstatPartida().equals(EstatPartida.jugant))
-          //  t.moureFitxa(m);
 
         if (super.FiTorn()){
             InscriureRanking();
