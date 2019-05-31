@@ -4,13 +4,7 @@ package Domain;
 /**Classe no rellevant per aquesta entrega*/
 
 public abstract class Usuari{
-    String _nickname;
-
-    FitxaProblema MourePeça(TipusPeça a, int b){
-        ParInt pos = new ParInt(b, b);
-        return new FitxaProblema(a,pos,Color.negre);
-
-    }
+    private String _nickname;
 
     public String GetNickName(){
         return _nickname;

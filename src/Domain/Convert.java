@@ -8,7 +8,6 @@ import static Domain.Color.negre;
  */
 
 public class Convert {
-
     /**
      * \pre:
      * \post: Es retorna true si coord està en els límits del tauler, false altrament
@@ -29,49 +28,6 @@ public class Convert {
         return negre;
     }
 
-    /**
-     * \pre: str conté dos characters: el primer indica la columna del tauler(lletra)
-     * i el segon la fila del tauler(numero)
-     * \post: Es converteix les coordenades de tauler a coordenades de matriu
-     * @return les coordenades de tauler derivades de str
-     */
-    public static ParInt StringToCoordenada(String str){
-        char primer = str.charAt(0);
-        char segon = str.charAt(1);
-
-        if((primer >= 'a' && primer <= 'h' ) || primer>='A' && primer<= 'H'){
-            char aux = primer;
-            primer = segon;
-            segon = aux;
-
-        }
-        return new ParInt(CharToCoordenadaInt(primer), CharToCoordenadaInt(segon));
-    }
-
-    /**
-     * \pre: ch conté la columna del tauler en coordenades de tauler
-     * \post: converteix la variabale ch en un número en coordenades de tauler
-     * @return el nombre en coordenades de tauler de la variable ch
-     * */
-    public static int CharToCoordenadaInt( char ch ){
-
-        int res = 0;
-
-        if(ch >= 'a' && ch <= 'h'){
-            res = ch - 'a' ;
-        }
-
-        else if(ch >= 'A' && ch <= 'H'){
-            res = ch - 'A' ;
-        }
-
-        else if(ch > '0' && ch<= '8')
-            res = 8 - Integer.parseInt(String.valueOf(ch));
-
-        else return -1;
-
-        return  res;
-    }
 
     /**
      * \pre: tipusPeça i color valids
