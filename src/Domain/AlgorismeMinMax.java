@@ -12,7 +12,7 @@ public class AlgorismeMinMax extends Algorithm{
     //Se li ha d'enviar una copia a l'hora de validar
     private int MinMax(Tauler t, Color jugador, int profunditat){
         int best;
-        if (profunditat == 0){
+        if (profunditat <= 0){
             if (t.IsMate(jugador)) return -Infinit;
             return t.EstimaPuntuacio(jugador);
         }
@@ -45,7 +45,7 @@ public class AlgorismeMinMax extends Algorithm{
     @Override
     public Move FindBestMoveConcr(Tauler t, Color jugador, int movimentsRestants) {
         int profunditat = Integer.min(getDepth(), movimentsRestants);
-        if (profunditat == 0){
+        if (profunditat <= 0){
             if (t.IsMate(jugador)) return null;
             return new Move(null, null, new ParInt(-1, -1));
         }

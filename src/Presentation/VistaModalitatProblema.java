@@ -95,9 +95,8 @@ public class VistaModalitatProblema {
                 paramPartdia[5] = "false";
         }
         else if (mod.equals("Humà vs màquina") || mod.equals("Màquina vs humà")){
-            paramPartdia[4] = "root";
-            paramPartdia[5] = algorisme.getSelectedItem().toString();
-            paramPartdia[6] = profunditatA1.getValue().toString();
+            paramPartdia[4] = algorisme.getSelectedItem().toString();
+            paramPartdia[5] = profunditatA1.getValue().toString();
         }
         else{
             paramPartdia[4] = algorisme.getSelectedItem().toString();

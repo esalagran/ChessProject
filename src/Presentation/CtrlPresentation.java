@@ -317,7 +317,7 @@ public class CtrlPresentation {
                 boolean isAttackingH2 = paramsPartida[5].contains("blanc");
                 torn = CD.JugarPartidaHH(paramsPartida[0], paramsPartida[1], TryParseInt(paramsPartida[2]),
                         paramsPartida[4], isAttackingH2, rand, index);
-                if(torn!=null){
+                if(torn != null){
                     if (index == -1)
                         sincronizacionVistaTipus_a_Tauler(torn);
                     else

@@ -9,7 +9,7 @@ public class AlgorismeAlfaBeta extends Algorithm{
     }
 
     private int AlphaBeta(Tauler t, Color jugadorActual, Color teoricGuanyador, int alfa, int beta, int profunditat){
-        if (profunditat == 0){
+        if (profunditat <= 0){
             if (t.IsMate(jugadorActual)) return Infinit;
             return t.EstimaPuntuacio(jugadorActual);
         }
@@ -85,7 +85,7 @@ public class AlgorismeAlfaBeta extends Algorithm{
      * move.getStartPos() = (-1,-1) si està ofegat
     * */
     private Move FindBestMoveAtDepthAlfa(Tauler t, Color jugadorActual, int profunditat){
-        if (profunditat == 0){
+        if (profunditat <= 0){
             if (t.IsMate(jugadorActual)) return null;
             else return new Move(null, null, new ParInt(-1, -1));
         }
