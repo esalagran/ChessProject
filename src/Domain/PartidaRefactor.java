@@ -2,6 +2,11 @@ package Domain;
 
 import static Domain.Convert.*;
 
+/**
+ * @class PartidaRefactor
+ * @brief Conte la informacio relativa a una partida
+ */
+
 public abstract class PartidaRefactor {
 
     private Problema problemaEnJoc;
@@ -28,7 +33,11 @@ public abstract class PartidaRefactor {
         return problemaEnJoc;
     }
 
-    boolean FiTorn(){
+    /**
+     * Funcio que ens serveix per saber si una partida ha acabat i quin ha sigut l'estat final d'aquesta
+     * @return Retorna cert si la partida ha acabat, fals altrament
+     */
+    public boolean FiTorn(){
         torn = InvertColor(torn);
         if (estatPartida.equals(EstatPartida.jugant)){
             if (problemaEnJoc.getTauler().IsMate(torn)) {
