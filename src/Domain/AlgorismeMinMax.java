@@ -9,7 +9,6 @@ public class AlgorismeMinMax extends Algorithm{
         super(profunditat, "simple");
     }
 
-    //Se li ha d'enviar una copia a l'hora de validar
     private int MinMax(Tauler t, Color jugador, int profunditat){
         int best;
         if (profunditat <= 0){

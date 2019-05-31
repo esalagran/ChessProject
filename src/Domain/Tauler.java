@@ -102,12 +102,7 @@ public class Tauler {
                             if (f.GetColor().equals(Color.blanc)) setWhiteKing(f);
                             else setBlackKing(f);
                         }
-                    } else {
-                        System.out.println("Ja hi ha una peça a l'origen");
                     }
-                }
-                else {
-                    System.out.println("S'ha superat el nombre màxim de peces");
                 }
             }
         catch (Exception ex){
@@ -236,7 +231,6 @@ public class Tauler {
         return puntuacio;
     }
 
-
     private void FillDictionary(){
         _numTipusFitxa.put('P', 0);
         _numTipusFitxa.put('T', 0);
@@ -269,7 +263,6 @@ public class Tauler {
         }
         return moves;
     }
-
 
     boolean IsChecked(Color jugador){
         if (jugador.equals(Color.negre))

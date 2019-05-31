@@ -6,18 +6,9 @@ import java.util.Vector;
 
 public class Huma extends Usuari{
 
-    private List<Problema> problemesCreats = new ArrayList<>();
-    private int[] puntuació;
-
     public Huma(String nickname) {
         super(nickname);
     }
-
-
-    public void AfegirProblema(Problema p){
-        problemesCreats.add(p);
-    }
-
 
     public Object[] MourePeça(Problema problemaEnJoc, ParInt origen, ParInt desti, Color torn){
         Tauler tauler = problemaEnJoc.getTauler();
@@ -41,7 +32,6 @@ public class Huma extends Usuari{
                 boolean isAttacked = tauler.IsChecked(torn);
                 if (isAttacked){
                     tauler.desferJugada(m);
-                    System.out.println("Moviment il·legal");
                     return obj;
                 }
                 possible = true;
@@ -49,17 +39,10 @@ public class Huma extends Usuari{
             }
         }
         if(!possible){
-            System.out.println("Moviment no possible");
             return obj;
         }
         obj[0] = new ParInt[]{origen, desti};
         obj[1] = tauler.getTaulell();
         return obj;
     }
-
-
-
-
-
-
 }

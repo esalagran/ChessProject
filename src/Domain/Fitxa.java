@@ -56,22 +56,18 @@ public abstract class Fitxa {
                 move = new ParInt(coord.GetFirst() + j + 1, coord.GetSecond() + j + 1);
                 if (!stopd1) {
                     stopd1 = addMove(move, color, actual, moviments);
-                    //stopd1 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 move = new ParInt(coord.GetFirst() - j - 1, coord.GetSecond() + j + 1);
                 if (!stopd2) {
                     stopd2 = addMove(move, color, actual, moviments);
-                    //stopd2 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 move = new ParInt(coord.GetFirst() + j + 1, coord.GetSecond() - j - 1);
                 if (!stopd3) {
                     stopd3 = addMove(move, color, actual, moviments);
-                    //stopd3 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 move = new ParInt(coord.GetFirst() - j - 1, coord.GetSecond() - j - 1);
                 if (!stopd4) {
                     stopd4 = addMove(move, color, actual, moviments);
-                    //stopd4 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
 
                 stop = stopd1 && stopd2 && stopd3 && stopd4;
@@ -82,12 +78,10 @@ public abstract class Fitxa {
                 move = new ParInt(coord.GetFirst() + j + 1, coord.GetSecond());
                 if (!stopd1) {
                     stopd1 = addMove(move, color, actual, moviments);
-                    //stopd1 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 move = new ParInt(coord.GetFirst() - j - 1, coord.GetSecond());
                 if (!stopd2) {
                     stopd2 = addMove(move, color, actual, moviments);
-                    //stopd2 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 stop = stopd1 && stopd2;
             }
@@ -97,12 +91,10 @@ public abstract class Fitxa {
                 move = new ParInt(coord.GetFirst(), coord.GetSecond() + j + 1);
                 if (!stopd1) {
                     stopd1 = addMove(move, color, actual, moviments);
-                    //stopd1 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 move = new ParInt(coord.GetFirst(), coord.GetSecond() - j - 1);
                 if (!stopd2) {
                     stopd2 = addMove(move, color, actual, moviments);
-                    //stopd2 = actual.PeçaMeva(move, color) || actual.PeçaRival(move, color);
                 }
                 stop = stopd1 && stopd2;
             }

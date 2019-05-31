@@ -8,7 +8,6 @@ public class CtrlDomain {
     private Problema pObert;
     private PartidaRefactor partidaEnJoc;
     private List<Problema> problemes;
-    private List<Huma> usuaris;
     private Huma usuariLoggedIn;
 
 
@@ -47,7 +46,6 @@ public class CtrlDomain {
         if (candidates.isEmpty()) return null;
         Algorithm a1 = getTipusAlgorithm(t1, p1);
         Algorithm a2 = getTipusAlgorithm(t2, p2);
-        Color guanyador;
         Random rnd = new Random();
 
         //PartidaRefactor pr;
@@ -84,10 +82,6 @@ public class CtrlDomain {
                     else
                         result[i][5] = "a1";
                 }
-
-                System.out.println("Problema: " + p.GetFEN());
-                result[i][6] = pr.getEstatPartida().toString();
-                System.out.println(result[i][6]);
             }
         }
         return result;
@@ -230,16 +224,12 @@ public class CtrlDomain {
     public void CreaProblema() {
         if (pObert == null)
             pObert = new Problema("", usuariLoggedIn.GetNickName());
-        else
-            System.out.println("Primer has de tancar el problema");
     }
 
     public void CreaProblema(String FEN) {
         if (pObert == null)
             pObert = new Problema(FEN, usuariLoggedIn.GetNickName());
-        else
-            System.out.println("Primer has de tancar el problema");
-    }
+        }
 
     /**
      * \pre: FEN conté el codi FEN del problema que es vol carregar
@@ -275,9 +265,7 @@ public class CtrlDomain {
     public void TancarProblema() {
         if (pObert != null)
             pObert = null;
-        else
-            System.out.println("No tens cap problema obert");
-    }
+        }
 
     public boolean isColorHuman(Color color){
        if (partidaEnJoc instanceof PartidaMM)
@@ -338,16 +326,14 @@ public class CtrlDomain {
      * altrament es mostra un misstage*/
     public FitxaProblema[][] AfegirFitxa(int peça, int color, ParInt coord) {
         try {
-            if (pObert.getTauler().FitxaAt(coord) != null)
-                System.out.println("Ja hi ha una peça a la posició especificada");
+            if (pObert.getTauler().FitxaAt(coord) != null);
             else
                return pObert.AfegirPeça(peçesEscacs[peça], colorPeça[color], coord);
 
         } catch (NullPointerException ex) {
-
-            System.out.println("Has de crear o carregar un problema ");
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return null;
     }
@@ -359,20 +345,16 @@ public class CtrlDomain {
      * es mou la peça de la posició ini a la fi, altrament es mostra un missatge*/
     public FitxaProblema[][] MoureFitxa(ParInt ini, ParInt fi) {
         try {
-            if (pObert.getTauler().FitxaAt(fi) != null)
-                System.out.println("Ja hi ha una peça a la posició final");
+            if (pObert.getTauler().FitxaAt(fi) != null);
             else if (pObert.getTauler().FitxaAt(ini) == null){
-                System.out.println("No hi ha cap peça a la posició inicial");
-
             }
             else{
                 return pObert.MourePeça(ini, fi);
             }
         } catch (NullPointerException ex) {
-
-            System.out.println("Has de crear o carregar un problema ");
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return null;
     }
@@ -384,14 +366,13 @@ public class CtrlDomain {
      * altrament, es mostra un missatge*/
     public FitxaProblema[][] EliminarFitxa(ParInt coord) {
         try {
-            if (pObert.getTauler().FitxaAt(coord) == null)
-                System.out.println("No hi ha cap peça a la posició especificada");
+            if (pObert.getTauler().FitxaAt(coord) == null);
             else
                 return pObert.EliminarPeça(coord);
         } catch (NullPointerException ex) {
-            System.out.println("Has de crear o carregar un problema ");
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return null;
     }
@@ -409,12 +390,10 @@ public class CtrlDomain {
         Color jugador = (torn)? Color.blanc : Color.negre;
         try {
             valid = pObert.validarProblema(profunditat, jugador);
-            if (pObert.GetValid()) System.out.println("El problema és valid");
-            else System.out.println("El problema no és valid");
         } catch (NullPointerException ex) {
-            System.out.println("Has de crear o carregar un problema ");
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return valid;
     }
@@ -433,10 +412,9 @@ public class CtrlDomain {
 
     public Dificultat getDificultat(Problema p){
         Dificultat d = p.getDificultat();
-        if (d == null){
-            System.out.println("El problema s'ha de validar primer.");
+        if (d == null)
             return null;
-        }
+
         else return d;
     }
 
@@ -479,7 +457,6 @@ public class CtrlDomain {
         }
         return candidates;
     }
-
 
     private List<Problema> getValids(){
         List<Problema> candidates = new ArrayList<>();

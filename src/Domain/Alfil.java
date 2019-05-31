@@ -1,6 +1,5 @@
 package Domain;
 
-
 /**
  * @Class: classe on hi ha la informació referent a la peça àlfil
  * */

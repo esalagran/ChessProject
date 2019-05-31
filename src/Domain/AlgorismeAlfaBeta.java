@@ -137,7 +137,6 @@ public class AlgorismeAlfaBeta extends Algorithm{
             if (!isAttacked){
                 int auxBest = AlphaBeta(t, Convert.InvertColor(jugadorActual), jugadorActual, -Infinit,
                         Infinit, profunditat - 1);
-                //best = Convert.Max(best, auxBest);
                 if (!hasMoved || auxBest > best){
                     hasMoved = true;
                     bestMove = m;
@@ -158,7 +157,4 @@ public class AlgorismeAlfaBeta extends Algorithm{
             else
                 return new Move(null, new ParInt(-1, -1), null);
     }
-
-
-
 }

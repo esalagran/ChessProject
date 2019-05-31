@@ -10,7 +10,6 @@ public abstract class PartidaRefactor {
     private Color guanyador;
     private EstatPartida estatPartida;
 
-
     public PartidaRefactor(Problema p){
         torn = p.GetTorn();
         problemaEnJoc = p;
@@ -18,7 +17,6 @@ public abstract class PartidaRefactor {
         guanyador = null;
         estatPartida = EstatPartida.jugant;
     }
-
 
     public FitxaProblema[][] MovimentHuma(ParInt origen, ParInt desti){ return null; }
 
@@ -29,8 +27,6 @@ public abstract class PartidaRefactor {
     public Problema getProblemaEnJoc(){
         return problemaEnJoc;
     }
-
-
 
     boolean FiTorn(){
         torn = InvertColor(torn);

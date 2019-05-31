@@ -1,6 +1,5 @@
 package Domain;
 
-
 import java.util.Vector;
 
 /**

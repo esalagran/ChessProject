@@ -135,17 +135,6 @@ return null;
      * @return
      */
     public FitxaProblema[][] MourePeça(ParInt origen, ParInt desti){
-
-        if ( origen.GetFirst() != -1 && origen.GetSecond() != -1) {
-            if (tauler.FitxaAt(origen) == null) {
-
-
-            }
-
-
-        } else{
-
-        }
         if (desti.GetFirst() != -1 && desti.GetSecond() != -1) {
             if (tauler.FitxaAt(desti) == null) {
                 FitxaProblema fp = tauler.FitxaAt(origen);
@@ -153,13 +142,7 @@ return null;
                 tauler.AfegirPeçaAt(desti,fp);
                 _valid = false;
                 return tauler.getTaulell();
-
-
-            } else{
-
             }
-        } else{
-
         }
         return null;
     }
@@ -311,8 +294,6 @@ return null;
 
     public List<Object[]> getRanking(){return ranking;}
 
-    public void setRanking(List<Object[]> r){ranking = r;}
-
     //FEN-TAULER FUNCTIONS
 
     /**
@@ -330,29 +311,21 @@ return null;
                 char ch = _FEN.charAt(i);
                 int l = x / 8;
                 int k = x - (x / 8) * 8;
-                // System.out.println( "Pos: " + x + " X: "+ String.valueOf(k) + " Y: " + String.valueOf(l) + "CHAR: " + ch );
 
                 if(x >= 64)
                     break;
 
-                if(ch == 57){
-                    System.out.println("FEN invalid 9 es massa gran" + ch);
+                if(ch == 57)
                     break;
-
-                }
-
                 if (ch > 48 && ch < 57){
                     x += (ch - 48);
                     if(k +(ch - 48) > 8){
-                        System.out.println("FEN invalid, espai massa gran " + k+(ch - 48));
                         break;
                     }
                 }
                 ParInt coord = new ParInt(x/8, x - (x/8) * 8);
-                if(ch == '/' && k!= 0){
-                    System.out.println("FEN invalid, / detectat massa d'hora " + k);
+                if(ch == '/' && k!= 0)
                     break;
-                }
 
                 else if(ch == 'n' || ch == 'N') {
                     FitxaProblema aux = new FitxaProblema(TipusPeça.Cavall, new ParInt(x / 8, x - (x / 8) * 8), charToColor(ch));
@@ -476,7 +449,6 @@ return null;
         }
 
         FEN.append(" w - - 0 1");
-        //System.out.println(FEN);
         return FEN.toString();
 
     }

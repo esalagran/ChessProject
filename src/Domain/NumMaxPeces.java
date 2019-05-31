@@ -2,7 +2,6 @@ package Domain;
 
 import java.util.HashMap;
 
-
 /**
  * Singleton que serveix per controla el nombre màxim de peces en un problema
  */

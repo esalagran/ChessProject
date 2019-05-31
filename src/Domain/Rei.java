@@ -1,6 +1,5 @@
 package Domain;
 
-
 /**
  * @class Rei
  * \brief Classe que conté la informació de la peça rei
