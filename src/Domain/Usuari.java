@@ -1,7 +1,23 @@
 package Domain;
 
 
-/**Classe abstracta que permet aïllar el tipus de jugador a l'hora de jugar una partida*/
+/**Classe no rellevant per aquesta entrega*/
 
 public abstract class Usuari{
+    private String _nickname;
+
+    public String GetNickName(){
+        return _nickname;
+    }
+
+    public Usuari (String nickname){
+        _nickname = nickname;
+    }
+
+
+
+
+
+
+
 }
