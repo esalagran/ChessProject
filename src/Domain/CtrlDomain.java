@@ -56,8 +56,8 @@ public class CtrlDomain {
             Problema p = candidates.get(rnd.nextInt(candidates.size()));
             if (p != null) {
                 PartidaRefactor pr;
-                int isA1 = rnd.nextInt(1);
-                if (isA1 == 0) {
+                boolean isA1 = rnd.nextBoolean();
+                if (isA1) {
                     pr = new PartidaMM(p, a1, a2);
                 } else {
                     pr = new PartidaMM(p, a2, a1);
@@ -72,7 +72,7 @@ public class CtrlDomain {
                 result[i][4] = obj[2] + "ms";
 
                 System.out.println("Problema: " + p.GetFEN());
-                if (isA1 == 0 && obj[0].equals(p.GetTorn()) || (isA1 != 0 && !obj[0].toString().equals(color)))
+                if (isA1 && obj[0].equals(p.GetTorn()) || (!isA1 && !obj[0].toString().equals(color)))
                     result[i][5] = "a1";
                 else
                     result[i][5] = "a2";
@@ -184,14 +184,7 @@ public class CtrlDomain {
         CP.InsertaUsuari(h2);
         Huma rival = new Huma(h2);
         Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate, index, random);
-        /*if(random){
-            List<Problema> valids = getValids();
-            Random rand = new Random();
-            p = valids.get(rand.nextInt(problemes.size()));
-        }
-        else{
-            p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
-        }*/
+
         if (p == null) return null;
         if (isAttackingH2)
             partidaEnJoc = new PartidaHH(p, rival, usuariLoggedIn);
@@ -204,18 +197,7 @@ public class CtrlDomain {
                                 String algName, int profunditat, boolean isMachine1, boolean random, int index){
 
         Problema p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate, index, random);
-        /*if (index >= 0 && index < problemes.size()){
-            p = problemes.get(index);
-        }
-        else if(random){
 
-           List<Problema> valids = getValids();
-           Random rand = new Random();
-           p = valids.get(rand.nextInt(problemes.size()));
-        }
-        else{
-            p = TriaProblema(Convert.StringToDificultat(dif), Convert.StringToColor(torns), jugadesPelMate);
-        }*/
         if (p == null) return null;
         if (isMachine1){
             //new Huma s'ha de canviar per una cerca a la base de dades d'usuari. En aquest cas hi ha de ser sempre
@@ -227,16 +209,6 @@ public class CtrlDomain {
         }
         return p.GetTorn();
     }
-
-    /*public Color JugarPartidaHuma(Modalitat mode, int index) {
-        // en realitat es busca un problema aletatori de la base de dades amb la dificultat
-        Random rand = new Random();
-        Problema p = problemes.get(index);
-        partidaEnJoc = CreaPartida(mode, p, "root", "complex", 7, 7);
-        //partidaEnJoc = new Partida(p, mode, 10);
-        //partidaEnJoc.ComençarPartida();
-        return p.GetTorn();
-    }*/
 
     /**
      * \pre:
