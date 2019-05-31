@@ -41,7 +41,7 @@ public class Problema{
         _creador = creador;
         ranking =  new ArrayList<>();
         _dif = Dificultat.mitja;
-        tema = new Tema(-1, torn);
+        tema = new Tema(0, torn);
     }
 
     public Problema(String FEN, Tema tema, boolean valid, String creador, Dificultat dificultat, List<Object[]> ranking){
