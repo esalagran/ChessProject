@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.io.File;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.plaf.FontUIResource;
@@ -195,15 +196,7 @@ public class TaulerGUICrearProblema {
             }
         };
         tools.add(importarFEN);
-
-        Action tryProblemaAction = new AbstractAction("Provar problema") {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("No implementat encara");
-            }
-        };
-        tools.add(tryProblemaAction);
+        
         JButton validarButton = new JButton("Validar");
         tools.add(validarButton);
 
@@ -417,7 +410,7 @@ public class TaulerGUICrearProblema {
 
     private final void createImages() {
         try {
-            URL url = new URL("http://i.stack.imgur.com/memI0.png");
+            File url = new File("localData/escacsBlancNegre.png");
             BufferedImage bi = ImageIO.read(url);
             for (int ii = 0; ii < 2; ii++) {
                 for (int jj = 0; jj < 6; jj++) {
@@ -539,10 +532,21 @@ public class TaulerGUICrearProblema {
     public void run() {
 
         TaulerGUICrearProblema cg = new TaulerGUICrearProblema(CP);
+        boolean hiHaPeça = false;
 
+        if(imported){
 
-        if(imported)
-            cg = new TaulerGUICrearProblema(CP, tauler);
+            for(int i = 0; i < 8; i++){
+                for (int j = 0; j < 8; j++){
+                    if(tauler[i][j] != null)
+                        hiHaPeça = true;
+
+                }
+            }
+
+            if(hiHaPeça)
+                cg = new TaulerGUICrearProblema(CP, tauler);
+        }
 
 
 
