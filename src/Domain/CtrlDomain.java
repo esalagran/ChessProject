@@ -82,6 +82,7 @@ public class CtrlDomain {
                     else
                         result[i][5] = "a1";
                 }
+                result[i][6] = pr.getEstatPartida();
             }
         }
         return result;
