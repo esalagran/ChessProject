@@ -410,7 +410,7 @@ public class TaulerGUICrearProblema {
 
     private final void createImages() {
         try {
-            File url = new File("localData/escacsBlancNegre.png");
+            File url = new File("localData/ChessBoardCorrect.png");
             BufferedImage bi = ImageIO.read(url);
             for (int ii = 0; ii < 2; ii++) {
                 for (int jj = 0; jj < 6; jj++) {
